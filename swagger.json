@@ -4881,13 +4881,85 @@
           "type": "object",
           "properties": {
             "addresses.info": {
-              "$ref": "#/definitions/links"
+              "description": "Hypermedia links format",
+              "type": "object",
+              "required": [
+                "rel",
+                "href",
+                "method"
+              ],
+              "properties": {
+                "rel": {
+                  "type": "string",
+                  "default": "self"
+                },
+                "href": {
+                  "type": "string",
+                  "format": "uri",
+                  "default": "https://api.byu.edu/byuapi/persons/v1/:byu_id/addresses/:address_type"
+                },
+                "method": {
+                  "type": "string",
+                  "default": "GET",
+                  "enum": [
+                    "GET"
+                  ]
+                }
+              }
             },
             "addresses.modify": {
-              "$ref": "#/definitions/links"
+              "description": "Hypermedia links format",
+              "type": "object",
+              "required": [
+                "rel",
+                "href",
+                "method"
+              ],
+              "properties": {
+                "rel": {
+                  "type": "string",
+                  "default": "self"
+                },
+                "href": {
+                  "type": "string",
+                  "format": "uri",
+                  "default": "https://api.byu.edu/byuapi/persons/v1/:byu_id/addresses/:address_type"
+                },
+                "method": {
+                  "type": "string",
+                  "default": "PUT",
+                  "enum": [
+                    "PUT"
+                  ]
+                }
+              }
             },
             "addresses.delete": {
-              "$ref": "#/definitions/links"
+              "description": "Hypermedia links format",
+              "type": "object",
+              "required": [
+                "rel",
+                "href",
+                "method"
+              ],
+              "properties": {
+                "rel": {
+                  "type": "string",
+                  "default": "self"
+                },
+                "href": {
+                  "type": "string",
+                  "format": "uri",
+                  "default": "https://api.byu.edu/byuapi/persons/v1/:byu_id/addresses/:address_type"
+                },
+                "method": {
+                  "type": "string",
+                  "default": "DELETE",
+                  "enum": [
+                    "DELETE"
+                  ]
+                }
+              }
             }
           }
         },
@@ -4944,6 +5016,9 @@
         },
         "unlisted": {
           "$ref": "#/definitions/unlisted"
+        },
+        "verified_flag": {
+          "$ref": "#/definitions/verified_flag"
         }
       }
     },
@@ -4958,10 +5033,13 @@
           "type": "string",
           "maxLength": 40,
           "minLength": 1,
-          "default": " "
+          "default": " ",
+          "x-template": ":address_line_1"
         },
         "api_type": {
           "type": "string",
+          "default": "read-only",
+          "x-template": ":modifiable",
           "enum": [
             "read-only",
             "modifiable"
@@ -4984,10 +5062,13 @@
           "type": "string",
           "maxLength": 40,
           "minLength": 1,
-          "default": " "
+          "default": " ",
+          "x-template": ":address_line_2"
         },
         "api_type": {
           "type": "string",
+          "default": "read-only",
+          "x-template": "modifiable",
           "enum": [
             "read-only",
             "modifiable"
@@ -5010,10 +5091,13 @@
           "type": "string",
           "maxLength": 40,
           "minLength": 1,
-          "default": " "
+          "default": " ",
+          "x-template": ":address_line_3"
         },
         "api_type": {
           "type": "string",
+          "default": "read-only",
+          "x-template": ":modifiable",
           "enum": [
             "read-only",
             "modifiable"
@@ -5036,10 +5120,13 @@
           "type": "string",
           "maxLength": 40,
           "minLength": 1,
-          "default": " "
+          "default": " ",
+          "x-template": ":address_line_4"
         },
         "api_type": {
           "type": "string",
+          "default": "read-only",
+          "x-template": ":modifiable",
           "enum": [
             "read-only",
             "modifiable"
@@ -5172,6 +5259,7 @@
       "properties": {
         "value": {
           "type": "string",
+          "x-template": ":address_type",
           "enum": [
             "PRM",
             "RES",
@@ -5181,13 +5269,15 @@
         },
         "api_type": {
           "type": "string",
+          "x-template": ":modifiable",
           "enum": [
             "read-only",
             "modifiable"
           ]
         },
         "key": {
-          "type": "boolean"
+          "type": "boolean",
+          "default": true
         }
       },
       "example": {
@@ -5542,18 +5632,23 @@
           "type": "string",
           "maxLength": 4,
           "minLength": 1,
-          "default": " "
+          "default": " ",
+          "x-template": ":building_code"
         },
         "description": {
           "type": "string",
-          "maxLength": 15
+          "maxLength": 15,
+          "x-template": ":building_name"
         },
         "long_description": {
           "type": "string",
-          "maxLength": 30
+          "maxLength": 30,
+          "x-template": ":long_building_name"
         },
         "api_type": {
           "type": "string",
+          "default": "read-only",
+          "x-template": ":modifiable",
           "enum": [
             "read-only",
             "modifiable"
@@ -5583,16 +5678,19 @@
         "description": {
           "type": "string",
           "pattern": "^(?=.{2,}?[A-Z])([A-Za-z-]+ )*?[A-Za-z-]+$",
+          "x-template": ":name",
           "maxLength": 50
         },
         "api_type": {
           "type": "string",
+          "default": "system",
           "enum": [
             "system"
           ]
         },
         "key": {
-          "type": "boolean"
+          "type": "boolean",
+          "default": true
         }
       },
       "example": {
@@ -5696,10 +5794,13 @@
           "type": "string",
           "maxLength": 30,
           "minLength": 1,
-          "default": " "
+          "default": " ",
+          "x-template": ":city"
         },
         "api_type": {
           "type": "string",
+          "default": "read-only",
+          "x-template": ":modifiable",
           "enum": [
             "read-only",
             "modifiable"
@@ -5781,14 +5882,18 @@
           "type": "string",
           "maxLength": 3,
           "minLength": 1,
-          "default": " "
+          "default": " ",
+          "x-template": ":country_code"
         },
         "description": {
           "type": "string",
-          "maxLength": 35
+          "maxLength": 35,
+          "x-template": ":country_name"
         },
         "api_type": {
           "type": "string",
+          "default": "read-only",
+          "x-template": ":modifiable",
           "enum": [
             "read-only",
             "modifiable"
@@ -5812,10 +5917,12 @@
       "properties": {
         "value": {
           "type": "string",
-          "pattern": "^[0-9]{9}$"
+          "pattern": "^[0-9]{9}$",
+          "x-template": ":created_by_id"
         },
         "api_type": {
           "type": "string",
+          "default": "system",
           "enum": [
             "system"
           ]
@@ -5823,7 +5930,8 @@
         "description": {
           "type": "string",
           "pattern": "^(?=.{2,}?[A-Z])([A-Za-z-]+ )*?[A-Za-z-]+$",
-          "maxLength": 50
+          "maxLength": 50,
+          "x-template": ":created_by_name"
         }
       },
       "example": {
@@ -6153,10 +6261,12 @@
       "properties": {
         "value": {
           "type": "string",
-          "format": "date-time"
+          "format": "date-time",
+          "x-template": ":date_time_created"
         },
         "api_type": {
           "type": "string",
+          "default":"system",
           "enum": [
             "system"
           ]
@@ -6269,10 +6379,12 @@
       "properties": {
         "value": {
           "type": "string",
+          "x-template": ":date_time_updated",
           "format": "date-time"
         },
         "api_type": {
           "type": "string",
+          "default": "system",
           "enum": [
             "system"
           ]
@@ -10426,10 +10538,13 @@
       "properties": {
         "value": {
           "type": "string",
-          "maxLength": 20
+          "maxLength": 20,
+          "x-template": ":postal_code"
         },
         "api_type": {
           "type": "string",
+          "default": "read-only",
+          "x-template": ":modifiable",
           "enum": [
             "read-only",
             "modifiable"
@@ -11217,10 +11332,13 @@
       "properties": {
         "value": {
           "type": "string",
-          "maxLength": 5
+          "maxLength": 5,
+          "x-template": ":room"
         },
         "api_type": {
           "type": "string",
+          "default": "read-only",
+          "x-template": ":modifiable",
           "enum": [
             "read-only",
             "modifiable"
@@ -11427,14 +11545,18 @@
           "type": "string",
           "default": "??",
           "pattern": "^([?]{2}|[A-Z]{2,5})$",
-          "maxLength": 4
+          "maxLength": 4,
+          "x-template": ":state_code"
         },
         "description": {
           "type": "string",
-          "maxLength": 30
+          "maxLength": 30,
+          "x-template": ":state_name"
         },
         "api_type": {
           "type": "string",
+          "default": "read-only",
+          "x-template": ":modifiable",
           "enum": [
             "read-only",
             "modifiable"
@@ -11530,28 +11652,34 @@
       "properties": {
         "collection_size": {
           "type": "integer",
-          "minimum": 0
+          "minimum": 0,
+          "x-template": ":collection_size"
         },
         "page_start": {
           "type": "integer",
           "minimum": 0,
-          "default": 0
+          "default": 0,
+          "x-template": ":page_start"
         },
         "page_end": {
           "type": "integer",
-          "minimum": 0
+          "minimum": 0,
+          "x-template": ":page_end"
         },
         "page_size": {
           "type": "integer",
-          "minimum": 0
+          "minimum": 0,
+          "x-template": ":page_size"
         },
         "default_page_size": {
           "type": "integer",
           "minimum": 1,
-          "default": 1
+          "default": 1,
+          "x-template": ":default_page_size"
         },
         "maximum_page_size": {
-          "type": "integer"
+          "type": "integer",
+          "x-template": ":maximum_page_size"
         },
         "validation_response": {
           "type": "object",
@@ -11809,6 +11937,7 @@
         "value": {
           "type": "string",
           "default": "N",
+          "x-template": ":unlisted",
           "enum": [
             "Y",
             "N"
@@ -11816,6 +11945,8 @@
         },
         "api_type": {
           "type": "string",
+          "default": "read-only",
+          "x-template": ":modifiable",
           "enum": [
             "read-only",
             "modifiable"
@@ -11838,10 +11969,12 @@
       "properties": {
         "value": {
           "type": "string",
-          "pattern": "^[0-9]{9}$"
+          "pattern": "^[0-9]{9}$",
+          "x-template": ":updated_by_id"
         },
         "api_type": {
           "type": "string",
+          "default": "system",
           "enum": [
             "system"
           ]
@@ -11849,7 +11982,8 @@
         "description": {
           "type": "string",
           "pattern": "^(?=.{2,}?[A-Z])([A-Za-z-]+ )*?[A-Za-z-]+$",
-          "maxLength": 50
+          "maxLength": 50,
+          "x-template": ":updated_by_name"
         }
       },
       "example": {
@@ -11940,7 +12074,7 @@
         "description": "INIT"
       }
     },
-    "verified_f": {
+    "verified_flag": {
       "type": "object",
       "required": [
         "value",
@@ -11950,6 +12084,7 @@
         "value": {
           "type": "string",
           "default": "N",
+          "x-template": ":verified_flag",
           "enum": [
             "Y",
             "N"
@@ -11957,6 +12092,8 @@
         },
         "api_type": {
           "type": "string",
+          "default": "read-only",
+          "x-template": ":modifiable",
           "enum": [
             "read-only",
             "modifiable"
