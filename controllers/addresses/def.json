@@ -1,0 +1,161 @@
+{
+  "links": {
+    "addresses.info": {
+      "rel": "self",
+      "href": "https://api.byu.edu/byuapi/persons/v1/:byu_id/addresses",
+      "method": "GET"
+    },
+    "addresses.prev": {
+      "rel": "addresses.prev",
+      "href": "https://api.byu.edu/byuapi/persons/v1/:byu_id/addresses?page_start=:page_start,page_size=:page_size",
+      "method": "GET"
+    },
+    "addresses.next": {
+      "rel": "addresses.next",
+      "href": "https://api.byu.edu/byuapi/persons/v1/:byu_id/addresses?page_start=:page_start,page_size=:page_size",
+      "method": "GET"
+    }
+  },
+  "metadata": {
+    "collection_size": 0,
+    "page_start": 1,
+    "page_end": 1,
+    "page_size": 20,
+    "default_page_size": 20,
+    "max_page_size": 20,
+    "validation_response": {
+      "return_code": 0,
+      "response": ""
+    },
+    "default_db": [
+      "ces"
+    ]
+  },
+  "values": [
+    {
+      "links": {
+        "addresses.info": {
+          "rel": "self",
+          "href": "https://api.byu.edu/byuapi/persons/v1/:byu_id/addresses/:address_type",
+          "method": "GET"
+        },
+        "addresses.modify": {
+          "rel": "addresses.modify",
+          "href": "https://api.byu.edu/byuapi/persons/v1/:byu_id/addresses/:address_type",
+          "method": "PUT"
+        },
+        "addresses.delete": {
+          "rel": "addresses.delete",
+          "href": "https://api.byu.edu/byuapi/persons/v1/:byu_id/addresses/:address_type",
+          "method": "DELETE"
+        }
+      },
+      "metadata": {
+        "collection_size": 0,
+        "page_start": 1,
+        "page_end": 1,
+        "page_size": 20,
+        "default_page_size": 20,
+        "max_page_size": 20,
+        "validation_response": {
+          "return_code": 0,
+          "response": ""
+        },
+        "default_db": [
+          "ces"
+        ]
+      },
+      "byu_id": {
+        "value": "",
+        "description": "",
+        "api_type": "system",
+        "key": true
+      },
+      "address_type": {
+        "value": "",
+        "api_type": "modifiable",
+        "key": true,
+        "domain": [
+          "RES",
+          "MAL",
+          "WRK",
+          "PRM"
+        ]
+      },
+      "date_time_updated": {
+        "value": "",
+        "api_type": "system"
+      },
+      "updated_by_id": {
+        "value": "",
+        "description": "",
+        "api_type": "system"
+      },
+      "date_time_created": {
+        "value": "",
+        "api_type": "system"
+      },
+      "created_by_id": {
+        "value": "",
+        "description": "",
+        "api_type": "system"
+      },
+      "address_line_1": {
+        "value": "",
+        "api_type": "modifiable"
+      },
+      "address_line_2": {
+        "value": "",
+        "api_type": "modifiable"
+      },
+      "address_line_3": {
+        "value": "",
+        "api_type": "modifiable"
+      },
+      "address_line_4": {
+        "value": "",
+        "api_type": "modifiable"
+      },
+      "building": {
+        "value": "",
+        "description": "",
+        "long_description": "",
+        "api_type": "modifiable",
+        "domain": "https://api.byu.edu/byuapi/meta/buildings"
+      },
+      "room": {
+        "value": "",
+        "api_type": "modifiable"
+      },
+      "city": {
+        "value": "",
+        "api_type": "modifiable"
+      },
+      "state_code": {
+        "value": "",
+        "description": "",
+        "api_type": "modifiable",
+        "domain": "https://api.byu.edu/byuapi/meta/states"
+      },
+      "country_code": {
+        "value": "",
+        "description": "",
+        "api_type": "modifiable",
+        "domain": "https://api.byu.edu/byuapi/meta/countries"
+      },
+      "postal_code": {
+        "value": "",
+        "api_type": "modifiable"
+      },
+      "unlisted": {
+        "value": "",
+        "api_type": "modifiable"
+      },
+      "verified_flag": {
+        "value": "",
+        "api_type": "modifiable"
+      }
+    }
+  ]
+}
+

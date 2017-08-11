@@ -1,0 +1,7 @@
+{
+    "WELL_KNOWN": "https://api.byu.edu/.well-known/openid-configuration",
+    "CLIENT_KEY": "",
+    "CLIENT_SECRET": "",
+    "DB_CONFIG": "",
+    "DB_AUTH": ""
+}

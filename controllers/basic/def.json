@@ -1,0 +1,165 @@
+{
+  "links": {
+    "persons.info": {
+      "rel": "self",
+      "href": "https://api.byu.edu/byuapi/persons/v1/:byu_id",
+      "method": "GET"
+    },
+    "persons.modify": {
+      "rel": "self",
+      "href": "https://api.byu.edu/byuapi/persons/v1/:byu_id",
+      "method": "PUT"
+    },
+    "persons.delete": {
+      "rel": "self",
+      "href": "https://api.byu.edu/byuapi/persons/v1/:byu_id",
+      "method": "DELETE"
+    }
+  },
+  "metadata": {
+    "collection_size": 0,
+    "page_start": 1,
+    "page_end": 1,
+    "page_size": 20,
+    "default_page_size": 20,
+    "max_page_size": 20,
+    "validation_response": {
+      "return_code": 0,
+      "response": ""
+    },
+    "default_db": [
+      "ces"
+    ]
+  },
+  "byu_id": {
+    "value": "",
+    "api_type": "system",
+    "key": true
+  },
+  "person_id": {
+    "value": "",
+    "api_type": "system"
+  },
+  "net_id": {
+    "value": "",
+    "api_type": "related",
+    "related_resource": "persons"
+  },
+  "deceased": {
+    "value": "",
+    "api_type": "related",
+    "related_resource": "persons"
+  },
+  "personal_email_address": {
+    "value": "",
+    "api_type": "related",
+    "related_resource": "persons"
+  },
+  "primary_phone_number": {
+    "value": "",
+    "api_type": "related",
+    "related_resource": "persons"
+  },
+  "date_time_updated": {
+    "value": "",
+    "api_type": "system"
+  },
+  "updated_by_id": {
+    "value": "",
+    "description": "",
+    "api_type": "system"
+  },
+  "date_time_created": {
+    "value": "",
+    "api_type": "system"
+  },
+  "created_by_id": {
+    "value": "",
+    "description": "",
+    "api_type": "system"
+  },
+  "sex": {
+    "value": "",
+    "api_type": "modifiable"
+  },
+  "first_name": {
+    "value": "",
+    "api_type": "modifiable"
+  },
+  "middle_name": {
+    "value": "",
+    "api_type": "modifiable"
+  },
+  "surname": {
+    "value": "",
+    "api_type": "modifiable"
+  },
+  "suffix": {
+    "value": "",
+    "api_type": "modifiable"
+  },
+  "preferred_first_name": {
+    "value": "",
+    "api_type": "modifiable"
+  },
+  "preferred_surname": {
+    "value": "",
+    "api_type": "modifiable"
+  },
+  "rest_of_name": {
+    "value": "",
+    "api_type": "derived"
+  },
+  "name_fnf": {
+    "value": "",
+    "api_type": "derived"
+  },
+  "name_lnf": {
+    "value": "",
+    "api_type": "derived"
+  },
+  "preferred_name": {
+    "value": "",
+    "api_type": "derived"
+  },
+  "home_town": {
+    "value": "",
+    "api_type": "modifiable"
+  },
+  "home_state_code": {
+    "value": "",
+    "description": "",
+    "api_type": "modifiable",
+    "domain": "https://api.byu.edu/byuapi/meta/states"
+  },
+  "home_country_code": {
+    "value": "",
+    "description": "",
+    "api_type": "modifiable",
+    "domain": "https://api.byu.edu/meta/countries"
+  },
+  "high_school_code": {
+    "value": "",
+    "description": "",
+    "api_type": "modifiable",
+    "domain": "https://api.byu.edu/meta/high_schools"
+  },
+  "high_school_city":{
+    "value": "",
+    "api_type": "derived"
+  },
+  "high_school_state_code": {
+    "value": "",
+    "description": "",
+    "api_type": "derived",
+    "domain": "https://api.byu.edu/byuapi/meta/states"
+  },
+  "restricted": {
+    "value": "",
+    "api_type": "modifiable"
+  },
+  "merge_in_process": {
+    "value": "",
+    "api_type": "derived"
+  }
+}
