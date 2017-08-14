@@ -26,6 +26,7 @@
     "byu-jwt": "^0.1.5",
     "express": "^4.15.3",
     "moment": "^2.18.1",
+    "oracledb": "^1.13.1",
     "sans-server": "^1.4.3",
     "sans-server-express": "0.0.3",
     "sans-server-swagger": "^0.3.2",

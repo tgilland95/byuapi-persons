@@ -15,7 +15,7 @@
  *
  */
 "use strict";
-var auth_req_array = utils.authRequests("GET", req.verifiedJWTs.authorized_byu_id, fs, res_owner, request);
+// var auth_req_array = authRequests("GET", req.verifiedJWTs.authorized_byu_id, fs, res_owner, request);
 
 exports.authRequests = function(method, subject, fieldsets, resource_owner, request) {
   var reqArray = [];

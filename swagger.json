@@ -4896,7 +4896,7 @@
                 "href": {
                   "type": "string",
                   "format": "uri",
-                  "default": "https://api.byu.edu/byuapi/persons/v1/:byu_id/addresses/:address_type"
+                  "x-template": "https://api.byu.edu/byuapi/persons/v1/:byu_id/addresses/:address_type"
                 },
                 "method": {
                   "type": "string",
@@ -5039,7 +5039,7 @@
         "api_type": {
           "type": "string",
           "default": "read-only",
-          "x-template": ":modifiable",
+          "x-template": ":address_api_type",
           "enum": [
             "read-only",
             "modifiable"

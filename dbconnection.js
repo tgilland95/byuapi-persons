@@ -16,7 +16,7 @@ exports.connect = async function () {
       password: params.DB_PWD,
       connectString: params.DB_CS
     };
-    console.log(dbconfig);
+    // console.log(dbconfig);
 
     pool = await oracle.createPool(dbconfig);
     console.log("POOL CREATED");
