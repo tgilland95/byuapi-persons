@@ -16,7 +16,7 @@
  */
 "use strict";
 const basic_sql = require('./../controllers/basic/sql');
-const func = require('./../shared_functions');
+const func = require('../controllers/sql/shared_functions');
 const moment = require("moment");
 
 exports.getPerson = function (req, res) {

@@ -11,13 +11,14 @@ exports.getParams = function () {
     return new Promise((resolve, reject) => {
         if (!params) {
             if (process.env.WELL_KNOWN && process.env.CLIENT_KEY && process.env.CLIENT_SECRET && process.env.DB_USER && process.env.DB_PWD && process.env.DB_CS) {
+              params = {};
               params.WELL_KNOWN = process.env.WELL_KNOWN;
               params.CLIENT_KEY = process.env.CLIENT_KEY;
               params.CLIENT_SECRET = process.env.CLIENT_SECRET;
               params.DB_USER = process.env.DB_USER;
               params.DB_PWD = process.env.DB_PWD;
               params.DB_CS = process.env.DB_CS;
-              Promise.resolve(params);
+              resolve(params);
             }
             else {
                 let p = {

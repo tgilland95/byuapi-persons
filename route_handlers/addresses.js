@@ -16,8 +16,19 @@
  */
 "use strict";
 const addressesController = require('../controllers/addresses');
+const auth                = require('../controllers/auth');
 
-exports.getAddress = async function (req, res) {
-  const address = await addressesController.getAddress(req.swagger.root.definitions, req.params.byu_id, req.params.address_type);
-  res.send(address);
+exports.getAddress = function (req, res) {
+  auth.getPermissions(req)
+    .then(function (permissions) {
+      console.log("permissions: ", permissions);
+      return addressesController.getAddress(req.swagger.root.definitions, req.params.byu_id, req.params.address_type, permissions)
+        .then(function (address) {
+          res.send(address);
+        })
+    })
+    .catch(function (error) {
+      res.send(error);
+    })
+  ;
 };

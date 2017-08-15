@@ -1,61 +1,43 @@
+/*
+ * Copyright 2017 Brigham Young University
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ */
 process.on('unhandledRejection', (reason) => {
   console.error(reason.stack);
   process.exit(1);
 });
 
-const byuJwt = require('byu-jwt');
-// const oracledb = require('oracledb');
-const param = require('./param');
-const utils = require('./controllers/utils');
-
 const api               = require('./api');
 const bodyParser        = require('body-parser');
 const express           = require('express');
 const expressTranslator = require('sans-server-express');
+const Enforcer          = require('swagger-enforcer');
 
-byuJwt.cacheWellknowns = true;
-const wellknown = 'https://api.byu.edu/.well-known/openid-configuration';
+Enforcer.injectParameters.defaults = {
+  mutate: true,
+  replacement: 'colon'
+};
+Enforcer.applyTemplate.defaults.replacement = 'colon';
 
 const app = express();
 
 app.use(bodyParser.json());
 
-// app.use(function (req, res, next) {
-//     if (req.path === "/") {
-//         next();
-//     }
-//     else {
-//         utils.verifyJWTs(req.headers)
-//             .then(function (verifiedJWTs) {
-//                 console.log("GETTING CLIENT ID FROM PARAM STORE");
-//                 param.getParams()
-//                     .then((params) => {
-//                         console.log("GOT PARAMS!");
-//                         if (verifiedJWTs.current.wso2.clientId !== params.CLIENT_KEY) {
-//                             console.log("Invalid ClientId:", params.CLIENT_KEY);
-//                             console.log("Invalid ClientId:", verifiedJWTs.current.wso2.clientId);
-//                             res.status(403).send({
-//                                 "return_code": 403,
-//                                 "error": "Access denied to protected data"
-//                             })
-//                         }
-//                         req.verifiedJWTs = verifiedJWTs;
-//                         next();
-//                     })
-//                     .catch(err => {
-//                         console.log(err);
-//                         res.status(500).send({
-//                             "return_code": 500,
-//                             "error": "Internal Server Error"
-//                         });
-//                     });
-//             })
-//             .catch(result => res.status(403).send({
-//                 "return_code": 403,
-//                 "error": "JWT Expired"
-//             }));
-//     }
-// });
+app.get("/favicon.ico", function (req, res) {
+    res.sendStatus(404);
+});
 
 app.get("/", function (req, res) {
     res.status(200).send("Success");

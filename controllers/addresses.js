@@ -15,15 +15,13 @@
  *
  */
 "use strict";
-const sql           = require('./sql/addresses');
-const utils         = require('./utils');
-const func          = require('../shared_functions');
-const moment        = require("moment");
 const Enforcer      = require('swagger-enforcer');
+const utils         = require('./utils');
+const func          = require('./sql/shared_functions');
+const sql           = require('./sql/addresses');
 const auth          = require('./auth');
 
-exports.getAddress = async function (definitions, byu_id, address_type) {
-  const result = Enforcer.enforce(definitions.address, definitions);
+exports.getAddress = async function (definitions, byu_id, address_type, permissions) {
   const params = [address_type, byu_id];
   const sql_query = sql.sql.getAddress;
   const results = await func.executeSelect(sql_query, params);
@@ -32,35 +30,36 @@ exports.getAddress = async function (definitions, byu_id, address_type) {
     throw utils.Error(404, "BYU_ID not found in person table")
   }
 
-  if (results.rows[0].restricted === 'Y' && auth.hasRestrictedRights(req)) {
+  if (results.rows[0].restricted === 'Y' && !auth.hasRestrictedRights(permissions)) {
     throw utils.Error(404, 'BYU_ID not found in person table')
   }
 
-  if (auth.canViewContact(req)) {
+  if (!auth.canViewContact(permissions)) {
+    throw utils.Error(403, 'Not Authorized to view contact')
+  }
 
-    if (!results.rows[0].address_type) {
-      throw utils.Error(404, address_type + " address not found")
-    }
-    const local_updated = moment.tz(results.rows[0].date_time_updated, 'America/Denver');
-    const gmt_updated = local_updated.clone().tz('Atlantic/Reykjavik');
-    const local_created = moment.tz(results.rows[0].date_time_created, 'America/Denver');
-    const gmt_created = local_created.clone().tz('Atlantic/Reykjavik');
-
-    Enforcer.injectParameters(result, {
+  if (!results.rows[0].address_type) {
+    throw utils.Error(404, address_type + " address not found")
+  }
+  console.log("Enforcer Appy Template: ",Enforcer.applyTemplate.toString());
+  const result = Enforcer.applyTemplate(definitions.address, definitions,
+    {
       byu_id: byu_id,
+      name: results.rows[0].name,
       address_type: address_type,
+      address_api_type: "modifiable",
       collection_size: results.rows.length,
       page_start: 0,
       page_end: results.rows.length,
       page_size: results.rows.length,
       default_page_size: 1,
       maximum_page_size: 100,
-      date_time_updated: gmt_updated,
+      date_time_updated: results.rows[0].date_time_updated.toISOString(),
       updated_by_id: results.rows[0].updated_by_id,
       updated_by_name: results.rows[0].updated_by_name,
-      date_time_created: gmt_created,
+      date_time_created: results.rows[0].date_time_created.toISOString(),
       created_by_id: results.rows[0].created_by_id,
-      created_by_name: results.rows[0].created_by_name,
+      created_by_name: results.rows[0].created_by_name || '',
       address_line_1: results.rows[0].address_line_1,
       address_line_2: results.rows[0].address_line_2,
       address_line_3: results.rows[0].address_line_3,
@@ -75,17 +74,10 @@ exports.getAddress = async function (definitions, byu_id, address_type) {
       state_code: results.rows[0].state_code,
       state_name: results.rows[0].state_name,
       postal_code: results.rows[0].postal_code,
-      unlisted: results.rows[0].unlisted,
-      verified_flag: results.rows[0].verified_flag,
-    });
-    // Enforcer.injectParameters(result, {
-    //   byu_id: byu_id,
-    //   collection_size: results.rows.length,
-    //   date_time_created: moment(results.rows[0].date_time_created).format("YYYY-MM-DDTHH:mm:ss.SSSZ"),
-    //   date_time_updated: moment(results.rows[0].date_time_updated).format("YYYY-MM-DDTHH:mm:ss.SSSZ")
-    // });
-  }
-  else {
-    throw utils.Error(501, 'Not Implemented');
-  }
+      unlisted: results.rows[0].unlisted || 'N',
+      verified_flag: results.rows[0].verified_flag || 'N',
+    }
+    );
+  // console.log(result);
+  return result;
 };

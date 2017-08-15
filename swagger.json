@@ -4896,7 +4896,7 @@
                 "href": {
                   "type": "string",
                   "format": "uri",
-                  "x-template": "https://api.byu.edu/byuapi/persons/v1/:byu_id/addresses/:address_type"
+                  "default": "https://api.byu.edu/byuapi/persons/v1/:byu_id/addresses/:address_type"
                 },
                 "method": {
                   "type": "string",
@@ -5068,7 +5068,7 @@
         "api_type": {
           "type": "string",
           "default": "read-only",
-          "x-template": "modifiable",
+          "x-template": ":address_api_type",
           "enum": [
             "read-only",
             "modifiable"
@@ -5097,7 +5097,7 @@
         "api_type": {
           "type": "string",
           "default": "read-only",
-          "x-template": ":modifiable",
+          "x-template": ":address_api_type",
           "enum": [
             "read-only",
             "modifiable"
@@ -5126,7 +5126,7 @@
         "api_type": {
           "type": "string",
           "default": "read-only",
-          "x-template": ":modifiable",
+          "x-template": ":address_api_type",
           "enum": [
             "read-only",
             "modifiable"
@@ -5269,7 +5269,7 @@
         },
         "api_type": {
           "type": "string",
-          "x-template": ":modifiable",
+          "x-template": ":address_api_type",
           "enum": [
             "read-only",
             "modifiable"
@@ -5648,7 +5648,7 @@
         "api_type": {
           "type": "string",
           "default": "read-only",
-          "x-template": ":modifiable",
+          "x-template": ":address_api_type",
           "enum": [
             "read-only",
             "modifiable"
@@ -5800,7 +5800,7 @@
         "api_type": {
           "type": "string",
           "default": "read-only",
-          "x-template": ":modifiable",
+          "x-template": ":address_api_type",
           "enum": [
             "read-only",
             "modifiable"
@@ -5893,7 +5893,7 @@
         "api_type": {
           "type": "string",
           "default": "read-only",
-          "x-template": ":modifiable",
+          "x-template": ":address_api_type",
           "enum": [
             "read-only",
             "modifiable"
@@ -5917,7 +5917,6 @@
       "properties": {
         "value": {
           "type": "string",
-          "pattern": "^[0-9]{9}$",
           "x-template": ":created_by_id"
         },
         "api_type": {
@@ -5929,7 +5928,7 @@
         },
         "description": {
           "type": "string",
-          "pattern": "^(?=.{2,}?[A-Z])([A-Za-z-]+ )*?[A-Za-z-]+$",
+          "pattern": "^(|(?=.{2,}?[A-Z])([A-Za-z-]+ )*?[A-Za-z-]+)$",
           "maxLength": 50,
           "x-template": ":created_by_name"
         }
@@ -6835,8 +6834,8 @@
         "unlisted": {
           "$ref": "#/definitions/unlisted"
         },
-        "verified_f": {
-          "$ref": "#/definitions/verified_f"
+        "verified_flag": {
+          "$ref": "#/definitions/verified_flag"
         },
         "date_time_updated": {
           "$ref": "#/definitions/date_time_updated"
@@ -10544,7 +10543,7 @@
         "api_type": {
           "type": "string",
           "default": "read-only",
-          "x-template": ":modifiable",
+          "x-template": ":address_api_type",
           "enum": [
             "read-only",
             "modifiable"
@@ -11338,7 +11337,7 @@
         "api_type": {
           "type": "string",
           "default": "read-only",
-          "x-template": ":modifiable",
+          "x-template": ":address_api_type",
           "enum": [
             "read-only",
             "modifiable"
@@ -11556,7 +11555,7 @@
         "api_type": {
           "type": "string",
           "default": "read-only",
-          "x-template": ":modifiable",
+          "x-template": ":address_api_type",
           "enum": [
             "read-only",
             "modifiable"
@@ -11946,7 +11945,7 @@
         "api_type": {
           "type": "string",
           "default": "read-only",
-          "x-template": ":modifiable",
+          "x-template": ":address_api_type",
           "enum": [
             "read-only",
             "modifiable"
@@ -12093,7 +12092,7 @@
         "api_type": {
           "type": "string",
           "default": "read-only",
-          "x-template": ":modifiable",
+          "x-template": ":address_api_type",
           "enum": [
             "read-only",
             "modifiable"
