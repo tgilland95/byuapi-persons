@@ -44,7 +44,6 @@ exports.getAddress = async function (definitions, byu_id, address_type, permissi
     throw utils.Error(403, 'Not Authorized To View Address')
   }
 
-  console.log("Enforcer Appy Template: ",Enforcer.applyTemplate.toString());
   return mapDBResultsToDefinition(definitions, results.rows[0], "modifiable");
 };
 
