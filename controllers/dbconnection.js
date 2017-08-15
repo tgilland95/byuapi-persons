@@ -1,6 +1,6 @@
 'use strict';
 const oracle = require('oracledb');
-const param = require('../param');
+const param = require('./param');
 
 oracle.outFormat = oracle.OBJECT;
 oracle.autoCommit = true;

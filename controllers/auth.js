@@ -15,7 +15,7 @@
  *
  */
 "use strict";
-const shared_func     = require('./sql/shared_functions');
+const shared_func     = require('./shared_functions');
 const Promise         = require('bluebird');
 
 exports.getPermissions = async function (req) {

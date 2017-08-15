@@ -15,7 +15,7 @@
  *
  */
 "use strict";
-const addressesController = require('../controllers/addresses');
+const addressesController = require('../controllers/addresses/addresses');
 const auth                = require('../controllers/auth');
 
 exports.getAddress = function (req, res) {
@@ -25,6 +25,21 @@ exports.getAddress = function (req, res) {
       return addressesController.getAddress(req.swagger.root.definitions, req.params.byu_id, req.params.address_type, permissions)
         .then(function (address) {
           res.send(address);
+        })
+    })
+    .catch(function (error) {
+      res.send(error);
+    })
+  ;
+};
+
+exports.getAddresses = function (req, res) {
+  auth.getPermissions(req)
+    .then(function (permissions) {
+      console.log("permissions: ", permissions);
+      return addressesController.getAddresses(req.swagger.root.definitions, req.params.byu_id, permissions)
+        .then(function (addresses) {
+          res.send(addresses);
         })
     })
     .catch(function (error) {

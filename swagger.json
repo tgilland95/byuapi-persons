@@ -4964,7 +4964,7 @@
           }
         },
         "metadata": {
-          "$ref": "#/definitions/sub_level_metadata"
+          "$ref": "#/definitions/simple_metadata"
         },
         "byu_id": {
           "$ref": "#/definitions/byu_id"
@@ -5318,7 +5318,8 @@
           "type": "array",
           "items": {
             "$ref": "#/definitions/address"
-          }
+          },
+          "x-variable": "addresses_values"
         }
       }
     },
@@ -5396,7 +5397,7 @@
           }
         },
         "metadata": {
-          "$ref": "#/definitions/sub_level_metadata"
+          "$ref": "#/definitions/simple_metadata"
         },
         "byu_id": {
           "$ref": "#/definitions/byu_id"
@@ -5958,7 +5959,7 @@
           }
         },
         "metadata": {
-          "$ref": "#/definitions/sub_level_metadata"
+          "$ref": "#/definitions/simple_metadata"
         },
         "byu_id": {
           "$ref": "#/definitions/byu_id"
@@ -6820,7 +6821,7 @@
           }
         },
         "metadata": {
-          "$ref": "#/definitions/sub_level_metadata"
+          "$ref": "#/definitions/simple_metadata"
         },
         "byu_id": {
           "$ref": "#/definitions/byu_id"
@@ -7008,7 +7009,7 @@
           }
         },
         "metadata": {
-          "$ref": "#/definitions/sub_level_metadata"
+          "$ref": "#/definitions/simple_metadata"
         },
         "byu_id": {
           "$ref": "#/definitions/byu_id"
@@ -7142,7 +7143,7 @@
           }
         },
         "metadata": {
-          "$ref": "#/definitions/sub_level_metadata"
+          "$ref": "#/definitions/simple_metadata"
         },
         "ethnicity_code": {
           "$ref": "#/definitions/ethnicity_code"
@@ -7270,7 +7271,7 @@
           }
         },
         "metadata": {
-          "$ref": "#/definitions/sub_level_metadata"
+          "$ref": "#/definitions/simple_metadata"
         },
         "byu_id": {
           "$ref": "#/definitions/byu_id"
@@ -7573,8 +7574,8 @@
             }
           }
         },
-        "sub_level_metadata": {
-          "$ref": "#/definitions/sub_level_metadata"
+        "metadata": {
+          "$ref": "#/definitions/simple_metadata"
         },
         "byu_id": {
           "$ref": "#/definitions/byu_id"
@@ -7656,7 +7657,7 @@
           }
         },
         "metadata": {
-          "$ref": "#/definitions/sub_level_metadata"
+          "$ref": "#/definitions/simple_metadata"
         },
         "group_id": {
           "$ref": "#/definitions/group_id"
@@ -7828,7 +7829,7 @@
           }
         },
         "metadata": {
-          "$ref": "#/definitions/sub_level_metadata"
+          "$ref": "#/definitions/simple_metadata"
         },
         "group_id": {
           "$ref": "#/definitions/group_id"
@@ -7869,7 +7870,7 @@
           }
         },
         "metadata": {
-          "$ref": "#/definitions/sub_level_metadata"
+          "$ref": "#/definitions/simple_metadata"
         },
         "person_group_event_id": {
           "$ref": "#/definitions/person_group_event_id"
@@ -8822,7 +8823,7 @@
           }
         },
         "metadata": {
-          "$ref": "#/definitions/sub_level_metadata"
+          "$ref": "#/definitions/simple_metadata"
         },
         "byu_id": {
           "$ref": "#/definitions/byu_id"
@@ -9235,7 +9236,7 @@
           }
         },
         "metadata": {
-          "$ref": "#/definitions/sub_level_metadata"
+          "$ref": "#/definitions/simple_metadata"
         },
         "access_delegation_id": {
           "$ref": "#/definitions/access_delegation_id"
@@ -9405,7 +9406,7 @@
           }
         },
         "metadata": {
-          "$ref": "#/definitions/sub_level_metadata"
+          "$ref": "#/definitions/simple_metadata"
         },
         "byu_id": {
           "$ref": "#/definitions/byu_id"
@@ -10192,7 +10193,7 @@
           }
         },
         "metadata": {
-          "$ref": "#/definitions/sub_level_metadata"
+          "$ref": "#/definitions/simple_metadata"
         },
         "byu_id": {
           "$ref": "#/definitions/byu_id"
@@ -10302,7 +10303,7 @@
           }
         },
         "metadata": {
-          "$ref": "#/definitions/sub_level_metadata"
+          "$ref": "#/definitions/simple_metadata"
         },
         "byu_id": {
           "$ref": "#/definitions/byu_id"
@@ -11016,7 +11017,7 @@
           }
         },
         "metadata": {
-          "$ref": "#/definitions/sub_level_metadata"
+          "$ref": "#/definitions/simple_metadata"
         },
         "byu_id": {
           "$ref": "#/definitions/byu_id"
@@ -11453,6 +11454,41 @@
         "api_type": "modifiable"
       }
     },
+    "simple_metadata": {
+      "type": "object",
+      "required": ["validation_response"],
+      "properties": {
+        "validation_response": {
+          "type": "object",
+          "required": [
+            "code",
+            "message"
+          ],
+          "properties": {
+            "code": {
+              "type": "integer"
+            },
+            "message": {
+              "type": "string"
+            }
+          }
+        },
+        "validation_information": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "cache": {
+          "description": "If data is from live source, value will be null, otherwise it will be date-time of cache",
+          "type": "object",
+          "properties": {
+            "date_time": {
+              "type": "string",
+              "format": "date-time"
+            }
+          }
+        }
+      }
+    },
     "speak_proficiency": {
       "type": "object",
       "required": [
@@ -11630,7 +11666,7 @@
           }
         },
         "metadata": {
-          "$ref": "#/definitions/sub_level_metadata"
+          "$ref": "#/definitions/simple_metadata"
         },
         "byu_id": {
           "$ref": "#/definitions/byu_id"
@@ -11683,12 +11719,12 @@
         "validation_response": {
           "type": "object",
           "properties": {
-            "return_code": {
+            "code": {
               "type": "integer",
               "maxLength": 3,
               "minLength": 3
             },
-            "response": {
+            "message": {
               "type": "string"
             }
           }
@@ -11851,12 +11887,12 @@
         "validation_response": {
           "type": "object",
           "properties": {
-            "return_code": {
+            "code": {
               "type": "integer",
               "maxLength": 3,
               "minLength": 3
             },
-            "response": {
+            "message": {
               "type": "string"
             }
           }
