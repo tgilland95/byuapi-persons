@@ -106,6 +106,7 @@ exports.getAddresses = async function getAddresses(definitions, byu_id, permissi
       .map(row => mapDBResultsToDefinition(definitions, row, "modifiable"));
   }
 
+  console.log(values);
 
   const addresses = Enforcer.applyTemplate(definitions.addresses, definitions,
     {
