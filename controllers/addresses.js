@@ -32,6 +32,10 @@ exports.getAddress = async function (definitions, byu_id, address_type, permissi
     throw utils.Error(404, 'BYU_ID Not Found In Person Table')
   }
 
+  if (!results.rows[0].address_type) {
+    throw utils.Error(404, `${address_type} address not found`)
+  }
+
   if (!auth.canViewContact(permissions) &&
     address_type !== 'WRK' &&
     results.rows[0].primary_role !== 'Employee' &&
@@ -40,9 +44,6 @@ exports.getAddress = async function (definitions, byu_id, address_type, permissi
     throw utils.Error(403, 'Not Authorized To View Address')
   }
 
-  if (!results.rows[0].address_type) {
-    throw utils.Error(404, `${address_type} address not found`)
-  }
   console.log("Enforcer Appy Template: ", Enforcer.applyTemplate.toString());
   return Enforcer.applyTemplate(definitions.address, definitions,
     {
