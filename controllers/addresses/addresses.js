@@ -15,38 +15,11 @@
  *
  */
 "use strict";
-const Enforcer      = require('swagger-enforcer');
-const utils         = require('../utils');
-const func          = require('../shared_functions');
-const sql           = require('./sql');
-const auth          = require('../auth');
-
-exports.getAddress = async function (definitions, byu_id, address_type, permissions) {
-  const params = [address_type, byu_id];
-  const sql_query = sql.sql.getAddress;
-  const results = await func.executeSelect(sql_query, params);
-
-  if (!results.rows.length ||
-    (results.rows[0].restricted === 'Y' &&
-      !auth.hasRestrictedRights(permissions))) {
-    throw utils.Error(404, 'BYU_ID Not Found In Person Table')
-  }
-
-  if (!results.rows[0].address_type) {
-    throw utils.Error(404, `${address_type} address not found`)
-  }
-
-  if (!auth.canViewContact(permissions) &&
-    address_type !== 'WRK' &&
-    results.rows[0].primary_role !== 'Employee' &&
-    results.rows[0].primary_role !== 'Faculty' &&
-    results.rows[0].unlisted === 'Y') {
-    throw utils.Error(403, 'Not Authorized To View Address')
-  }
-
-  console.log("Enforcer Appy Template: ",Enforcer.applyTemplate.toString());
-  return mapDBResultsToDefinition(definitions, results.rows[0], "modifiable");
-};
+const Enforcer = require('swagger-enforcer');
+const utils = require('../utils');
+const func = require('../shared_functions');
+const sql = require('./sql');
+const auth = require('../auth');
 
 function mapDBResultsToDefinition(definitions, row, api_type) {
   return Enforcer.applyTemplate(definitions.address, definitions,
@@ -80,25 +53,61 @@ function mapDBResultsToDefinition(definitions, row, api_type) {
     }
   );
 }
-exports.getAddresses = async function (definitions, byu_id, permissions) {
-  const params = [byu_id];
-  const sql_query = sql.sql.getAddresses;
+
+exports.getAddress =  async function getAddress(definitions, byu_id, address_type, permissions) {
+  const params = [address_type, byu_id];
+  const sql_query = sql.sql.getAddress;
   const results = await func.executeSelect(sql_query, params);
 
-  if (results.rows.length === 0) {
-    throw utils.Error(404, "BYU_ID not found in person table")
+  if (!results.rows.length ||
+    (results.rows[0].restricted === 'Y' &&
+      !auth.hasRestrictedRights(permissions))) {
+    throw utils.Error(404, 'BYU_ID Not Found In Person Table')
   }
 
-  if (results.rows[0].restricted === 'Y' && !auth.hasRestrictedRights(permissions)) {
-    throw utils.Error(404, 'BYU_ID not found in person table')
+  if (!results.rows[0].address_type) {
+    throw utils.Error(404, `${address_type} address not found`)
   }
 
-  const values = results.rows
-    // .filter(row => {
-    //   return
-    //     (row.unlisted !== 'Y' || (!auth.canViewContact(permissions) && row.address_type !== "WRK"))
-    // })
-    .map(row => mapDBResultsToDefinition(definitions, row,"modifiable"));
+  if (!auth.canViewContact(permissions) &&
+    address_type !== 'WRK' &&
+    results.rows[0].primary_role !== 'Employee' &&
+    results.rows[0].primary_role !== 'Faculty' &&
+    results.rows[0].unlisted === 'Y') {
+    throw utils.Error(403, 'Not Authorized To View Address')
+  }
+
+  console.log("Enforcer Apply Template: ", Enforcer.applyTemplate.toString());
+  return mapDBResultsToDefinition(definitions, results.rows[0], "modifiable");
+};
+
+exports.getAddresses = async function getAddresses(definitions, byu_id, permissions) {
+  const params = [byu_id];
+  const sql_query = sql.sql.getAddresses;
+  let values = [];
+  const results = await func.executeSelect(sql_query, params);
+
+  if (!results.rows.length ||
+    (results.rows[0].restricted === 'Y' &&
+      !auth.hasRestrictedRights(permissions))) {
+    throw utils.Error(404, 'BYU_ID Not Found In Person Table')
+  }
+
+  if (auth.canViewContact(permissions)) {
+     values = results.rows
+      .map(row => mapDBResultsToDefinition(definitions, row, "modifiable"));
+  } else {
+     values = results.rows
+      .filter(row => {
+        return (row.unlisted === 'N' &&
+          row.address_type === 'WRK' &&
+          (row.primary_role === 'Employee' ||
+            row.primary_role === 'Faculty' ))
+      })
+      .map(row => mapDBResultsToDefinition(definitions, row, "modifiable"));
+  }
+
+
   const addresses = Enforcer.applyTemplate(definitions.addresses, definitions,
     {
       byu_id: byu_id,
