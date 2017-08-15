@@ -15,11 +15,11 @@
  *
  */
 "use strict";
-const Enforcer = require('swagger-enforcer');
-const utils = require('../utils');
-const func = require('../shared_functions');
-const sql = require('./sql');
-const auth = require('../auth');
+const Enforcer      = require('swagger-enforcer');
+const utils         = require('../utils');
+const func          = require('../shared_functions');
+const sql           = require('./sql');
+const auth          = require('../auth');
 
 function mapDBResultsToDefinition(definitions, row, api_type) {
   return Enforcer.applyTemplate(definitions.address, definitions,
@@ -77,7 +77,6 @@ exports.getAddress =  async function getAddress(definitions, byu_id, address_typ
     throw utils.Error(403, 'Not Authorized To View Address')
   }
 
-  console.log("Enforcer Apply Template: ", Enforcer.applyTemplate.toString());
   return mapDBResultsToDefinition(definitions, results.rows[0], "modifiable");
 };
 

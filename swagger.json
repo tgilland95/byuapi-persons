@@ -11466,16 +11466,18 @@
           ],
           "properties": {
             "code": {
-              "type": "integer"
+              "type": "integer",
+              "default": 200
             },
             "message": {
-              "type": "string"
+              "type": "string",
+              "default": "Success"
             }
           }
         },
         "validation_information": {
           "type": "array",
-          "items": { "type": "string" }
+          "items": { "type": "string", "default": "Success" }
         },
         "cache": {
           "description": "If data is from live source, value will be null, otherwise it will be date-time of cache",
