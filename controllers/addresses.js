@@ -34,8 +34,12 @@ exports.getAddress = async function (definitions, byu_id, address_type, permissi
     throw utils.Error(404, 'BYU_ID not found in person table')
   }
 
-  if (!auth.canViewContact(permissions)) {
-    throw utils.Error(403, 'Not Authorized to view contact')
+  if (!auth.canViewContact(permissions) &&
+    address_type !== 'WRK' &&
+    results.rows[0].primary_role !== 'Employee' &&
+    results.rows[0].primary_role !== 'Faculty' &&
+    results.rows[0].unlisted === 'Y') {
+    throw utils.Error(403, 'Not Authorized To View Address')
   }
 
   if (!results.rows[0].address_type) {
