@@ -15,23 +15,21 @@
  *
  */
 "use strict";
-const Enforcer      = require('swagger-enforcer');
-const utils         = require('./utils');
-const func          = require('./sql/shared_functions');
-const sql           = require('./sql/addresses');
-const auth          = require('./auth');
+const Enforcer = require('swagger-enforcer');
+const utils = require('./utils');
+const func = require('./sql/shared_functions');
+const sql = require('./sql/addresses');
+const auth = require('./auth');
 
 exports.getAddress = async function (definitions, byu_id, address_type, permissions) {
   const params = [address_type, byu_id];
   const sql_query = sql.sql.getAddress;
   const results = await func.executeSelect(sql_query, params);
 
-  if (results.rows.length === 0) {
-    throw utils.Error(404, "BYU_ID not found in person table")
-  }
-
-  if (results.rows[0].restricted === 'Y' && !auth.hasRestrictedRights(permissions)) {
-    throw utils.Error(404, 'BYU_ID not found in person table')
+  if (!results.rows.length ||
+    (results.rows[0].restricted === 'Y' &&
+      !auth.hasRestrictedRights(permissions))) {
+    throw utils.Error(404, 'BYU_ID Not Found In Person Table')
   }
 
   if (!auth.canViewContact(permissions) &&
@@ -43,10 +41,10 @@ exports.getAddress = async function (definitions, byu_id, address_type, permissi
   }
 
   if (!results.rows[0].address_type) {
-    throw utils.Error(404, address_type + " address not found")
+    throw utils.Error(404, `${address_type} address not found`)
   }
-  console.log("Enforcer Appy Template: ",Enforcer.applyTemplate.toString());
-  const result = Enforcer.applyTemplate(definitions.address, definitions,
+  console.log("Enforcer Appy Template: ", Enforcer.applyTemplate.toString());
+  return Enforcer.applyTemplate(definitions.address, definitions,
     {
       byu_id: byu_id,
       name: results.rows[0].name,
@@ -81,7 +79,6 @@ exports.getAddress = async function (definitions, byu_id, address_type, permissi
       unlisted: results.rows[0].unlisted || 'N',
       verified_flag: results.rows[0].verified_flag || 'N',
     }
-    );
+  );
   // console.log(result);
-  return result;
 };
