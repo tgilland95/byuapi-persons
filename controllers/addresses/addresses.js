@@ -107,7 +107,7 @@ exports.getAddresses = async function getAddresses(definitions, byu_id, permissi
   const addresses = Enforcer.applyTemplate(definitions.addresses, definitions,
     {
       byu_id: byu_id,
-      collection_size: results.rows.length,
+      collection_size: results.rows.length, // TODO: Can we use the length of the results.rows? We may get results back with no addresses but have results.
       page_start: 0,
       page_end: results.rows.length,
       page_size: results.rows.length,

@@ -5923,6 +5923,7 @@
         "api_type": {
           "type": "string",
           "default": "system",
+          "x-template": ":api_type",
           "enum": [
             "system"
           ]
@@ -6267,6 +6268,7 @@
         "api_type": {
           "type": "string",
           "default":"system",
+          "x-template": ":api_type",
           "enum": [
             "system"
           ]
@@ -6385,6 +6387,7 @@
         "api_type": {
           "type": "string",
           "default": "system",
+          "x-template": ":api_type",
           "enum": [
             "system"
           ]
@@ -6429,6 +6432,7 @@
         "value": {
           "type": "string",
           "default": "N",
+          "x-template": "::deceased",
           "enum": [
             "Y",
             "N"
@@ -6436,6 +6440,7 @@
         },
         "api_type": {
           "type": "string",
+          "x-template": ":api_type",
           "enum": [
             "read-only",
             "modifiable"
@@ -7478,10 +7483,12 @@
         "value": {
           "type": "string",
           "pattern": "^(?=.*?[A-Z])([A-Za-z-]+ )*?[A-Za-z-]+$",
-          "maxLength": 40
+          "maxLength": 40,
+          "x-template": ":first_name"
         },
         "api_type": {
           "type": "string",
+          "x-template": ":api_type",
           "enum": [
             "read-only",
             "modifiable"
@@ -8331,10 +8338,12 @@
       "properties": {
         "value": {
           "type": "string",
-          "maxLength": 30
+          "maxLength": 30,
+          "x-template": ":high_school_city"
         },
         "api_type": {
           "type": "string",
+          "x-template": ":api_type",
           "enum": [
             "read-only",
             "modifiable"
@@ -8358,14 +8367,17 @@
         "value": {
           "type": "string",
           "pattern": "^([]*|[0-9]{6})$",
-          "maxLength": 6
+          "maxLength": 6,
+          "x-template": ":high_school_code"
         },
         "description": {
           "type": "string",
-          "maxLength": 30
+          "maxLength": 30,
+          "x-template": ":high_school_name"
         },
         "api_type": {
           "type": "string",
+          "x-template": ":api_type",
           "enum": [
             "read-only",
             "modifiable"
@@ -8394,14 +8406,17 @@
           "type": "string",
           "default": "??",
           "pattern": "^([?]{2}|[A-Z]{2,5})$",
-          "maxLength": 4
+          "maxLength": 4,
+          "x-template": ":high_school_state_code"
         },
         "description": {
           "type": "string",
-          "maxLength": 30
+          "maxLength": 30,
+          "x-template": ":high_school_state_name"
         },
         "api_type": {
           "type": "string",
+          "x-template": ":api_type",
           "enum": [
             "read-only",
             "modifiable"
@@ -8455,14 +8470,17 @@
           "type": "string",
           "default": "???",
           "pattern": "^[A-Z?]{3}$",
-          "maxLength": 3
+          "maxLength": 3,
+          "x-template": ":home_country_code"
         },
         "description": {
           "type": "string",
-          "maxLength": 35
+          "maxLength": 35,
+          "x-template": ":home_country_name"
         },
         "api_type": {
           "type": "string",
+          "x-template": ":api_type",
           "enum": [
             "read-only",
             "modifiable"
@@ -8488,14 +8506,17 @@
           "type": "string",
           "default": "??",
           "pattern": "^([?]{2}|[A-Z]{2,5})$",
-          "maxLength": 4
+          "maxLength": 4,
+          "x-template": ":home_state_code"
         },
         "description": {
           "type": "string",
-          "maxLength": 30
+          "maxLength": 30,
+          "x-template": ":home_state_name"
         },
         "api_type": {
           "type": "string",
+          "x-template": ":api_type",
           "enum": [
             "read-only",
             "modifiable"
@@ -8521,10 +8542,12 @@
           "pattern": "^([ ]|(?=.*?[A-Z])([A-Za-z-]+ )*?[A-Za-z-]+)$",
           "maxLength": 30,
           "minLength": 1,
-          "default": " "
+          "default": " ",
+          "x-template": ":home_town"
         },
         "api_type": {
           "type": "string",
+          "x-template": ":api_type",
           "enum": [
             "read-only",
             "modifiable"
@@ -9174,6 +9197,7 @@
       "properties": {
         "value": {
           "type": "string",
+          "x-template": ":merge_in_process",
           "enum": [
             "Y",
             "N"
@@ -9181,6 +9205,7 @@
         },
         "api_type": {
           "type": "string",
+          "default": "derived",
           "enum": [
             "derived"
           ]
@@ -9202,10 +9227,12 @@
         "value": {
           "type": "string",
           "pattern": "^(?=.*?[A-Z])([A-Za-z-]+ )*?[A-Za-z-]+$",
-          "maxLength": 40
+          "maxLength": 40,
+          "x-template": ":middle_name"
         },
         "api_type": {
           "type": "string",
+          "x-template": ":api_type",
           "enum": [
             "read-only",
             "modifiable"
@@ -9614,10 +9641,12 @@
         "value": {
           "type": "string",
           "pattern": "^(?=.*?[A-Z])([A-Za-z-]+ )*?[A-Za-z-]+$",
-          "maxLength": 121
+          "maxLength": 121,
+          "x-template": ":name_fnf"
         },
         "api_type": {
           "type": "string",
+          "x-template": ":api_type",
           "enum": [
             "derived"
           ]
@@ -9639,10 +9668,12 @@
         "value": {
           "type": "string",
           "pattern": "^(?=.*?[A-Z])([A-Za-z-]+ )*?[A-Za-z-]+$",
-          "maxLength": 122
+          "maxLength": 122,
+          "x-template": ":name_lnf"
         },
         "api_type": {
           "type": "string",
+          "x-template": ":api_type",
           "enum": [
             "derived"
           ]
@@ -9690,10 +9721,12 @@
       "properties": {
         "value": {
           "type": "string",
-          "pattern": "^[a-z][a-z0-9]{4,7}$"
+          "pattern": "^[a-z][a-z0-9]{4,7}$",
+          "x-template": ":net_id"
         },
         "api_type": {
           "type": "string",
+          "x-template": ":api_type",
           "enum": [
             "read-only",
             "modifiable"
@@ -10567,10 +10600,12 @@
         "value": {
           "type": "string",
           "pattern": "^(?=.*?[A-Z])([A-Za-z-]+ )*?[A-Za-z-]+$",
-          "maxLength": 25
+          "maxLength": 25,
+          "x-template": ":preferred_first_name"
         },
         "api_type": {
           "type": "string",
+          "x-template": ":api_type",
           "enum": [
             "read-only",
             "modifiable"
@@ -10593,10 +10628,12 @@
         "value": {
           "type": "string",
           "pattern": "^(?=.*?[A-Z])([A-Za-z-]+ )*?[A-Za-z-]+$",
-          "maxLength": 100
+          "maxLength": 100,
+          "x-template": ":preferred_name"
         },
         "api_type": {
           "type": "string",
+          "default": "derived",
           "enum": [
             "derived"
           ]
@@ -10644,10 +10681,12 @@
         "value": {
           "type": "string",
           "pattern": "^(?=.*?[A-Z])([A-Za-z-]+ )*?[A-Za-z-]+$",
-          "maxLength": 40
+          "maxLength": 40,
+          "x-template": ":preferred_surname"
         },
         "api_type": {
           "type": "string",
+          "x-template": ":api_type",
           "enum": [
             "read-only",
             "modifiable"
@@ -11249,10 +11288,12 @@
         "value": {
           "type": "string",
           "pattern": "^(?=.*?[A-Z])([A-Za-z-]+ )*?[A-Za-z-]+$",
-          "maxLength": 80
+          "maxLength": 80,
+          "x-template": ":rest_of_name"
         },
         "api_type": {
           "type": "string",
+          "x-template": ":api_type",
           "enum": [
             "read-only",
             "modifiable"
@@ -11274,6 +11315,7 @@
       "properties": {
         "value": {
           "type": "string",
+          "x-template": ":restricted",
           "enum": [
             "Y",
             "N"
@@ -11281,6 +11323,7 @@
         },
         "api_type": {
           "type": "string",
+          "x-template": ":api_type",
           "enum": [
             "read-only",
             "modifiable"
@@ -11747,10 +11790,12 @@
           "default": " ",
           "pattern": "^( |Sr|SR|JR|Jr|M{0,4}(CM|CD|D?C{0,3})(XC|XL|L?X{0,3})(IX|IV|V?I{0,3}))$",
           "maxLength": 10,
-          "minLength": 1
+          "minLength": 1,
+          "x-template": ":suffix"
         },
         "api_type": {
           "type": "string",
+          "x-template": ":api_type",
           "enum": [
             "read-only",
             "modifiable"
@@ -11773,10 +11818,12 @@
         "value": {
           "type": "string",
           "pattern": "^(?=.*?[A-Z])([A-Za-z-]+ )*?[A-Za-z-]+$",
-          "maxLength": 40
+          "maxLength": 40,
+          "x-template": ":surname"
         },
         "api_type": {
           "type": "string",
+          "x-template": ":api_type",
           "enum": [
             "read-only",
             "modifiable"
@@ -12008,6 +12055,7 @@
         "api_type": {
           "type": "string",
           "default": "system",
+          "x-template": ":api_type",
           "enum": [
             "system"
           ]

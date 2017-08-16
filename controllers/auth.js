@@ -1095,3 +1095,7 @@ exports.hasRestrictedRights = function (permissions) {
 exports.canViewContact = function (permissions) {
   return permissions.includes("person_view_contact");
 };
+
+exports.canViewBasic = function (permissions) {
+  return permissions.includes("person_view_basic");
+};

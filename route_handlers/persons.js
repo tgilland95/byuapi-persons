@@ -16,11 +16,30 @@
  */
 "use strict";
 const auth        = require('../controllers/auth');
+const personsController = require('../controllers/persons');
+
+exports.getPersons = function (req, res) {
+
+  auth.getPermissions(req)
+    .then(function (permissions) {
+      console.log("permissions: ", permissions);
+      return personsController.getPersons(req.swagger.root.definitions, req.params.byu_id, permissions)
+        .then(function (address) {
+          res.send(address);
+        })
+    });
+
+};
 
 exports.getPerson = function (req, res) {
 
   auth.getPermissions(req)
     .then(function (permissions) {
+      console.log("permissions: ", permissions);
+      return personsController.getPerson(req.swagger.root.definitions, req.params.byu_id, permissions)
+        .then(function (address) {
+          res.send(address);
+        })
     });
 
 };
