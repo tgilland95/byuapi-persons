@@ -15,11 +15,11 @@
  *
  */
 
-const Enforcer = require('swagger-enforcer');
-const utils = require('../utils');
-const func = require('../shared_functions');
-const sql = require('./sql');
-const auth = require('../auth');
+const Enforcer      = require('swagger-enforcer');
+const utils         = require('../utils');
+const func          = require('../shared_functions');
+const sql           = require('./sql');
+const auth          = require('../auth');
 
 /**
  * A helper function that takes the swagger definition sql results and
