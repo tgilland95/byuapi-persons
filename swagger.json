@@ -461,7 +461,7 @@
           "200": {
             "description": "Person successfully returned",
             "schema": {
-              "$ref": "#/definitions/basic"
+              "$ref": "#/definitions/person"
             }
           },
           "400": {
@@ -5938,14 +5938,12 @@
         "api_type": {
           "type": "string",
           "default": "system",
-          "x-template": ":api_type",
           "enum": [
             "system"
           ]
         },
         "description": {
           "type": "string",
-          "pattern": "^(|(?=.{2,}?[A-Z])([A-Za-z-]+ )*?[A-Za-z-]+)$",
           "maxLength": 50,
           "x-template": ":created_by_name"
         }
@@ -6283,7 +6281,6 @@
         "api_type": {
           "type": "string",
           "default":"system",
-          "x-template": ":api_type",
           "enum": [
             "system"
           ]
@@ -6402,7 +6399,6 @@
         "api_type": {
           "type": "string",
           "default": "system",
-          "x-template": ":api_type",
           "enum": [
             "system"
           ]
@@ -6447,7 +6443,7 @@
         "value": {
           "type": "string",
           "default": "N",
-          "x-template": "::deceased",
+          "x-template": ":deceased",
           "enum": [
             "Y",
             "N"
@@ -9661,7 +9657,7 @@
         },
         "api_type": {
           "type": "string",
-          "x-template": ":api_type",
+          "default": "derived",
           "enum": [
             "derived"
           ]
@@ -9682,13 +9678,12 @@
       "properties": {
         "value": {
           "type": "string",
-          "pattern": "^(?=.*?[A-Z])([A-Za-z-]+ )*?[A-Za-z-]+$",
           "maxLength": 122,
           "x-template": ":name_lnf"
         },
         "api_type": {
           "type": "string",
-          "x-template": ":api_type",
+          "default": "derived",
           "enum": [
             "derived"
           ]
@@ -12072,14 +12067,12 @@
         "api_type": {
           "type": "string",
           "default": "system",
-          "x-template": ":api_type",
           "enum": [
             "system"
           ]
         },
         "description": {
           "type": "string",
-          "pattern": "^(?=.{2,}?[A-Z])([A-Za-z-]+ )*?[A-Za-z-]+$",
           "maxLength": 50,
           "x-template": ":updated_by_name"
         }

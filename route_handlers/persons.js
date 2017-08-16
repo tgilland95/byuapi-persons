@@ -37,8 +37,8 @@ exports.getPerson = function (req, res) {
     .then(function (permissions) {
       console.log("permissions: ", permissions);
       return personsController.getPerson(req.swagger.root.definitions, req.params.byu_id, permissions)
-        .then(function (address) {
-          res.send(address);
+        .then(function (person) {
+          res.send(person);
         })
     });
 

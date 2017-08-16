@@ -21,9 +21,10 @@ const addresses       = require('./addresses/addresses');
 exports.getPerson = function getAddress(definitions, byu_id, permissions) {
   const promises = [];
   promises.push(basic.getBasic(definitions, byu_id, permissions));
+  promises.push(addresses.getAddresses(definitions, byu_id, permissions));
   return Promise.all(promises)
     .then(function (results) {
-      console.log(results[0]);
-      return { basic: results[0] };
+      console.log(results);
+      return { basic: results[0], addresses: results[1] };
     })
 };

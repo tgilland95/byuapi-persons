@@ -1,7 +1,7 @@
 "use strict";
 
 exports.sql = {
-    getPerson: `
+    getBasic: `
     select a.byu_id                        as "byu_id",
            a.person_id                     as "person_id",
            k.credential_id                 as "net_id",
@@ -87,7 +87,7 @@ exports.sql = {
            left join pro.id_card_vw icv
                   on a.byu_id = icv.byu_id
     where  a.byu_id = :1`,
-    fromPerson: `
+    fromBasic: `
     select a.byu_id                        as "byu_id",
            a.person_id                     as "person_id",
            k.credential_id                 as "net_id",
@@ -201,7 +201,7 @@ exports.sql = {
     where  a.byu_id = :BYU_ID`
 };
 
-exports.modifyPerson = {
+exports.modifyBasic = {
     create: `
     insert into iam.person
     values      (:BYU_ID,
