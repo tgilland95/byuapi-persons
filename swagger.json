@@ -4896,7 +4896,7 @@
                 "href": {
                   "type": "string",
                   "format": "uri",
-                  "x-template": "https://api.byu.edu/byuapi/persons/v1/:byu_id/addresses/:address_type"
+                  "default": "https://api.byu.edu/byuapi/persons/v1/:byu_id/addresses/:address_type"
                 },
                 "method": {
                   "type": "string",
@@ -4964,7 +4964,7 @@
           }
         },
         "metadata": {
-          "$ref": "#/definitions/sub_level_metadata"
+          "$ref": "#/definitions/simple_metadata"
         },
         "byu_id": {
           "$ref": "#/definitions/byu_id"
@@ -5068,7 +5068,7 @@
         "api_type": {
           "type": "string",
           "default": "read-only",
-          "x-template": "modifiable",
+          "x-template": ":address_api_type",
           "enum": [
             "read-only",
             "modifiable"
@@ -5097,7 +5097,7 @@
         "api_type": {
           "type": "string",
           "default": "read-only",
-          "x-template": ":modifiable",
+          "x-template": ":address_api_type",
           "enum": [
             "read-only",
             "modifiable"
@@ -5126,7 +5126,7 @@
         "api_type": {
           "type": "string",
           "default": "read-only",
-          "x-template": ":modifiable",
+          "x-template": ":address_api_type",
           "enum": [
             "read-only",
             "modifiable"
@@ -5269,7 +5269,7 @@
         },
         "api_type": {
           "type": "string",
-          "x-template": ":modifiable",
+          "x-template": ":address_api_type",
           "enum": [
             "read-only",
             "modifiable"
@@ -5318,7 +5318,8 @@
           "type": "array",
           "items": {
             "$ref": "#/definitions/address"
-          }
+          },
+          "x-variable": "addresses_values"
         }
       }
     },
@@ -5396,7 +5397,7 @@
           }
         },
         "metadata": {
-          "$ref": "#/definitions/sub_level_metadata"
+          "$ref": "#/definitions/simple_metadata"
         },
         "byu_id": {
           "$ref": "#/definitions/byu_id"
@@ -5648,7 +5649,7 @@
         "api_type": {
           "type": "string",
           "default": "read-only",
-          "x-template": ":modifiable",
+          "x-template": ":address_api_type",
           "enum": [
             "read-only",
             "modifiable"
@@ -5800,7 +5801,7 @@
         "api_type": {
           "type": "string",
           "default": "read-only",
-          "x-template": ":modifiable",
+          "x-template": ":address_api_type",
           "enum": [
             "read-only",
             "modifiable"
@@ -5893,7 +5894,7 @@
         "api_type": {
           "type": "string",
           "default": "read-only",
-          "x-template": ":modifiable",
+          "x-template": ":address_api_type",
           "enum": [
             "read-only",
             "modifiable"
@@ -5917,7 +5918,6 @@
       "properties": {
         "value": {
           "type": "string",
-          "pattern": "^[0-9]{9}$",
           "x-template": ":created_by_id"
         },
         "api_type": {
@@ -5929,7 +5929,7 @@
         },
         "description": {
           "type": "string",
-          "pattern": "^(?=.{2,}?[A-Z])([A-Za-z-]+ )*?[A-Za-z-]+$",
+          "pattern": "^(|(?=.{2,}?[A-Z])([A-Za-z-]+ )*?[A-Za-z-]+)$",
           "maxLength": 50,
           "x-template": ":created_by_name"
         }
@@ -5959,7 +5959,7 @@
           }
         },
         "metadata": {
-          "$ref": "#/definitions/sub_level_metadata"
+          "$ref": "#/definitions/simple_metadata"
         },
         "byu_id": {
           "$ref": "#/definitions/byu_id"
@@ -6821,7 +6821,7 @@
           }
         },
         "metadata": {
-          "$ref": "#/definitions/sub_level_metadata"
+          "$ref": "#/definitions/simple_metadata"
         },
         "byu_id": {
           "$ref": "#/definitions/byu_id"
@@ -6835,8 +6835,8 @@
         "unlisted": {
           "$ref": "#/definitions/unlisted"
         },
-        "verified_f": {
-          "$ref": "#/definitions/verified_f"
+        "verified_flag": {
+          "$ref": "#/definitions/verified_flag"
         },
         "date_time_updated": {
           "$ref": "#/definitions/date_time_updated"
@@ -7009,7 +7009,7 @@
           }
         },
         "metadata": {
-          "$ref": "#/definitions/sub_level_metadata"
+          "$ref": "#/definitions/simple_metadata"
         },
         "byu_id": {
           "$ref": "#/definitions/byu_id"
@@ -7143,7 +7143,7 @@
           }
         },
         "metadata": {
-          "$ref": "#/definitions/sub_level_metadata"
+          "$ref": "#/definitions/simple_metadata"
         },
         "ethnicity_code": {
           "$ref": "#/definitions/ethnicity_code"
@@ -7271,7 +7271,7 @@
           }
         },
         "metadata": {
-          "$ref": "#/definitions/sub_level_metadata"
+          "$ref": "#/definitions/simple_metadata"
         },
         "byu_id": {
           "$ref": "#/definitions/byu_id"
@@ -7574,8 +7574,8 @@
             }
           }
         },
-        "sub_level_metadata": {
-          "$ref": "#/definitions/sub_level_metadata"
+        "metadata": {
+          "$ref": "#/definitions/simple_metadata"
         },
         "byu_id": {
           "$ref": "#/definitions/byu_id"
@@ -7657,7 +7657,7 @@
           }
         },
         "metadata": {
-          "$ref": "#/definitions/sub_level_metadata"
+          "$ref": "#/definitions/simple_metadata"
         },
         "group_id": {
           "$ref": "#/definitions/group_id"
@@ -7829,7 +7829,7 @@
           }
         },
         "metadata": {
-          "$ref": "#/definitions/sub_level_metadata"
+          "$ref": "#/definitions/simple_metadata"
         },
         "group_id": {
           "$ref": "#/definitions/group_id"
@@ -7870,7 +7870,7 @@
           }
         },
         "metadata": {
-          "$ref": "#/definitions/sub_level_metadata"
+          "$ref": "#/definitions/simple_metadata"
         },
         "person_group_event_id": {
           "$ref": "#/definitions/person_group_event_id"
@@ -8823,7 +8823,7 @@
           }
         },
         "metadata": {
-          "$ref": "#/definitions/sub_level_metadata"
+          "$ref": "#/definitions/simple_metadata"
         },
         "byu_id": {
           "$ref": "#/definitions/byu_id"
@@ -9236,7 +9236,7 @@
           }
         },
         "metadata": {
-          "$ref": "#/definitions/sub_level_metadata"
+          "$ref": "#/definitions/simple_metadata"
         },
         "access_delegation_id": {
           "$ref": "#/definitions/access_delegation_id"
@@ -9406,7 +9406,7 @@
           }
         },
         "metadata": {
-          "$ref": "#/definitions/sub_level_metadata"
+          "$ref": "#/definitions/simple_metadata"
         },
         "byu_id": {
           "$ref": "#/definitions/byu_id"
@@ -10193,7 +10193,7 @@
           }
         },
         "metadata": {
-          "$ref": "#/definitions/sub_level_metadata"
+          "$ref": "#/definitions/simple_metadata"
         },
         "byu_id": {
           "$ref": "#/definitions/byu_id"
@@ -10303,7 +10303,7 @@
           }
         },
         "metadata": {
-          "$ref": "#/definitions/sub_level_metadata"
+          "$ref": "#/definitions/simple_metadata"
         },
         "byu_id": {
           "$ref": "#/definitions/byu_id"
@@ -10544,7 +10544,7 @@
         "api_type": {
           "type": "string",
           "default": "read-only",
-          "x-template": ":modifiable",
+          "x-template": ":address_api_type",
           "enum": [
             "read-only",
             "modifiable"
@@ -11017,7 +11017,7 @@
           }
         },
         "metadata": {
-          "$ref": "#/definitions/sub_level_metadata"
+          "$ref": "#/definitions/simple_metadata"
         },
         "byu_id": {
           "$ref": "#/definitions/byu_id"
@@ -11338,7 +11338,7 @@
         "api_type": {
           "type": "string",
           "default": "read-only",
-          "x-template": ":modifiable",
+          "x-template": ":address_api_type",
           "enum": [
             "read-only",
             "modifiable"
@@ -11454,6 +11454,43 @@
         "api_type": "modifiable"
       }
     },
+    "simple_metadata": {
+      "type": "object",
+      "required": ["validation_response"],
+      "properties": {
+        "validation_response": {
+          "type": "object",
+          "required": [
+            "code",
+            "message"
+          ],
+          "properties": {
+            "code": {
+              "type": "integer",
+              "default": 200
+            },
+            "message": {
+              "type": "string",
+              "default": "Success"
+            }
+          }
+        },
+        "validation_information": {
+          "type": "array",
+          "items": { "type": "string", "default": "Success" }
+        },
+        "cache": {
+          "description": "If data is from live source, value will be null, otherwise it will be date-time of cache",
+          "type": "object",
+          "properties": {
+            "date_time": {
+              "type": "string",
+              "format": "date-time"
+            }
+          }
+        }
+      }
+    },
     "speak_proficiency": {
       "type": "object",
       "required": [
@@ -11556,7 +11593,7 @@
         "api_type": {
           "type": "string",
           "default": "read-only",
-          "x-template": ":modifiable",
+          "x-template": ":address_api_type",
           "enum": [
             "read-only",
             "modifiable"
@@ -11631,7 +11668,7 @@
           }
         },
         "metadata": {
-          "$ref": "#/definitions/sub_level_metadata"
+          "$ref": "#/definitions/simple_metadata"
         },
         "byu_id": {
           "$ref": "#/definitions/byu_id"
@@ -11684,12 +11721,12 @@
         "validation_response": {
           "type": "object",
           "properties": {
-            "return_code": {
+            "code": {
               "type": "integer",
               "maxLength": 3,
               "minLength": 3
             },
-            "response": {
+            "message": {
               "type": "string"
             }
           }
@@ -11852,12 +11889,12 @@
         "validation_response": {
           "type": "object",
           "properties": {
-            "return_code": {
+            "code": {
               "type": "integer",
               "maxLength": 3,
               "minLength": 3
             },
-            "response": {
+            "message": {
               "type": "string"
             }
           }
@@ -11946,7 +11983,7 @@
         "api_type": {
           "type": "string",
           "default": "read-only",
-          "x-template": ":modifiable",
+          "x-template": ":address_api_type",
           "enum": [
             "read-only",
             "modifiable"
@@ -12093,7 +12130,7 @@
         "api_type": {
           "type": "string",
           "default": "read-only",
-          "x-template": ":modifiable",
+          "x-template": ":address_api_type",
           "enum": [
             "read-only",
             "modifiable"
