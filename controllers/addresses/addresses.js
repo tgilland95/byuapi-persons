@@ -1,25 +1,25 @@
 /*
  * Copyright 2017 Brigham Young University
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
+ * Licensed under the Apache License, Version 2.0 (the 'License');
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
  *     http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
+ * distributed under the License is distributed on an 'AS IS' BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
  */
-"use strict";
-const Enforcer      = require('swagger-enforcer');
-const utils         = require('../utils');
-const func          = require('../shared_functions');
-const sql           = require('./sql');
-const auth          = require('../auth');
+
+import Enforcer from 'swagger-enforcer';
+import utils from '../utils';
+import func from '../shared_functions';
+import sql from './sql';
+import auth from '../auth';
 
 function mapDBResultsToDefinition(definitions, row, api_type) {
   return Enforcer.applyTemplate(definitions.address, definitions,
@@ -48,13 +48,13 @@ function mapDBResultsToDefinition(definitions, row, api_type) {
       state_code: row.state_code,
       state_name: row.state_name,
       postal_code: row.postal_code,
-      unlisted: row.unlisted || 'N', // TODO: switch to boolean in Swagger
-      verified_flag: row.verified_flag || 'N' // TODO: switch to boolean in Swagger
+      unlisted: row.unlisted === 'Y',
+      verified_flag: row.verified_flag === 'Y',
     }
   );
 }
 
-exports.getAddress =  async function getAddress(definitions, byu_id, address_type, permissions) {
+exports.getAddress = async function getAddress(definitions, byu_id, address_type, permissions) {
   const params = [address_type, byu_id];
   const sql_query = sql.sql.getAddress;
   const results = await func.executeSelect(sql_query, params);
@@ -77,13 +77,14 @@ exports.getAddress =  async function getAddress(definitions, byu_id, address_typ
     throw utils.Error(403, 'Not Authorized To View Address')
   }
 
-  return mapDBResultsToDefinition(definitions, results.rows[0], "modifiable");
+  // const modifiable = auth.canUpdateContact(permissions) ? 'modifiable': 'read-only';
+
+  return mapDBResultsToDefinition(definitions, results.rows[0], 'modifiable');
 };
 
 exports.getAddresses = async function getAddresses(definitions, byu_id, permissions) {
   const params = [byu_id];
   const sql_query = sql.sql.getAddresses;
-  let values = [];
   const results = await func.executeSelect(sql_query, params);
 
   if (!results.rows.length ||
@@ -92,19 +93,14 @@ exports.getAddresses = async function getAddresses(definitions, byu_id, permissi
     throw utils.Error(404, 'BYU_ID Not Found In Person Table')
   }
 
-  if (auth.canViewContact(permissions)) {
-     values = results.rows
-      .map(row => mapDBResultsToDefinition(definitions, row, "modifiable"));
-  } else {
-     values = results.rows
-      .filter(row => {
-        return (row.unlisted === 'N' &&
-          row.address_type === 'WRK' &&
-          (row.primary_role === 'Employee' ||
-            row.primary_role === 'Faculty' ))
-      })
-      .map(row => mapDBResultsToDefinition(definitions, row, "modifiable"));
-  }
+  const values = (auth.canViewContact(permissions)) ? (
+    results.rows.map(row => mapDBResultsToDefinition(definitions, row, 'modifiable'))
+  ) : (
+    results.rows.filter(row => (row.unlisted === 'N' && row.address_type === 'WRK' &&
+      (row.primary_role === 'Employee' || row.primary_role === 'Faculty'))
+    )
+      .map(row => mapDBResultsToDefinition(definitions, row, 'modifiable'))
+  );
 
   console.log(values);
 

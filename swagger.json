@@ -11972,13 +11972,9 @@
       ],
       "properties": {
         "value": {
-          "type": "string",
-          "default": "N",
-          "x-template": ":unlisted",
-          "enum": [
-            "Y",
-            "N"
-          ]
+          "type": "boolean",
+          "default": false,
+          "x-template": ":unlisted"
         },
         "api_type": {
           "type": "string",
@@ -11991,7 +11987,7 @@
         }
       },
       "example": {
-        "value": "N",
+        "value": false,
         "api_type": "read-only"
       }
     },
@@ -12119,13 +12115,9 @@
       ],
       "properties": {
         "value": {
-          "type": "string",
-          "default": "N",
-          "x-template": ":verified_flag",
-          "enum": [
-            "Y",
-            "N"
-          ]
+          "type": "boolean",
+          "default": false,
+          "x-template": ":verified_flag"
         },
         "api_type": {
           "type": "string",
@@ -12138,7 +12130,7 @@
         }
       },
       "example": {
-        "value": "N",
+        "value": false,
         "api_type": "read-only"
       }
     },
