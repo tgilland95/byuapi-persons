@@ -15,11 +15,11 @@
  *
  */
 
-import Enforcer from 'swagger-enforcer';
-import utils from '../utils';
-import func from '../shared_functions';
-import sql from './sql';
-import auth from '../auth';
+const Enforcer      = require('swagger-enforcer');
+const utils         = require('../utils');
+const func          = require('../shared_functions');
+const sql           = require('./sql');
+const auth          = require('../auth');
 
 function mapDBResultsToDefinition(definitions, row, api_type) {
   return Enforcer.applyTemplate(definitions.address, definitions,
