@@ -5298,16 +5298,31 @@
           "type": "object",
           "properties": {
             "addresses.info": {
-              "$ref": "#/definitions/links"
-            },
-            "addresses.next": {
-              "$ref": "#/definitions/links"
-            },
-            "addresses.prev": {
-              "$ref": "#/definitions/links"
-            },
-            "addresses.modify": {
-              "$ref": "#/definitions/links"
+              "description": "Hypermedia links format",
+              "type": "object",
+              "required": [
+                "rel",
+                "href",
+                "method"
+              ],
+              "properties": {
+                "rel": {
+                  "type": "string",
+                  "default": "self"
+                },
+                "href": {
+                  "type": "string",
+                  "format": "uri",
+                  "default": "https://api.byu.edu/byuapi/persons/v1/:byu_id/addresses"
+                },
+                "method": {
+                  "type": "string",
+                  "default": "GET",
+                  "enum": [
+                    "GET"
+                  ]
+                }
+              }
             }
           }
         },
@@ -11510,11 +11525,13 @@
           "properties": {
             "code": {
               "type": "integer",
-              "default": 200
+              "default": 200,
+              "x-template": ":return_code"
             },
             "message": {
               "type": "string",
-              "default": "Success"
+              "default": "Success",
+              "x-template": ":return_message"
             }
           }
         },
