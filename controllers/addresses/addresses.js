@@ -15,15 +15,26 @@
  *
  */
 
-import Enforcer from 'swagger-enforcer';
-import utils from '../utils';
-import func from '../shared_functions';
-import sql from './sql';
-import auth from '../auth';
+const Enforcer = require('swagger-enforcer');
+const utils = require('../utils');
+const func = require('../shared_functions');
+const sql = require('./sql');
+const auth = require('../auth');
 
-function mapDBResultsToDefinition(definitions, row, api_type) {
+/**
+ * A helper function that takes the swagger definition sql results and
+ * returns a JSON object based on a map
+ * @param definitions - Swagger
+ * @param row - SQL Results
+ * @param api_type - Whether the field is modifiable or read-only
+ * @param return_code - 200 all info, 203 publicly available info
+ * @returns {*}
+ */
+function mapDBResultsToDefinition(definitions, row, api_type, return_code, return_message) {
   return Enforcer.applyTemplate(definitions.address, definitions,
     {
+      return_code: return_code,
+      return_message: return_message,
       byu_id: row.byu_id,
       name: row.name,
       address_type: row.address_type,
@@ -54,21 +65,46 @@ function mapDBResultsToDefinition(definitions, row, api_type) {
   );
 }
 
+/**
+ * This function returns a JSON object with a person's address information as defined by the
+ * swagger.
+ * @param definitions - swagger information
+ * @param byu_id - Nine digit number
+ * @param address_type - MAL, RES, PRM, WRK
+ * @param permissions - authorizations
+ * @returns {Promise.<*>}
+ */
 exports.getAddress = async function getAddress(definitions, byu_id, address_type, permissions) {
   const params = [address_type, byu_id];
   const sql_query = sql.sql.getAddress;
+  // Return code 203 lets the consumer know that there is more information that it is not
+  // authorized to see
+  const return_code = auth.canViewContact(permissions) ? 200 : 203;
+  const return_message = auth.canViewContact(permissions) ? 'Success' : 'Public Info Only';
+  const modifiable = auth.canViewContact(permissions) ? 'modifiable': 'read-only';
   const results = await func.executeSelect(sql_query, params);
 
+  // If no results are returned or the record is restricted
+  // and the entity retrieving the record does not belong
+  // to the GRO.PERSON_GROUP.GROUP_ID.RESTRICTED then
+  // return 404 person not found
   if (!results.rows.length ||
     (results.rows[0].restricted === 'Y' &&
       !auth.hasRestrictedRights(permissions))) {
     throw utils.Error(404, 'BYU_ID Not Found In Person Table')
   }
 
+  // If the person exists but the type of address requested
+  // does not exist then return 404 address not found
   if (!results.rows[0].address_type) {
     throw utils.Error(404, `${address_type} address not found`)
   }
 
+  // If it is not self service and the entity retrieving the
+  // record does not have the PERSON info area and the
+  // address being retrieved does not belong to an employee
+  // or faculty and it is not his or her work address
+  // and if it is unlisted then throw a 403 Not Authorized
   if (!auth.canViewContact(permissions) &&
     address_type !== 'WRK' &&
     results.rows[0].primary_role !== 'Employee' &&
@@ -77,32 +113,41 @@ exports.getAddress = async function getAddress(definitions, byu_id, address_type
     throw utils.Error(403, 'Not Authorized To View Address')
   }
 
-  // const modifiable = auth.canUpdateContact(permissions) ? 'modifiable': 'read-only';
-
-  return mapDBResultsToDefinition(definitions, results.rows[0], 'modifiable');
+  return mapDBResultsToDefinition(definitions, results.rows[0], modifiable, return_code, return_message);
 };
 
+/**
+ * Returns a person's address collection
+ * @param definitions - Swagger
+ * @param byu_id - Nine digit number
+ * @param permissions - Authorizations
+ * @returns {Promise.<*>}
+ */
 exports.getAddresses = async function getAddresses(definitions, byu_id, permissions) {
   const params = [byu_id];
   const sql_query = sql.sql.getAddresses;
   const results = await func.executeSelect(sql_query, params);
 
+  // If no results are returned or the record is restricted
+  // and the entity retrieving the record does not belong
+  // to the GRO.PERSON_GROUP.GROUP_ID.RESTRICTED then
+  // return 404 person not found
   if (!results.rows.length ||
     (results.rows[0].restricted === 'Y' &&
       !auth.hasRestrictedRights(permissions))) {
     throw utils.Error(404, 'BYU_ID Not Found In Person Table')
   }
 
+  // If it is self service or the entity retrieving the record has the PERSON info area then
+  // return all address information else if they are looking up an employee or faculty member
+  // return the employee's or faculty's work address as long as it is not unlisted
   const values = (auth.canViewContact(permissions)) ? (
-    results.rows.map(row => mapDBResultsToDefinition(definitions, row, 'modifiable'))
+    results.rows.map(row => mapDBResultsToDefinition(definitions, row, 'modifiable', 200, 'Success'))
   ) : (
     results.rows.filter(row => (row.unlisted === 'N' && row.address_type === 'WRK' &&
       (row.primary_role === 'Employee' || row.primary_role === 'Faculty'))
-    )
-      .map(row => mapDBResultsToDefinition(definitions, row, 'modifiable'))
+    ).map(row => mapDBResultsToDefinition(definitions, row, 'read-only', 203, 'Public Info Only'))
   );
-
-  console.log(values);
 
   const addresses = Enforcer.applyTemplate(definitions.addresses, definitions,
     {
