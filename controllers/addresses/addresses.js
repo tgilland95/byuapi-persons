@@ -39,7 +39,7 @@ function mapDBResultsToDefinition(definitions, row, api_type, return_code, retur
       byu_id: row.byu_id,
       name: row.name,
       address_type: row.address_type,
-      address_api_type: api_type,
+      api_type: api_type,
       date_time_updated: row.date_time_updated.toISOString(),
       updated_by_id: row.updated_by_id,
       updated_by_name: row.updated_by_name,

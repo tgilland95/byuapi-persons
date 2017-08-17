@@ -4813,6 +4813,8 @@
         },
         "api_type": {
           "type": "string",
+          "default": "read-only",
+          "x-template": ":api_type",
           "enum": [
             "read-only",
             "modifiable"
@@ -4845,6 +4847,8 @@
         },
         "api_type": {
           "type": "string",
+          "default": "read-only",
+          "x-template": ":api_type",
           "enum": [
             "read-only",
             "modifiable"
@@ -4862,6 +4866,7 @@
         "value": {
           "type": "string",
           "default": " ",
+          "x-template": ":active",
           "enum": [
             " ",
             "Y",
@@ -4870,6 +4875,8 @@
         },
         "api_type": {
           "type": "string",
+          "default": "read-only",
+          "x-template": ":api_type",
           "enum": [
             "read-only",
             "modifiable"
@@ -5047,7 +5054,7 @@
         "api_type": {
           "type": "string",
           "default": "read-only",
-          "x-template": ":address_api_type",
+          "x-template": ":api_type",
           "enum": [
             "read-only",
             "modifiable"
@@ -5076,7 +5083,7 @@
         "api_type": {
           "type": "string",
           "default": "read-only",
-          "x-template": ":address_api_type",
+          "x-template": ":api_type",
           "enum": [
             "read-only",
             "modifiable"
@@ -5105,7 +5112,7 @@
         "api_type": {
           "type": "string",
           "default": "read-only",
-          "x-template": ":address_api_type",
+          "x-template": ":api_type",
           "enum": [
             "read-only",
             "modifiable"
@@ -5134,7 +5141,7 @@
         "api_type": {
           "type": "string",
           "default": "read-only",
-          "x-template": ":address_api_type",
+          "x-template": ":api_type",
           "enum": [
             "read-only",
             "modifiable"
@@ -5277,7 +5284,8 @@
         },
         "api_type": {
           "type": "string",
-          "x-template": ":address_api_type",
+          "default": "read-only",
+          "x-template": ":api_type",
           "enum": [
             "read-only",
             "modifiable"
@@ -5382,10 +5390,14 @@
       "properties": {
         "value": {
           "type": "string",
-          "maxLength": 20
+          "maxLength": 20,
+          "default": " ",
+          "x-template": ":associated_device"
         },
         "api_type": {
           "type": "string",
+          "default": "read-only",
+          "x-template": ":api_type",
           "enum": [
             "read-only",
             "modifiable"
@@ -5589,6 +5601,7 @@
         "value": {
           "type": "string",
           "default": "N",
+          "x-template": ":beard_flag",
           "enum": [
             "Y",
             "N"
@@ -5596,6 +5609,8 @@
         },
         "api_type": {
           "type": "string",
+          "default": "read-only",
+          "x-template": ":api_type",
           "enum": [
             "read-only",
             "modifiable"
@@ -5620,16 +5635,20 @@
           "type": "string",
           "maxLength": 3,
           "minLength": 1,
-          "default": " "
+          "default": " ",
+          "x-template": ":birth_country_code"
         },
         "description": {
           "type": "string",
           "maxLength": 40,
           "minLength": 1,
-          "default": " "
+          "default": " ",
+          "x-template": ":birth_country_name"
         },
         "api_type": {
           "type": "string",
+          "default": "read-only",
+          "x-template": ":api_type",
           "enum": [
             "read-only",
             "modifiable"
@@ -5672,7 +5691,7 @@
         "api_type": {
           "type": "string",
           "default": "read-only",
-          "x-template": ":address_api_type",
+          "x-template": ":api_type",
           "enum": [
             "read-only",
             "modifiable"
@@ -5733,10 +5752,14 @@
       "properties": {
         "value": {
           "type": "string",
-          "maxLength": 100
+          "maxLength": 100,
+          "default": " ",
+          "x-template": ":categories"
         },
         "api_type": {
           "type": "string",
+          "default": "read-only",
+          "x-template": ":api_type",
           "enum": [
             "read-only",
             "modifiable"
@@ -5757,6 +5780,7 @@
       "properties": {
         "value": {
           "type": "string",
+          "x-template": ":cell_flag",
           "enum": [
             "Y",
             "N"
@@ -5764,6 +5788,8 @@
         },
         "api_type": {
           "type": "string",
+          "default": "read-only",
+          "x-template": ":api_type",
           "enum": [
             "read-only",
             "modifiable"
@@ -5787,14 +5813,18 @@
         "value": {
           "type": "string",
           "default": "???",
-          "pattern": "^[A-Z?]{3}$"
+          "pattern": "^[A-Z?]{3}$",
+          "x-template": ":citizenship_country_code"
         },
         "description": {
           "type": "string",
-          "maxLength": 35
+          "maxLength": 35,
+          "x-template": ":citizenship_country_name"
         },
         "api_type": {
           "type": "string",
+          "default": "read-only",
+          "x-template": ":api_type",
           "enum": [
             "read-only",
             "modifiable"
@@ -5824,7 +5854,7 @@
         "api_type": {
           "type": "string",
           "default": "read-only",
-          "x-template": ":address_api_type",
+          "x-template": ":api_type",
           "enum": [
             "read-only",
             "modifiable"
@@ -5858,10 +5888,13 @@
       "properties": {
         "value": {
           "type": "string",
-          "maxLength": 30
+          "maxLength": 30,
+          "x-template": ":contact_person"
         },
         "api_type": {
           "type": "string",
+          "default": "read-only",
+          "x-template": ":api_type",
           "enum": [
             "read-only",
             "modifiable"
@@ -5917,7 +5950,7 @@
         "api_type": {
           "type": "string",
           "default": "read-only",
-          "x-template": ":address_api_type",
+          "x-template": ":api_type",
           "enum": [
             "read-only",
             "modifiable"
@@ -10593,7 +10626,7 @@
         "api_type": {
           "type": "string",
           "default": "read-only",
-          "x-template": ":address_api_type",
+          "x-template": ":api_type",
           "enum": [
             "read-only",
             "modifiable"
@@ -11397,7 +11430,7 @@
         "api_type": {
           "type": "string",
           "default": "read-only",
-          "x-template": ":address_api_type",
+          "x-template": ":api_type",
           "enum": [
             "read-only",
             "modifiable"
@@ -11654,7 +11687,7 @@
         "api_type": {
           "type": "string",
           "default": "read-only",
-          "x-template": ":address_api_type",
+          "x-template": ":api_type",
           "enum": [
             "read-only",
             "modifiable"
@@ -12044,7 +12077,7 @@
         "api_type": {
           "type": "string",
           "default": "read-only",
-          "x-template": ":address_api_type",
+          "x-template": ":api_type",
           "enum": [
             "read-only",
             "modifiable"
@@ -12186,7 +12219,7 @@
         "api_type": {
           "type": "string",
           "default": "read-only",
-          "x-template": ":address_api_type",
+          "x-template": ":api_type",
           "enum": [
             "read-only",
             "modifiable"
