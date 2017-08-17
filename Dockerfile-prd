@@ -1,6 +1,0 @@
-FROM 384680075521.dkr.ecr.us-west-2.amazonaws.com/uapi-api-repo-sandbox-base
-ADD byuapi-node /opt/webroot/byuapi-node
-WORKDIR /opt/webroot/byuapi-node
-RUN npm install
-EXPOSE 9000
-CMD npm run-script developer

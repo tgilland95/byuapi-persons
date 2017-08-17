@@ -1,0 +1,614 @@
+{
+  "items": [
+    {
+      "country_code": " ",
+      "state_code": " ",
+      "state": " ",
+      "updated_by_id": " ",
+      "date_time_updated": ""
+    },
+    {
+      "country_code": "USA",
+      "state_code": "??",
+      "state": "Unknown",
+      "updated_by_id": "INIT",
+      "date_time_updated": "01-NOV-05"
+    },
+    {
+      "country_code": "USA",
+      "state_code": "AA",
+      "state": "APO ZIPs 340",
+      "updated_by_id": "INIT",
+      "date_time_updated": "01-NOV-05"
+    },
+    {
+      "country_code": "CAN",
+      "state_code": "AB",
+      "state": "Alberta",
+      "updated_by_id": "INIT",
+      "date_time_updated": "01-NOV-05"
+    },
+    {
+      "country_code": "AUS",
+      "state_code": "ACT",
+      "state": "Austl. Cap. Terr.",
+      "updated_by_id": "INIT",
+      "date_time_updated": "01-NOV-05"
+    },
+    {
+      "country_code": "USA",
+      "state_code": "AE",
+      "state": "APO ZIPs 090-098",
+      "updated_by_id": "INIT",
+      "date_time_updated": "01-NOV-05"
+    },
+    {
+      "country_code": "USA",
+      "state_code": "AK",
+      "state": "Alaska",
+      "updated_by_id": "INIT",
+      "date_time_updated": "01-NOV-05"
+    },
+    {
+      "country_code": "USA",
+      "state_code": "AL",
+      "state": "Alabama",
+      "updated_by_id": "INIT",
+      "date_time_updated": "01-NOV-05"
+    },
+    {
+      "country_code": "USA",
+      "state_code": "AP",
+      "state": "APO ZIPs 962-966",
+      "updated_by_id": "INIT",
+      "date_time_updated": "01-NOV-05"
+    },
+    {
+      "country_code": "USA",
+      "state_code": "AR",
+      "state": "Arkansas",
+      "updated_by_id": "INIT",
+      "date_time_updated": "01-NOV-05"
+    },
+    {
+      "country_code": "USA",
+      "state_code": "AS",
+      "state": "American Samoa",
+      "updated_by_id": "INIT",
+      "date_time_updated": "01-NOV-05"
+    },
+    {
+      "country_code": "AUS",
+      "state_code": "ATEST",
+      "state": "Test1"
+    },
+    {
+      "country_code": "USA",
+      "state_code": "AZ",
+      "state": "Arizona",
+      "updated_by_id": "INIT",
+      "date_time_updated": "01-NOV-05"
+    },
+    {
+      "country_code": "CAN",
+      "state_code": "BC",
+      "state": "British Columbia",
+      "updated_by_id": "INIT",
+      "date_time_updated": "01-NOV-05"
+    },
+    {
+      "country_code": "USA",
+      "state_code": "CA",
+      "state": "California",
+      "updated_by_id": "INIT",
+      "date_time_updated": "01-NOV-05"
+    },
+    {
+      "country_code": "USA",
+      "state_code": "CO",
+      "state": "Colorado",
+      "updated_by_id": "INIT",
+      "date_time_updated": "01-NOV-05"
+    },
+    {
+      "country_code": "USA",
+      "state_code": "CT",
+      "state": "Connecticut",
+      "updated_by_id": "INIT",
+      "date_time_updated": "01-NOV-05"
+    },
+    {
+      "country_code": "USA",
+      "state_code": "DC",
+      "state": "District of Columbia",
+      "updated_by_id": "INIT",
+      "date_time_updated": "01-NOV-05"
+    },
+    {
+      "country_code": "USA",
+      "state_code": "DE",
+      "state": "Delaware",
+      "updated_by_id": "INIT",
+      "date_time_updated": "01-NOV-05"
+    },
+    {
+      "country_code": "USA",
+      "state_code": "FL",
+      "state": "Florida",
+      "updated_by_id": "INIT",
+      "date_time_updated": "01-NOV-05"
+    },
+    {
+      "country_code": "USA",
+      "state_code": "FM",
+      "state": "Fed. St. of Micronesia",
+      "updated_by_id": "INIT",
+      "date_time_updated": "01-NOV-05"
+    },
+    {
+      "country_code": "USA",
+      "state_code": "GA",
+      "state": "Georgia",
+      "updated_by_id": "INIT",
+      "date_time_updated": "01-NOV-05"
+    },
+    {
+      "country_code": "USA",
+      "state_code": "GU",
+      "state": "Guam",
+      "updated_by_id": "INIT",
+      "date_time_updated": "01-NOV-05"
+    },
+    {
+      "country_code": "USA",
+      "state_code": "HI",
+      "state": "Hawaii",
+      "updated_by_id": "INIT",
+      "date_time_updated": "01-NOV-05"
+    },
+    {
+      "country_code": "USA",
+      "state_code": "IA",
+      "state": "Iowa",
+      "updated_by_id": "INIT",
+      "date_time_updated": "01-NOV-05"
+    },
+    {
+      "country_code": "USA",
+      "state_code": "ID",
+      "state": "Idaho",
+      "updated_by_id": "INIT",
+      "date_time_updated": "01-NOV-05"
+    },
+    {
+      "country_code": "USA",
+      "state_code": "IL",
+      "state": "Illinois",
+      "updated_by_id": "INIT",
+      "date_time_updated": "01-NOV-05"
+    },
+    {
+      "country_code": "USA",
+      "state_code": "IN",
+      "state": "Indiana",
+      "updated_by_id": "INIT",
+      "date_time_updated": "01-NOV-05"
+    },
+    {
+      "country_code": "USA",
+      "state_code": "KS",
+      "state": "Kansas",
+      "updated_by_id": "INIT",
+      "date_time_updated": "01-NOV-05"
+    },
+    {
+      "country_code": "USA",
+      "state_code": "KY",
+      "state": "Kentucky",
+      "updated_by_id": "INIT",
+      "date_time_updated": "01-NOV-05"
+    },
+    {
+      "country_code": "USA",
+      "state_code": "LA",
+      "state": "Louisiana",
+      "updated_by_id": "INIT",
+      "date_time_updated": "01-NOV-05"
+    },
+    {
+      "country_code": "CAN",
+      "state_code": "LB",
+      "state": "Labrador",
+      "updated_by_id": "INIT",
+      "date_time_updated": "01-NOV-05"
+    },
+    {
+      "country_code": "USA",
+      "state_code": "MA",
+      "state": "Massachusetts",
+      "updated_by_id": "INIT",
+      "date_time_updated": "01-NOV-05"
+    },
+    {
+      "country_code": "CAN",
+      "state_code": "MB",
+      "state": "Manitoba",
+      "updated_by_id": "INIT",
+      "date_time_updated": "01-NOV-05"
+    },
+    {
+      "country_code": "USA",
+      "state_code": "MD",
+      "state": "Maryland",
+      "updated_by_id": "INIT",
+      "date_time_updated": "01-NOV-05"
+    },
+    {
+      "country_code": "USA",
+      "state_code": "ME",
+      "state": "Maine",
+      "updated_by_id": "INIT",
+      "date_time_updated": "01-NOV-05"
+    },
+    {
+      "country_code": "USA",
+      "state_code": "MH",
+      "state": "Marshall Islands",
+      "updated_by_id": "INIT",
+      "date_time_updated": "01-NOV-05"
+    },
+    {
+      "country_code": "USA",
+      "state_code": "MI",
+      "state": "Michigan",
+      "updated_by_id": "INIT",
+      "date_time_updated": "01-NOV-05"
+    },
+    {
+      "country_code": "USA",
+      "state_code": "MN",
+      "state": "Minnesota",
+      "updated_by_id": "INIT",
+      "date_time_updated": "01-NOV-05"
+    },
+    {
+      "country_code": "USA",
+      "state_code": "MO",
+      "state": "Missouri",
+      "updated_by_id": "INIT",
+      "date_time_updated": "01-NOV-05"
+    },
+    {
+      "country_code": "USA",
+      "state_code": "MP",
+      "state": "Northern Mariana Islands",
+      "updated_by_id": "INIT",
+      "date_time_updated": "01-NOV-05"
+    },
+    {
+      "country_code": "USA",
+      "state_code": "MS",
+      "state": "Mississippi",
+      "updated_by_id": "INIT",
+      "date_time_updated": "01-NOV-05"
+    },
+    {
+      "country_code": "USA",
+      "state_code": "MT",
+      "state": "Montana",
+      "updated_by_id": "INIT",
+      "date_time_updated": "01-NOV-05"
+    },
+    {
+      "country_code": "CAN",
+      "state_code": "NB",
+      "state": "New Brunswick",
+      "updated_by_id": "INIT",
+      "date_time_updated": "01-NOV-05"
+    },
+    {
+      "country_code": "USA",
+      "state_code": "NC",
+      "state": "North Carolina",
+      "updated_by_id": "INIT",
+      "date_time_updated": "01-NOV-05"
+    },
+    {
+      "country_code": "USA",
+      "state_code": "ND",
+      "state": "North Dakota",
+      "updated_by_id": "INIT",
+      "date_time_updated": "01-NOV-05"
+    },
+    {
+      "country_code": "USA",
+      "state_code": "NE",
+      "state": "Nebraska",
+      "updated_by_id": "INIT",
+      "date_time_updated": "01-NOV-05"
+    },
+    {
+      "country_code": "CAN",
+      "state_code": "NF",
+      "state": "Newfoundland",
+      "updated_by_id": "INIT",
+      "date_time_updated": "01-NOV-05"
+    },
+    {
+      "country_code": "USA",
+      "state_code": "NH",
+      "state": "New Hampshire",
+      "updated_by_id": "INIT",
+      "date_time_updated": "01-NOV-05"
+    },
+    {
+      "country_code": "USA",
+      "state_code": "NJ",
+      "state": "New Jersey",
+      "updated_by_id": "INIT",
+      "date_time_updated": "01-NOV-05"
+    },
+    {
+      "country_code": "CAN",
+      "state_code": "NL",
+      "state": "Newfoundland and Labrador"
+    },
+    {
+      "country_code": "USA",
+      "state_code": "NM",
+      "state": "New Mexico",
+      "updated_by_id": "INIT",
+      "date_time_updated": "01-NOV-05"
+    },
+    {
+      "country_code": "CAN",
+      "state_code": "NS",
+      "state": "Nova Scotia",
+      "updated_by_id": "INIT",
+      "date_time_updated": "01-NOV-05"
+    },
+    {
+      "country_code": "AUS",
+      "state_code": "NSW",
+      "state": "New South Wales",
+      "updated_by_id": "INIT",
+      "date_time_updated": "01-NOV-05"
+    },
+    {
+      "country_code": "CAN",
+      "state_code": "NT",
+      "state": "Northwest Territories",
+      "updated_by_id": "INIT",
+      "date_time_updated": "01-NOV-05"
+    },
+    {
+      "country_code": "AUS",
+      "state_code": "NT",
+      "state": "Northern Territory",
+      "updated_by_id": "INIT",
+      "date_time_updated": "01-NOV-05"
+    },
+    {
+      "country_code": "CAN",
+      "state_code": "NU",
+      "state": "Nunavut"
+    },
+    {
+      "country_code": "USA",
+      "state_code": "NV",
+      "state": "Nevada",
+      "updated_by_id": "INIT",
+      "date_time_updated": "01-NOV-05"
+    },
+    {
+      "country_code": "USA",
+      "state_code": "NY",
+      "state": "New York",
+      "updated_by_id": "INIT",
+      "date_time_updated": "01-NOV-05"
+    },
+    {
+      "country_code": "USA",
+      "state_code": "OH",
+      "state": "Ohio",
+      "updated_by_id": "INIT",
+      "date_time_updated": "01-NOV-05"
+    },
+    {
+      "country_code": "USA",
+      "state_code": "OK",
+      "state": "Oklahoma",
+      "updated_by_id": "INIT",
+      "date_time_updated": "01-NOV-05"
+    },
+    {
+      "country_code": "CAN",
+      "state_code": "ON",
+      "state": "Ontario",
+      "updated_by_id": "INIT",
+      "date_time_updated": "01-NOV-05"
+    },
+    {
+      "country_code": "USA",
+      "state_code": "OR",
+      "state": "Oregon",
+      "updated_by_id": "INIT",
+      "date_time_updated": "01-NOV-05"
+    },
+    {
+      "country_code": "USA",
+      "state_code": "PA",
+      "state": "Pennsylvania",
+      "updated_by_id": "INIT",
+      "date_time_updated": "01-NOV-05"
+    },
+    {
+      "country_code": "CAN",
+      "state_code": "PE",
+      "state": "Prince Edward Island",
+      "updated_by_id": "INIT",
+      "date_time_updated": "01-NOV-05"
+    },
+    {
+      "country_code": "USA",
+      "state_code": "PR",
+      "state": "Puerto Rico",
+      "updated_by_id": "INIT",
+      "date_time_updated": "01-NOV-05"
+    },
+    {
+      "country_code": "USA",
+      "state_code": "PW",
+      "state": "Palau",
+      "updated_by_id": "INIT",
+      "date_time_updated": "01-NOV-05"
+    },
+    {
+      "country_code": "CAN",
+      "state_code": "QC",
+      "state": "Province of Quebec",
+      "updated_by_id": "948204812",
+      "date_time_updated": "12-MAR-10"
+    },
+    {
+      "country_code": "AUS",
+      "state_code": "QLD",
+      "state": "Queensland",
+      "updated_by_id": "INIT",
+      "date_time_updated": "01-NOV-05"
+    },
+    {
+      "country_code": "USA",
+      "state_code": "RI",
+      "state": "Rhode Island",
+      "updated_by_id": "INIT",
+      "date_time_updated": "01-NOV-05"
+    },
+    {
+      "country_code": "AUS",
+      "state_code": "SA",
+      "state": "South Australia",
+      "updated_by_id": "INIT",
+      "date_time_updated": "01-NOV-05"
+    },
+    {
+      "country_code": "USA",
+      "state_code": "SC",
+      "state": "South Carolina",
+      "updated_by_id": "INIT",
+      "date_time_updated": "01-NOV-05"
+    },
+    {
+      "country_code": "USA",
+      "state_code": "SD",
+      "state": "South Dakota",
+      "updated_by_id": "INIT",
+      "date_time_updated": "01-NOV-05"
+    },
+    {
+      "country_code": "CAN",
+      "state_code": "SK",
+      "state": "Saskatchewan",
+      "updated_by_id": "INIT",
+      "date_time_updated": "01-NOV-05"
+    },
+    {
+      "country_code": "AUS",
+      "state_code": "TAS",
+      "state": "Tasmania",
+      "updated_by_id": "INIT",
+      "date_time_updated": "01-NOV-05"
+    },
+    {
+      "country_code": "USA",
+      "state_code": "TN",
+      "state": "Tennessee",
+      "updated_by_id": "INIT",
+      "date_time_updated": "01-NOV-05"
+    },
+    {
+      "country_code": "USA",
+      "state_code": "TX",
+      "state": "Texas",
+      "updated_by_id": "INIT",
+      "date_time_updated": "01-NOV-05"
+    },
+    {
+      "country_code": "USA",
+      "state_code": "UT",
+      "state": "Utah",
+      "updated_by_id": "INIT",
+      "date_time_updated": "01-NOV-05"
+    },
+    {
+      "country_code": "USA",
+      "state_code": "VA",
+      "state": "Virginia",
+      "updated_by_id": "INIT",
+      "date_time_updated": "01-NOV-05"
+    },
+    {
+      "country_code": "USA",
+      "state_code": "VI",
+      "state": "Virgin Islands",
+      "updated_by_id": "INIT",
+      "date_time_updated": "01-NOV-05"
+    },
+    {
+      "country_code": "AUS",
+      "state_code": "VIC",
+      "state": "Victoria",
+      "updated_by_id": "INIT",
+      "date_time_updated": "01-NOV-05"
+    },
+    {
+      "country_code": "USA",
+      "state_code": "VT",
+      "state": "Vermont",
+      "updated_by_id": "INIT",
+      "date_time_updated": "01-NOV-05"
+    },
+    {
+      "country_code": "USA",
+      "state_code": "WA",
+      "state": "Washington",
+      "updated_by_id": "INIT",
+      "date_time_updated": "01-NOV-05"
+    },
+    {
+      "country_code": "AUS",
+      "state_code": "WA",
+      "state": "Western Australia",
+      "updated_by_id": "INIT",
+      "date_time_updated": "01-NOV-05"
+    },
+    {
+      "country_code": "USA",
+      "state_code": "WI",
+      "state": "Wisconsin",
+      "updated_by_id": "INIT",
+      "date_time_updated": "01-NOV-05"
+    },
+    {
+      "country_code": "USA",
+      "state_code": "WV",
+      "state": "West Virginia",
+      "updated_by_id": "INIT",
+      "date_time_updated": "01-NOV-05"
+    },
+    {
+      "country_code": "USA",
+      "state_code": "WY",
+      "state": "Wyoming",
+      "updated_by_id": "INIT",
+      "date_time_updated": "01-NOV-05"
+    },
+    {
+      "country_code": "CAN",
+      "state_code": "YT",
+      "state": "Yukon Territory",
+      "updated_by_id": "INIT",
+      "date_time_updated": "01-NOV-05"
+    }
+  ]
+}

@@ -1099,3 +1099,8 @@ exports.canViewContact = function (permissions) {
 exports.canViewBasic = function (permissions) {
   return permissions.includes("person_view_basic");
 };
+
+exports.canUpdatePersonContact = function (permissions) {
+  return permissions.includes("person_update_contact");
+};
+

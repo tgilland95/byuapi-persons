@@ -1,0 +1,712 @@
+{
+  "items": [
+    {
+      "domain_value": " ",
+      "desc_15": " ",
+      "description": " ",
+      "active_status": " "
+    },
+    {
+      "domain_value": "????",
+      "desc_15": "Other Building",
+      "description": "Other Building",
+      "active_status": " "
+    },
+    {
+      "domain_value": "AEPS",
+      "desc_15": "Elk Pnt Showers",
+      "description": "Elk Point Showers/laundry",
+      "active_status": " "
+    },
+    {
+      "domain_value": "AKH",
+      "desc_15": "Amanda Knight H",
+      "description": "Amanda Knight Hall",
+      "active_status": " "
+    },
+    {
+      "domain_value": "ALLN",
+      "desc_15": "Allen Hall",
+      "description": "Allen Hall",
+      "active_status": "A"
+    },
+    {
+      "domain_value": "AMB",
+      "desc_15": "Aux Maint",
+      "description": "Auxiliary Maintenance Building",
+      "active_status": "A"
+    },
+    {
+      "domain_value": "ASB",
+      "desc_15": "Smoot Administr",
+      "description": "Smoot Administration Building",
+      "active_status": " "
+    },
+    {
+      "domain_value": "AXLB",
+      "desc_15": "Auxiliary Servi",
+      "description": "Auxiliary Services, Laundry",
+      "active_status": "I"
+    },
+    {
+      "domain_value": "AXMB",
+      "desc_15": "Auxiliary Servi",
+      "description": "Auxiliary Services, Maint.",
+      "active_status": "I"
+    },
+    {
+      "domain_value": "AXSB",
+      "desc_15": "Aux Services",
+      "description": "Auxiliary Services Building",
+      "active_status": "I"
+    },
+    {
+      "domain_value": "B21",
+      "desc_15": "Service Bldg",
+      "description": "Service Building",
+      "active_status": " "
+    },
+    {
+      "domain_value": "B32",
+      "desc_15": "Service Buildin",
+      "description": "Service Building",
+      "active_status": " "
+    },
+    {
+      "domain_value": "B34",
+      "desc_15": "Service Bldg",
+      "description": "Service Building",
+      "active_status": " "
+    },
+    {
+      "domain_value": "B38",
+      "desc_15": "Engineering Res",
+      "description": "Engineering Research Lab",
+      "active_status": " "
+    },
+    {
+      "domain_value": "B40",
+      "desc_15": "Student Tool Sh",
+      "description": "Student Tool Shed",
+      "active_status": " "
+    },
+    {
+      "domain_value": "B41",
+      "desc_15": "Coal Combustion",
+      "description": "Coal Combustion Research Lab",
+      "active_status": " "
+    },
+    {
+      "domain_value": "B45",
+      "desc_15": "Service Bldg",
+      "description": "Service Building",
+      "active_status": " "
+    },
+    {
+      "domain_value": "B48",
+      "desc_15": "Root Cellar",
+      "description": "Root Cellar",
+      "active_status": " "
+    },
+    {
+      "domain_value": "B49",
+      "desc_15": "Maxwell Institu",
+      "description": "Maxwell Institute",
+      "active_status": " "
+    },
+    {
+      "domain_value": "B51",
+      "desc_15": "Compressor Shed",
+      "description": "Compressor Shed - Wind Tunnel",
+      "active_status": " "
+    },
+    {
+      "domain_value": "B57",
+      "desc_15": "Recreation Area",
+      "description": "Recreation Area Storage",
+      "active_status": " "
+    },
+    {
+      "domain_value": "B66",
+      "desc_15": "Ceramics Sculpt",
+      "description": "Ceramics Sculpture Ind Ed Lab",
+      "active_status": " "
+    },
+    {
+      "domain_value": "B67",
+      "desc_15": "Service Bldg",
+      "description": "Service Building",
+      "active_status": " "
+    },
+    {
+      "domain_value": "BELL",
+      "desc_15": "Centennial Cari",
+      "description": "Centennial Carillon Tower",
+      "active_status": " "
+    },
+    {
+      "domain_value": "BNSN",
+      "desc_15": "Benson Science ",
+      "description": "Benson Science Building",
+      "active_status": " "
+    },
+    {
+      "domain_value": "BRMB",
+      "desc_15": "Brimhall (Georg",
+      "description": "Brimhall (George H.) Building",
+      "active_status": " "
+    },
+    {
+      "domain_value": "BRWB",
+      "desc_15": "Brewster Buildi",
+      "description": "Brewster Building",
+      "active_status": " "
+    },
+    {
+      "domain_value": "BYUB",
+      "desc_15": "BYUBroadcasting",
+      "description": "BYU Broadcasting",
+      "active_status": "A"
+    },
+    {
+      "domain_value": "CANC",
+      "desc_15": "Cannon Center, ",
+      "description": "Cannon Center, Helaman Halls",
+      "active_status": " "
+    },
+    {
+      "domain_value": "CB",
+      "desc_15": "Clyde Engineeri",
+      "description": "Clyde Engineering Building",
+      "active_status": " "
+    },
+    {
+      "domain_value": "CLFB",
+      "desc_15": "Cluff Plant Sci",
+      "description": "Cluff Plant Science Lab",
+      "active_status": " "
+    },
+    {
+      "domain_value": "CMB",
+      "desc_15": "Chemicals Manag",
+      "description": "Chemicals Management Building",
+      "active_status": " "
+    },
+    {
+      "domain_value": "COB",
+      "desc_15": "Church Office",
+      "description": "Church Office Building",
+      "active_status": " "
+    },
+    {
+      "domain_value": "CONE",
+      "desc_15": "Creamery - 9th",
+      "description": "Creamery on 9th East",
+      "active_status": " "
+    },
+    {
+      "domain_value": "CONF",
+      "desc_15": "Conference Cent",
+      "description": "Conference Center",
+      "active_status": " "
+    },
+    {
+      "domain_value": "CSC",
+      "desc_15": "Culinary Center",
+      "description": "Culinary Support Center",
+      "active_status": "A"
+    },
+    {
+      "domain_value": "CTB",
+      "desc_15": "Crabtree Techno",
+      "description": "Crabtree Technology Building",
+      "active_status": " "
+    },
+    {
+      "domain_value": "ELLB",
+      "desc_15": "Ellsworth Bldg",
+      "description": "Leo B. Ellsworth Building",
+      "active_status": "A"
+    },
+    {
+      "domain_value": "EPSB",
+      "desc_15": "Emergency Prepa",
+      "description": "Emergency Preparedness Storage",
+      "active_status": " "
+    },
+    {
+      "domain_value": "ESC",
+      "desc_15": "Eyring Science ",
+      "description": "Eyring Science Center",
+      "active_status": " "
+    },
+    {
+      "domain_value": "FB",
+      "desc_15": "Harvey Fletcher",
+      "description": "Harvey Fletcher Building",
+      "active_status": " "
+    },
+    {
+      "domain_value": "FLSR",
+      "desc_15": "Foreign Languag",
+      "description": "Foreign Language Student Resid",
+      "active_status": " "
+    },
+    {
+      "domain_value": "FOB",
+      "desc_15": "Faculty Office ",
+      "description": "Faculty Office Building",
+      "active_status": " "
+    },
+    {
+      "domain_value": "FPH",
+      "desc_15": "Frmr Pres Home",
+      "description": "Former Presidents' Home",
+      "active_status": "A"
+    },
+    {
+      "domain_value": "HBLL",
+      "desc_15": "Harold B. Lee L",
+      "description": "Harold B. Lee Library",
+      "active_status": " "
+    },
+    {
+      "domain_value": "HC",
+      "desc_15": "Hinckley Center",
+      "description": "Hinckley Center",
+      "active_status": "A"
+    },
+    {
+      "domain_value": "HCEB",
+      "desc_15": "Harman Continui",
+      "description": "Harman Continuing Education",
+      "active_status": " "
+    },
+    {
+      "domain_value": "HFAC",
+      "desc_15": "Harris Fine Art",
+      "description": "Harris Fine Arts Center",
+      "active_status": " "
+    },
+    {
+      "domain_value": "HGB",
+      "desc_15": "Heber J. Grant ",
+      "description": "Heber J. Grant Building",
+      "active_status": " "
+    },
+    {
+      "domain_value": "HL",
+      "desc_15": "Helaman Residen",
+      "description": "Helaman Residence Halls",
+      "active_status": " "
+    },
+    {
+      "domain_value": "HR",
+      "desc_15": "Heritage Reside",
+      "description": "Heritage Residence Halls",
+      "active_status": " "
+    },
+    {
+      "domain_value": "HRCB",
+      "desc_15": "Herald R. Clark",
+      "description": "Herald R. Clark Building",
+      "active_status": " "
+    },
+    {
+      "domain_value": "HRCN",
+      "desc_15": "Heritage Halls ",
+      "description": "Heritage Halls Central Bldg",
+      "active_status": " "
+    },
+    {
+      "domain_value": "ISB",
+      "desc_15": "Ironton Storage",
+      "description": "Ironton Storage Building",
+      "active_status": "A"
+    },
+    {
+      "domain_value": "ITB",
+      "desc_15": "Information Tec",
+      "description": "Information Technology Bldg",
+      "active_status": "A"
+    },
+    {
+      "domain_value": "JACH",
+      "desc_15": "Jacobs House",
+      "description": "Jacobs House",
+      "active_status": " "
+    },
+    {
+      "domain_value": "JFSB",
+      "desc_15": "Joseph F. Smith",
+      "description": "Joseph F. Smith Building",
+      "active_status": "A"
+    },
+    {
+      "domain_value": "JKB",
+      "desc_15": "Jesse Knight",
+      "description": "Jesse Knight Building",
+      "active_status": " "
+    },
+    {
+      "domain_value": "JNEH",
+      "desc_15": "Johnson House E",
+      "description": "Johnson House East",
+      "active_status": " "
+    },
+    {
+      "domain_value": "JRCB",
+      "desc_15": "J. Reuben Clark",
+      "description": "J. Reuben Clark Law Building",
+      "active_status": " "
+    },
+    {
+      "domain_value": "JRMC",
+      "desc_15": "Jerusalem Cente",
+      "description": "Jerusalem Center",
+      "active_status": " "
+    },
+    {
+      "domain_value": "JSB",
+      "desc_15": "Joseph Smith",
+      "description": "Joseph Smith Building",
+      "active_status": " "
+    },
+    {
+      "domain_value": "KMC",
+      "desc_15": "KBYU Media Cent",
+      "description": "KBYU Media Center - [now ISB]",
+      "active_status": "I"
+    },
+    {
+      "domain_value": "LDSP",
+      "desc_15": "LDS Phil Bld",
+      "description": "LDS Philanthropies Building",
+      "active_status": "A"
+    },
+    {
+      "domain_value": "LSB",
+      "desc_15": "Life Sciences",
+      "description": "Life Sciences Building",
+      "active_status": "A"
+    },
+    {
+      "domain_value": "LVEB",
+      "desc_15": "LaVell Building",
+      "description": "LaVell Edwards Building",
+      "active_status": "A"
+    },
+    {
+      "domain_value": "LVES",
+      "desc_15": "LaVell Stadium",
+      "description": "LaVell Edwards Stadium",
+      "active_status": "A"
+    },
+    {
+      "domain_value": "LYTL",
+      "desc_15": "Lytle Ranch",
+      "description": "Lytle Ranch",
+      "active_status": " "
+    },
+    {
+      "domain_value": "MARB",
+      "desc_15": "Thomas L. Marti",
+      "description": "Thomas L. Martin Building",
+      "active_status": " "
+    },
+    {
+      "domain_value": "MB",
+      "desc_15": "Howard S. McDon",
+      "description": "Howard S. McDonald Building",
+      "active_status": " "
+    },
+    {
+      "domain_value": "MC",
+      "desc_15": "J. Willard Marr",
+      "description": "J. Willard Marriott Center",
+      "active_status": " "
+    },
+    {
+      "domain_value": "MCKB",
+      "desc_15": "David O. McKay ",
+      "description": "David O. McKay Building",
+      "active_status": " "
+    },
+    {
+      "domain_value": "MLBM",
+      "desc_15": "Monte Bean Life",
+      "description": "Monte Bean Life Science Museum",
+      "active_status": " "
+    },
+    {
+      "domain_value": "MLRP",
+      "desc_15": "Miller Park Bdg",
+      "description": "Miller Park Building",
+      "active_status": " "
+    },
+    {
+      "domain_value": "MOA",
+      "desc_15": "Museum of Art",
+      "description": "Museum of Art",
+      "active_status": " "
+    },
+    {
+      "domain_value": "MORC",
+      "desc_15": "Morris Center, ",
+      "description": "Morris Center, Deseret Towers",
+      "active_status": " "
+    },
+    {
+      "domain_value": "MPS",
+      "desc_15": "Motion Picture ",
+      "description": "Motion Picture Studio",
+      "active_status": " "
+    },
+    {
+      "domain_value": "MPSP",
+      "desc_15": "Media Productio",
+      "description": "Media Production Studio Storag",
+      "active_status": " "
+    },
+    {
+      "domain_value": "MSRB",
+      "desc_15": "Karl G. Maeser ",
+      "description": "Karl G. Maeser Building",
+      "active_status": " "
+    },
+    {
+      "domain_value": "MTC",
+      "desc_15": "Mission Trainin",
+      "description": "Mission Training Center",
+      "active_status": " "
+    },
+    {
+      "domain_value": "MTV",
+      "desc_15": "Mount Vision Tr",
+      "description": "Mount Vision Transmitter",
+      "active_status": " "
+    },
+    {
+      "domain_value": "NICB",
+      "desc_15": "Joseph K. Nicho",
+      "description": "Joseph K. Nicholes Building",
+      "active_status": " "
+    },
+    {
+      "domain_value": "OLVH",
+      "desc_15": "Oliver House",
+      "description": "Oliver House",
+      "active_status": " "
+    },
+    {
+      "domain_value": "PPCH",
+      "desc_15": "Central Heating",
+      "description": "Central Heating Plant",
+      "active_status": " "
+    },
+    {
+      "domain_value": "PPGC",
+      "desc_15": "Physical Facili",
+      "description": "Physical Facilities Grnds Bldg",
+      "active_status": " "
+    },
+    {
+      "domain_value": "PPGE",
+      "desc_15": "Physical Plant ",
+      "description": "Physical Plant Grnd Equip Shed",
+      "active_status": " "
+    },
+    {
+      "domain_value": "PPGH",
+      "desc_15": "Physical Plant ",
+      "description": "Physical Plant Greenhouse",
+      "active_status": " "
+    },
+    {
+      "domain_value": "PPGO",
+      "desc_15": "Physical Plant ",
+      "description": "Physical Plant Grounds Office",
+      "active_status": " "
+    },
+    {
+      "domain_value": "PPGT",
+      "desc_15": "Phys Plant Grnd",
+      "description": "Phys Plant Grnds Truck Shelter",
+      "active_status": " "
+    },
+    {
+      "domain_value": "PPMO",
+      "desc_15": "Phy Plant Motor",
+      "description": "Phy Plant Motor Pool Office",
+      "active_status": " "
+    },
+    {
+      "domain_value": "PPSS",
+      "desc_15": "Phy Plant Servi",
+      "description": "Phy Plant Service Station",
+      "active_status": " "
+    },
+    {
+      "domain_value": "RB",
+      "desc_15": "Stephen L. Rich",
+      "description": "Stephen L. Richards Building",
+      "active_status": " "
+    },
+    {
+      "domain_value": "ROTC",
+      "desc_15": "Daniel H. Wells",
+      "description": "Daniel H. Wells ROTC Building",
+      "active_status": " "
+    },
+    {
+      "domain_value": "SAB",
+      "desc_15": "Std Athlete Bld",
+      "description": "Student Athlete Building",
+      "active_status": " "
+    },
+    {
+      "domain_value": "SASB",
+      "desc_15": "Student Auxilia",
+      "description": "Student Auxiliary Services Bld",
+      "active_status": "N"
+    },
+    {
+      "domain_value": "SFH",
+      "desc_15": "George Albert S",
+      "description": "George Albert Smith Fieldhouse",
+      "active_status": " "
+    },
+    {
+      "domain_value": "SHC",
+      "desc_15": "Student Health ",
+      "description": "Student Health Center",
+      "active_status": " "
+    },
+    {
+      "domain_value": "SKAG",
+      "desc_15": "Skaggs Research",
+      "description": "Skaggs Research Ranch - Idaho",
+      "active_status": " "
+    },
+    {
+      "domain_value": "SNLB",
+      "desc_15": "William H. Snel",
+      "description": "William H. Snell Building",
+      "active_status": " "
+    },
+    {
+      "domain_value": "SWKT",
+      "desc_15": "Spencer W. Kimb",
+      "description": "Spencer W. Kimball Tower",
+      "active_status": " "
+    },
+    {
+      "domain_value": "TALL",
+      "desc_15": "TALL",
+      "description": "TALL",
+      "active_status": " "
+    },
+    {
+      "domain_value": "TCB",
+      "desc_15": "Tennis Courts B",
+      "description": "Tennis Courts Building",
+      "active_status": " "
+    },
+    {
+      "domain_value": "TIMP",
+      "desc_15": "Timp Lodge",
+      "description": "Timp Lodge",
+      "active_status": " "
+    },
+    {
+      "domain_value": "TLRB",
+      "desc_15": "Taylor Building",
+      "description": "Taylor Building",
+      "active_status": " "
+    },
+    {
+      "domain_value": "TMCB",
+      "desc_15": "Talmage Math-Co",
+      "description": "Talmage Math-Computer Building",
+      "active_status": " "
+    },
+    {
+      "domain_value": "TNRB",
+      "desc_15": "Tanner Building",
+      "description": "Tanner Building",
+      "active_status": " "
+    },
+    {
+      "domain_value": "TOMH",
+      "desc_15": "Thomas House",
+      "description": "Thomas House",
+      "active_status": " "
+    },
+    {
+      "domain_value": "TPVN",
+      "desc_15": "Tennis Pavillio",
+      "description": "Tennis Pavillion",
+      "active_status": " "
+    },
+    {
+      "domain_value": "ULB",
+      "desc_15": "Laundry",
+      "description": "University Laundry Building",
+      "active_status": "A"
+    },
+    {
+      "domain_value": "UPB",
+      "desc_15": "University Pres",
+      "description": "University Press Building",
+      "active_status": " "
+    },
+    {
+      "domain_value": "UPC",
+      "desc_15": "University Park",
+      "description": "University Parkway Center",
+      "active_status": " "
+    },
+    {
+      "domain_value": "USB",
+      "desc_15": "Univ Services",
+      "description": "University Services Building",
+      "active_status": "A"
+    },
+    {
+      "domain_value": "W0AB",
+      "desc_15": "Wymount Terrace",
+      "description": "Wymount Terrace Administration",
+      "active_status": " "
+    },
+    {
+      "domain_value": "WIDB",
+      "desc_15": "John A. Widtsoe",
+      "description": "John A. Widtsoe Building",
+      "active_status": " "
+    },
+    {
+      "domain_value": "WPCB",
+      "desc_15": "Wyview Park Cen",
+      "description": "Wyview Park Central Building",
+      "active_status": " "
+    },
+    {
+      "domain_value": "WPMB",
+      "desc_15": "Wyview Park Mlt",
+      "description": "Wyview Park Multipurpose",
+      "active_status": "A"
+    },
+    {
+      "domain_value": "WSC",
+      "desc_15": "Ernest L. Wilki",
+      "description": "Ernest L. Wilkinson Center",
+      "active_status": " "
+    },
+    {
+      "domain_value": "WT",
+      "desc_15": "Wymount Terrace",
+      "description": "Wymount Terrace",
+      "active_status": " "
+    }
+  ]
+}

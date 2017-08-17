@@ -19,7 +19,6 @@ const auth        = require('../controllers/auth');
 const personsController = require('../controllers/persons');
 
 exports.getPersons = function (req, res) {
-
   auth.getPermissions(req)
     .then(function (permissions) {
       console.log("permissions: ", permissions);
@@ -32,11 +31,10 @@ exports.getPersons = function (req, res) {
 };
 
 exports.getPerson = function (req, res) {
-
   auth.getPermissions(req)
     .then(function (permissions) {
       console.log("permissions: ", permissions);
-      return personsController.getPerson(req.swagger.root.definitions, req.params.byu_id, permissions)
+      return personsController.getPerson(req.swagger.root.definitions, req.params.byu_id, req.query, permissions)
         .then(function (person) {
           res.send(person);
         })

@@ -18,13 +18,24 @@
 const basic           = require('./basic/basic');
 const addresses       = require('./addresses/addresses');
 
-exports.getPerson = function getAddress(definitions, byu_id, permissions) {
+exports.getPerson = async function (definitions, byu_id, query, permissions) {
   const promises = [];
-  promises.push(basic.getBasic(definitions, byu_id, permissions));
-  promises.push(addresses.getAddresses(definitions, byu_id, permissions));
-  return Promise.all(promises)
-    .then(function (results) {
-      console.log(results);
-      return { basic: results[0], addresses: results[1] };
-    })
+  const result = {};
+
+  if(query.field_sets.includes('basic')){
+    promises.push(basic.getBasic(definitions, byu_id, permissions).then(function (basic_result) {
+      result.basic = basic_result;
+    }));
+  }
+  if(query.field_sets.includes('addresses')) {
+    promises.push(addresses.getAddresses(definitions, byu_id, permissions).then(function (addresses_result) {
+      result.addresses = addresses_result;
+    }));
+  }
+  await Promise.all(promises);
+  return result;
+};
+
+exports.getPersons = async function(definitions, query, permisisons) {
+
 };

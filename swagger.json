@@ -253,28 +253,32 @@
             "in": "query",
             "description": "indicates which field sets are to be returned",
             "required": false,
-            "type": "string",
-            "enum": [
-              "basic",
-              "addresses",
-              "credentials",
-              "email_addresses",
-              "employee_summaries",
-              "ethnicities",
-              "family_phones",
-              "government_records",
-              "group_membership_events",
-              "group_memberships",
-              "groups_administered",
-              "id_cards",
-              "languages",
-              "my_delegators",
-              "my_guests",
-              "personal_records",
-              "phones",
-              "relationships",
-              "student_summaries"
-            ]
+            "type": "array",
+            "items": {
+              "type": "string",
+              "default": ["basic"],
+              "enum": [
+                "basic",
+                "addresses",
+                "credentials",
+                "email_addresses",
+                "employee_summaries",
+                "ethnicities",
+                "family_phones",
+                "government_records",
+                "group_membership_events",
+                "group_memberships",
+                "groups_administered",
+                "id_cards",
+                "languages",
+                "my_delegators",
+                "my_guests",
+                "personal_records",
+                "phones",
+                "relationships",
+                "student_summaries"
+              ]
+            }
           },
           {
             "name": "contexts",
@@ -416,28 +420,32 @@
             "in": "query",
             "description": "indicates which field sets are to be returned",
             "required": false,
-            "type": "string",
-            "enum": [
-              "basic",
-              "addresses",
-              "credentials",
-              "email_addresses",
-              "employee_summaries",
-              "ethnicities",
-              "family_phones",
-              "government_records",
-              "group_membership_events",
-              "group_memberships",
-              "groups_administered",
-              "id_cards",
-              "languages",
-              "my_delegators",
-              "my_guests",
-              "personal_records",
-              "phones",
-              "relationships",
-              "student_summaries"
-            ]
+            "type": "array",
+            "default": ["basic"],
+            "items": {
+              "type": "string",
+              "enum": [
+                "basic",
+                "addresses",
+                "credentials",
+                "email_addresses",
+                "employee_summaries",
+                "ethnicities",
+                "family_phones",
+                "government_records",
+                "group_membership_events",
+                "group_memberships",
+                "groups_administered",
+                "id_cards",
+                "languages",
+                "my_delegators",
+                "my_guests",
+                "personal_records",
+                "phones",
+                "relationships",
+                "student_summaries"
+              ]
+            }
           },
           {
             "name": "contexts",
@@ -5240,12 +5248,12 @@
           "default": " "
         },
         "unlisted": {
-          "type": "string",
-          "default": "N",
-          "enum": [
-            "Y",
-            "N"
-          ]
+          "type": "boolean",
+          "default": false
+        },
+        "verified_flag": {
+          "type": "boolean",
+          "default": false
         }
       }
     },
@@ -6465,15 +6473,13 @@
     },
     "default_field_sets": {
       "description": "Default Field Sets",
-      "type": "object",
-      "properties": {
-        "value": {
-          "type": "string",
-          "default": "basic",
-          "enum": [
-            "basic"
-          ]
-        }
+      "type": "array",
+      "items": {
+        "type": "string",
+        "default": ["basic"],
+        "enum": [
+          "basic"
+        ]
       }
     },
     "delegator_id": {
@@ -8377,7 +8383,7 @@
       "properties": {
         "value": {
           "type": "string",
-          "pattern": "^([]*|[0-9]{6})$",
+          "pattern": "^([ ]*|[0-9]{6})$",
           "maxLength": 6,
           "x-template": ":high_school_code"
         },
@@ -8416,7 +8422,7 @@
         "value": {
           "type": "string",
           "default": "??",
-          "pattern": "^([?]{2}|[A-Z]{2,5})$",
+          "pattern": "^(null|[?]{2}|[A-Z]{2,5})$",
           "maxLength": 4,
           "x-template": ":high_school_state_code"
         },
@@ -9731,7 +9737,7 @@
       "properties": {
         "value": {
           "type": "string",
-          "pattern": "^[a-z][a-z0-9]{4,7}$",
+          "pattern": "^[a-z][a-z0-9]{0,8}$",
           "x-template": ":net_id"
         },
         "api_type": {
