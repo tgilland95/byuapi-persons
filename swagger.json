@@ -256,7 +256,9 @@
             "type": "array",
             "items": {
               "type": "string",
-              "default": ["basic"],
+              "default": [
+                "basic"
+              ],
               "enum": [
                 "basic",
                 "addresses",
@@ -421,7 +423,9 @@
             "description": "indicates which field sets are to be returned",
             "required": false,
             "type": "array",
-            "default": ["basic"],
+            "default": [
+              "basic"
+            ],
             "items": {
               "type": "string",
               "enum": [
@@ -5156,43 +5160,24 @@
     "address_put": {
       "type": "object",
       "required": [
-        "address_type",
-        "address_line_1",
-        "address_line_2",
-        "address_line_3",
-        "address_line_4",
-        "building",
-        "room",
-        "country_code",
-        "city",
-        "state_code",
-        "postal_code",
-        "unlisted"
+        "address_line_1"
       ],
       "properties": {
         "date_time_updated": {
           "type": "string",
-          "format": "date-time"
+          "format": "date-time",
+          "x-template": ":date_time_updated"
         },
         "updated_by_id": {
           "type": "string",
-          "pattern": "^([]{0}|[0-9]{9})$"
-        },
-        "address_type": {
-          "type": "string",
-          "enum": [
-            "PRM",
-            "RES",
-            "MAL",
-            "WRK"
-          ]
+          "pattern": "^([]{0}|[0-9]{9})$",
+          "x-template": ":updated_by_id"
         },
         "address_line_1": {
           "type": "string",
-          "pattern": "^( |([A-Za-z0-9-#.,]+ )*?[A-Za-z0-9-#.,]+)$",
+          "pattern": "^(([A-Za-z0-9-#.,]+ )*?[A-Za-z0-9-#.,]+)$",
           "maxLength": 40,
-          "minLength": 1,
-          "default": " "
+          "minLength": 1
         },
         "address_line_2": {
           "type": "string",
@@ -5421,13 +5406,85 @@
           "type": "object",
           "properties": {
             "persons.info": {
-              "$ref": "#/definitions/links"
+              "description": "Hypermedia links format",
+              "type": "object",
+              "required": [
+                "rel",
+                "href",
+                "method"
+              ],
+              "properties": {
+                "rel": {
+                  "type": "string",
+                  "default": "self"
+                },
+                "href": {
+                  "type": "string",
+                  "format": "uri",
+                  "default": "https://api.byu.edu/byuapi/persons/v1/:byu_id"
+                },
+                "method": {
+                  "type": "string",
+                  "default": "GET",
+                  "enum": [
+                    "GET"
+                  ]
+                }
+              }
             },
             "persons.modify": {
-              "$ref": "#/definitions/links"
+              "description": "Hypermedia links format",
+              "type": "object",
+              "required": [
+                "rel",
+                "href",
+                "method"
+              ],
+              "properties": {
+                "rel": {
+                  "type": "string",
+                  "default": "self"
+                },
+                "href": {
+                  "type": "string",
+                  "format": "uri",
+                  "default": "https://api.byu.edu/byuapi/persons/v1/:byu_id"
+                },
+                "method": {
+                  "type": "string",
+                  "default": "PUT",
+                  "enum": [
+                    "PUT"
+                  ]
+                }
+              }
             },
             "persons.delete": {
-              "$ref": "#/definitions/links"
+              "description": "Hypermedia links format",
+              "type": "object",
+              "required": [
+                "rel",
+                "href",
+                "method"
+              ],
+              "properties": {
+                "rel": {
+                  "type": "string",
+                  "default": "self"
+                },
+                "href": {
+                  "type": "string",
+                  "format": "uri",
+                  "default": "https://api.byu.edu/byuapi/persons/v1/:byu_id"
+                },
+                "method": {
+                  "type": "string",
+                  "default": "DELETE",
+                  "enum": [
+                    "DELETE"
+                  ]
+                }
+              }
             }
           }
         },
@@ -5437,11 +5494,138 @@
         "byu_id": {
           "$ref": "#/definitions/byu_id"
         },
+        "person_id": {
+          "$ref": "#/definitions/person_id"
+        },
         "net_id": {
-          "$ref": "#/definitions/net_id"
+          "description": "The user name to used for authentication to BYU web applications",
+          "type": "object",
+          "required": [
+            "value",
+            "api_type",
+            "related_resource"
+          ],
+          "properties": {
+            "value": {
+              "type": "string",
+              "pattern": "^[a-z][a-z0-9]{0,8}$",
+              "x-template": ":net_id"
+            },
+            "api_type": {
+              "type": "string",
+              "default": "related",
+              "enum": [
+                "related"
+              ]
+            },
+            "related_resource": {
+              "type": "string",
+              "default": "https://api.byu.edu/byuapi/persons/v1/:byu_id/credentials/NET_ID,:net_id"
+            }
+          },
+          "example": {
+            "value": "js279",
+            "api_type": "read-only"
+          }
         },
         "deceased": {
-          "$ref": "#/definitions/deceased"
+          "description": "Whether or not the person is deceased",
+          "type": "object",
+          "required": [
+            "value",
+            "api_type",
+            "related_resource"
+          ],
+          "properties": {
+            "value": {
+              "type": "string",
+              "default": "N",
+              "x-template": ":deceased",
+              "enum": [
+                "Y",
+                "N"
+              ]
+            },
+            "api_type": {
+              "type": "string",
+              "default": "related",
+              "enum": [
+                "related"
+              ]
+            },
+            "related_resource": {
+              "type": "string",
+              "default": "https://api.byu.edu/byuapi/persons/v1/:byu_id/personal_records"
+            }
+          },
+          "example": {
+            "value": "N",
+            "api_type": "related",
+            "related_resource": "https://api.byu.edu/byuapi/persons/v1/123456789/personal_records"
+          }
+        },
+        "personal_email_address": {
+          "description": "The listed personal email address of the person",
+          "type": "object",
+          "required": [
+            "value",
+            "api_type",
+            "related_resource"
+          ],
+          "properties": {
+            "value": {
+              "type": "string",
+              "format": "email",
+              "maxLength": 70,
+              "minLength": 7
+            },
+            "api_type": {
+              "type": "related",
+              "enum": [
+                "related"
+              ]
+            },
+            "related_resource": {
+              "type": "string",
+              "default": "https://api.byu.edu/byuapi/persons/v1/:byu_id/email_addresses/PERSONAL"
+            }
+          },
+          "example": {
+            "value": "donald_duck@gmail.com`",
+            "api-type": "related",
+            "related_resource": "https://api.byu.edu/byuapi/persons/v1/123456789/email_addresses/PERSONAL"
+          }
+        },
+        "primary_phone_number": {
+          "description": "The listed primary phone number of the person",
+          "type": "object",
+          "required": [
+            "value",
+            "api_type"
+          ],
+          "properties": {
+            "value": {
+              "type": "string",
+              "x-template": ":primary_phone_number",
+              "maxLength": 30
+            },
+            "api_type": {
+              "type": "string",
+              "default": "related",
+              "enum": [
+                "related"
+              ]
+            },
+            "related_resource": {
+              "type": "string",
+              "default": "https://api.byu.edu/byuapi/persons/v1/:byu_id/phones/:primary_phone_number"
+            }
+          },
+          "example": {
+            "value": "801-420-1684",
+            "api_type": "related",
+            "related_resource": "https://api.byu.edu/byuapi/persons/v1/123456789/phones/801-420-1684"
+          }
         },
         "date_time_updated": {
           "$ref": "#/definitions/date_time_updated"
@@ -5455,17 +5639,8 @@
         "created_by_id": {
           "$ref": "#/definitions/created_by_id"
         },
-        "name_lnf": {
-          "$ref": "#/definitions/name_lnf"
-        },
-        "name_fnf": {
-          "$ref": "#/definitions/name_fnf"
-        },
-        "preferred_name": {
-          "$ref": "#/definitions/preferred_name"
-        },
-        "surname": {
-          "$ref": "#/definitions/surname"
+        "sex": {
+          "$ref": "#/definitions/sex"
         },
         "first_name": {
           "$ref": "#/definitions/first_name"
@@ -5473,17 +5648,29 @@
         "middle_name": {
           "$ref": "#/definitions/middle_name"
         },
-        "preferred_surname": {
-          "$ref": "#/definitions/preferred_surname"
+        "surname": {
+          "$ref": "#/definitions/surname"
+        },
+        "suffix": {
+          "$ref": "#/definitions/suffix"
         },
         "rest_of_name": {
           "$ref": "#/definitions/rest_of_name"
         },
+        "name_fnf": {
+          "$ref": "#/definitions/name_fnf"
+        },
+        "name_lnf": {
+          "$ref": "#/definitions/name_lnf"
+        },
         "preferred_first_name": {
           "$ref": "#/definitions/preferred_first_name"
         },
-        "suffix": {
-          "$ref": "#/definitions/suffix"
+        "preferred_surname": {
+          "$ref": "#/definitions/preferred_surname"
+        },
+        "preferred_name": {
+          "$ref": "#/definitions/preferred_name"
         },
         "home_town": {
           "$ref": "#/definitions/home_town"
@@ -6247,6 +6434,8 @@
         },
         "api_type": {
           "type": "string",
+          "default": "read-only",
+          "x-template": ":canUpdateVitals",
           "enum": [
             "read-only",
             "modifiable"
@@ -6272,6 +6461,8 @@
         },
         "api_type": {
           "type": "string",
+          "default": "read-only",
+          "x-template": ":canUpdateVitals",
           "enum": [
             "read-only",
             "modifiable"
@@ -6321,7 +6512,7 @@
         },
         "api_type": {
           "type": "string",
-          "default":"system",
+          "default": "system",
           "enum": [
             "system"
           ]
@@ -6492,7 +6683,8 @@
         },
         "api_type": {
           "type": "string",
-          "x-template": ":api_type",
+          "default": "read-only",
+          "x-template": ":canUpdateVitals",
           "enum": [
             "read-only",
             "modifiable"
@@ -6509,7 +6701,9 @@
       "type": "array",
       "items": {
         "type": "string",
-        "default": ["basic"],
+        "default": [
+          "basic"
+        ],
         "enum": [
           "basic"
         ]
@@ -7538,7 +7732,8 @@
         },
         "api_type": {
           "type": "string",
-          "x-template": ":api_type",
+          "default": "read-only",
+          "x-template": ":canUpdateName",
           "enum": [
             "read-only",
             "modifiable"
@@ -8393,16 +8588,20 @@
         },
         "api_type": {
           "type": "string",
-          "x-template": ":api_type",
+          "default": "related",
           "enum": [
-            "read-only",
-            "modifiable"
+            "related"
           ]
+        },
+        "related_resource": {
+          "type": "string",
+          "default": "https://api.byu.edu/byuapi/meta/high_school_codes/v1/:high_school_code"
         }
       },
       "example": {
-        "value": "Provo",
-        "api_type": "read-only"
+        "value": "Cypress",
+        "api_type": "related",
+        "related_resource": "https://api.byu.edu/byuapi/meta/high_school_codes/v1/050714"
       }
     },
     "high_school_code": {
@@ -8427,7 +8626,8 @@
         },
         "api_type": {
           "type": "string",
-          "x-template": ":api_type",
+          "default": "read-only",
+          "x-template": ":canUpdateBasic",
           "enum": [
             "read-only",
             "modifiable"
@@ -8466,17 +8666,20 @@
         },
         "api_type": {
           "type": "string",
-          "x-template": ":api_type",
+          "default": "related",
           "enum": [
-            "read-only",
-            "modifiable"
+            "related"
           ]
+        },
+        "related_resource": {
+          "type": "string",
+          "default": "https://api.byu.edu/byuapi/meta/high_school_codes/v1/:high_school_code"
         }
       },
       "example": {
-        "value": "UT",
-        "description": "Utah",
-        "api_type": "read-only"
+        "value": "CA",
+        "api_type": "related",
+        "related_resource": "https://api.byu.edu/byuapi/meta/high_school_codes/v1/050714"
       }
     },
     "hire_date": {
@@ -8530,7 +8733,8 @@
         },
         "api_type": {
           "type": "string",
-          "x-template": ":api_type",
+          "default": "read-only",
+          "x-template": ":canUpdateBasic",
           "enum": [
             "read-only",
             "modifiable"
@@ -8566,7 +8770,8 @@
         },
         "api_type": {
           "type": "string",
-          "x-template": ":api_type",
+          "default": "read-only",
+          "x-template": ":canUpdateBasic",
           "enum": [
             "read-only",
             "modifiable"
@@ -8597,7 +8802,8 @@
         },
         "api_type": {
           "type": "string",
-          "x-template": ":api_type",
+          "default": "read-only",
+          "x-template": ":canUpdateBasic",
           "enum": [
             "read-only",
             "modifiable"
@@ -8660,7 +8866,34 @@
           "$ref": "#/definitions/dtf_flag"
         },
         "unlisted": {
-          "$ref": "#/definitions/unlisted"
+          "type": "object",
+          "required": [
+            "value",
+            "api_type"
+          ],
+          "properties": {
+            "value": {
+              "type": "string",
+              "default": "N",
+              "enum": [
+                "Y",
+                "N"
+              ]
+            },
+            "api_type": {
+              "type": "string",
+              "default": "read-only",
+              "x-template": ":canUpdateBasic",
+              "enum": [
+                "read-only",
+                "modifiable"
+              ]
+            }
+          },
+          "example": {
+            "value": "N",
+            "api_type": "read-only"
+          }
         },
         "printed_name": {
           "$ref": "#/definitions/printed_name"
@@ -9282,7 +9515,8 @@
         },
         "api_type": {
           "type": "string",
-          "x-template": ":api_type",
+          "default": "read-only",
+          "x-template": ":canUpdateName",
           "enum": [
             "read-only",
             "modifiable"
@@ -9775,7 +10009,8 @@
         },
         "api_type": {
           "type": "string",
-          "x-template": ":api_type",
+          "default": "read-only",
+          "x-template": ":",
           "enum": [
             "read-only",
             "modifiable"
@@ -10654,7 +10889,8 @@
         },
         "api_type": {
           "type": "string",
-          "x-template": ":api_type",
+          "default": "read-only",
+          "x-template": ":canUpdateBasic",
           "enum": [
             "read-only",
             "modifiable"
@@ -10735,7 +10971,8 @@
         },
         "api_type": {
           "type": "string",
-          "x-template": ":api_type",
+          "default": "read-only",
+          "x-template": ":canUpdateBasic",
           "enum": [
             "read-only",
             "modifiable"
@@ -11372,7 +11609,8 @@
         },
         "api_type": {
           "type": "string",
-          "x-template": ":api_type",
+          "default": "read-only",
+          "x-template": ":hasRestrictedRights",
           "enum": [
             "read-only",
             "modifiable"
@@ -11504,13 +11742,15 @@
           "type": "string",
           "default": "?",
           "enum": [
-            "M",
+            "?",
             "F",
-            "?"
+            "M"
           ]
         },
         "api_type": {
           "type": "string",
+          "default": "read-only",
+          "x-template": ":canUpdateVitals",
           "enum": [
             "read-only",
             "modifiable"
@@ -11548,7 +11788,9 @@
     },
     "simple_metadata": {
       "type": "object",
-      "required": ["validation_response"],
+      "required": [
+        "validation_response"
+      ],
       "properties": {
         "validation_response": {
           "type": "object",
@@ -11571,7 +11813,10 @@
         },
         "validation_information": {
           "type": "array",
-          "items": { "type": "string", "default": "Success" }
+          "items": {
+            "type": "string",
+            "default": "Success"
+          }
         },
         "cache": {
           "description": "If data is from live source, value will be null, otherwise it will be date-time of cache",
@@ -11846,7 +12091,8 @@
         },
         "api_type": {
           "type": "string",
-          "x-template": ":api_type",
+          "default": "read-only",
+          "x-template": ":canUpdateBasic",
           "enum": [
             "read-only",
             "modifiable"
@@ -11874,7 +12120,8 @@
         },
         "api_type": {
           "type": "string",
-          "x-template": ":api_type",
+          "default": "read-only",
+          "x-template": ":canUpdateName",
           "enum": [
             "read-only",
             "modifiable"
