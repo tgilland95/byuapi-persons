@@ -21,3 +21,20 @@ exports.Error = function (status, message) {
   err.status = status;
   return err;
 };
+
+const clearNull = function(arr) {
+  for(let i = 0; i < arr.length; i++) {
+    for (let property in arr[i]) {
+      if (arr[i].hasOwnProperty(property)) {
+        //console.log(typeof arr[i][property]);
+        if (arr[i][property] === null) {
+          arr[i][property] = "";
+        }
+        if (typeof arr[i][property] === "number") {
+          arr[i][property] = arr[i][property].toString();
+        }
+      }
+    }
+  }
+  return arr;
+};

@@ -268,22 +268,22 @@ exports.modifyAddress = {
                  :VERIFIED_F)`,
   update: `
     update iam.address 
-    set    date_time_updated = to_timestamp(sysdate, 'YYYY-MM-DD HH24:MI:SS.FF'), 
-           updated_by_id = :1, 
-           address_line_1 = :2, 
-           address_line_2 = :3, 
-           address_line_3 = :4, 
-           address_line_4 = :5, 
-           country_code = :6, 
-           room = :7, 
-           building = :8, 
-           city = :9, 
-           state_code = :10, 
-           postal_code = :11, 
-           unlisted = :12, 
-           verified_f = :13 
-           where  byu_id = :14 
-           and address_type = :15`,
+    set    date_time_updated = to_timestamp(:1, 'YYYY-MM-DD HH24:MI:SS.FF'), 
+           updated_by_id = :2, 
+           address_line_1 = :3, 
+           address_line_2 = :4, 
+           address_line_3 = :5, 
+           address_line_4 = :6, 
+           country_code = :7, 
+           room = :8, 
+           building = :9, 
+           city = :10, 
+           state_code = :11, 
+           postal_code = :12, 
+           unlisted = :13, 
+           verified_f = :14 
+           where  byu_id = :15 
+           and address_type = :16`,
   delete: `
     delete from iam.address 
     where  address_type = :ADDRESS_TYPE 

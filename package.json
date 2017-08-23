@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/byu-oit/byuapi--persons.git"
+    "url": "git+https://github.com/byu-oit/byuapi-persons.git"
   },
   "keywords": [
     "Persons"
@@ -16,20 +16,20 @@
   "author": "John Bench <john_bench@byu.edu>",
   "license": "Apache-2.0",
   "bugs": {
-    "url": "https://github.com/byu-oit/byuapi--persons/issues"
+    "url": "https://github.com/byu-oit/byuapi-persons/issues"
   },
-  "homepage": "https://github.com/byu-oit/byuapi--persons#readme",
+  "homepage": "https://github.com/byu-oit/byuapi-persons#readme",
   "dependencies": {
     "aws-sdk": "2.92.0",
     "bluebird": "3.5.0",
     "body-parser": "1.17.2",
     "byu-jwt": "0.2.3",
     "express": "4.15.3",
-    "moment": "2.18.1",
+    "moment-timezone": "^0.5.13",
     "oracledb": "1.13.1",
-    "sans-server": "1.4.3",
+    "sans-server": "1.5.1",
     "sans-server-express": "0.0.3",
-    "sans-server-swagger": "0.3.4",
-    "swagger-enforcer": "1.3.2"
+    "sans-server-swagger": "0.3.5",
+    "swagger-enforcer": "1.3.9"
   }
 }

@@ -15,15 +15,15 @@
  *
  */
 "use strict";
-const shared_func     = require('./shared_functions');
-const Promise         = require('bluebird');
+const db          = require('./db');
+const Promise     = require('bluebird');
 
 exports.getPermissions = async function (req) {
-  console.log("verifiedJWTs: ", req.verifiedJWTs);
+  // console.log("verifiedJWTs: ", req.verifiedJWTs);
   const requirements = authRequests(req.method, req.verifiedJWTs.prioritizedClaims.byuId, ['addresses'], req.params.byu_id);
-  console.log("requirements: ", requirements);
+  // console.log("requirements: ", requirements);
   const info_areas_list = await authz_handle_auth(requirements);
-  console.log("info_areas_list: ", info_areas_list);
+  // console.log("info_areas_list: ", info_areas_list);
   const permits = [];
   if (info_areas_list !== undefined) {
     for (let i = info_areas_list.length; i--;) {
@@ -379,7 +379,7 @@ function authRequests(method, subject, fieldsets, resource_owner, sub_res_id, bo
 
 async function authz_handle_auth(auth_info_list) {
 
-  const results = await shared_func.executeSelect(`select informational_area as "info_area",
+  const results = await db.executeSelect(`select informational_area as "info_area",
        update_type as "update_type",
        nvl(limitation_value, ' ') as "limitation_value"
        from common.user_authorization cua
@@ -582,7 +582,7 @@ async function person_handle_auth(auth_info, info_areas) {
     //     return auth_info;
     //   }
     //   if (limitations === "update employee") {
-    //     const results = shared_func.executeSelect(""
+    //     const results = db.executeSelect(""
     //       + "select classification, "
     //       + "       standing "
     //       + "from   hr.per_warehouse "
@@ -1073,7 +1073,7 @@ async function person_handle_auth(auth_info, info_areas) {
         auth_info.response = "Permit";
         return auth_info;
       }
-      const results = await shared_func.executeSelect(""
+      const results = await db.executeSelect(""
         + "select * "
         + "from   gro.person_group "
         + "where  group_id = 'RESTRICTED' "
@@ -1104,3 +1104,6 @@ exports.canUpdatePersonContact = function (permissions) {
   return permissions.includes("person_update_contact");
 };
 
+exports.canLookupSSN = function (permissions) {
+  return permissions.includes("person_lookup_ssn")
+};

@@ -241,10 +241,10 @@ exports.modifyBasic = {
                  to_date(:LDS_CONFIRMATION_DATE, 'YYYY-MM-DD'))`,
     update: `
     update iam.person
-    set    date_time_updated = to_timestamp(:1, 'YYYY-MM-DD HH24:MI:SS.FF'),
-           updated_by_id = :2,
-           surname = :3,
-           first_name = :4,
+    set    date_time_updated = to_timestamp(:date_time_updated, 'YYYY-MM-DD HH24:MI:SS.FF'),
+           updated_by_id = :updated_by_id,
+           surname = :surname,
+           first_name = :first_name,
            rest_of_name = :5,
            preferred_surname = :6,
            preferred_first_name = :7,

@@ -17,7 +17,7 @@
 "use strict";
 const Enforcer      = require('swagger-enforcer');
 const utils         = require('../utils');
-const func          = require('../shared_functions');
+const db          = require('../db');
 const sql           = require('./sql');
 const auth          = require('../auth');
 
@@ -26,13 +26,13 @@ function mapDBResultsToDefinition(definitions, row, api_type) {
     {
       byu_id: row.byu_id,
       person_id: row.byu_id,
-      net_id: row.net_id,
+      net_id: row.net_id || undefined,
       api_type: api_type,
       deceased: row.deceased,
       sex: row.sex,
       personal_email_address: row.personal_email_address,
       primary_phone_number: row.primary_phone_number,
-      date_time_updated: row.date_time_updated.toISOString(),
+      date_time_updated: row.date_time_updated ? row.date_time_updated.toISOString() : undefined,
       updated_by_id: row.updated_by_id,
       updated_by_name: row.updated_by_id,
       date_time_created: row.date_time_created.toISOString(),
@@ -50,14 +50,14 @@ function mapDBResultsToDefinition(definitions, row, api_type) {
       preferred_name: row.preferred_name,
       home_town: row.home_town,
       home_state_code: row.home_state_code,
-      home_state_name: row.home_state_name,
+      home_state_name: row.home_state_name || undefined,
       home_country_code: row.home_country_code,
       home_country_name: row.home_country_name,
       high_school_code: row.high_school_code,
-      high_school_name: row.high_school_name,
-      high_school_state_code: row.high_school_state_code,
-      high_school_state_name: row.high_school_state_name,
-      high_school_city: row.high_school_city,
+      high_school_name: row.high_school_name || undefined,
+      high_school_state_code: row.high_school_state_code || undefined,
+      high_school_state_name: row.high_school_state_name || undefined,
+      high_school_city: row.high_school_city || undefined,
       restricted: row.restricted,
       merge_in_process: row.merge_in_process
     }
@@ -67,7 +67,7 @@ function mapDBResultsToDefinition(definitions, row, api_type) {
 exports.getBasic = async function getBasic(definitions, byu_id, permissions) {
   const params = [byu_id];
   const sql_query = sql.sql.getBasic;
-  const results = await func.executeSelect(sql_query, params);
+  const results = await db.executeSelect(sql_query, params);
 
   if (!results.rows.length ||
     (results.rows[0].restricted === 'Y' &&

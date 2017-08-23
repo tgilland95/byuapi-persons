@@ -25,10 +25,6 @@ const express           = require('express');
 const expressTranslator = require('sans-server-express');
 const Enforcer          = require('swagger-enforcer');
 
-Enforcer.injectParameters.defaults = {
-  mutate: true,
-  replacement: 'colon'
-};
 Enforcer.applyTemplate.defaults.replacement = 'colon';
 
 const app = express();

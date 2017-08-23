@@ -17,9 +17,10 @@
 
 const Enforcer      = require('swagger-enforcer');
 const utils         = require('../utils');
-const func          = require('../shared_functions');
+const db          = require('../db');
 const sql           = require('./sql');
 const auth          = require('../auth');
+const moment        = require('moment-timezone');
 
 /**
  * A helper function that takes the swagger definition sql results and
@@ -32,7 +33,7 @@ const auth          = require('../auth');
  * @returns {*}
  */
 function mapDBResultsToDefinition(definitions, row, api_type, return_code, return_message) {
-  return Enforcer.applyTemplate(definitions.address, definitions,
+  return Enforcer.applyTemplate(definitions.address, null,
     {
       return_code: return_code,
       return_message: return_message,
@@ -40,19 +41,19 @@ function mapDBResultsToDefinition(definitions, row, api_type, return_code, retur
       name: row.name,
       address_type: row.address_type,
       api_type: api_type,
-      date_time_updated: row.date_time_updated.toISOString(),
+      date_time_updated: row.date_time_updated,
       updated_by_id: row.updated_by_id,
       updated_by_name: row.updated_by_name,
-      date_time_created: row.date_time_created.toISOString(),
+      date_time_created: row.date_time_created,
       created_by_id: row.created_by_id,
-      created_by_name: row.created_by_name || '',
+      created_by_name: row.created_by_name || undefined,
       address_line_1: row.address_line_1,
       address_line_2: row.address_line_2,
       address_line_3: row.address_line_3,
       address_line_4: row.address_line_4,
       building_code: row.building_code,
-      building_name: row.building_name,
-      long_building_name: row.long_building_name,
+      building_name: row.building_name || undefined,
+      long_building_name: row.long_building_name || undefined,
       room: row.room,
       country_code: row.country_code,
       country_name: row.country_name,
@@ -83,7 +84,7 @@ exports.getAddress = async function getAddress(definitions, byu_id, address_type
   const return_code = auth.canViewContact(permissions) ? 200 : 203;
   const return_message = auth.canViewContact(permissions) ? 'Success' : 'Public Info Only';
   const modifiable = auth.canViewContact(permissions) ? 'modifiable': 'read-only';
-  const results = await func.executeSelect(sql_query, params);
+  const results = await db.executeSelect(sql_query, params);
 
   // If no results are returned or the record is restricted
   // and the entity retrieving the record does not belong
@@ -125,9 +126,10 @@ exports.getAddress = async function getAddress(definitions, byu_id, address_type
  * @returns {Promise.<*>}
  */
 exports.getAddresses = async function getAddresses(definitions, byu_id, permissions) {
+  // throw utils.Error(404, 'BYU_ID Not Found In Person Table');
   const params = [byu_id];
   const sql_query = sql.sql.getAddresses;
-  const results = await func.executeSelect(sql_query, params);
+  const results = await db.executeSelect(sql_query, params);
 
   // If no results are returned or the record is restricted
   // and the entity retrieving the record does not belong
@@ -240,7 +242,7 @@ function isValidBuildingCode(building_code) {
   return false
 }
 
-var accepted_date_formats = [
+let accepted_date_formats = [
   "YYYY-MM-DD HH:mm:ss.SSS",
   "YYYY-MM-DDTHH:mm:ss.SSSZ",
   "YYYY-MM-DD h:mm:ss.SSS A",
@@ -315,7 +317,7 @@ exports.modifyAddress = async function (definitions, byu_id, address_type, body,
     byu_id
   ];
   let sql_query = sql.sql.fromAddress;
-  const from_results = await func.executeSelect(sql_query, params);
+  const from_results = await db.executeSelect(sql_query, params);
   if (from_results.rows.length === 0) {
     throw new ClientError(404, "Could not find BYU_ID in Person Table")
   }
@@ -390,55 +392,61 @@ exports.modifyAddress = async function (definitions, byu_id, address_type, body,
     is_different = true
   }
 
-  if (is_different && !from_results.rows[0].address_type) {
-    sql_query = sql.modifyAddress.create;
-    params = [
-      byu_id,
-      address_type,
-      date_time_updated,
-      updated_by_id,
-      date_time_created,
-      created_by_id,
-      address_line_1,
-      address_line_2,
-      address_line_3,
-      address_line_4,
-      country_code,
-      room,
-      building,
-      city,
-      state_code,
-      postal_code,
-      unlisted,
-      verified_flag
-    ];
-
-  } else if (is_different && from_results.rows[0].address_type) {
-    sql_query = sql.modifyAddress.update;
-    params = [
-      date_time_updated,
-      updated_by_id,
-      address_line_1,
-      address_line_2,
-      address_line_3,
-      address_line_4,
-      country_code,
-      room,
-      building,
-      city,
-      state_code,
-      postal_code,
-      unlisted,
-      verified_flag,
-      byu_id,
-      address_type
-    ];
+  if(!is_different) {
+    return await exports.getAddress(definitions, byu_id, address_type, permissions);
   }
-  const update_results = await func.executeUpdate(sql_query, params);
-  sql_query = sql.modifyAddress.logChange;
-  const log_change_results = await func.executeUpdate(sql_query, log_params);
-  // return addressEvents(connection)
-  return await getAddress(definitions, byu_id, address_type, permissions);
+  else {
+    if (is_different && !from_results.rows[0].address_type) {
+      sql_query = sql.modifyAddress.create;
+      params = [
+        byu_id,
+        address_type,
+        date_time_updated,
+        updated_by_id,
+        date_time_created,
+        created_by_id,
+        address_line_1,
+        address_line_2,
+        address_line_3,
+        address_line_4,
+        country_code,
+        room,
+        building,
+        city,
+        state_code,
+        postal_code,
+        unlisted,
+        verified_flag
+      ];
+
+    } else if (is_different && from_results.rows[0].address_type) {
+      sql_query = sql.modifyAddress.update;
+      params = [
+        date_time_updated,
+        updated_by_id,
+        address_line_1,
+        address_line_2,
+        address_line_3,
+        address_line_4,
+        country_code,
+        room,
+        building,
+        city,
+        state_code,
+        postal_code,
+        unlisted,
+        verified_flag,
+        byu_id,
+        address_type
+      ];
+    }
+
+    const update_results = await db.executeUpdate(sql_query, params);
+    // sql_query = sql.modifyAddress.logChange;
+    // const log_change_results = await db.executeUpdate(sql_query, log_params);
+    // return addressEvents(connection)
+    return await exports.getAddress(definitions, byu_id, address_type, permissions);
+  }
 };
 
 // function addressEvents(connection) {
@@ -622,3 +630,28 @@ exports.modifyAddress = async function (definitions, byu_id, address_type, body,
 //       })
 //   }
 // }
+
+exports.deleteAddress = async function (definitions, byu_id, address_type, authorized_byu_id, permissions) {
+  if (!auth.canUpdatePersonContact(permissions)) {
+    throw new ClientError(403, "User not authorized to update CONTACT data")
+  }
+  let sql_query = sql.sql.fromAddress;
+  let params = [
+    address_type,
+    byu_id
+  ];
+
+  const results = await db.executeSelect(sql_query, params);
+
+  if (results.rows.length === 0) {
+    throw new ClientError(404, "Could not find BYU_ID")
+  }
+
+  /* This is the same as if a delete happened successfully. */
+  if (!results.rows[0].address_type) {
+    return;
+  }
+
+  sql_query = sql.modifyAddress.delete;
+  return await db.executeUpdate(sql_query, params);
+};

@@ -16,7 +16,6 @@
  */
 "use strict";
 
-const Enforcer          = require('swagger-enforcer');
 const SansServer        = require('sans-server');
 const SansServerSwagger = require('sans-server-swagger');
 const byuJwt            = require('byu-jwt');
@@ -32,7 +31,8 @@ api.hook(function defaultResponseHandler(state) {
   if(state.body instanceof Error && state.body.status) {
     this.body({
       return_code: state.body.status,
-      explanation: state.body.message
+      explanation: state.body.message,
+      error: state.body.message
     });
   }
 });
@@ -59,7 +59,6 @@ api.use(SansServerSwagger({
   development: true,
   logs: 'verbose',
   swagger: './swagger.json',
-  ignoreBasePath: true,
   exception: function exception(res, state) {
     res.body({
       return_code: state.statusCode,

@@ -17,11 +17,12 @@
 "use strict";
 const addressesController = require('../controllers/addresses/addresses');
 const auth                = require('../controllers/auth');
+const Enforcer            = require('swagger-enforcer');
 
 exports.getAddress = function (req, res) {
   auth.getPermissions(req)
     .then(function (permissions) {
-      console.log("permissions: ", permissions);
+      // console.log("permissions: ", permissions);
       return addressesController.getAddress(req.swagger.root.definitions, req.params.byu_id, req.params.address_type, permissions)
         .then(function (address) {
           res.send(address);
@@ -36,14 +37,40 @@ exports.getAddress = function (req, res) {
 exports.getAddresses = function (req, res) {
   auth.getPermissions(req)
     .then(function (permissions) {
-      console.log("permissions: ", permissions);
+      // console.log("permissions: ", permissions);
       return addressesController.getAddresses(req.swagger.root.definitions, req.params.byu_id, permissions)
         .then(function (addresses) {
           res.send(addresses);
         })
     })
     .catch(function (error) {
-      res.send(error);
+      res.status(error.status).send({ return_code: 404, explanation: "", error: error.message});
     })
   ;
+};
+
+exports.modifyAddress = function (req, res) {
+  auth.getPermissions(req)
+    .then(function (permissions) {
+      return addressesController.modifyAddress(req.swagger.root.definitions, req.params.byu_id, req.params.address_type, req.body, req.verifiedJWTs.prioritizedClaims.byuId, permissions)
+        .then(function (address) {
+          res.send(address);
+        })
+    })
+    .catch(function (error) {
+      res.send(error);
+    })
+};
+
+exports.deleteAddress = function (req, res) {
+  auth.getPermissions(req)
+    .then(function (permissions) {
+      return addressesController.deleteAddress(req.swagger.root.definitions, req.params.byu_id, req.params.address_type, req.verifiedJWTs.prioritizedClaims.byuId, permissions)
+        .then(function (success) {
+          res.sendStatus(204);
+        })
+    })
+    .catch(function (error) {
+      res.send(error);
+    })
 };
