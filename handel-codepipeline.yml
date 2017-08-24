@@ -1,6 +1,6 @@
 version: 1
 
-name: byuapi--persons
+name: byuapi-persons
 
 pipelines:
   dev:
@@ -8,7 +8,7 @@ pipelines:
     - type: github
       name: Github
       owner: byu-oit
-      repo: byuapi--persons
+      repo: byuapi-persons
       branch: master
     - type: codebuild
       name: Build

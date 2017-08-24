@@ -1,6 +1,6 @@
 version: 1
 
-name: byuapi--persons
+name: byuapi-persons
 
 environments:
   dev:
