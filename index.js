@@ -1,14 +1,14 @@
 /*
  * Copyright 2017 Brigham Young University
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
+ * Licensed under the Apache License, Version 2.0 (the 'License');
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
  *     http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
+ * distributed under the License is distributed on an 'AS IS' BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
@@ -19,11 +19,11 @@ process.on('unhandledRejection', (reason) => {
   // process.exit(1);
 });
 
-const api               = require('./api');
-const bodyParser        = require('body-parser');
-const express           = require('express');
+const api = require('./api');
+const bodyParser = require('body-parser');
+const express = require('express');
 const expressTranslator = require('sans-server-express');
-const Enforcer          = require('swagger-enforcer');
+const Enforcer = require('swagger-enforcer');
 
 Enforcer.applyTemplate.defaults.replacement = 'colon';
 
@@ -31,14 +31,10 @@ const app = express();
 
 app.use(bodyParser.json());
 
-app.get("/favicon.ico", function (req, res) {
-    res.sendStatus(404);
-});
+app.get('/favicon.ico', (req, res) => res.sendStatus(404));
 
-app.get("/", function (req, res) {
-    res.status(200).send("Success");
-});
+app.get('/', (req, res) => res.status(200).send('Success'));
 
 app.use(expressTranslator(api));
 
-app.listen(3000, () => console.log("Listening on port:3000"));
+app.listen(3000, () => console.log('Listening on port:3000'));
