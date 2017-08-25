@@ -305,36 +305,12 @@
               "$ref": "#/definitions/persons"
             }
           },
-          "400": {
-            "description": "Invalid Request - unable to interpret request",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
-          },
-          "401": {
-            "description": "Authentication required to access data",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
-          },
-          "403": {
-            "description": "Access denied to protected data",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
-          },
-          "409": {
-            "description": "Query parameters conflict or are malformed",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
-          },
-          "default": {
-            "description": "Unexpected error",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
-          }
+          "400": { "$ref": "#/responses/400" },
+          "401": { "$ref": "#/responses/401" },
+          "403": { "$ref": "#/responses/403" },
+          "404": { "$ref": "#/responses/404" },
+          "409": { "$ref": "#/responses/409" },
+          "default": { "$ref": "#/responses/default" }
         }
       },
       "post": {
@@ -362,42 +338,12 @@
               "$ref": "#/definitions/basic"
             }
           },
-          "400": {
-            "description": "Invalid Request - unable to interpret request",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
-          },
-          "401": {
-            "description": "Authentication required to access data",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
-          },
-          "403": {
-            "description": "Access denied to protected data",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
-          },
-          "404": {
-            "description": "Not found",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
-          },
-          "409": {
-            "description": "Query parameters conflict or are malformed",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
-          },
-          "default": {
-            "description": "Unexpected error",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
-          }
+          "400": { "$ref": "#/responses/400" },
+          "401": { "$ref": "#/responses/401" },
+          "403": { "$ref": "#/responses/403" },
+          "404": { "$ref": "#/responses/404" },
+          "409": { "$ref": "#/responses/409" },
+          "default": { "$ref": "#/responses/default" }
         }
       }
     },
@@ -472,42 +418,12 @@
               "$ref": "#/definitions/person"
             }
           },
-          "400": {
-            "description": "Invalid Request - unable to interpret request",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
-          },
-          "401": {
-            "description": "Authentication required to access data",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
-          },
-          "403": {
-            "description": "Access denied to protected data",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
-          },
-          "404": {
-            "description": "Not found",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
-          },
-          "409": {
-            "description": "Query parameters conflict or are malformed",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
-          },
-          "default": {
-            "description": "Unexpected error",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
-          }
+          "400": { "$ref": "#/responses/400" },
+          "401": { "$ref": "#/responses/401" },
+          "403": { "$ref": "#/responses/403" },
+          "404": { "$ref": "#/responses/404" },
+          "409": { "$ref": "#/responses/409" },
+          "default": { "$ref": "#/responses/default" }
         }
       },
       "put": {
@@ -543,42 +459,12 @@
               "$ref": "#/definitions/basic"
             }
           },
-          "400": {
-            "description": "Invalid Request - unable to interpret request",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
-          },
-          "401": {
-            "description": "Authentication required to access data",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
-          },
-          "403": {
-            "description": "Access denied to protected data",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
-          },
-          "404": {
-            "description": "Not found",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
-          },
-          "409": {
-            "description": "Query parameters conflict or are malformed",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
-          },
-          "default": {
-            "description": "Unexpected error",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
-          }
+          "400": { "$ref": "#/responses/400" },
+          "401": { "$ref": "#/responses/401" },
+          "403": { "$ref": "#/responses/403" },
+          "404": { "$ref": "#/responses/404" },
+          "409": { "$ref": "#/responses/409" },
+          "default": { "$ref": "#/responses/default" }
         }
       },
       "delete": {
@@ -602,30 +488,10 @@
           "204": {
             "description": "Person successfully deleted"
           },
-          "400": {
-            "description": "Invalid Request - unable to interpret request",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
-          },
-          "401": {
-            "description": "Authentication required to access data",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
-          },
-          "403": {
-            "description": "Access denied to protected data",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
-          },
-          "default": {
-            "description": "Unexpected error",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
-          }
+          "400": { "$ref": "#/responses/400" },
+          "401": { "$ref": "#/responses/401" },
+          "403": { "$ref": "#/responses/403" },
+          "default": { "$ref": "#/responses/default" }
         }
       }
     },
@@ -655,42 +521,12 @@
               "$ref": "#/definitions/addresses"
             }
           },
-          "400": {
-            "description": "Invalid Request - unable to interpret request",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
-          },
-          "401": {
-            "description": "Authentication required to access data",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
-          },
-          "403": {
-            "description": "Access denied to protected data",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
-          },
-          "404": {
-            "description": "Not found",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
-          },
-          "409": {
-            "description": "Query parameters conflict or are malformed",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
-          },
-          "default": {
-            "description": "Unexpected error",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
-          }
+          "400": { "$ref": "#/responses/400" },
+          "401": { "$ref": "#/responses/401" },
+          "403": { "$ref": "#/responses/403" },
+          "404": { "$ref": "#/responses/404" },
+          "409": { "$ref": "#/responses/409" },
+          "default": { "$ref": "#/responses/default" }
         }
       }
     },
@@ -733,42 +569,12 @@
               "$ref": "#/definitions/address"
             }
           },
-          "400": {
-            "description": "Invalid Request - unable to interpret request",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
-          },
-          "401": {
-            "description": "Authentication required to access data",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
-          },
-          "403": {
-            "description": "Access denied to protected data",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
-          },
-          "404": {
-            "description": "Not found",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
-          },
-          "409": {
-            "description": "Query parameters conflict or are malformed",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
-          },
-          "default": {
-            "description": "Unexpected error",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
-          }
+          "400": { "$ref": "#/responses/400" },
+          "401": { "$ref": "#/responses/401" },
+          "403": { "$ref": "#/responses/403" },
+          "404": { "$ref": "#/responses/404" },
+          "409": { "$ref": "#/responses/409" },
+          "default": { "$ref": "#/responses/default" }
         }
       },
       "put": {
@@ -823,42 +629,12 @@
               "$ref": "#/definitions/address"
             }
           },
-          "400": {
-            "description": "Invalid Request - unable to interpret request",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
-          },
-          "401": {
-            "description": "Authentication required to access data",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
-          },
-          "403": {
-            "description": "Access denied to protected data",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
-          },
-          "404": {
-            "description": "Not found",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
-          },
-          "409": {
-            "description": "Query parameters conflict or are malformed",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
-          },
-          "default": {
-            "description": "Unexpected error",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
-          }
+          "400": { "$ref": "#/responses/400" },
+          "401": { "$ref": "#/responses/401" },
+          "403": { "$ref": "#/responses/403" },
+          "404": { "$ref": "#/responses/404" },
+          "409": { "$ref": "#/responses/409" },
+          "default": { "$ref": "#/responses/default" }
         }
       },
       "delete": {
@@ -895,30 +671,10 @@
           "204": {
             "description": "Address successfully deleted"
           },
-          "400": {
-            "description": "Invalid Request - unable to interpret request",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
-          },
-          "401": {
-            "description": "Authentication required to access data",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
-          },
-          "403": {
-            "description": "Access denied to protected data",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
-          },
-          "default": {
-            "description": "Unexpected error",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
-          }
+          "400": { "$ref": "#/responses/400" },
+          "401": { "$ref": "#/responses/401" },
+          "403": { "$ref": "#/responses/403" },
+          "default": { "$ref": "#/responses/default" }
         }
       }
     },
@@ -5354,33 +5110,6 @@
         }
       }
     },
-    "all": {
-      "type": "array",
-      "items": {
-        "type": "string",
-        "enum": [
-          "basic",
-          "addresses",
-          "credentials",
-          "email_addresses",
-          "employee_summaries",
-          "ethnicities",
-          "family_phones",
-          "government_records",
-          "group_membership_events",
-          "group_memberships",
-          "groups_administered",
-          "my_delegators",
-          "my_guests",
-          "id_cards",
-          "languages",
-          "personal_records",
-          "phones",
-          "relationships",
-          "student_summaries"
-        ]
-      }
-    },
     "associated_device": {
       "type": "object",
       "required": [
@@ -5868,19 +5597,6 @@
         "api_type": "read-only"
       }
     },
-    "contact": {
-      "type": "array",
-      "items": {
-        "type": "string",
-        "enum": [
-          "basic",
-          "addresses",
-          "email_addresses",
-          "family_phones",
-          "phones"
-        ]
-      }
-    },
     "contact_person": {
       "type": "object",
       "required": [
@@ -5906,27 +5622,6 @@
       "example": {
         "value": "Joseph Smith",
         "api_type": "modifiable"
-      }
-    },
-    "contexts_available": {
-      "description": "Pre-designated collections of field_sets",
-      "type": "object",
-      "properties": {
-        "all": {
-          "$ref": "#/definitions/all"
-        },
-        "contact": {
-          "$ref": "#/definitions/contact"
-        },
-        "official": {
-          "$ref": "#/definitions/official"
-        },
-        "emergency": {
-          "$ref": "#/definitions/emergency"
-        },
-        "marriott_school": {
-          "$ref": "#/definitions/marriott_school"
-        }
       }
     },
     "country_code": {
@@ -6507,17 +6202,6 @@
         "api_type": "read-only"
       }
     },
-    "default_field_sets": {
-      "description": "Default Field Sets",
-      "type": "array",
-      "items": {
-        "type": "string",
-        "default": ["basic"],
-        "enum": [
-          "basic"
-        ]
-      }
-    },
     "delegator_id": {
       "description": "The BYU ID of the delegator in an access delegation relationship",
       "type": "object",
@@ -7043,16 +6727,6 @@
         }
       }
     },
-    "emergency": {
-      "type": "array",
-      "items": {
-        "type": "string",
-        "enum": [
-          "family_phones",
-          "relationships"
-        ]
-      }
-    },
     "employee_summaries": {
       "description": "Employee summaries for a person",
       "type": "object",
@@ -7124,22 +6798,28 @@
     },
     "error": {
       "description": "Error Information",
-      "type": "object",
       "required": [
         "return_code",
         "explanation",
         "error"
       ],
+      "return_code": {
+        "type": "integer",
+        "format": "int32"
+      },
+      "explanation": {
+        "type": "string"
+      },
+      "error": {
+        "type": "string"
+      }
+    },
+    "error_response": {
+      "type": "object",
+      "required": ["metadata"],
       "properties": {
-        "return_code": {
-          "type": "integer",
-          "format": "int32"
-        },
-        "explanation": {
-          "type": "string"
-        },
-        "error": {
-          "type": "string"
+        "metadata": {
+          "$ref": "#/definitions/simple_metadata"
         }
       }
     },
@@ -7467,62 +7147,6 @@
             "$ref": "#/definitions/family_phone"
           }
         }
-      }
-    },
-    "field_sets_available": {
-      "description": "Field Sets Available",
-      "type": "array",
-      "items": {
-        "type": "string",
-        "enum": [
-          "basic",
-          "addresses",
-          "credentials",
-          "email_addresses",
-          "employee_summaries",
-          "ethnicities",
-          "family_phones",
-          "government_records",
-          "group_membership_events",
-          "group_memberships",
-          "groups_administered",
-          "id_cards",
-          "languages",
-          "my_delegators",
-          "my_guests",
-          "personal_reccords",
-          "phones",
-          "relationships",
-          "student_summaries"
-        ]
-      }
-    },
-    "field_sets_returned": {
-      "description": "Field Sets that are returned",
-      "type": "array",
-      "items": {
-        "type": "string",
-        "enum": [
-          "basic",
-          "addresses",
-          "credentials",
-          "email_addresses",
-          "employee_summaries",
-          "ethnicities",
-          "family_phones",
-          "government_records",
-          "group_membership_events",
-          "group_memberships",
-          "groups_administered",
-          "id_cards",
-          "languages",
-          "my_delegators",
-          "my_guests",
-          "personal_records",
-          "phones",
-          "relationships",
-          "student_summaries"
-        ]
       }
     },
     "first_name": {
@@ -9217,30 +8841,6 @@
         "api_type": "read-only"
       }
     },
-    "marriott_school": {
-      "type": "array",
-      "items": {
-        "type": "string",
-        "enum": [
-          "basic",
-          "addresses",
-          "credentials",
-          "email_addresses",
-          "employee_summaries",
-          "ethnicities",
-          "family_phones",
-          "government_records",
-          "group_memberships",
-          "groups_administered",
-          "id_cards",
-          "languages",
-          "personal_records",
-          "phones",
-          "relationships",
-          "student_summaries"
-        ]
-      }
-    },
     "merge_in_process": {
       "description": "Indicates whether a merge is pending for this record, in which case updates are not allowed",
       "type": "object",
@@ -9789,18 +9389,6 @@
         "api_type": "read-only"
       }
     },
-    "official": {
-      "type": "array",
-      "items": {
-        "type": "string",
-        "enum": [
-          "credentials",
-          "government_records",
-          "personal_records",
-          "id_cards"
-        ]
-      }
-    },
     "operation": {
       "description": "The name of the operation in the Guest Access system",
       "type": "object",
@@ -10337,23 +9925,185 @@
           "description": "Hypermedia links for a collection of persons",
           "type": "object",
           "properties": {
-            "persons.info": {
-              "$ref": "#/definitions/links"
+            "persons__current": {
+              "rel": "persons__current",
+              "href": "https://api.byu.edu/byuapi/persons?page_start=1,page_size=50",
+              "method": "GET"
             },
-            "persons.first": {
-              "$ref": "#/definitions/links"
+            "persons__prev": {
+              "rel": "persons__prev",
+              "href": "https://api.byu.edu/byuapi/persons?page_start=1,page_size=50",
+              "method": "GET"
             },
-            "persons.last": {
-              "$ref": "#/definitions/links"
+            "persons__next": {
+              "rel": "persons__next",
+              "href": "https://api.byu.edu/byuapi/persons?page_start=101,page_size=50",
+              "method": "GET"
             },
-            "persons.next": {
-              "$ref": "#/definitions/links"
+            "persons__create": {
+              "rel": "persons__create",
+              "href": "https://api.byu.edu/byuapi/persons",
+              "method": "POST"
             },
-            "persons.prev": {
-              "$ref": "#/definitions/links"
+            "persons__info": {
+              "description": "Hypermedia link for the default persons collection",
+              "type": "object",
+              "required": [
+                "rel",
+                "href",
+                "method"
+              ],
+              "properties": {
+                "rel": {
+                  "type": "string",
+                  "default": "self",
+                  "enum": ["self" ]
+                },
+                "href": {
+                  "type": "string",
+                  "format": "uri",
+                  "default": "https://api.byu.edu/byuapi/persons/v1/"
+                },
+                "method": {
+                  "type": "string",
+                  "default": "GET",
+                  "enum": [ "GET" ]
+                }
+              }
             },
-            "persons.create": {
-              "$ref": "#/definitions/links"
+            "persons__first": {
+              "description": "Hypermedia link for the persons collection at the first page",
+              "type": "object",
+              "required": [
+                "rel",
+                "href",
+                "method"
+              ],
+              "properties": {
+                "rel": {
+                  "type": "string",
+                  "default": "persons__first",
+                  "enum": [ "persons__first" ]
+                },
+                "href": {
+                  "type": "string",
+                  "format": "uri",
+                  "default": "https://api.byu.edu/byuapi/persons/v1/?page_start=1,page_size=:page_size"
+                },
+                "method": {
+                  "type": "string",
+                  "default": "GET",
+                  "enum": [ "GET" ]
+                }
+              }
+            },
+            "persons__last": {
+              "description": "Hypermedia links format",
+              "type": "object",
+              "required": [
+                "rel",
+                "href",
+                "method"
+              ],
+              "properties": {
+                "rel": {
+                  "type": "string",
+                  "default": "self"
+                },
+                "href": {
+                  "type": "string",
+                  "format": "uri",
+                  "default": "https://api.byu.edu/byuapi/persons/v1/"
+                },
+                "method": {
+                  "type": "string",
+                  "default": "GET",
+                  "enum": [
+                    "GET"
+                  ]
+                }
+              }
+            },
+            "persons__next": {
+              "description": "Hypermedia links format",
+              "type": "object",
+              "required": [
+                "rel",
+                "href",
+                "method"
+              ],
+              "properties": {
+                "rel": {
+                  "type": "string",
+                  "default": "self"
+                },
+                "href": {
+                  "type": "string",
+                  "format": "uri",
+                  "default": "https://api.byu.edu/byuapi/persons/v1/"
+                },
+                "method": {
+                  "type": "string",
+                  "default": "GET",
+                  "enum": [
+                    "GET"
+                  ]
+                }
+              }
+            },
+            "persons__prev": {
+              "description": "Hypermedia links format",
+              "type": "object",
+              "required": [
+                "rel",
+                "href",
+                "method"
+              ],
+              "properties": {
+                "rel": {
+                  "type": "string",
+                  "default": "self"
+                },
+                "href": {
+                  "type": "string",
+                  "format": "uri",
+                  "default": "https://api.byu.edu/byuapi/persons/v1/"
+                },
+                "method": {
+                  "type": "string",
+                  "default": "GET",
+                  "enum": [
+                    "GET"
+                  ]
+                }
+              }
+            },
+            "persons__create": {
+              "description": "Hypermedia links format",
+              "type": "object",
+              "required": [
+                "rel",
+                "href",
+                "method"
+              ],
+              "properties": {
+                "rel": {
+                  "type": "string",
+                  "default": "self"
+                },
+                "href": {
+                  "type": "string",
+                  "format": "uri",
+                  "default": "https://api.byu.edu/byuapi/persons/v1/"
+                },
+                "method": {
+                  "type": "string",
+                  "default": "GET",
+                  "enum": [
+                    "GET"
+                  ]
+                }
+              }
             }
           }
         },
@@ -11561,13 +11311,15 @@
           "properties": {
             "code": {
               "type": "integer",
+              "maxLength": 3,
+              "minLength": 3,
               "default": 200,
-              "x-variable": "return_code"
+              "x-variable": "validation_response_code"
             },
             "message": {
               "type": "string",
               "default": "Success",
-              "x-variable": "return_message"
+              "x-variable": "validation_response_message"
             }
           }
         },
@@ -11584,7 +11336,8 @@
           "properties": {
             "date_time": {
               "type": "string",
-              "format": "date-time"
+              "format": "date-time",
+              "x-variable": "cache_date_time"
             }
           }
         }
@@ -11784,53 +11537,58 @@
       }
     },
     "sub_level_metadata": {
-      "type": "object",
-      "properties": {
-        "collection_size": {
-          "type": "integer",
-          "minimum": 0,
-          "x-variable": "collection_size"
-        },
-        "page_start": {
-          "type": "integer",
-          "minimum": 0,
-          "default": 0,
-          "x-variable": "page_start"
-        },
-        "page_end": {
-          "type": "integer",
-          "minimum": 0,
-          "x-variable": "page_end"
-        },
-        "page_size": {
-          "type": "integer",
-          "minimum": 0,
-          "x-variable": "page_size"
-        },
-        "default_page_size": {
-          "type": "integer",
-          "minimum": 1,
-          "default": 1,
-          "x-variable": "default_page_size"
-        },
-        "maximum_page_size": {
-          "type": "integer",
-          "x-variable": "maximum_page_size"
-        },
-        "validation_response": {
+      "allOf": [
+        {
           "type": "object",
+          "required": [
+            "collection_size",
+            "page_start",
+            "page_end",
+            "page_size",
+            "default_page_size",
+            "max_page_size"
+          ],
           "properties": {
-            "code": {
+            "collection_size": {
               "type": "integer",
-              "maxLength": 3,
-              "minLength": 3
+              "minimum": 0,
+              "default": 0,
+              "x-variable": "collection_size"
             },
-            "message": {
-              "type": "string"
+            "page_start": {
+              "type": "integer",
+              "minimum": 0,
+              "default": 0,
+              "x-variable": "page_start"
+            },
+            "page_end": {
+              "type": "integer",
+              "minimum": 0,
+              "default": 0,
+              "x-variable": "page_end"
+            },
+            "page_size": {
+              "type": "integer",
+              "minimum": 0,
+              "default": 0,
+              "x-variable": "page_size"
+            },
+            "default_page_size": {
+              "type": "integer",
+              "minimum": 1,
+              "default": 50,
+              "x-variable": "default_page_size"
+            },
+            "maximum_page_size": {
+              "type": "integer",
+              "minimum": 0,
+              "default": 200,
+              "x-variable": "maximum_page_size"
             }
           }
-        }
-      }
+        },
+        { "$ref": "#/definitions/simple_metadata" }
+      ]
     },
     "suffix": {
       "description": "The suffix, validated through the meta/suffix service",
@@ -11942,75 +11700,246 @@
       }
     },
     "top_level_metadata": {
-      "type": "object",
-      "required": [
-        "collection_size",
-        "page_start",
-        "page_end",
-        "page_size",
-        "default_page_size",
-        "max_page_size"
-      ],
-      "properties": {
-        "collection_size": {
-          "type": "integer",
-          "minimum": 0
-        },
-        "page_start": {
-          "type": "integer",
-          "minimum": 0
-        },
-        "page_end": {
-          "type": "integer",
-          "minimum": 0
-        },
-        "page_size": {
-          "type": "integer",
-          "minimum": 0
-        },
-        "default_page_size": {
-          "type": "integer",
-          "minimum": 1
-        },
-        "max_page_size": {
-          "type": "integer",
-          "minimum": 0
-        },
-        "field_sets_returned": {
-          "$ref": "#/definitions/field_sets_returned"
-        },
-        "field_sets_available": {
-          "$ref": "#/definitions/field_sets_available"
-        },
-        "default_field_sets": {
-          "$ref": "#/definitions/default_field_sets"
-        },
-        "contexts_available": {
-          "$ref": "#/definitions/contexts_available"
-        },
-        "validation_response": {
+      "allOf": [
+        {
           "type": "object",
           "properties": {
-            "code": {
-              "type": "integer",
-              "maxLength": 3,
-              "minLength": 3
+            "field_sets_returned": {
+              "type": "array",
+              "default": ["basic"],
+              "items": {
+                "type": "string",
+                "enum": [
+                  "basic",
+                  "addresses",
+                  "credentials",
+                  "email_addresses",
+                  "employee_summaries",
+                  "ethnicities",
+                  "family_phones",
+                  "government_records",
+                  "group_membership_events",
+                  "group_memberships",
+                  "groups_administered",
+                  "id_cards",
+                  "languages",
+                  "my_delegators",
+                  "my_guests",
+                  "personal_records",
+                  "phones",
+                  "relationships",
+                  "student_summaries"
+                ]
+              }
             },
-            "message": {
-              "type": "string"
+            "field_sets_available": {
+              "type": "array",
+              "default": [
+                "basic",
+                "addresses",
+                "credentials",
+                "email_addresses",
+                "employee_summaries",
+                "ethnicities",
+                "family_phones",
+                "government_records",
+                "group_membership_events",
+                "group_memberships",
+                "groups_administered",
+                "id_cards",
+                "languages",
+                "my_delegators",
+                "my_guests",
+                "personal_reccords",
+                "phones",
+                "relationships",
+                "student_summaries"
+              ],
+              "items": {
+                "type": "string",
+                "enum": [
+                  "basic",
+                  "addresses",
+                  "credentials",
+                  "email_addresses",
+                  "employee_summaries",
+                  "ethnicities",
+                  "family_phones",
+                  "government_records",
+                  "group_membership_events",
+                  "group_memberships",
+                  "groups_administered",
+                  "id_cards",
+                  "languages",
+                  "my_delegators",
+                  "my_guests",
+                  "personal_reccords",
+                  "phones",
+                  "relationships",
+                  "student_summaries"
+                ]
+              }
+            },
+            "field_sets_default": {
+              "type": "array",
+              "default": ["basic"],
+              "items": {
+                "type": "string",
+                "enum": [ "basic" ]
+              }
+            },
+            "contexts_available": {
+              "description": "Pre-designated collections of field_sets",
+              "type": "object",
+              "properties": {
+                "all": {
+                  "type": "array",
+                  "default": [
+                    "basic",
+                    "addresses",
+                    "credentials",
+                    "email_addresses",
+                    "employee_summaries",
+                    "ethnicities",
+                    "family_phones",
+                    "government_records",
+                    "group_membership_events",
+                    "group_memberships",
+                    "groups_administered",
+                    "my_delegators",
+                    "my_guests",
+                    "id_cards",
+                    "languages",
+                    "personal_records",
+                    "phones",
+                    "relationships",
+                    "student_summaries"
+                  ],
+                  "items": {
+                    "type": "string",
+                    "enum": [
+                      "basic",
+                      "addresses",
+                      "credentials",
+                      "email_addresses",
+                      "employee_summaries",
+                      "ethnicities",
+                      "family_phones",
+                      "government_records",
+                      "group_membership_events",
+                      "group_memberships",
+                      "groups_administered",
+                      "my_delegators",
+                      "my_guests",
+                      "id_cards",
+                      "languages",
+                      "personal_records",
+                      "phones",
+                      "relationships",
+                      "student_summaries"
+                    ]
+                  }
+                },
+                "contact": {
+                  "type": "array",
+                  "default": [
+                    "basic",
+                    "addresses",
+                    "email_addresses",
+                    "family_phones",
+                    "phones"
+                  ],
+                  "items": {
+                    "type": "string",
+                    "enum": [
+                      "basic",
+                      "addresses",
+                      "email_addresses",
+                      "family_phones",
+                      "phones"
+                    ]
+                  }
+                },
+                "official": {
+                  "type": "array",
+                  "default": [
+                    "credentials",
+                    "government_records",
+                    "personal_records",
+                    "id_cards"
+                  ],
+                  "items": {
+                    "type": "string",
+                    "enum": [
+                      "credentials",
+                      "government_records",
+                      "personal_records",
+                      "id_cards"
+                    ]
+                  }
+                },
+                "emergency": {
+                  "type": "array",
+                  "default": [
+                    "family_phones",
+                    "relationships"
+                  ],
+                  "items": {
+                    "type": "string",
+                    "enum": [
+                      "family_phones",
+                      "relationships"
+                    ]
+                  }
+                },
+                "marriott_school": {
+                  "type": "array",
+                  "default": [
+                    "basic",
+                    "addresses",
+                    "credentials",
+                    "email_addresses",
+                    "employee_summaries",
+                    "ethnicities",
+                    "family_phones",
+                    "government_records",
+                    "group_memberships",
+                    "groups_administered",
+                    "id_cards",
+                    "languages",
+                    "personal_records",
+                    "phones",
+                    "relationships",
+                    "student_summaries"
+                  ],
+                  "items": {
+                    "type": "string",
+                    "enum": [
+                      "basic",
+                      "addresses",
+                      "credentials",
+                      "email_addresses",
+                      "employee_summaries",
+                      "ethnicities",
+                      "family_phones",
+                      "government_records",
+                      "group_memberships",
+                      "groups_administered",
+                      "id_cards",
+                      "languages",
+                      "personal_records",
+                      "phones",
+                      "relationships",
+                      "student_summaries"
+                    ]
+                  }
+                }
+              }
             }
           }
         },
-        "default_db": {
-          "type": "array",
-          "items": {
-            "type": "string",
-            "enum": [
-              "ces"
-            ]
-          }
-        }
-      }
+        { "$ref": "#/definitions/sub_level_metadata" }
+      ]
     },
     "translator": {
       "type": "object",
@@ -12347,6 +12276,40 @@
         "value": "H",
         "api_type": "read-only"
       }
+    }
+  },
+  "responses": {
+    "400": {
+      "description": "Invalid Request - unable to interpret request",
+      "schema": { "$ref": "#/definitions/error_response" }
+    },
+    "401": {
+      "description": "Authentication required to access data",
+      "schema": { "$ref": "#/definitions/error_response" }
+    },
+    "403": {
+      "description": "Access denied to protected data",
+      "schema": { "$ref": "#/definitions/error_response" }
+    },
+    "404": {
+      "description": "The resource does not exist",
+      "schema": { "$ref": "#/definitions/error_response" }
+    },
+    "409": {
+      "description": "Query parameters conflict or are malformed",
+      "schema": { "$ref": "#/definitions/error_response" }
+    },
+    "default": {
+      "description": "Unexpected error",
+      "schema": { "$ref": "#/definitions/error_response" },
+      "x-handler": "defaultHandler"
+    }
+  },
+  "x-mock_json": {
+    "persons": {
+      "links": {},
+      "metadata": {},
+      "values": []
     }
   }
 }

@@ -18,9 +18,10 @@
 const addressesController = require('../controllers/addresses/addresses');
 const auth                = require('../controllers/auth');
 const Enforcer            = require('swagger-enforcer');
+const utils               = require('../controllers/utils');
 
 exports.getAddress = function (req, res) {
-  auth.getPermissions(req)
+  return auth.getPermissions(req)
     .then(function (permissions) {
       // console.log("permissions: ", permissions);
       return addressesController.getAddress(req.swagger.root.definitions, req.params.byu_id, req.params.address_type, permissions)
@@ -29,13 +30,14 @@ exports.getAddress = function (req, res) {
         })
     })
     .catch(function (error) {
-      res.send(error);
+      utils.defaultResponseHandler(req.swagger.root.definitions.simple_metadata, {}, res, error);
+      // res.send(error);
     })
   ;
 };
 
 exports.getAddresses = function (req, res) {
-  auth.getPermissions(req)
+  return auth.getPermissions(req)
     .then(function (permissions) {
       // console.log("permissions: ", permissions);
       return addressesController.getAddresses(req.swagger.root.definitions, req.params.byu_id, permissions)
@@ -44,13 +46,13 @@ exports.getAddresses = function (req, res) {
         })
     })
     .catch(function (error) {
-      res.status(error.status).send({ return_code: 404, explanation: "", error: error.message});
+      utils.defaultResponseHandler(req.swagger.root.definitions.simple_metadata, {}, res, error);
     })
   ;
 };
 
 exports.modifyAddress = function (req, res) {
-  auth.getPermissions(req)
+  return auth.getPermissions(req)
     .then(function (permissions) {
       return addressesController.modifyAddress(req.swagger.root.definitions, req.params.byu_id, req.params.address_type, req.body, req.verifiedJWTs.prioritizedClaims.byuId, permissions)
         .then(function (address) {
@@ -63,7 +65,7 @@ exports.modifyAddress = function (req, res) {
 };
 
 exports.deleteAddress = function (req, res) {
-  auth.getPermissions(req)
+  return auth.getPermissions(req)
     .then(function (permissions) {
       return addressesController.deleteAddress(req.swagger.root.definitions, req.params.byu_id, req.params.address_type, req.verifiedJWTs.prioritizedClaims.byuId, permissions)
         .then(function (success) {

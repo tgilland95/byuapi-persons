@@ -19,7 +19,7 @@ const auth        = require('../controllers/auth');
 const personsController = require('../controllers/persons/persons');
 
 exports.getPersons = function (req, res) {
-  auth.getPermissions(req)
+  return auth.getPermissions(req)
     .then(function (permissions) {
       return personsController.getPersons(req.swagger.root.definitions, req.query, permissions)
         .then(function (address) {
@@ -30,7 +30,7 @@ exports.getPersons = function (req, res) {
 };
 
 exports.getPerson = function (req, res) {
-  auth.getPermissions(req)
+  return auth.getPermissions(req)
     .then(function (permissions) {
       return personsController.getPerson(req.swagger.root.definitions, req.params.byu_id, req.query, permissions)
         .then(function (person) {

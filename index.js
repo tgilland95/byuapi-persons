@@ -16,7 +16,7 @@
  */
 process.on('unhandledRejection', (reason) => {
   console.error(reason.stack);
-  process.exit(1);
+  // process.exit(1);
 });
 
 const api               = require('./api');

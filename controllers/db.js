@@ -3,7 +3,6 @@ const oracle = require('oracledb');
 const param = require('./param');
 
 oracle.outFormat = oracle.OBJECT;
-oracle.autoCommit = true;
 
 console.log("CREATING POOL");
 const poolPromise = param.getParams()
@@ -19,50 +18,40 @@ const poolPromise = param.getParams()
     return oracle.createPool(dbconfig)
       .then(function (pool) {
         console.log("POOL CREATED");
+        process.on("SIGINT", function () {
+          console.log("SIGINT");
+          pool.close();
+          process.exit(0);
+        });
         return pool;
       });
   });
 
-poolPromise.then(function (pool) {
-  oracle.getConnection(pool).then(function (conn) {
-    conn.close();
-  })
-});
-
-async function connect() {
+exports.getConnection = async function () {
   let startTime = (new Date()).getTime();
   const pool = await poolPromise;
   return oracle.getConnection(pool)
-    .then(function (pool) {
+    .then(function (conn) {
       let elapsedMilliseconds = (new Date()).getTime() - startTime;
       console.log("elapsedMilliseconds: ",elapsedMilliseconds);
-      return pool;
+      return conn;
     });
 };
 
-exports.executeSelect = async function (sql,params) {
+exports.execute = async function (sql, params, options) {
   // console.log("CONNECTING TO DB");
-  const conn = await connect();
-  const result = await conn.execute(sql, params);
-  // console.log("SQL EXECUTED");
-  conn.close();
-  return result;
-};
-
-exports.executeUpdate = function(sql,params) {
-  return connect()
-    .then(function (conn) {
-      // console.log("update connection created");
-      return conn.execute(sql, params)
-        .then(function (result) {
-          conn.close();
-          return result;
-        })
-        .catch(function (err) {
-          console.log(err);
-          throw err;
-        })
-    })
+  let conn;
+  try {
+    conn = await exports.getConnection();
+    const result = await conn.execute(sql, params, options || {});
+    // console.log("SQL EXECUTED");
+    conn.close();
+    return result;
+  } catch (e) {
+    if(conn) {
+      conn.close();
+    }
+  }
 };
 
 exports.intermediaryId = {

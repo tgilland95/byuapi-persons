@@ -15,6 +15,7 @@
  *
  */
 "use strict";
+const Enforcer            = require('swagger-enforcer');
 
 exports.Error = function (status, message) {
   const err = Error(message);
@@ -37,4 +38,13 @@ const clearNull = function(arr) {
     }
   }
   return arr;
+};
+
+exports.defaultResponseHandler = function (metadata_definition, initial, res, error) {
+  initial.metadata = Enforcer.applyTemplate(metadata_definition, null,
+    {
+      validation_response_code: error.status || 500,
+      validation_response_message: error.message || 'Internal Server Error'
+    });
+  res.status(initial.metadata.validation_response.code).send(initial);
 };

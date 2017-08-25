@@ -27,16 +27,6 @@ const wellknown = 'https://api.byu.edu/.well-known/openid-configuration';
 const api = SansServer();
 module.exports = api;
 
-api.hook(function defaultResponseHandler(state) {
-  if(state.body instanceof Error && state.body.status) {
-    this.body({
-      return_code: state.body.status,
-      explanation: state.body.message,
-      error: state.body.message
-    });
-  }
-});
-
 api.use(function (req, res, next) {
   if (req.path === "/") {
     next();
@@ -60,10 +50,11 @@ api.use(SansServerSwagger({
   logs: 'verbose',
   swagger: './swagger.json',
   exception: function exception(res, state) {
-    res.body({
-      return_code: state.statusCode,
-      explanation: state.body,
-      error: state.body
-    });
+    if(state.body instanceof Error && state.body.status) {
+      res.body({ metadata: { validation_response: { code: state.body.status, message: state.body.message}}});
+    }
+    else {
+      res.body({ metadata: { validation_response: { code: state.statusCode, message: state.body}}});
+    }
   }
 }));

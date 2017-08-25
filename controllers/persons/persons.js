@@ -29,18 +29,27 @@ exports.getPerson = async function (definitions, byu_id, query, permissions) {
   if(query.field_sets.includes('basic')){
     promises.push(basic.getBasic(definitions, byu_id, permissions).then(function (basic_result) {
       result.basic = basic_result;
-    }));
+    })
+      .catch(function (error) {
+        let basic = Enforcer.applyTemplate(definitions.basic, null,
+          {
+            byu_id: byu_id,
+            validation_response_code: error.status || 500,
+            validation_response_message: error.message || 'Internal Server Error'
+          }, { ignoreMissingRequired: false });
+        result.basic = basic;
+      }));
   }
   if(query.field_sets.includes('addresses')) {
     promises.push(addresses.getAddresses(definitions, byu_id, permissions).then(function (addresses_result) {
       result.addresses = addresses_result;
     })
       .catch(function (error) {
-        let addresses = { metadata: {}, values: []};
-        addresses.metadata = Enforcer.applyTemplate(definitions.simple_metadata, null,
+        let addresses = {values: []};
+        addresses.metadata = Enforcer.applyTemplate(definitions.sub_level_metadata, null,
           {
-            return_code: error.status || 500,
-            return_message: error.message || 'Internal Server Error'
+            validation_response_code: error.status || 500,
+            validation_response_message: error.message || 'Internal Server Error'
           });
         result.addresses = addresses;
       }));
@@ -366,7 +375,7 @@ exports.getPersons = async function(definitions, query, permisisons) {
         " and sre.reg_eligibility = :re"
     }
   }
-  const results = await db.executeSelect(sql_query_select + sql_query_from + sql_query_where, params);
+  const results = await db.execute(sql_query_select + sql_query_from + sql_query_where, params);
   const values = await Promise.all(results.rows.map(row => exports.getPerson(definitions, row.byu_id, query, permisisons)));
   const persons = Enforcer.applyTemplate(definitions.persons, definitions,
     {
@@ -378,6 +387,8 @@ exports.getPersons = async function(definitions, query, permisisons) {
       maximum_page_size: 100,
       persons_values: values
     });
+  // TODO: Should we embellish the HATEOAS "self" links with the query parameters specified on this specific request?
+  // TODO: Set :page_size in HATEOAS link to size of results from SQL query
   persons.values = values;
   return persons;
 };

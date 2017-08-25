@@ -65,9 +65,10 @@ function mapDBResultsToDefinition(definitions, row, api_type) {
 }
 
 exports.getBasic = async function getBasic(definitions, byu_id, permissions) {
+  // throw utils.Error(401, 'BYU_ID Not Found In Person Table');
   const params = [byu_id];
   const sql_query = sql.sql.getBasic;
-  const results = await db.executeSelect(sql_query, params);
+  const results = await db.execute(sql_query, params);
 
   if (!results.rows.length ||
     (results.rows[0].restricted === 'Y' &&

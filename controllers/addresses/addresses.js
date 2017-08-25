@@ -32,11 +32,9 @@ const moment        = require('moment-timezone');
  * @param return_message - string to pass as a message
  * @returns {*}
  */
-function mapDBResultsToDefinition(definitions, row, api_type, return_code, return_message) {
+function mapDBResultsToDefinition(definitions, row, api_type) {
   return Enforcer.applyTemplate(definitions.address, null,
     {
-      return_code: return_code,
-      return_message: return_message,
       byu_id: row.byu_id,
       name: row.name,
       address_type: row.address_type,
@@ -84,7 +82,7 @@ exports.getAddress = async function getAddress(definitions, byu_id, address_type
   const return_code = auth.canViewContact(permissions) ? 200 : 203;
   const return_message = auth.canViewContact(permissions) ? 'Success' : 'Public Info Only';
   const modifiable = auth.canViewContact(permissions) ? 'modifiable': 'read-only';
-  const results = await db.executeSelect(sql_query, params);
+  const results = await db.execute(sql_query, params);
 
   // If no results are returned or the record is restricted
   // and the entity retrieving the record does not belong
@@ -129,7 +127,7 @@ exports.getAddresses = async function getAddresses(definitions, byu_id, permissi
   // throw utils.Error(404, 'BYU_ID Not Found In Person Table');
   const params = [byu_id];
   const sql_query = sql.sql.getAddresses;
-  const results = await db.executeSelect(sql_query, params);
+  const results = await db.execute(sql_query, params);
 
   // If no results are returned or the record is restricted
   // and the entity retrieving the record does not belong
@@ -317,7 +315,7 @@ exports.modifyAddress = async function (definitions, byu_id, address_type, body,
     byu_id
   ];
   let sql_query = sql.sql.fromAddress;
-  const from_results = await db.executeSelect(sql_query, params);
+  const from_results = await db.execute(sql_query, params, { autoCommit: true });
   if (from_results.rows.length === 0) {
     throw new ClientError(404, "Could not find BYU_ID in Person Table")
   }
@@ -441,9 +439,9 @@ exports.modifyAddress = async function (definitions, byu_id, address_type, body,
       ];
     }
 
-    const update_results = await db.executeUpdate(sql_query, params);
+    const update_results = await db.execute(sql_query, params, {autoCommit: true});
     // sql_query = sql.modifyAddress.logChange;
-    // const log_change_results = await db.executeUpdate(sql_query, log_params);
+    // const log_change_results = await db.execute(sql_query, log_params);
     // return addressEvents(connection)
     return await exports.getAddress(definitions, byu_id, address_type, permissions);
   }
@@ -641,7 +639,7 @@ exports.deleteAddress = async function (definitions, byu_id, address_type, autho
     byu_id
   ];
 
-  const results = await db.executeSelect(sql_query, params);
+  const results = await db.execute(sql_query, params, {autoCommit:true});
 
   if (results.rows.length === 0) {
     throw new ClientError(404, "Could not find BYU_ID")
@@ -653,5 +651,5 @@ exports.deleteAddress = async function (definitions, byu_id, address_type, autho
   }
 
   sql_query = sql.modifyAddress.delete;
-  return await db.executeUpdate(sql_query, params);
+  return await db.execute(sql_query, params, {autoCommit: true});
 };

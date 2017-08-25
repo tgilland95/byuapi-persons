@@ -379,7 +379,7 @@ function authRequests(method, subject, fieldsets, resource_owner, sub_res_id, bo
 
 async function authz_handle_auth(auth_info_list) {
 
-  const results = await db.executeSelect(`select informational_area as "info_area",
+  const results = await db.execute(`select informational_area as "info_area",
        update_type as "update_type",
        nvl(limitation_value, ' ') as "limitation_value"
        from common.user_authorization cua
@@ -582,7 +582,7 @@ async function person_handle_auth(auth_info, info_areas) {
     //     return auth_info;
     //   }
     //   if (limitations === "update employee") {
-    //     const results = db.executeSelect(""
+    //     const results = db.execute(""
     //       + "select classification, "
     //       + "       standing "
     //       + "from   hr.per_warehouse "
@@ -1073,7 +1073,7 @@ async function person_handle_auth(auth_info, info_areas) {
         auth_info.response = "Permit";
         return auth_info;
       }
-      const results = await db.executeSelect(""
+      const results = await db.execute(""
         + "select * "
         + "from   gro.person_group "
         + "where  group_id = 'RESTRICTED' "
