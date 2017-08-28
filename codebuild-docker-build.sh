@@ -3,7 +3,7 @@ set -eux
 
 echo "Building Docker image"
 imageName=$HANDEL_PIPELINE_NAME-webapp-app
-docker build -f "Dockerfile-${ENV_TO_DEPLOY}" -t "$imageName:latest" .
+docker build -t "$imageName:latest" .
 
 arrEnvs=(${ENV_TO_DEPLOY//,/ })
 for env in "${arrEnvs[@]}"; do
