@@ -13,6 +13,8 @@ pipelines:
     - type: codebuild
       name: Build
       build_image: aws/codebuild/docker:1.12.1
+      environment_variables:
+        ENV_TO_DEPLOY: dev
     - type: handel
       name: DevDeploy
       environments_to_deploy:
