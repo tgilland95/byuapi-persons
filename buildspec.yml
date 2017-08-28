@@ -1,8 +1,12 @@
 version: 0.2
 phases:
+  pre_build:
+    commands:
+      - $(aws ecr get-login --region us-west-2)
   build:
     commands:
-      -
+      - chmod a+x ./codebuild-docker-build.sh
+      - bash ./codebuild-docker-build.sh
 artifacts:
   files:
     - ./**/*
