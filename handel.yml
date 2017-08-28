@@ -7,7 +7,7 @@ environments:
     webapp:
       type: ecs
       cluster:
-        key_name: persons
+#        key_name: persons
         instance_type: m3.medium
       auto_scaling:
         min_tasks: 1
