@@ -18,6 +18,9 @@
   "produces": [
     "application/json"
   ],
+  "consumes": [
+    "application/json"
+  ],
   "x-controller": "persons",
   "paths": {
     "/": {

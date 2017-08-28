@@ -39,7 +39,7 @@ environments:
         max_mb: 1200 # change to support two docker containers per box
         cpu_units: 450
         port_mappings:
-        - 9000
+        - 3000
         routing:
           base_path: /
         environment_variables:
