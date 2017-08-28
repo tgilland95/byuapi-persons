@@ -14,7 +14,6 @@
  * limitations under the License.
  *
  */
-"use strict";
 
 const SansServer        = require('sans-server');
 const SansServerSwagger = require('sans-server-swagger');

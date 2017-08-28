@@ -14,10 +14,10 @@
  * limitations under the License.
  *
  */
-"use strict";
+
+const Enforcer            = require('swagger-enforcer');
 const addressesController = require('../controllers/addresses/addresses');
 const auth                = require('../controllers/auth');
-const Enforcer            = require('swagger-enforcer');
 const utils               = require('../controllers/utils');
 
 exports.getAddress = function (req, res) {
@@ -31,9 +31,7 @@ exports.getAddress = function (req, res) {
     })
     .catch(function (error) {
       utils.defaultResponseHandler(req.swagger.root.definitions.simple_metadata, {}, res, error);
-      // res.send(error);
-    })
-  ;
+    });
 };
 
 exports.getAddresses = function (req, res) {
@@ -47,8 +45,7 @@ exports.getAddresses = function (req, res) {
     })
     .catch(function (error) {
       utils.defaultResponseHandler(req.swagger.root.definitions.simple_metadata, {}, res, error);
-    })
-  ;
+    });
 };
 
 exports.modifyAddress = function (req, res) {
@@ -60,8 +57,8 @@ exports.modifyAddress = function (req, res) {
         })
     })
     .catch(function (error) {
-      res.send(error);
-    })
+      utils.defaultResponseHandler(req.swagger.root.definitions.simple_metadata, {}, res, error);
+    });
 };
 
 exports.deleteAddress = function (req, res) {
@@ -73,6 +70,6 @@ exports.deleteAddress = function (req, res) {
         })
     })
     .catch(function (error) {
-      res.send(error);
-    })
+      utils.defaultResponseHandler(req.swagger.root.definitions.simple_metadata, {}, res, error);
+    });
 };

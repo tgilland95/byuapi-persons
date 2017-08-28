@@ -169,91 +169,6 @@ exports.getAddresses = async function getAddresses(definitions, byu_id, permissi
   return addresses;
 };
 
-//Checks to see if the country input matches our list of known country codes
-// if it does not then an error is returned
-function isValidCountryCode(country_code) {
-  if (country_code && country_code.match(/^([?]{3}|[A-Z]{3})$/)) {
-    let countryCode = require("../../meta/countries/countryCodes.json");
-    let country_codes = countryCode.items;
-
-    for (let i = country_codes.length; i--;) {
-      if (country_code === country_codes[i].country_code) {
-        return true
-      }
-    }
-  }
-  else {
-    return false
-  }
-}
-
-//This function checks the state codes for USA, CAN, and AUS input by the user
-// if the user has entered an invalid state code an error is returned
-function isValidStateCode(state_code, country_code) {
-  if ((!country_code) || (!state_code)) {
-    return false
-  }
-  else if (((country_code === "USA") ||
-      (country_code === "CAN") ||
-      (country_code === "AUS")) &&
-    state_code.match(/^([?]{2}|[A-Z]{2,5})$/)) {
-    let stateCode = require("../../meta/states/stateCodes.json");
-    let state_codes = stateCode.items;
-
-    for (let i = state_codes.length; i--;) {
-      if ((state_code === state_codes[i].state_code) &&
-        (country_code === state_codes[i].country_code)) {
-        return true
-      }
-    }
-    return false
-  }
-  else {
-    return true
-  }
-}
-
-
-//This function validates the postal code input by the user for USA and CAN addresses
-//  it does not check to see if it matches the city only that the code is possible
-function isValidPostalCode(postal_code, country_code) {
-  if (postal_code && country_code && (country_code === "USA") &&
-    (postal_code.match(/^[0-9]{5}$/))) {
-    return true
-  }
-  else {
-    return (postal_code && country_code && (country_code === "CAN") &&
-      postal_code.toString().replace(/\W+/g, '').match(/([ABCEGHJKLMNPRSTVXY]\d)([ABCEGHJKLMNPRSTVWXYZ]\d){2}/i))
-  }
-}
-
-//This function is used in the PUT to validate an on campus building code
-function isValidBuildingCode(building_code) {
-  let buildingCode = require("../../meta/buildings/buildingCodes.json");
-  let building_codes = buildingCode.items;
-
-  for (let i = building_codes.length; i--;) {
-    if (building_code && building_code === building_codes[i]["domain_value"]) {
-      return true
-    }
-  }
-  return false
-}
-
-let accepted_date_formats = [
-  "YYYY-MM-DD HH:mm:ss.SSS",
-  "YYYY-MM-DDTHH:mm:ss.SSSZ",
-  "YYYY-MM-DD h:mm:ss.SSS A",
-  "YYYY-MM-DD h:mm:ss.SSS a",
-  "YYYY-MM-DD",
-  "MM/DD/YYYY",
-  "M/D/YY",
-  "M/D/YYYY",
-  "DD-MMM-YYYY",
-  "DD-MMM-YY",
-  "DD MMMM YYYY"
-];
-
 exports.modifyAddress = async function (definitions, byu_id, address_type, body, authorized_byu_id, permissions) {
 
   let address_line_1 = body.address_line_1;
@@ -273,24 +188,24 @@ exports.modifyAddress = async function (definitions, byu_id, address_type, body,
   let unlisted = body.unlisted ? "Y" : "N";
   let current_date_time = moment();
   let updated_by_id = (!body.updated_by_id || (body.updated_by_id === " ")) ? authorized_byu_id : body.updated_by_id;
-  let date_time_updated = (!body.date_time_updated || (body.date_time_updated === " ")) ? current_date_time["clone"]().tz("America/Denver").format("YYYY-MM-DD HH:mm:ss.SSS") : moment["tz"](body.date_time_updated, accepted_date_formats, "America/Denver").format("YYYY-MM-DD HH:mm:ss.SSS");
+  let date_time_updated = (!body.date_time_updated || (body.date_time_updated === " ")) ? current_date_time["clone"]().tz("America/Denver").format("YYYY-MM-DD HH:mm:ss.SSS") : moment["tz"](body.date_time_updated, utils.accepted_date_formats, "America/Denver").format("YYYY-MM-DD HH:mm:ss.SSS");
   let created_by_id = (!body.created_by_id || (body.created_by_id === " ")) ? authorized_byu_id : body.created_by_id;
-  let date_time_created = (!body.date_time_created || (body.date_time_created === " ")) ? current_date_time["clone"]().tz("America/Denver").format("YYYY-MM-DD HH:mm:ss.SSS") : moment["tz"](body.date_time_created, accepted_date_formats, "America/Denver").format("YYYY-MM-DD HH:mm:ss.SSS");
+  let date_time_created = (!body.date_time_created || (body.date_time_created === " ")) ? current_date_time["clone"]().tz("America/Denver").format("YYYY-MM-DD HH:mm:ss.SSS") : moment["tz"](body.date_time_created, utils.accepted_date_formats, "America/Denver").format("YYYY-MM-DD HH:mm:ss.SSS");
 
   let error = false;
   let msg = "Incorrect BODY: Missing\n";
-  if (!isValidCountryCode(country_code)) {
+  if (!utils.isValidCountryCode(country_code)) {
     msg += "\n\tInvalid Country Code if unknown use, ???";
     error = true
   }
-  if (!isValidStateCode(state_code, country_code)) {
+  if (!utils.isValidStateCode(state_code, country_code)) {
     msg += "\n\tInvalid State Code if unknown use, ??";
     error = true
   }
   switch (country_code) {
     case "USA":
     case "CAN":
-      if (!isValidPostalCode(postal_code, country_code)) {
+      if (!utils.isValidPostalCode(postal_code, country_code)) {
         msg += "\n\tInvalid Postal Code";
         error = true
       }
@@ -299,7 +214,7 @@ exports.modifyAddress = async function (definitions, byu_id, address_type, body,
       break
   }
 
-  if (!isValidBuildingCode(building)) {
+  if (!utils.isValidBuildingCode(building)) {
     msg += "\n\tInvalid Building Code";
     error = true
   }
@@ -325,7 +240,7 @@ exports.modifyAddress = async function (definitions, byu_id, address_type, body,
   let student_status = from_results.rows[0].student_status;
   let restricted = (from_results.rows[0].restricted && from_results.rows[0].restricted === "Y") ? "Y" : "N";
   created_by_id = (from_results.rows[0].created_by_id) ? from_results.rows[0].created_by_id : created_by_id;
-  date_time_created = (from_results.rows[0].date_time_created) ? moment(from_results.rows[0].date_time_created, accepted_date_formats)["format"]("YYYY-MM-DD HH:mm:ss.SSS") : date_time_created;
+  date_time_created = (from_results.rows[0].date_time_created) ? moment(from_results.rows[0].date_time_created, utils.accepted_date_formats)["format"]("YYYY-MM-DD HH:mm:ss.SSS") : date_time_created;
 
   let change_type = (!from_results.rows[0].address_type) ? "A" : "C";
   let from_address_line_1 = (from_results.rows[0].address_line_1) ? from_results.rows[0].address_line_1 : " ";

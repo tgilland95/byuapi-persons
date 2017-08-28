@@ -14,9 +14,10 @@
  * limitations under the License.
  *
  */
-"use strict";
-const auth        = require('../controllers/auth');
+
+const auth              = require('../controllers/auth');
 const personsController = require('../controllers/persons/persons');
+const utils             = require('../controllers/utils');
 
 exports.getPersons = function (req, res) {
   return auth.getPermissions(req)
@@ -25,8 +26,10 @@ exports.getPersons = function (req, res) {
         .then(function (address) {
           res.send(address);
         })
+    })
+    .catch(function (error) {
+      utils.defaultResponseHandler(req.swagger.root.definitions.simple_metadata, {}, res, error);
     });
-
 };
 
 exports.getPerson = function (req, res) {
@@ -36,6 +39,21 @@ exports.getPerson = function (req, res) {
         .then(function (person) {
           res.send(person);
         })
+    })
+    .catch(function (error) {
+      utils.defaultResponseHandler(req.swagger.root.definitions.simple_metadata, {}, res, error);
     });
+};
 
+exports.modifyPerson = function (req, res) {
+  return auth.getPermissions(req)
+    .then(function (permissions) {
+      return personsController.modifyPerson(req.swagger.root.definitions, req.params.byu_id, req.verifiedJWTs.prioritizedClaims.byuId, req.body, permissions)
+        .then(function (person) {
+          res.send(person);
+        })
+    })
+    .catch(function (error) {
+      utils.defaultResponseHandler(req.swagger.root.definitions.simple_metadata, {}, res, error);
+    });
 };

@@ -5246,10 +5246,6 @@
       "required": [
         "surname",
         "first_name",
-        "preferred_surname",
-        "preferred_first_name",
-        "middle_name",
-        "suffix",
         "home_town",
         "home_state_code",
         "home_country_code",

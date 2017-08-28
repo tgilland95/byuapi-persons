@@ -22,42 +22,6 @@ const db              = require('../db');
 const sql             = require('./sql');
 const Enforcer        = require('swagger-enforcer');
 
-exports.getPerson = async function (definitions, byu_id, query, permissions) {
-  const promises = [];
-  const result = {};
-
-  if(query.field_sets.includes('basic')){
-    promises.push(basic.getBasic(definitions, byu_id, permissions).then(function (basic_result) {
-      result.basic = basic_result;
-    })
-      .catch(function (error) {
-        let basic = Enforcer.applyTemplate(definitions.basic, null,
-          {
-            byu_id: byu_id,
-            validation_response_code: error.status || 500,
-            validation_response_message: error.message || 'Internal Server Error'
-          }, { ignoreMissingRequired: false });
-        result.basic = basic;
-      }));
-  }
-  if(query.field_sets.includes('addresses')) {
-    promises.push(addresses.getAddresses(definitions, byu_id, permissions).then(function (addresses_result) {
-      result.addresses = addresses_result;
-    })
-      .catch(function (error) {
-        let addresses = {values: []};
-        addresses.metadata = Enforcer.applyTemplate(definitions.sub_level_metadata, null,
-          {
-            validation_response_code: error.status || 500,
-            validation_response_message: error.message || 'Internal Server Error'
-          });
-        result.addresses = addresses;
-      }));
-  }
-  await Promise.all(promises);
-  return result;
-};
-
 exports.getPersons = async function(definitions, query, permisisons) {
   let data = {};
   let params = [];
@@ -391,4 +355,44 @@ exports.getPersons = async function(definitions, query, permisisons) {
   // TODO: Set :page_size in HATEOAS link to size of results from SQL query
   persons.values = values;
   return persons;
+};
+
+exports.getPerson = async function (definitions, byu_id, query, permissions) {
+  const promises = [];
+  const result = {};
+
+  if(query.field_sets.includes('basic')){
+    promises.push(basic.getBasic(definitions, byu_id, permissions).then(function (basic_result) {
+      result.basic = basic_result;
+    })
+      .catch(function (error) {
+        let basic = Enforcer.applyTemplate(definitions.basic, null,
+          {
+            byu_id: byu_id,
+            validation_response_code: error.status || 500,
+            validation_response_message: error.message || 'Internal Server Error'
+          }, { ignoreMissingRequired: false });
+        result.basic = basic;
+      }));
+  }
+  if(query.field_sets.includes('addresses')) {
+    promises.push(addresses.getAddresses(definitions, byu_id, permissions).then(function (addresses_result) {
+      result.addresses = addresses_result;
+    })
+      .catch(function (error) {
+        let addresses = {values: []};
+        addresses.metadata = Enforcer.applyTemplate(definitions.sub_level_metadata, null,
+          {
+            validation_response_code: error.status || 500,
+            validation_response_message: error.message || 'Internal Server Error'
+          });
+        result.addresses = addresses;
+      }));
+  }
+  await Promise.all(promises);
+  return result;
+};
+
+exports.modifyPerson = async function (definitions, byu_id, authorized_byu_id, body, permissions) {
+  return basic.putBasic(definitions, byu_id, authorized_byu_id, body, permissions);
 };

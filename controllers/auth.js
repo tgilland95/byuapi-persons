@@ -14,7 +14,7 @@
  * limitations under the License.
  *
  */
-"use strict";
+
 const db          = require('./db');
 const Promise     = require('bluebird');
 
@@ -1098,6 +1098,10 @@ exports.canViewContact = function (permissions) {
 
 exports.canViewBasic = function (permissions) {
   return permissions.includes("person_view_basic");
+};
+
+exports.canUpdatePersonBasic = function (permissions) {
+  return permissions.includes("person_update_basic");
 };
 
 exports.canUpdatePersonContact = function (permissions) {

@@ -3,9 +3,9 @@
 # You are required to maintain Software CI records in the CMDB for all of the deployable software artifacts you maintain.
 # You can fill in the information here and have the integration do that for you or you can do that yourself manually.
 $schemaver: '2.0'
-repo_url: https://github.com/byu-oit/byuapi--persons  # optional
+repo_url: https://github.com/byu-oit/byuapi-persons  # optional
 software:
-  - name: byuapi--persons  # optional
+  - name: byuapi-persons  # optional
     deploy_to_cmdb: true # optional
     type: library
     aliases:  # optional
@@ -19,7 +19,7 @@ software:
         ubiquitous_language_url:
         context_map_url:
     links: # optional
-        system_documentation_url: https://github.com/byu-oit/byuapi--persons
+        system_documentation_url: https://github.com/byu-oit/byuapi-persons
         swagger_urls:
     microservice: true # optional
     technologies_used: 
