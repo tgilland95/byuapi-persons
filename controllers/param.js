@@ -40,12 +40,12 @@ exports.getParams = function () {
                 let p = {
                     WithDecryption: true,
                     Names: [
-                        'byuapi--persons.dev.WELL_KNOWN',
-                        'byuapi--persons.dev.CLIENT_KEY',
-                        'byuapi--persons.dev.CLIENT_SECRET',
-                        'byuapi--persons.dev.DB_USER',
-                        'byuapi--persons.dev.DB_PWD',
-                        'byuapi--persons.dev.DB_CS'
+                        process.env.HANDEL_APP_NAME+'.'+process.env.HANDEL_ENVIRONMENT_NAME+'.WELL_KNOWN',
+                        process.env.HANDEL_APP_NAME+'.'+process.env.HANDEL_ENVIRONMENT_NAME+'.CLIENT_KEY',
+                        process.env.HANDEL_APP_NAME+'.'+process.env.HANDEL_ENVIRONMENT_NAME+'.CLIENT_SECRET',
+                        process.env.HANDEL_APP_NAME+'.'+process.env.HANDEL_ENVIRONMENT_NAME+'.DB_USER',
+                        process.env.HANDEL_APP_NAME+'.'+process.env.HANDEL_ENVIRONMENT_NAME+'.DB_PWD',
+                        process.env.HANDEL_APP_NAME+'.'+process.env.HANDEL_ENVIRONMENT_NAME+'.DB_CS'
                     ]
                 };
 
@@ -57,12 +57,12 @@ exports.getParams = function () {
                         // console.log("RESPONSE:", response);
                         params = {};
                         response.Parameters.forEach(function (parameter) {
-                            if (parameter.Name === 'byuapi--persons.dev.WELL_KNOWN') params.WELL_KNOWN = parameter.Value;
-                            if (parameter.Name === 'byuapi--persons.dev.CLIENT_KEY') params.CLIENT_KEY = parameter.Value;
-                            if (parameter.Name === 'byuapi--persons.dev.CLIENT_SECRET') params.CLIENT_SECRET = parameter.Value;
-                            if (parameter.Name === 'byuapi--persons.dev.DB_USER') params.DB_USER = parameter.Value;
-                            if (parameter.Name === 'byuapi--persons.dev.DB_PWD') params.DB_PWD = parameter.Value;
-                            if (parameter.Name === 'byuapi--persons.dev.DB_CS') params.DB_CS = parameter.Value;
+                            if (parameter.Name === process.env.HANDEL_APP_NAME+'.'+process.env.HANDEL_ENVIRONMENT_NAME+'.WELL_KNOWN') params.WELL_KNOWN = parameter.Value;
+                            if (parameter.Name === process.env.HANDEL_APP_NAME+'.'+process.env.HANDEL_ENVIRONMENT_NAME+'.CLIENT_KEY') params.CLIENT_KEY = parameter.Value;
+                            if (parameter.Name === process.env.HANDEL_APP_NAME+'.'+process.env.HANDEL_ENVIRONMENT_NAME+'.CLIENT_SECRET') params.CLIENT_SECRET = parameter.Value;
+                            if (parameter.Name === process.env.HANDEL_APP_NAME+'.'+process.env.HANDEL_ENVIRONMENT_NAME+'.DB_USER') params.DB_USER = parameter.Value;
+                            if (parameter.Name === process.env.HANDEL_APP_NAME+'.'+process.env.HANDEL_ENVIRONMENT_NAME+'.DB_PWD') params.DB_PWD = parameter.Value;
+                            if (parameter.Name === process.env.HANDEL_APP_NAME+'.'+process.env.HANDEL_ENVIRONMENT_NAME+'.DB_CS') params.DB_CS = parameter.Value;
                         });
                         if (params.WELL_KNOWN === undefined || params.CLIENT_KEY === undefined || params.CLIENT_SECRET === undefined || params.DB_USER === undefined || params.DB_PWD === undefined || params.DB_CS === undefined) {
                             let msg = '[Config Error] Unable to retrieve parameters from AWS parameter store.';
