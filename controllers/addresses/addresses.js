@@ -15,12 +15,12 @@
  *
  */
 
-const Enforcer      = require('swagger-enforcer');
-const utils         = require('../utils');
-const db          = require('../db');
-const sql           = require('./sql');
-const auth          = require('../auth');
-const moment        = require('moment-timezone');
+const Enforcer = require('swagger-enforcer');
+const utils = require('../utils');
+const db = require('../db');
+const sql = require('./sql');
+const auth = require('../auth');
+const event = require('../event');
 
 /**
  * A helper function that takes the swagger definition sql results and
@@ -28,8 +28,6 @@ const moment        = require('moment-timezone');
  * @param definitions - Swagger
  * @param row - SQL Results
  * @param api_type - Whether the field is modifiable or read-only
- * @param return_code - 200 all info, 203 publicly available info
- * @param return_message - string to pass as a message
  * @returns {*}
  */
 function mapDBResultsToDefinition(definitions, row, api_type) {
@@ -77,11 +75,7 @@ function mapDBResultsToDefinition(definitions, row, api_type) {
 exports.getAddress = async function getAddress(definitions, byu_id, address_type, permissions) {
   const params = [address_type, byu_id];
   const sql_query = sql.sql.getAddress;
-  // Return code 203 lets the consumer know that there is more information that it is not
-  // authorized to see
-  const return_code = auth.canViewContact(permissions) ? 200 : 203;
-  const return_message = auth.canViewContact(permissions) ? 'Success' : 'Public Info Only';
-  const modifiable = auth.canViewContact(permissions) ? 'modifiable': 'read-only';
+  const modifiable = auth.canViewContact(permissions) ? 'modifiable' : 'read-only';
   const results = await db.execute(sql_query, params);
 
   // If no results are returned or the record is restricted
@@ -113,7 +107,7 @@ exports.getAddress = async function getAddress(definitions, byu_id, address_type
     throw utils.Error(403, 'Not Authorized To View Address')
   }
 
-  return mapDBResultsToDefinition(definitions, results.rows[0], modifiable, return_code, return_message);
+  return mapDBResultsToDefinition(definitions, results.rows[0], modifiable);
 };
 
 /**
@@ -124,10 +118,12 @@ exports.getAddress = async function getAddress(definitions, byu_id, address_type
  * @returns {Promise.<*>}
  */
 exports.getAddresses = async function getAddresses(definitions, byu_id, permissions) {
-  // throw utils.Error(404, 'BYU_ID Not Found In Person Table');
   const params = [byu_id];
   const sql_query = sql.sql.getAddresses;
   const results = await db.execute(sql_query, params);
+  const return_code = auth.canViewContact(permissions) ? 200 : 203;
+  const return_message = auth.canViewContact(permissions) ? 'Success' : 'Public Info Only';
+  const collection_size = (results.rows[0].address_type) ? results.rows.length : 0;
 
   // If no results are returned or the record is restricted
   // and the entity retrieving the record does not belong
@@ -139,90 +135,331 @@ exports.getAddresses = async function getAddresses(definitions, byu_id, permissi
     throw utils.Error(404, 'BYU_ID Not Found In Person Table')
   }
 
-  // TODO: Do we return an Error with a 404 or do we return an empty array with the response_validation set and require who is invoking this handle the HTTP response properly?
-
   // If it is self service or the entity retrieving the record has the PERSON info area then
   // return all address information else if they are looking up an employee or faculty member
   // return the employee's or faculty's work address as long as it is not unlisted
   const values = (auth.canViewContact(permissions)) ? (
-    results.rows.map(row => mapDBResultsToDefinition(definitions, row, 'modifiable', 200, 'Success'))
+    results.rows.map(row => mapDBResultsToDefinition(definitions, row, 'modifiable'))
   ) : (
     results.rows.filter(row => (row.unlisted === 'N' && row.address_type === 'WRK' &&
       (row.primary_role === 'Employee' || row.primary_role === 'Faculty'))
-    ).map(row => mapDBResultsToDefinition(definitions, row, 'read-only', 203, 'Public Info Only'))
+    ).map(row => mapDBResultsToDefinition(definitions, row, 'read-only'))
   );
-
-
 
   const addresses = Enforcer.applyTemplate(definitions.addresses, definitions,
     {
       byu_id: byu_id,
-      collection_size: results.rows.length, // TODO: Can we use the length of the results.rows? We may get results back with no addresses but have results.
+      collection_size: collection_size,
       page_start: 0,
-      page_end: results.rows.length,
-      page_size: results.rows.length,
+      page_end: collection_size,
+      page_size: collection_size,
       default_page_size: 1,
       maximum_page_size: 100,
+      validation_response_code: return_code,
+      validation_response_message: return_message,
       addresses_values: values
     });
   addresses.values = values;
   return addresses;
 };
 
-exports.modifyAddress = async function (definitions, byu_id, address_type, body, authorized_byu_id, permissions) {
+function processPostCode(postal_code, country_code) {
+  if (country_code === 'USA' &&
+    !/^( |[0-9]{5})$/g.test(postal_code)) {
 
-  let address_line_1 = body.address_line_1;
-  let address_line_2 = body.address_line_2 || " ";
-  let address_line_3 = body.address_line_3 || " ";
-  let address_line_4 = body.address_line_4 || " ";
-  let country_code   = body.country_code || "???";
-  let room           = body.room || " ";
-  let building       = body.building || " ";
-  let city           = body.city || " ";
-  let state_code     = body.state_code || "??";
-  let postal_code    = body.postal_code || " ";
-  let verified_flag  = body.verified_flag ? "Y" : "N";
-  if (postal_code) {
-    postal_code.trim()
+    if (/^[0-9]{5}$/g.test(postal_code.substr(0, 5))) {
+      postal_code = postal_code.substr(0, 5);
+    }
+    else {
+      postal_code = ' ';
+    }
   }
-  let unlisted = body.unlisted ? "Y" : "N";
-  let current_date_time = moment();
-  let updated_by_id = (!body.updated_by_id || (body.updated_by_id === " ")) ? authorized_byu_id : body.updated_by_id;
-  let date_time_updated = (!body.date_time_updated || (body.date_time_updated === " ")) ? current_date_time["clone"]().tz("America/Denver").format("YYYY-MM-DD HH:mm:ss.SSS") : moment["tz"](body.date_time_updated, utils.accepted_date_formats, "America/Denver").format("YYYY-MM-DD HH:mm:ss.SSS");
-  let created_by_id = (!body.created_by_id || (body.created_by_id === " ")) ? authorized_byu_id : body.created_by_id;
-  let date_time_created = (!body.date_time_created || (body.date_time_created === " ")) ? current_date_time["clone"]().tz("America/Denver").format("YYYY-MM-DD HH:mm:ss.SSS") : moment["tz"](body.date_time_created, utils.accepted_date_formats, "America/Denver").format("YYYY-MM-DD HH:mm:ss.SSS");
+
+  if (country_code === 'CAN' &&
+    !/^( |[ABCEGHJ-NPRSTVXY]\d[ABCEGHJ-NPRSTV-Z][ ]\d[ABCEGHJ-NPRSTV-Z]\d)$/g.test(postal_code)) {
+
+    if (/^( |[ABCEGHJ-NPRSTVXY]\d[ABCEGHJ-NPRSTV-Z]\d[ABCEGHJ-NPRSTV-Z]\d)$/g.test(postal_code)) {
+      postal_code = postal_code.substr(0, 3) + ' ' + postal_code.substr(3, 3);
+    }
+    else if (/^( |[ABCEGHJ-NPRSTVXY]\d[ABCEGHJ-NPRSTV-Z][-]\d[ABCEGHJ-NPRSTV-Z]\d)$/g.test(postal_code)) {
+      postal_code = postal_code.replace(/-/, ' ');
+    }
+    else {
+      postal_code = ' ';
+    }
+  }
+
+  if (!/^( |[A-Z0-9 -]{1,20})$/g.test(postal_code)) {
+    postal_code = ' ';
+  }
+
+  return postal_code;
+}
+
+function processBody(authorized_byu_id, body) {
+  const current_date_time = new Date().toISOString();
+  let new_body = {};
+  new_body.address_line_1 = body.address_line_1 || '';
+  new_body.address_line_2 = body.address_line_2 || ' ';
+  new_body.address_line_3 = body.address_line_3 || ' ';
+  new_body.address_line_4 = body.address_line_4 || ' ';
+  new_body.country_code = body.country_code || '???';
+  new_body.room = body.room || ' ';
+  new_body.building = body.building || ' ';
+  new_body.city = body.city || ' ';
+  new_body.state_code = body.state_code || '??';
+  new_body.postal_code = (body.postal_code) ? (
+    processPostCode(body.postal_code, new_body.country_code)) : ' ';
+  new_body.verified_flag = body.verified_flag ? 'Y' : 'N';
+  new_body.unlisted = body.unlisted ? 'Y' : 'N';
+  new_body.updated_by_id = (!body.updated_by_id ||
+    body.updated_by_id === ' ') ? authorized_byu_id : body.updated_by_id;
+  new_body.date_time_updated = (!body.date_time_updated ||
+    body.date_time_updated === ' ') ? current_date_time : body.date_time_updated;
+  new_body.created_by_id = (!body.created_by_id ||
+    body.created_by_id === ' ') ? authorized_byu_id : body.created_by_id;
+  new_body.date_time_created = (!body.date_time_created ||
+    body.date_time_created === ' ') ? current_date_time : body.date_time_created;
 
   let error = false;
-  let msg = "Incorrect BODY: Missing\n";
-  if (!utils.isValidCountryCode(country_code)) {
-    msg += "\n\tInvalid Country Code if unknown use, ???";
-    error = true
-  }
-  if (!utils.isValidStateCode(state_code, country_code)) {
-    msg += "\n\tInvalid State Code if unknown use, ??";
-    error = true
-  }
-  switch (country_code) {
-    case "USA":
-    case "CAN":
-      if (!utils.isValidPostalCode(postal_code, country_code)) {
-        msg += "\n\tInvalid Postal Code";
-        error = true
-      }
-      break;
-    default:
-      break
+  let msg = 'Incorrect BODY: Missing\n';
+  if (!new_body.address_line_1) {
+    msg += '\n\tAddress Line 1 must not be blank or a space'
   }
 
-  if (!utils.isValidBuildingCode(building)) {
-    msg += "\n\tInvalid Building Code";
-    error = true
+  if (!utils.isValidCountryCode(new_body.country_code)) {
+    msg += '\n\tInvalid Country Code if unknown use, ???';
+    error = true;
   }
+
+  if (!utils.isValidStateCode(new_body.state_code, new_body.country_code)) {
+    msg += '\n\tInvalid State Code if unknown use, ??';
+    error = true;
+  }
+
+  if (!utils.isValidBuildingCode(new_body.building)) {
+    msg += '\n\tInvalid Building Code';
+    error = true;
+  }
+
+  for (let prop in new_body) {
+    if (new_body.hasOwnProperty(prop)) {
+      if (!/[\x00-\x7F]+/.test(new_body[prop])) {
+        msg += `${prop} contains unsupported characters`;
+        error = true;
+      }
+    }
+  }
+
   if (error) {
-    throw new ClientError(409, msg)
+    throw utils.Error(409, msg)
   }
+
+  return body;
+}
+
+function processFromResults(from_results) {
+  let process_results = {};
+  process_results.person_id = from_results.person_id || ' ';
+  process_results.net_id = from_results.net_id || ' ';
+  process_results.employee_type = (from_results.employee_type &&
+    from_results.employee_type !== '--') ? from_results.employee_type : 'Not An Employee';
+  process_results.student_status = from_results.student_status;
+  process_results.restricted = (from_results.restricted && from_results.restricted === 'Y');
+  process_results.address_line_1 = from_results.address_line_1 || ' ';
+  process_results.address_line_2 = from_results.address_line_2 || ' ';
+  process_results.address_line_3 = from_results.address_line_3 || ' ';
+  process_results.address_line_4 = from_results.address_line_4 || ' ';
+  process_results.country_code = from_results.country_code || ' ';
+  process_results.room = from_results.room || ' ';
+  process_results.building = from_results.building || ' ';
+  process_results.city = from_results.city || ' ';
+  process_results.state_code = from_results.state_code || ' ';
+  process_results.postal_code = from_results.postal_code || ' ';
+  process_results.unlisted = from_results.unlisted || ' ';
+  process_results.verified_flag = from_results.verified_flag || ' ';
+
+  return process_results;
+}
+
+async function addressEvents(connection, change_type, byu_id, address_type, body, processed_results) {
+  try {
+    const address_url = `https://api.byu.edu/byuapi/persons/v1/${byu_id}/addresses/${address_type}`;
+    const source_dt = new Date().toISOString();
+    const domain = 'edu.byu';
+    const entity = 'BYU-IAM';
+    const identity_type = 'Person';
+    let event_type = (change_type === 'A') ? 'Address Added' : 'Address Changed';
+    let event_type2 = (change_type === 'A') ? 'Address Added v2' : 'Address Changed v2';
+    let secure_url = 'https://api.byu.edu/domains/legacy/identity/secureurl/v1/';
+    let sql_query = '';
+    let filters = [];
+    let params = [];
+    let eventness;
+    let event_frame = {
+      'events': {
+        'event': []
+      }
+    };
+    let header = [
+      'domain',
+      domain,
+      'entity',
+      entity,
+      'event_type',
+      event_type,
+      'source_dt',
+      source_dt,
+      'event_dt',
+      ' ',
+      'event_id',
+      ' '
+    ];
+    if (processed_results.restricted && body.unlisted === 'N') {
+      let event_body = [
+        'person_id',
+        processed_results.person_id,
+        'byu_id',
+        byu_id,
+        'net_id',
+        processed_results.net_id,
+        'address_type',
+        address_type,
+        'address_line_1',
+        body.address_line_1,
+        'address_line_2',
+        body.address_line_2,
+        'address_line_3',
+        body.address_line_3,
+        'address_line_4',
+        body.address_line_4,
+        'country_code',
+        body.country_code,
+        'city',
+        body.city,
+        'state_code',
+        body.state_code,
+        'postal_code',
+        body.postal_code,
+        'campus_address_f',
+        body.building,
+        'unlisted',
+        body.unlisted,
+        'updated_by_id',
+        body.updated_by_id,
+        'date_time_updated',
+        body.date_time_updated,
+        'created_by_id',
+        body.created_by_id,
+        'date_time_created',
+        body.date_time_created,
+        'callback_url',
+        address_url
+      ];
+      eventness = event.Builder(header, event_body);
+      event_frame.events.event.push(eventness);
+
+      header[5] = event_type2;
+      body.push('verified_flag');
+      body.push(body.verified_flag);
+      filters.push('identity_type');
+      filters.push(identity_type);
+      filters.push('employee_type');
+      filters.push(processed_results.employee_type);
+      filters.push('student_status');
+      filters.push(processed_results.student_status);
+      eventness = event.Builder(header, body, filters);
+      event_frame.events.event.push(eventness);
+    }
+    else {
+      sql_query = db.intermediaryId.get;
+      params = [address_url];
+      let results = await connection.execute(sql_query, params);
+      if (!results.rows.length) {
+        sql_query = db.intermediaryId.put;
+        params = [
+          address_url,
+          ' ',    // actor
+          ' ',    // group_id
+          body.created_by_id
+        ];
+        await connection.execute(sql_query, params);
+        sql_query = db.intermediaryId.get;
+        params = [address_url];
+        results = await connection.execute(sql_query, params);
+      }
+
+      secure_url += results.rows[0]['intermediary_id'];
+
+      let restricted_body = [
+        'person_id',
+        ' ',
+        'byu_id',
+        ' ',
+        'net_id',
+        ' ',
+        'address_type',
+        ' ',
+        'address_line_1',
+        ' ',
+        'address_line_2',
+        ' ',
+        'address_line_3',
+        ' ',
+        'address_line_4',
+        ' ',
+        'country_code',
+        ' ',
+        'city',
+        ' ',
+        'state_code',
+        ' ',
+        'postal_code',
+        ' ',
+        'campus_address_f',
+        ' ',
+        'unlisted',
+        body.unlisted,
+        'updated_by_id',
+        ' ',
+        'date_time_updated',
+        ' ',
+        'created_by_id',
+        ' ',
+        'date_time_created',
+        ' ',
+        'secure_url',
+        secure_url
+      ];
+      eventness = event.Builder(header, restricted_body);
+      event_frame.events.event.push(eventness);
+
+      header[5] = event_type2;
+      restricted_body.push('verified_flag');
+      restricted_body.push(' ');
+      filters.push('restricted');
+      filters.push(body.restricted);
+      eventness = event.Builder(header, restricted_body, filters);
+      event_frame.events.event.push(eventness);
+    }
+    sql_query = db.raiseEvent;
+    params.push(JSON.stringify(event_frame));
+    await connection.execute(sql_query, params);
+    await connection.commit();
+    sql_query = db.enqueue;
+    await connection.execute(sql_query, params);
+  } catch (error) {
+    console.error(error.stack);
+    throw utils.Error(207, 'Record was changed but event was not raised');
+  }
+}
+
+exports.modifyAddress = async function (definitions, byu_id, address_type, body, authorized_byu_id, permissions) {
+  const connection = await db.getConnection();
+  const new_body = processBody(authorized_byu_id, body);
+
   if (!auth.canUpdatePersonContact(permissions)) {
-    throw new ClientError(403, "User not authorized to update CONTACT data")
+    throw utils.Error(403, 'User not authorized to update CONTACT data')
   }
 
   let params = [
@@ -230,323 +467,125 @@ exports.modifyAddress = async function (definitions, byu_id, address_type, body,
     byu_id
   ];
   let sql_query = sql.sql.fromAddress;
-  const from_results = await db.execute(sql_query, params, { autoCommit: true });
-  if (from_results.rows.length === 0) {
-    throw new ClientError(404, "Could not find BYU_ID in Person Table")
-  }
-  let person_id = (from_results.rows[0].person_id) ? from_results.rows[0].person_id : " ";
-  let net_id = (from_results.rows[0].net_id) ? from_results.rows[0].net_id : " ";
-  let employee_type = (from_results.rows[0].employee_type && from_results.rows[0].employee_type !== "--") ? from_results.rows[0].employee_type : "Not An Employee";
-  let student_status = from_results.rows[0].student_status;
-  let restricted = (from_results.rows[0].restricted && from_results.rows[0].restricted === "Y") ? "Y" : "N";
-  created_by_id = (from_results.rows[0].created_by_id) ? from_results.rows[0].created_by_id : created_by_id;
-  date_time_created = (from_results.rows[0].date_time_created) ? moment(from_results.rows[0].date_time_created, utils.accepted_date_formats)["format"]("YYYY-MM-DD HH:mm:ss.SSS") : date_time_created;
-
-  let change_type = (!from_results.rows[0].address_type) ? "A" : "C";
-  let from_address_line_1 = (from_results.rows[0].address_line_1) ? from_results.rows[0].address_line_1 : " ";
-  let from_address_line_2 = (from_results.rows[0].address_line_2) ? from_results.rows[0].address_line_2 : " ";
-  let from_address_line_3 = (from_results.rows[0].address_line_3) ? from_results.rows[0].address_line_3 : " ";
-  let from_address_line_4 = (from_results.rows[0].address_line_4) ? from_results.rows[0].address_line_4 : " ";
-  let from_country_code = (from_results.rows[0].country_code) ? from_results.rows[0].country_code : " ";
-  let from_room = (from_results.rows[0].room) ? from_results.rows[0].room : " ";
-  let from_building = (from_results.rows[0].building) ? from_results.rows[0].building : " ";
-  let from_city = (from_results.rows[0].city) ? from_results.rows[0].city : " ";
-  let from_state_code = (from_results.rows[0].state_code) ? from_results.rows[0].state_code : " ";
-  let from_postal_code = (from_results.rows[0].postal_code) ? from_results.rows[0].postal_code : " ";
-  let from_unlisted = (from_results.rows[0].unlisted) ? from_results.rows[0].unlisted : " ";
-  let from_verified_flag = (from_results.rows[0].verified_flag) ? from_results.rows[0].verified_flag : " ";
-
-  let log_params = [
-    change_type,
-    byu_id,
-    address_type,
-    date_time_updated,
-    updated_by_id,
-    date_time_created,
-    created_by_id,
-    from_address_line_1,
-    from_address_line_2,
-    from_address_line_3,
-    from_address_line_4,
-    from_country_code,
-    from_room,
-    from_building,
-    from_city,
-    from_state_code,
-    from_postal_code,
-    from_unlisted,
-    from_verified_flag,
-    address_line_1,
-    address_line_2,
-    address_line_3,
-    address_line_4,
-    country_code,
-    room,
-    building,
-    city,
-    state_code,
-    postal_code,
-    unlisted,
-    verified_flag
-  ];
-
-  let is_different = false;
-  if ((address_line_1 !== from_address_line_1) ||
-    (address_line_2 !== from_address_line_2) ||
-    (address_line_3 !== from_address_line_3) ||
-    (address_line_4 !== from_address_line_4) ||
-    (country_code !== from_country_code) ||
-    (room !== from_room) ||
-    (building !== from_building) ||
-    (city !== from_city) ||
-    (state_code !== from_state_code) ||
-    (postal_code !== from_postal_code) ||
-    (unlisted !== from_unlisted)) {
-    is_different = true
+  const from_results = await connection.execute(sql_query, params);
+  if (from_results.rows.length === 0 ||
+    (from_results.rows[0].restricted === 'Y' &&
+      !auth.hasRestrictedRights(permissions))) {
+    throw utils.Error(404, 'Could not find BYU_ID in Person Table')
   }
 
-  if(!is_different) {
-    return await exports.getAddress(definitions, byu_id, address_type, permissions);
-  }
-  else {
-    if (is_different && !from_results.rows[0].address_type) {
+  new_body.created_by_id = from_results.rows[0].created_by_id || new_body.created_by_id;
+  new_body.date_time_created = from_results.rows[0].date_time_created || new_body.date_time_created;
+
+  const change_type = (!from_results.rows[0].address_type) ? 'A' : 'C';
+  const processed_results = processFromResults(from_results.rows[0]);
+
+  const is_different = (
+    new_body.address_line_1 !== processed_results.address_line_1 ||
+    new_body.address_line_2 !== processed_results.address_line_2 ||
+    new_body.address_line_3 !== processed_results.address_line_3 ||
+    new_body.address_line_4 !== processed_results.address_line_4 ||
+    new_body.country_code !== processed_results.country_code ||
+    new_body.room !== processed_results.room ||
+    new_body.building !== processed_results.building ||
+    new_body.city !== processed_results.city ||
+    new_body.state_code !== processed_results.state_code ||
+    new_body.postal_code !== processed_results.postal_code ||
+    new_body.unlisted !== processed_results.unlisted ||
+    new_body.verified_flag !== processed_results.verified_flag);
+
+  if (is_different) {
+    if (!from_results.rows[0].address_type) {
       sql_query = sql.modifyAddress.create;
       params = [
         byu_id,
         address_type,
-        date_time_updated,
-        updated_by_id,
-        date_time_created,
-        created_by_id,
-        address_line_1,
-        address_line_2,
-        address_line_3,
-        address_line_4,
-        country_code,
-        room,
-        building,
-        city,
-        state_code,
-        postal_code,
-        unlisted,
-        verified_flag
+        new_body.date_time_updated,
+        new_body.updated_by_id,
+        new_body.date_time_created,
+        new_body.created_by_id,
+        new_body.address_line_1,
+        new_body.address_line_2,
+        new_body.address_line_3,
+        new_body.address_line_4,
+        new_body.country_code,
+        new_body.room,
+        new_body.building,
+        new_body.city,
+        new_body.state_code,
+        new_body.postal_code,
+        new_body.unlisted,
+        new_body.verified_flag
       ];
-
-    } else if (is_different && from_results.rows[0].address_type) {
+    } else {
       sql_query = sql.modifyAddress.update;
       params = [
-        date_time_updated,
-        updated_by_id,
-        address_line_1,
-        address_line_2,
-        address_line_3,
-        address_line_4,
-        country_code,
-        room,
-        building,
-        city,
-        state_code,
-        postal_code,
-        unlisted,
-        verified_flag,
+        new_body.date_time_updated,
+        new_body.updated_by_id,
+        new_body.address_line_1,
+        new_body.address_line_2,
+        new_body.address_line_3,
+        new_body.address_line_4,
+        new_body.country_code,
+        new_body.room,
+        new_body.building,
+        new_body.city,
+        new_body.state_code,
+        new_body.postal_code,
+        new_body.unlisted,
+        new_body.verified_flag,
         byu_id,
         address_type
       ];
     }
-
-    const update_results = await db.execute(sql_query, params, {autoCommit: true});
-    // sql_query = sql.modifyAddress.logChange;
-    // const log_change_results = await db.execute(sql_query, log_params);
-    // return addressEvents(connection)
-    return await exports.getAddress(definitions, byu_id, address_type, permissions);
+    await connection.execute(sql_query, params);
+    sql_query = sql.modifyAddress.logChange;
+    const log_params = [
+      change_type,
+      byu_id,
+      address_type,
+      new_body.date_time_updated,
+      new_body.updated_by_id,
+      new_body.date_time_created,
+      new_body.created_by_id,
+      processed_results.address_line_1,
+      processed_results.address_line_2,
+      processed_results.address_line_3,
+      processed_results.address_line_4,
+      processed_results.country_code,
+      processed_results.room,
+      processed_results.building,
+      processed_results.city,
+      processed_results.state_code,
+      processed_results.postal_code,
+      processed_results.unlisted,
+      processed_results.verified_flag,
+      new_body.address_line_1,
+      new_body.address_line_2,
+      new_body.address_line_3,
+      new_body.address_line_4,
+      new_body.country_code,
+      new_body.room,
+      new_body.building,
+      new_body.city,
+      new_body.state_code,
+      new_body.postal_code,
+      new_body.unlisted,
+      new_body.verified_flag
+    ];
+    await connection.execute(sql_query, log_params);
+    await connection.commit();
+    await addressEvents(connection, change_type, byu_id, address_type, new_body, processed_results);
+    connection.close();
   }
+
+  return await exports.getAddress(definitions, byu_id, address_type, permissions);
 };
 
-// function addressEvents(connection) {
-//   var source_dt = moment()['tz']("America/Denver").format("YYYY-MM-DD HH:mm:ss.SSS");
-//   var event_type = (change_type === "A") ? "Address Added" : "Address Changed";
-//   var event_type2 = (change_type === "A") ? "Address Added v2" : "Address Changed v2";
-//   var domain = "edu.byu";
-//   var entity = "BYU-IAM";
-//   var filters = [];
-//   var address_url = "https://api.byu.edu/byuapi/persons/v1/" + byu_id + "/addresses/" + address_type;
-//   var secure_url = "https://api.byu.edu/domains/legacy/identity/secureurl/v1/";
-//   var sql_query = "";
-//   var params = [];
-//   var event_frame = {
-//     "events": {
-//       "event": []
-//     }
-//   };
-//   var header = [
-//     "domain",
-//     domain,
-//     "entity",
-//     entity,
-//     "event_type",
-//     event_type,
-//     "source_dt",
-//     source_dt,
-//     "event_dt",
-//     " ",
-//     "event_id",
-//     " "
-//   ];
-//   if (restricted !== "Y" && unlisted === "N") {
-//     var body = [
-//       "person_id",
-//       person_id,
-//       "byu_id",
-//       byu_id,
-//       "net_id",
-//       net_id,
-//       "address_type",
-//       address_type,
-//       "address_line_1",
-//       address_line_1,
-//       "address_line_2",
-//       address_line_2,
-//       "address_line_3",
-//       address_line_3,
-//       "address_line_4",
-//       address_line_4,
-//       "country_code",
-//       country_code,
-//       "city",
-//       city,
-//       "state_code",
-//       state_code,
-//       "postal_code",
-//       postal_code,
-//       "campus_address_f",
-//       building,
-//       "unlisted",
-//       unlisted,
-//       "updated_by_id",
-//       updated_by_id,
-//       "date_time_updated",
-//       date_time_updated,
-//       "created_by_id",
-//       created_by_id,
-//       "date_time_created",
-//       date_time_created,
-//       "callback_url",
-//       address_url
-//     ];
-//     var event = eventBuilder.eventBuilder(header, body);
-//     event_frame.events.event.push(event);
-//
-//     header[5] = event_type2;
-//     body.push("verified_flag");
-//     body.push(verified_flag);
-//     filters.push("identity_type");
-//     filters.push(identity_type);
-//     filters.push("employee_type");
-//     filters.push(employee_type);
-//     filters.push("student_status");
-//     filters.push(student_status);
-//     event = eventBuilder.eventBuilder(header, body, filters);
-//     event_frame.events.event.push(event);
-//
-//     sql_query = sql.eventPersonAddress.raiseEvent;
-//     params.push(JSON.stringify(event_frame));
-//     return connection["ces"].executeWithCommit(sql_query, params)
-//       .then(function(){
-//         sql_query = sql.enqueue.sql;
-//         return connection["ces"].execute(sql_query, params)
-//       })
-//   }
-//   else {
-//     sql_query = sql.intermediaryId.get;
-//     params = [address_url];
-//     return connection["ces"].execute(sql_query, params)
-//       .then(function (results) {
-//         if (results.rows.length === 0) {
-//           sql_query = sql.intermediaryId.put;
-//           params = [
-//             address_url,
-//             " ",    // actor
-//             " ",    // group_id
-//             created_by_id
-//           ];
-//           return connection["ces"].executeWithCommit(sql_query, params)
-//             .then(function () {
-//               sql_query = sql.intermediaryId.get;
-//               params = [address_url];
-//               return connection["ces"].execute(sql_query, params)
-//                 .then(function (results) {
-//                   secure_url += results.rows[0]["intermediary_id"]
-//                 })
-//             })
-//         }
-//         else {
-//           secure_url += results.rows[0]["intermediary_id"]
-//         }
-//         var restricted_body = [
-//           "person_id",
-//           " ",
-//           "byu_id",
-//           " ",
-//           "net_id",
-//           " ",
-//           "address_type",
-//           " ",
-//           "address_line_1",
-//           " ",
-//           "address_line_2",
-//           " ",
-//           "address_line_3",
-//           " ",
-//           "address_line_4",
-//           " ",
-//           "country_code",
-//           " ",
-//           "city",
-//           " ",
-//           "state_code",
-//           " ",
-//           "postal_code",
-//           " ",
-//           "campus_address_f",
-//           " ",
-//           "unlisted",
-//           unlisted,
-//           "updated_by_id",
-//           " ",
-//           "date_time_updated",
-//           " ",
-//           "created_by_id",
-//           " ",
-//           "date_time_created",
-//           " ",
-//           "secure_url",
-//           secure_url
-//         ];
-//         event = eventBuilder.eventBuilder(header, restricted_body);
-//         event_frame.events.event.push(event);
-//
-//         header[5] = event_type2;
-//         restricted_body.push("verified_flag");
-//         restricted_body.push(" ");
-//         filters.push("restricted");
-//         filters.push(restricted);
-//         event = eventBuilder.eventBuilder(header, restricted_body, filters);
-//         event_frame.events.event.push(event);
-//
-//         sql_query = sql.eventPersonAddress.raiseEvent;
-//         params = [JSON.stringify(event_frame)];
-//         return connection["ces"].executeWithCommit(sql_query, params)
-//           .then(function(){
-//             sql_query = sql.enqueue.sql;
-//             return connection["ces"].execute(sql_query, params)
-//           })
-//       })
-//   }
-// }
-
 exports.deleteAddress = async function (definitions, byu_id, address_type, authorized_byu_id, permissions) {
+  const connection = await db.getConnection();
   if (!auth.canUpdatePersonContact(permissions)) {
-    throw new ClientError(403, "User not authorized to update CONTACT data")
+    throw utils.Error(403, 'User not authorized to update CONTACT data')
   }
   let sql_query = sql.sql.fromAddress;
   let params = [
@@ -554,17 +593,19 @@ exports.deleteAddress = async function (definitions, byu_id, address_type, autho
     byu_id
   ];
 
-  const results = await db.execute(sql_query, params, {autoCommit:true});
+  const results = await connection.execute(sql_query, params);
 
   if (results.rows.length === 0) {
-    throw new ClientError(404, "Could not find BYU_ID")
+    throw utils.Error(404, 'Could not find BYU_ID')
   }
 
   /* This is the same as if a delete happened successfully. */
   if (!results.rows[0].address_type) {
-    return;
+    await connection.close();
+  } else {
+    sql_query = sql.modifyAddress.delete;
+    await connection.execute(sql_query, params);
+    await connection.commit();
+    await connection.close();
   }
-
-  sql_query = sql.modifyAddress.delete;
-  return await db.execute(sql_query, params, {autoCommit: true});
 };

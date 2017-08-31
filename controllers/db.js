@@ -71,32 +71,27 @@ exports.execute = async function (sql, params, options) {
 };
 
 exports.intermediaryId = {
-  get:
-    `select events.intermediary.intermediary_id as "intermediary_id"
- from   events.intermediary
- where  events.intermediary.url = :URL`,
-  put:
-    `insert into events.intermediary
- values  (events.intermediary_seq.nextval,
- :URL,
- :ACTOR,
- :GROUP_ID,
- sysdate,
- :CREATED_BY_ID)`
+  get: `
+    select events.intermediary.intermediary_id as "intermediary_id" 
+    from   events.intermediary 
+    where  events.intermediary.url = :URL`,
+  put: `
+    insert into events.intermediary 
+    values  (events.intermediary_seq.nextval, 
+             :URL, 
+             :ACTOR, 
+             :GROUP_ID, 
+             sysdate, 
+             :CREATED_BY_ID)`
 };
 
-exports.eventPersonAddress = {
-  raiseEvent:
-    `insert into iam.event
- (event_id,
- date_time_created,
- event_body)
- values      (iam.event_id_seq.nextval,
- systimestamp,
- :1)`
-};
+exports.raiseEvent =  `
+  insert into iam.event 
+              (event_id, 
+               date_time_created, 
+               event_body) 
+  values      (iam.event_id_seq.nextval, 
+               systimestamp, 
+               :1)`;
 
-exports.enqueue = {
-  sql:
-    `CALL iam.iam_enqueue_now(:1)`
-};
+exports.enqueue = `call iam.iam_enqueue_now(:1)`;

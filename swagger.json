@@ -4744,7 +4744,42 @@
           "$ref": "#/definitions/byu_id"
         },
         "address_type": {
-          "$ref": "#/definitions/address_type"
+          "type": "object",
+          "required": [
+            "value",
+            "api_type",
+            "key"
+          ],
+          "properties": {
+            "value": {
+              "type": "string",
+              "x-variable": "address_type",
+              "enum": [
+                "PRM",
+                "RES",
+                "MAL",
+                "WRK"
+              ]
+            },
+            "api_type": {
+              "type": "string",
+              "default": "read-only",
+              "x-variable": "api_type",
+              "enum": [
+                "read-only",
+                "modifiable"
+              ]
+            },
+            "key": {
+              "type": "boolean",
+              "default": true
+            }
+          },
+          "example": {
+            "value": "MAL",
+            "api_type": "read-only",
+            "key": true
+          }
         },
         "date_time_updated": {
           "$ref": "#/definitions/date_time_updated"
@@ -4759,16 +4794,120 @@
           "$ref": "#/definitions/created_by_id"
         },
         "address_line_1": {
-          "$ref": "#/definitions/address_line_1"
+          "type": "object",
+          "required": [
+            "value",
+            "api_type"
+          ],
+          "properties": {
+            "value": {
+              "type": "string",
+              "maxLength": 40,
+              "minLength": 1,
+              "default": " ",
+              "x-variable": "address_line_1"
+            },
+            "api_type": {
+              "type": "string",
+              "default": "read-only",
+              "x-variable": "api_type",
+              "enum": [
+                "read-only",
+                "modifiable"
+              ]
+            }
+          },
+          "example": {
+            "value": "3217 ITB",
+            "api_type": "read-only"
+          }
         },
         "address_line_2": {
-          "$ref": "#/definitions/address_line_2"
+          "type": "object",
+          "required": [
+            "value",
+            "api_type"
+          ],
+          "properties": {
+            "value": {
+              "type": "string",
+              "maxLength": 40,
+              "minLength": 1,
+              "default": " ",
+              "x-variable": "address_line_2"
+            },
+            "api_type": {
+              "type": "string",
+              "default": "read-only",
+              "x-variable": "api_type",
+              "enum": [
+                "read-only",
+                "modifiable"
+              ]
+            }
+          },
+          "example": {
+            "value": "Provo, UT 84602",
+            "api_type": "read-only"
+          }
         },
         "address_line_3": {
-          "$ref": "#/definitions/address_line_3"
+          "type": "object",
+          "required": [
+            "value",
+            "api_type"
+          ],
+          "properties": {
+            "value": {
+              "type": "string",
+              "maxLength": 40,
+              "minLength": 1,
+              "default": " ",
+              "x-variable": "address_line_3"
+            },
+            "api_type": {
+              "type": "string",
+              "default": "read-only",
+              "x-variable": "api_type",
+              "enum": [
+                "read-only",
+                "modifiable"
+              ]
+            }
+          },
+          "example": {
+            "value": "Wei Street",
+            "api_type": "read-only"
+          }
         },
         "address_line_4": {
-          "$ref": "#/definitions/address_line_4"
+          "type": "object",
+          "required": [
+            "value",
+            "api_type"
+          ],
+          "properties": {
+            "value": {
+              "type": "string",
+              "maxLength": 40,
+              "minLength": 1,
+              "default": " ",
+              "x-variable": "address_line_4"
+            },
+            "api_type": {
+              "type": "string",
+              "default": "read-only",
+              "x-variable": "api_type",
+              "enum": [
+                "read-only",
+                "modifiable"
+              ]
+            }
+          },
+          "example": {
+            "value": "The People's Republic of China",
+            "api_type": "read-only"
+          }
         },
         "building": {
           "$ref": "#/definitions/building"
@@ -4796,126 +4935,9 @@
         }
       }
     },
-    "address_line_1": {
-      "type": "object",
-      "required": [
-        "value",
-        "api_type"
-      ],
-      "properties": {
-        "value": {
-          "type": "string",
-          "maxLength": 40,
-          "minLength": 1,
-          "default": " ",
-          "x-variable": "address_line_1"
-        },
-        "api_type": {
-          "type": "string",
-          "default": "read-only",
-          "x-variable": "api_type",
-          "enum": [
-            "read-only",
-            "modifiable"
-          ]
-        }
-      },
-      "example": {
-        "value": "3217 ITB",
-        "api_type": "read-only"
-      }
-    },
-    "address_line_2": {
-      "type": "object",
-      "required": [
-        "value",
-        "api_type"
-      ],
-      "properties": {
-        "value": {
-          "type": "string",
-          "maxLength": 40,
-          "minLength": 1,
-          "default": " ",
-          "x-variable": "address_line_2"
-        },
-        "api_type": {
-          "type": "string",
-          "default": "read-only",
-          "x-variable": "api_type",
-          "enum": [
-            "read-only",
-            "modifiable"
-          ]
-        }
-      },
-      "example": {
-        "value": "Provo, UT 84602",
-        "api_type": "read-only"
-      }
-    },
-    "address_line_3": {
-      "type": "object",
-      "required": [
-        "value",
-        "api_type"
-      ],
-      "properties": {
-        "value": {
-          "type": "string",
-          "maxLength": 40,
-          "minLength": 1,
-          "default": " ",
-          "x-variable": "address_line_3"
-        },
-        "api_type": {
-          "type": "string",
-          "default": "read-only",
-          "x-variable": "api_type",
-          "enum": [
-            "read-only",
-            "modifiable"
-          ]
-        }
-      },
-      "example": {
-        "value": "Wei Street",
-        "api_type": "read-only"
-      }
-    },
-    "address_line_4": {
-      "type": "object",
-      "required": [
-        "value",
-        "api_type"
-      ],
-      "properties": {
-        "value": {
-          "type": "string",
-          "maxLength": 40,
-          "minLength": 1,
-          "default": " ",
-          "x-variable": "address_line_4"
-        },
-        "api_type": {
-          "type": "string",
-          "default": "read-only",
-          "x-variable": "api_type",
-          "enum": [
-            "read-only",
-            "modifiable"
-          ]
-        }
-      },
-      "example": {
-        "value": "The People's Republic of China",
-        "api_type": "read-only"
-      }
-    },
     "address_put": {
       "type": "object",
       "required": [
-        "address_type",
         "address_line_1",
         "address_line_2",
         "address_line_3",
@@ -4926,7 +4948,8 @@
         "city",
         "state_code",
         "postal_code",
-        "unlisted"
+        "unlisted",
+        "verified_flag"
       ],
       "properties": {
         "date_time_updated": {
@@ -4935,16 +4958,7 @@
         },
         "updated_by_id": {
           "type": "string",
-          "pattern": "^([]{0}|[0-9]{9})$"
-        },
-        "address_type": {
-          "type": "string",
-          "enum": [
-            "PRM",
-            "RES",
-            "MAL",
-            "WRK"
-          ]
+          "pattern": "[\x00-\x7F]{0,9}"
         },
         "address_line_1": {
           "type": "string",
@@ -4990,7 +5004,7 @@
         "country_code": {
           "type": "string",
           "default": "???",
-          "pattern": "^[A-Z?]{3}$"
+          "pattern": "^([?]{3}|UK|HK|EL|CW|SX|[A-Z]{3})$"
         },
         "city": {
           "type": "string",
@@ -5021,44 +5035,6 @@
           "type": "boolean",
           "default": false
         }
-      }
-    },
-    "address_type": {
-      "type": "object",
-      "required": [
-        "value",
-        "api_type",
-        "key"
-      ],
-      "properties": {
-        "value": {
-          "type": "string",
-          "x-variable": "address_type",
-          "enum": [
-            "PRM",
-            "RES",
-            "MAL",
-            "WRK"
-          ]
-        },
-        "api_type": {
-          "type": "string",
-          "default": "read-only",
-          "x-variable": "api_type",
-          "enum": [
-            "read-only",
-            "modifiable"
-          ]
-        },
-        "key": {
-          "type": "boolean",
-          "default": true
-        }
-      },
-      "example": {
-        "value": "MAL",
-        "api_type": "read-only",
-        "key": true
       }
     },
     "addresses": {

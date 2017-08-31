@@ -52,7 +52,7 @@ exports.defaultResponseHandler = function (metadata_definition, initial, res, er
 //Checks to see if the country input matches our list of known country codes
 // if it does not then an error is returned
 exports.isValidCountryCode = function (country_code) {
-  if (country_code && country_code.match(/^([?]{3}|[A-Z]{3})$/)) {
+  if (/^([?]{3}|UK|HK|EL|CW|SX|[A-Z]{3})$/.test(country_code)) {
     let countryCode = require("../meta/countries/countryCodes.json");
     let country_codes = countryCode.items;
 
@@ -93,24 +93,10 @@ exports.isValidStateCode = function (state_code, country_code) {
   }
 };
 
-
-//This function validates the postal code input by the user for USA and CAN addresses
-//  it does not check to see if it matches the city only that the code is possible
-exports.isValidPostalCode = function (postal_code, country_code) {
-  if (postal_code && country_code && (country_code === "USA") &&
-    (postal_code.match(/^[0-9]{5}$/))) {
-    return true
-  }
-  else {
-    return (postal_code && country_code && (country_code === "CAN") &&
-      postal_code.toString().replace(/\W+/g, '').match(/([ABCEGHJKLMNPRSTVXY]\d)([ABCEGHJKLMNPRSTVWXYZ]\d){2}/i))
-  }
-};
-
 //This function is used in the PUT to validate an on campus building code
 exports.isValidBuildingCode = function (building_code) {
-  let buildingCode = require("../meta/buildings/buildingCodes.json");
-  let building_codes = buildingCode.items;
+  const buildingCode = require("../meta/buildings/buildingCodes.json");
+  const building_codes = buildingCode.items;
 
   for (let i = building_codes.length; i--;) {
     if (building_code && building_code === building_codes[i]["domain_value"]) {
@@ -122,10 +108,10 @@ exports.isValidBuildingCode = function (building_code) {
 
 exports.isValidHighSchoolCode = function (high_school_code) {
   if (high_school_code && high_school_code.match(/^( |[0-9]{6})$/)) {
-    var highSchoolCode = require("../meta/high_schools/highSchoolCodes.json");
-    var high_school_codes = highSchoolCode.items;
+    const highSchoolCode = require("../meta/high_schools/highSchoolCodes.json");
+    const high_school_codes = highSchoolCode.items;
 
-    for (var i = high_school_codes.length; i--;) {
+    for (let i = high_school_codes.length; i--;) {
       if (high_school_code === high_school_codes[i].high_school_code) {
         return true
       }
@@ -133,19 +119,4 @@ exports.isValidHighSchoolCode = function (high_school_code) {
   }
   return false
 };
-
-
-let accepted_date_formats = [
-  "YYYY-MM-DD HH:mm:ss.SSS",
-  "YYYY-MM-DDTHH:mm:ss.SSSZ",
-  "YYYY-MM-DD h:mm:ss.SSS A",
-  "YYYY-MM-DD h:mm:ss.SSS a",
-  "YYYY-MM-DD",
-  "MM/DD/YYYY",
-  "M/D/YY",
-  "M/D/YYYY",
-  "DD-MMM-YYYY",
-  "DD-MMM-YY",
-  "DD MMMM YYYY"
-];
 

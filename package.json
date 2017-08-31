@@ -26,7 +26,7 @@
     "express": "4.15.3",
     "json-schema-ref-parser": "github:byu-oit/json-schema-ref-parser",
     "moment-timezone": "^0.5.13",
-    "oracledb": "1.13.1",
+    "oracledb": "^1.13.1",
     "sans-server": "1.5.1",
     "sans-server-express": "0.0.3",
     "sans-server-swagger": "0.3.7",
