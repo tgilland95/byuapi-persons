@@ -21,6 +21,7 @@ const db = require('../db');
 const sql = require('./sql');
 const auth = require('../auth');
 const event = require('../event');
+const moment = require('moment-timezone');
 
 /**
  * A helper function that takes the swagger definition sql results and
@@ -197,7 +198,8 @@ function processPostCode(postal_code, country_code) {
 }
 
 function processBody(authorized_byu_id, body) {
-  const current_date_time = new Date().toISOString();
+  let current_date_time = moment();
+  current_date_time = current_date_time.clone().tz('America/Denver').format('YYYY-MM-DD HH:mm:ss.SSS');
   let new_body = {};
   new_body.address_line_1 = body.address_line_1 || '';
   new_body.address_line_2 = body.address_line_2 || ' ';
@@ -208,18 +210,23 @@ function processBody(authorized_byu_id, body) {
   new_body.building = body.building || ' ';
   new_body.city = body.city || ' ';
   new_body.state_code = body.state_code || '??';
-  new_body.postal_code = (body.postal_code) ? (
-    processPostCode(body.postal_code, new_body.country_code)) : ' ';
+  new_body.postal_code = (body.postal_code) ? processPostCode(body.postal_code, new_body.country_code) : ' ';
   new_body.verified_flag = body.verified_flag ? 'Y' : 'N';
   new_body.unlisted = body.unlisted ? 'Y' : 'N';
-  new_body.updated_by_id = (!body.updated_by_id ||
-    body.updated_by_id === ' ') ? authorized_byu_id : body.updated_by_id;
-  new_body.date_time_updated = (!body.date_time_updated ||
-    body.date_time_updated === ' ') ? current_date_time : body.date_time_updated;
-  new_body.created_by_id = (!body.created_by_id ||
-    body.created_by_id === ' ') ? authorized_byu_id : body.created_by_id;
-  new_body.date_time_created = (!body.date_time_created ||
-    body.date_time_created === ' ') ? current_date_time : body.date_time_created;
+  new_body.updated_by_id = (!body.updated_by_id || !body.updated_by_id.trim()) ? authorized_byu_id : body.updated_by_id;
+  if (!body.date_time_updated || !body.date_time_updated.trim()) {
+    new_body.date_time_updated = current_date_time
+  } else {
+    new_body.date_time_updated = moment.tz(body.date_time_updated, 'America/Danmarkshavn');
+    new_body.date_time_updated = new_body.date_time_updated.clone().tz('America/Denver').format('YYYY-MM-DD HH:mm:ss.SSS');
+  }
+  new_body.created_by_id = (!body.created_by_id || !body.created_by_id.trim()) ? authorized_byu_id : body.created_by_id;
+  if (!body.date_time_created || !body.date_time_created.trim()) {
+    new_body.date_time_created = current_date_time
+  } else {
+    new_body.date_time_created = moment.tz(body.date_time_created, 'America/Danmarkshavn');
+    new_body.date_time_created = new_body.date_time_created.clone().tz('America/Denver').format('YYYY-MM-DD HH:mm:ss.SSS');
+  }
 
   let error = false;
   let msg = 'Incorrect BODY: Missing\n';
@@ -255,7 +262,8 @@ function processBody(authorized_byu_id, body) {
     throw utils.Error(409, msg)
   }
 
-  return body;
+  console.log('NEW BODY', new_body);
+  return new_body;
 }
 
 function processFromResults(from_results) {
@@ -279,6 +287,7 @@ function processFromResults(from_results) {
   process_results.unlisted = from_results.unlisted || ' ';
   process_results.verified_flag = from_results.verified_flag || ' ';
 
+  console.log("PROCESS RESULTS", process_results);
   return process_results;
 }
 
@@ -442,13 +451,21 @@ async function addressEvents(connection, change_type, byu_id, address_type, body
       eventness = event.Builder(header, restricted_body, filters);
       event_frame.events.event.push(eventness);
     }
+
     sql_query = db.raiseEvent;
-    params.push(JSON.stringify(event_frame));
-    await connection.execute(sql_query, params);
-    await connection.commit();
+    params = [JSON.stringify(event_frame)];
+    console.log('EVENT QUERY', sql_query);
+    console.log('Event', params);
+    const event_store = await connection.execute(sql_query, params);
+    console.log('Event Store', event_store);
+    const commit = await connection.commit();
+    console.log("EVENT COMMIT", commit);
     sql_query = db.enqueue;
-    await connection.execute(sql_query, params);
+    console.log('Enqueue', sql_query);
+    const enqueue_results = await connection.execute(sql_query, params);
+    console.log("ENQUEUE RESUTLS", enqueue_results);
   } catch (error) {
+    console.log('THIS ERROR');
     console.error(error.stack);
     throw utils.Error(207, 'Record was changed but event was not raised');
   }
@@ -538,7 +555,10 @@ exports.modifyAddress = async function (definitions, byu_id, address_type, body,
         address_type
       ];
     }
-    await connection.execute(sql_query, params);
+    console.log(sql_query);
+    console.log(params);
+    const hello = await connection.execute(sql_query, params);
+    console.log('HELLO', hello);
     sql_query = sql.modifyAddress.logChange;
     const log_params = [
       change_type,
@@ -573,10 +593,20 @@ exports.modifyAddress = async function (definitions, byu_id, address_type, body,
       new_body.unlisted,
       new_body.verified_flag
     ];
-    await connection.execute(sql_query, log_params);
-    await connection.commit();
-    await addressEvents(connection, change_type, byu_id, address_type, new_body, processed_results);
-    connection.close();
+    console.log('made it');
+    let logs = {};
+    try {
+      logs = await connection.execute(sql_query, log_params);
+    }
+    catch (error) {
+      console.error(error.stack);
+    }
+    console.log("LOGS", logs);
+    const commit = await connection.commit();
+    console.log("COMMIT", commit);
+    const event_status = await addressEvents(connection, change_type, byu_id, address_type, new_body, processed_results);
+    console.log("EVENT STATUS", event_status);
+    await connection.close();
   }
 
   return await exports.getAddress(definitions, byu_id, address_type, permissions);

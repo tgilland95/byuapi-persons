@@ -15,61 +15,59 @@
  *
  */
 
-const Enforcer            = require('swagger-enforcer');
 const addressesController = require('../controllers/addresses/addresses');
-const auth                = require('../controllers/auth');
-const utils               = require('../controllers/utils');
+const auth = require('../controllers/auth');
+const utils = require('../controllers/utils');
 
-exports.getAddress = function (req, res) {
-  return auth.getPermissions(req)
-    .then(function (permissions) {
-      // console.log("permissions: ", permissions);
-      return addressesController.getAddress(req.swagger.root.definitions, req.params.byu_id, req.params.address_type, permissions)
-        .then(function (address) {
-          res.send(address);
-        })
-    })
-    .catch(function (error) {
-      utils.defaultResponseHandler(req.swagger.root.definitions.simple_metadata, {}, res, error);
-    });
+exports.getAddress = async (req, res) => {
+  try {
+    const permissions = await auth.getPermissions(req);
+    const address = await addressesController.getAddress(req.swagger.root.definitions,
+      req.params.byu_id, req.params.address_type, permissions);
+
+    res.send(address);
+  } catch (error) {
+    console.error(error.stack);
+    utils.defaultResponseHandler(req.swagger.root.definitions.simple_metadata, {}, res, error);
+  }
 };
 
-exports.getAddresses = function (req, res) {
-  return auth.getPermissions(req)
-    .then(function (permissions) {
-      // console.log("permissions: ", permissions);
-      return addressesController.getAddresses(req.swagger.root.definitions, req.params.byu_id, permissions)
-        .then(function (addresses) {
-          res.send(addresses);
-        })
-    })
-    .catch(function (error) {
-      utils.defaultResponseHandler(req.swagger.root.definitions.simple_metadata, {}, res, error);
-    });
+exports.getAddresses = async (req, res) => {
+  try {
+    const permissions = await auth.getPermissions(req);
+    const addresses = await addressesController.getAddresses(req.swagger.root.definitions,
+      req.params.byu_id, permissions);
+
+    res.send(addresses);
+  } catch (error) {
+    console.error(error.stack);
+    utils.defaultResponseHandler(req.swagger.root.definitions.simple_metadata, {}, res, error);
+  }
 };
 
-exports.modifyAddress = function (req, res) {
-  return auth.getPermissions(req)
-    .then(function (permissions) {
-      return addressesController.modifyAddress(req.swagger.root.definitions, req.params.byu_id, req.params.address_type, req.body, req.verifiedJWTs.prioritizedClaims.byuId, permissions)
-        .then(function (address) {
-          res.send(address);
-        })
-    })
-    .catch(function (error) {
-      utils.defaultResponseHandler(req.swagger.root.definitions.simple_metadata, {}, res, error);
-    });
+exports.modifyAddress = async (req, res) => {
+  try {
+    const permissions = await auth.getPermissions(req);
+    const address = await addressesController.modifyAddress(req.swagger.root.definitions,
+      req.params.byu_id, req.params.address_type, req.body, req.verifiedJWTs.prioritizedClaims.byuId, permissions);
+
+    res.send(address);
+  } catch (error) {
+    console.error(error.stack);
+    utils.defaultResponseHandler(req.swagger.root.definitions.simple_metadata, {}, res, error);
+  }
 };
 
-exports.deleteAddress = function (req, res) {
-  return auth.getPermissions(req)
-    .then(function (permissions) {
-      return addressesController.deleteAddress(req.swagger.root.definitions, req.params.byu_id, req.params.address_type, req.verifiedJWTs.prioritizedClaims.byuId, permissions)
-        .then(function (success) {
-          res.sendStatus(204);
-        })
-    })
-    .catch(function (error) {
-      utils.defaultResponseHandler(req.swagger.root.definitions.simple_metadata, {}, res, error);
-    });
+exports.deleteAddress = async (req, res) => {
+  try {
+    const permissions = await auth.getPermissions(req);
+    const success = await addressesController.deleteAddress(req.swagger.root.definitions,
+      req.params.byu_id, req.params.address_type, req.verifiedJWTs.prioritizedClaims.byuId, permissions);
+
+    console.log(success);
+    res.sendStatus(204);
+  } catch (error) {
+    console.error(error.stack);
+    utils.defaultResponseHandler(req.swagger.root.definitions.simple_metadata, {}, res, error);
+  }
 };

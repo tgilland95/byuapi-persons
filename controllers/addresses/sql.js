@@ -222,9 +222,9 @@ exports.modifyAddress = {
     insert into iam.address 
     values      (:BYU_ID, 
                  :ADDRESS_TYPE, 
-                 to_timestamp_tz(:DATE_TIME_UPDATED, 'YYYY-MM-DD"T"HH24:MI:SS.FF3"Z"'), 
+                 to_timestamp(:DATE_TIME_UPDATED, 'YYYY-MM-DD HH24:MI:SS.FF3'), 
                  :UPDATED_BY_ID, 
-                 to_timestamp_tz(:DATE_TIME_CREATED, 'YYYY-MM-DD"T"HH24:MI:SS.FF3"Z"'), 
+                 to_timestamp(:DATE_TIME_CREATED, 'YYYY-MM-DD HH24:MI:SS.FF3'), 
                  :CREATED_BY_ID, 
                  :ADDRESS_LINE_1, 
                  :ADDRESS_LINE_2, 
@@ -244,9 +244,9 @@ exports.modifyAddress = {
                  :CHANGE_TYPE, 
                  :BYU_ID, 
                  :ADDRESS_TYPE, 
-                 to_timestamp_tz(:DATE_TIME_UPDATED, 'YYYY-MM-DD"T"HH24:MI:SS.FF3"Z"'), 
+                 to_timestamp(:DATE_TIME_UPDATED, 'YYYY-MM-DD HH24:MI:SS.FF3'), 
                  :UPDATED_BY_ID, 
-                 to_timestamp_tz(:DATE_TIME_CREATED, 'YYYY-MM-DD"T"HH24:MI:SS.FF3"Z"'), 
+                 to_timestamp(:DATE_TIME_CREATED, 'YYYY-MM-DD HH24:MI:SS.FF3'), 
                  :CREATED_BY_ID, 
                  :FROM_ADDRESS_LINE_1, 
                  :FROM_ADDRESS_LINE_2, 
@@ -274,7 +274,7 @@ exports.modifyAddress = {
                  :VERIFIED_F)`,
   update: `
     update iam.address 
-    set    date_time_updated = to_timestamp_tz(:1, 'YYYY-MM-DD"T"HH24:MI:SS.FF3"Z"'), 
+    set    date_time_updated = to_timestamp_tz(:1, 'YYYY-MM-DD HH24:MI:SS.FF3'), 
            updated_by_id = :2, 
            address_line_1 = :3, 
            address_line_2 = :4, 

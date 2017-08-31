@@ -626,10 +626,13 @@
               "$ref": "#/definitions/address"
             }
           },
-          "201": {
-            "description": "Address successfully created",
-            "schema": {
-              "$ref": "#/definitions/address"
+          "207": {
+            "type": "object",
+            "required": ["metadata"],
+            "properties": {
+              "metadata": {
+                "$ref": "#/definitions/simple_metadata"
+              }
             }
           },
           "400": { "$ref": "#/responses/400" },
@@ -4958,7 +4961,7 @@
         },
         "updated_by_id": {
           "type": "string",
-          "pattern": "[\x00-\x7F]{0,9}"
+          "pattern": "^[A-Z0-9 _]{0,9}$"
         },
         "address_line_1": {
           "type": "string",
