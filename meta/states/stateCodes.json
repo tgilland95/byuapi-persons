@@ -15,6 +15,20 @@
       "date_time_updated": "01-NOV-05"
     },
     {
+      "country_code": "AUS",
+      "state_code": "??",
+      "state": "Unknown",
+      "updated_by_id": "INIT",
+      "date_time_updated": "01-NOV-05"
+    },
+    {
+      "country_code": "CAN",
+      "state_code": "??",
+      "state": "Unknown",
+      "updated_by_id": "INIT",
+      "date_time_updated": "01-NOV-05"
+    },
+    {
       "country_code": "USA",
       "state_code": "AA",
       "state": "APO ZIPs 340",

@@ -1086,7 +1086,7 @@ async function person_handle_auth(auth_info, info_areas) {
       auth_info.response = "Deny";
       return auth_info;
   }
-};
+}
 
 exports.hasRestrictedRights = function (permissions) {
   return permissions.includes("person_restricted");
@@ -1111,3 +1111,5 @@ exports.canUpdatePersonContact = function (permissions) {
 exports.canLookupSSN = function (permissions) {
   return permissions.includes("person_lookup_ssn")
 };
+
+exports.canUpdateName = permissions => permissions.includes('person_update_name');

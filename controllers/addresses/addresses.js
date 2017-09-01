@@ -222,7 +222,7 @@ function processBody(authorized_byu_id, body) {
   }
   new_body.created_by_id = (!body.created_by_id || !body.created_by_id.trim()) ? authorized_byu_id : body.created_by_id;
   if (!body.date_time_created || !body.date_time_created.trim()) {
-    new_body.date_time_created = current_date_time
+    new_body.date_time_created = current_date_time;
   } else {
     new_body.date_time_created = moment.tz(body.date_time_created, 'America/Danmarkshavn');
     new_body.date_time_created = new_body.date_time_created.clone().tz('America/Denver').format('YYYY-MM-DD HH:mm:ss.SSS');
@@ -262,7 +262,6 @@ function processBody(authorized_byu_id, body) {
     throw utils.Error(409, msg)
   }
 
-  console.log('NEW BODY', new_body);
   return new_body;
 }
 
@@ -287,7 +286,6 @@ function processFromResults(from_results) {
   process_results.unlisted = from_results.unlisted || ' ';
   process_results.verified_flag = from_results.verified_flag || ' ';
 
-  console.log("PROCESS RESULTS", process_results);
   return process_results;
 }
 
@@ -324,7 +322,7 @@ async function addressEvents(connection, change_type, byu_id, address_type, body
       'event_id',
       ' '
     ];
-    if (processed_results.restricted && body.unlisted === 'N') {
+    if (!processed_results.restricted && body.unlisted === 'N') {
       let event_body = [
         'person_id',
         processed_results.person_id,
@@ -369,15 +367,15 @@ async function addressEvents(connection, change_type, byu_id, address_type, body
       event_frame.events.event.push(eventness);
 
       header[5] = event_type2;
-      body.push('verified_flag');
-      body.push(body.verified_flag);
+      event_body.push('verified_flag');
+      event_body.push(body.verified_flag);
       filters.push('identity_type');
       filters.push(identity_type);
       filters.push('employee_type');
       filters.push(processed_results.employee_type);
       filters.push('student_status');
       filters.push(processed_results.student_status);
-      eventness = event.Builder(header, body, filters);
+      eventness = event.Builder(header, event_body, filters);
       event_frame.events.event.push(eventness);
     }
     else {
@@ -454,18 +452,14 @@ async function addressEvents(connection, change_type, byu_id, address_type, body
 
     sql_query = db.raiseEvent;
     params = [JSON.stringify(event_frame)];
-    console.log('EVENT QUERY', sql_query);
-    console.log('Event', params);
-    const event_store = await connection.execute(sql_query, params);
-    console.log('Event Store', event_store);
+    const event_log_results = await connection.execute(sql_query, params);
+    console.log('EVENT LOG RESULTS', event_log_results);
     const commit = await connection.commit();
-    console.log("EVENT COMMIT", commit);
     sql_query = db.enqueue;
-    console.log('Enqueue', sql_query);
     const enqueue_results = await connection.execute(sql_query, params);
-    console.log("ENQUEUE RESUTLS", enqueue_results);
+    console.log("ENQUEUE RESULTS", enqueue_results);
   } catch (error) {
-    console.log('THIS ERROR');
+    console.log('EVENT ENQUEUE ERROR');
     console.error(error.stack);
     throw utils.Error(207, 'Record was changed but event was not raised');
   }
@@ -474,6 +468,7 @@ async function addressEvents(connection, change_type, byu_id, address_type, body
 exports.modifyAddress = async function (definitions, byu_id, address_type, body, authorized_byu_id, permissions) {
   const connection = await db.getConnection();
   const new_body = processBody(authorized_byu_id, body);
+  console.log('NEW BODY', new_body);
 
   if (!auth.canUpdatePersonContact(permissions)) {
     throw utils.Error(403, 'User not authorized to update CONTACT data')
@@ -492,11 +487,14 @@ exports.modifyAddress = async function (definitions, byu_id, address_type, body,
   }
 
   new_body.created_by_id = from_results.rows[0].created_by_id || new_body.created_by_id;
-  new_body.date_time_created = from_results.rows[0].date_time_created || new_body.date_time_created;
+  if (from_results.rows[0].date_time_created) {
+    new_body.date_time_created = moment.tz(from_results.rows[0].date_time_created, 'America/Danmarkshavn');
+    new_body.date_time_created = new_body.date_time_created.clone().tz('America/Denver').format('YYYY-MM-DD HH:mm:ss.SSS');
+  }
 
   const change_type = (!from_results.rows[0].address_type) ? 'A' : 'C';
   const processed_results = processFromResults(from_results.rows[0]);
-
+  console.log("PROCESS RESULTS", processed_results);
   const is_different = (
     new_body.address_line_1 !== processed_results.address_line_1 ||
     new_body.address_line_2 !== processed_results.address_line_2 ||
@@ -555,10 +553,8 @@ exports.modifyAddress = async function (definitions, byu_id, address_type, body,
         address_type
       ];
     }
-    console.log(sql_query);
-    console.log(params);
-    const hello = await connection.execute(sql_query, params);
-    console.log('HELLO', hello);
+    const put_results = await connection.execute(sql_query, params);
+    console.log('PUT RESULTS', put_results);
     sql_query = sql.modifyAddress.logChange;
     const log_params = [
       change_type,
@@ -593,23 +589,20 @@ exports.modifyAddress = async function (definitions, byu_id, address_type, body,
       new_body.unlisted,
       new_body.verified_flag
     ];
-    console.log('made it');
-    let logs = {};
-    try {
-      logs = await connection.execute(sql_query, log_params);
-    }
-    catch (error) {
-      console.error(error.stack);
-    }
-    console.log("LOGS", logs);
+
+    console.log("LOG PARAMS", log_params);
+    const address_change_log_results = await connection.execute(sql_query, log_params);
+    console.log("ADDRESS CHANGE LOG RESULTS", address_change_log_results);
     const commit = await connection.commit();
-    console.log("COMMIT", commit);
     const event_status = await addressEvents(connection, change_type, byu_id, address_type, new_body, processed_results);
     console.log("EVENT STATUS", event_status);
-    await connection.close();
   }
 
-  return await exports.getAddress(definitions, byu_id, address_type, permissions);
+  params = [address_type, byu_id];
+  sql_query = sql.sql.getAddress;
+  const results = await connection.execute(sql_query, params);
+  await connection.close();
+  return mapDBResultsToDefinition(definitions, results.rows[0], 'modifiable');
 };
 
 exports.deleteAddress = async function (definitions, byu_id, address_type, authorized_byu_id, permissions) {

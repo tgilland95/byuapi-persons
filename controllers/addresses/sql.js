@@ -17,35 +17,33 @@
 
 exports.sql = {
   getAddresses: `
-    select a.byu_id                          as "byu_id", 
-           a.preferred_name                  as "name", 
-           a.restricted                      as "restricted", 
-           loc.address_type                  as "address_type", 
-           to_char(loc.date_time_updated at time zone 'UTC', 
-           'YYYY-MM-DD"T"HH24:MI:SS.FF3"Z"') as "date_time_updated", 
-           loc.updated_by_id                 as "updated_by_id", 
-           ii.identity_name                  as "updated_by_name", 
-           to_char(loc.date_time_created at time zone 'UTC', 
-           'YYYY-MM-DD"T"HH24:MI:SS.FF3"Z"') as "date_time_created", 
-           loc.created_by_id                 as "created_by_id", 
-           iii.identity_name                 as "created_by_name", 
-           loc.address_line_1                as "address_line_1", 
-           loc.address_line_2                as "address_line_2", 
-           loc.address_line_3                as "address_line_3", 
-           loc.address_line_4                as "address_line_4", 
-           loc.country_code                  as "country_code", 
-           pcc.country                       as "country_name", 
-           loc.room                          as "room", 
-           loc.building                      as "building_code", 
-           cev.desc_15                       as "building_name", 
-           cev.description                   as "long_building_name", 
-           loc.city                          as "city", 
-           loc.state_code                    as "state_code", 
-           pcs.state                         as "state_name", 
-           loc.postal_code                   as "postal_code", 
-           loc.unlisted                      as "unlisted", 
-           loc.verified_f                    as "verified_flag", 
-           idvw.primary_role                 as "primary_role" 
+    select a.byu_id                                                                            as "byu_id",
+           a.preferred_name                                                                    as "name",
+           a.restricted                                                                        as "restricted",
+           loc.address_type                                                                    as "address_type",
+           to_char(loc.date_time_updated at time zone 'UTC', 'YYYY-MM-DD"T"HH24:MI:SS.FF3"Z"') as "date_time_updated", 
+           loc.updated_by_id                                                                   as "updated_by_id",
+           ii.identity_name                                                                    as "updated_by_name",
+           to_char(loc.date_time_created at time zone 'UTC', 'YYYY-MM-DD"T"HH24:MI:SS.FF3"Z"') as "date_time_created", 
+           loc.created_by_id                                                                   as "created_by_id",
+           iii.identity_name                                                                   as "created_by_name",
+           loc.address_line_1                                                                  as "address_line_1",
+           loc.address_line_2                                                                  as "address_line_2",
+           loc.address_line_3                                                                  as "address_line_3",
+           loc.address_line_4                                                                  as "address_line_4",
+           loc.country_code                                                                    as "country_code",
+           pcc.country                                                                         as "country_name",
+           loc.room                                                                            as "room",
+           loc.building                                                                        as "building_code",
+           cev.desc_15                                                                         as "building_name",
+           cev.description                                                                     as "long_building_name",
+           loc.city                                                                            as "city",
+           loc.state_code                                                                      as "state_code",
+           pcs.state                                                                           as "state_name",
+           loc.postal_code                                                                     as "postal_code",
+           loc.unlisted                                                                        as "unlisted",
+           loc.verified_f                                                                      as "verified_flag",
+           idvw.primary_role                                                                   as "primary_role"
     from   iam.person a 
            left join iam.address loc 
                   on a.byu_id = loc.byu_id 
@@ -64,41 +62,39 @@ exports.sql = {
                      and loc.country_code = pcs.country_code 
            left join pro.id_card_vw idvw 
                   on a.person_id = idvw.person_id 
-    where  a.byu_id = :1`,
+    where  a.byu_id = :BYU_ID`,
   getAddress: `
-    select a.byu_id                          as "byu_id", 
-           a.preferred_name                  as "name", 
-           a.restricted                      as "restricted", 
-           loc.address_type                  as "address_type", 
-           to_char(loc.date_time_updated at time zone 'UTC', 
-           'YYYY-MM-DD"T"HH24:MI:SS.FF3"Z"') as "date_time_updated", 
-           loc.updated_by_id                 as "updated_by_id", 
-           ii.identity_name                  as "updated_by_name", 
-           to_char(loc.date_time_created at time zone 'UTC', 
-           'YYYY-MM-DD"T"HH24:MI:SS.FF3"Z"') as "date_time_created", 
-           loc.created_by_id                 as "created_by_id", 
-           iii.identity_name                 as "created_by_name", 
-           loc.address_line_1                as "address_line_1", 
-           loc.address_line_2                as "address_line_2", 
-           loc.address_line_3                as "address_line_3", 
-           loc.address_line_4                as "address_line_4", 
-           loc.country_code                  as "country_code", 
-           pcc.country                       as "country_name", 
-           loc.room                          as "room", 
-           loc.building                      as "building_code", 
-           cev.desc_15                       as "building_name", 
-           cev.description                   as "long_building_name", 
-           loc.city                          as "city", 
-           loc.state_code                    as "state_code", 
-           pcs.state                         as "state_name", 
-           loc.postal_code                   as "postal_code", 
-           loc.unlisted                      as "unlisted", 
-           loc.verified_f                    as "verified_flag", 
-           idvw.primary_role                 as "primary_role" 
+    select a.byu_id                                                                            as "byu_id",
+           a.preferred_name                                                                    as "name",
+           a.restricted                                                                        as "restricted",
+           loc.address_type                                                                    as "address_type",
+           to_char(loc.date_time_updated at time zone 'UTC', 'YYYY-MM-DD"T"HH24:MI:SS.FF3"Z"') as "date_time_updated", 
+           loc.updated_by_id                                                                   as "updated_by_id",
+           ii.identity_name                                                                    as "updated_by_name",
+           to_char(loc.date_time_created at time zone 'UTC', 'YYYY-MM-DD"T"HH24:MI:SS.FF3"Z"') as "date_time_created", 
+           loc.created_by_id                                                                   as "created_by_id",
+           iii.identity_name                                                                   as "created_by_name",
+           loc.address_line_1                                                                  as "address_line_1",
+           loc.address_line_2                                                                  as "address_line_2",
+           loc.address_line_3                                                                  as "address_line_3",
+           loc.address_line_4                                                                  as "address_line_4",
+           loc.country_code                                                                    as "country_code",
+           pcc.country                                                                         as "country_name",
+           loc.room                                                                            as "room",
+           loc.building                                                                        as "building_code",
+           cev.desc_15                                                                         as "building_name",
+           cev.description                                                                     as "long_building_name",
+           loc.city                                                                            as "city",
+           loc.state_code                                                                      as "state_code",
+           pcs.state                                                                           as "state_name",
+           loc.postal_code                                                                     as "postal_code",
+           loc.unlisted                                                                        as "unlisted",
+           loc.verified_f                                                                      as "verified_flag",
+           idvw.primary_role                                                                   as "primary_role"
     from   iam.person a 
            left join iam.address loc 
                   on a.byu_id = loc.byu_id 
-                     and loc.address_type = :1 
+                     and loc.address_type = :ADDRESS_TYPE 
            left join iam.identity ii 
                   on loc.updated_by_id = ii.byu_id 
            left join iam.identity iii 
@@ -114,13 +110,13 @@ exports.sql = {
                      and loc.country_code = pcs.country_code 
            left join pro.id_card_vw idvw 
                   on a.person_id = idvw.person_id 
-    where  a.byu_id = :2`,
+    where  a.byu_id = :BYU_ID`,
   fromAddress: `
-    select a.byu_id                     as "byu_id", 
-           a.preferred_name             as "name", 
-           a.person_id                  as "person_id", 
-           a.restricted                 as "restricted", 
-           k.credential_id              as "net_id", 
+    select a.byu_id                                                                            as "byu_id",
+           a.preferred_name                                                                    as "name",
+           a.person_id                                                                         as "person_id",
+           a.restricted                                                                        as "restricted",
+           k.credential_id                                                                     as "net_id",
            case 
              when e.class_standing = '8' then 'Doctorate Program' 
              when e.class_standing = '7' then 'Masters Program' 
@@ -147,42 +143,40 @@ exports.sql = {
                       and e.reg_eligibility = 'SL' then 'Salt Lake Center Student' 
                  else 'Non-student' 
                end 
-           end                          as "student_status", 
+           end                                                                                 as "student_status",
            hr.per_warehouse.classification 
            || '-' 
            || hr.per_warehouse.status 
            || '-' 
-           || hr.per_warehouse.standing as "employee_type", 
-           loc.address_type             as "address_type", 
-           to_char(loc.date_time_updated at time zone 'UTC', 
-           'YYYY-MM-DD"T"HH24:MI:SS.FF3"Z"') as "date_time_updated", 
-           loc.updated_by_id                 as "updated_by_id", 
-           ii.identity_name                  as "updated_by_name", 
-           to_char(loc.date_time_created at time zone 'UTC', 
-           'YYYY-MM-DD"T"HH24:MI:SS.FF3"Z"') as "date_time_created", 
-           loc.created_by_id                 as "created_by_id", 
-           iii.identity_name                 as "created_by_name", 
-           loc.address_line_1           as "address_line_1", 
-           loc.address_line_2           as "address_line_2", 
-           loc.address_line_3           as "address_line_3", 
-           loc.address_line_4           as "address_line_4", 
-           loc.country_code             as "country_code", 
-           pcc.country                  as "country_name", 
-           loc.room                     as "room", 
-           loc.building                 as "building_code", 
-           cev.desc_15                  as "building_name", 
-           cev.description              as "long_building_name", 
-           loc.city                     as "city", 
-           loc.state_code               as "state_code", 
-           pcs.state                    as "state_name", 
-           loc.postal_code              as "postal_code", 
-           loc.unlisted                 as "unlisted", 
-           loc.verified_f               as "verified_flag", 
-           idvw.primary_role            as "primary_role" 
+           || hr.per_warehouse.standing                                                        as "employee_type",
+           loc.address_type                                                                    as "address_type",
+           to_char(loc.date_time_updated at time zone 'UTC', 'YYYY-MM-DD"T"HH24:MI:SS.FF3"Z"') as "date_time_updated", 
+           loc.updated_by_id                                                                   as "updated_by_id",
+           ii.identity_name                                                                    as "updated_by_name",
+           to_char(loc.date_time_created at time zone 'UTC', 'YYYY-MM-DD"T"HH24:MI:SS.FF3"Z"') as "date_time_created", 
+           loc.created_by_id                                                                   as "created_by_id",
+           iii.identity_name                                                                   as "created_by_name",
+           loc.address_line_1                                                                  as "address_line_1",
+           loc.address_line_2                                                                  as "address_line_2",
+           loc.address_line_3                                                                  as "address_line_3",
+           loc.address_line_4                                                                  as "address_line_4",
+           loc.country_code                                                                    as "country_code",
+           pcc.country                                                                         as "country_name",
+           loc.room                                                                            as "room",
+           loc.building                                                                        as "building_code",
+           cev.desc_15                                                                         as "building_name",
+           cev.description                                                                     as "long_building_name",
+           loc.city                                                                            as "city",
+           loc.state_code                                                                      as "state_code",
+           pcs.state                                                                           as "state_name",
+           loc.postal_code                                                                     as "postal_code",
+           loc.unlisted                                                                        as "unlisted",
+           loc.verified_f                                                                      as "verified_flag",
+           idvw.primary_role                                                                   as "primary_role"
     from   iam.person a 
            left join iam.address loc 
                   on a.byu_id = loc.byu_id 
-                     and loc.address_type = :1 
+                     and loc.address_type = :ADDRESS_TYPE 
            left join iam.identity ii 
                   on loc.updated_by_id = ii.byu_id 
            left join iam.identity iii 
@@ -214,7 +208,7 @@ exports.sql = {
                      and d.date_type = 'CURRENT_YYT' 
                      and trunc(d.start_date) <= trunc(sysdate) 
                      and trunc(d.end_date) >= trunc(sysdate) 
-    where  a.byu_id = :2`
+    where  a.byu_id = :BYU_ID`
 };
 
 exports.modifyAddress = {
@@ -274,22 +268,22 @@ exports.modifyAddress = {
                  :VERIFIED_F)`,
   update: `
     update iam.address 
-    set    date_time_updated = to_timestamp_tz(:1, 'YYYY-MM-DD HH24:MI:SS.FF3'), 
-           updated_by_id = :2, 
-           address_line_1 = :3, 
-           address_line_2 = :4, 
-           address_line_3 = :5, 
-           address_line_4 = :6, 
-           country_code = :7, 
-           room = :8, 
-           building = :9, 
-           city = :10, 
-           state_code = :11, 
-           postal_code = :12, 
-           unlisted = :13, 
-           verified_f = :14 
-           where  byu_id = :15 
-           and address_type = :16`,
+    set    date_time_updated = to_timestamp(:DATE_TIME_UPDATED, 'YYYY-MM-DD HH24:MI:SS.FF3'), 
+           updated_by_id = :UPDATED_BY_ID, 
+           address_line_1 = :ADDRESS_LINE_1, 
+           address_line_2 = :ADDRESS_LINE_2, 
+           address_line_3 = :ADDRESS_LINE_3, 
+           address_line_4 = :ADDRESS_LINE_4, 
+           country_code = :COUNTRY_CODE, 
+           room = :ROOM, 
+           building = :BUILDING, 
+           city = :CITY, 
+           state_code = :STATE_CODE, 
+           postal_code = :POSTAL_CODE, 
+           unlisted = :UNLISTED, 
+           verified_f = :VERIFIED_F
+           where  byu_id = :BYU_ID 
+           and address_type = :ADDRESS_TYPE`,
   delete: `
     delete from iam.address 
     where  address_type = :ADDRESS_TYPE 
