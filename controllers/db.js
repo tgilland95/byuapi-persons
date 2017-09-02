@@ -22,36 +22,32 @@ oracle.outFormat = oracle.OBJECT;
 
 console.log("CREATING POOL");
 const poolPromise = param.getParams()
-  .then(function (params) {
+  .then(async (params) => {
     const dbconfig = {
       user: params.DB_USER,
       password: params.DB_PWD,
       connectString: params.DB_CS,
       poolMin: 2
     };
-// console.log(dbconfig);
+    const pool = await oracle.createPool(dbconfig);
 
-    return oracle.createPool(dbconfig)
-      .then(function (pool) {
-        console.log("POOL CREATED");
-        process.on("SIGINT", function () {
-          console.log("SIGINT");
-          pool.close();
-          process.exit(0);
-        });
-        return pool;
-      });
+    console.log("POOL CREATED");
+    process.on("SIGINT", () => {
+      console.log("SIGINT");
+      pool.close();
+      process.exit(0);
+    });
+    return pool;
   });
 
 exports.getConnection = async function () {
-  let startTime = (new Date()).getTime();
+  const startTime = (new Date()).getTime();
   const pool = await poolPromise;
-  return oracle.getConnection(pool)
-    .then(function (conn) {
-      let elapsedMilliseconds = (new Date()).getTime() - startTime;
-      console.log("elapsedMilliseconds: ",elapsedMilliseconds);
-      return conn;
-    });
+  const conn = await oracle.getConnection(pool);
+  const elapsedMilliseconds = (new Date()).getTime() - startTime;
+  console.log("elapsedMilliseconds: ", elapsedMilliseconds);
+
+  return conn;
 };
 
 exports.execute = async function (sql, params, options) {
@@ -60,11 +56,10 @@ exports.execute = async function (sql, params, options) {
   try {
     conn = await exports.getConnection();
     const result = await conn.execute(sql, params, options || {});
-    // console.log("SQL EXECUTED");
     conn.close();
     return result;
   } catch (e) {
-    if(conn) {
+    if (conn) {
       conn.close();
     }
   }
@@ -85,7 +80,7 @@ exports.intermediaryId = {
              :CREATED_BY_ID)`
 };
 
-exports.raiseEvent =  `
+exports.raiseEvent = `
   insert into iam.event 
               (event_id, 
                date_time_created, 

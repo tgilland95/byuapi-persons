@@ -269,8 +269,7 @@ function processFromResults(from_results) {
   let process_results = {};
   process_results.person_id = from_results.person_id || ' ';
   process_results.net_id = from_results.net_id || ' ';
-  process_results.employee_type = (from_results.employee_type &&
-    from_results.employee_type !== '--') ? from_results.employee_type : 'Not An Employee';
+  process_results.employee_type = /[^-]/.test(from_results.employee_type) ? from_results.employee_type : 'Not An Employee';
   process_results.student_status = from_results.student_status;
   process_results.restricted = (from_results.restricted && from_results.restricted === 'Y');
   process_results.address_line_1 = from_results.address_line_1 || ' ';
@@ -287,6 +286,87 @@ function processFromResults(from_results) {
   process_results.verified_flag = from_results.verified_flag || ' ';
 
   return process_results;
+}
+
+async function logChange(connection, change_type, authorized_byu_id, byu_id, address_type, processed_results, new_body) {
+  const sql_query = sql.modifyAddress.logChange;
+
+  let log_params = [];
+  if (change_type === 'D') {
+    let date_time_updated = moment();
+    date_time_updated = date_time_updated.clone().tz('America/Denver').format('YYYY-MM-DD HH:mm:ss.SSS');
+    log_params = [
+      change_type,
+      byu_id,
+      address_type,
+      date_time_updated,
+      authorized_byu_id,
+      processed_results.date_time_created,
+      processed_results.created_by_id,
+      processed_results.from_address_line_1,
+      processed_results.from_address_line_2,
+      processed_results.from_address_line_3,
+      processed_results.from_address_line_4,
+      processed_results.from_country_code,
+      processed_results.from_room,
+      processed_results.from_building,
+      processed_results.from_city,
+      processed_results.from_state_code,
+      processed_results.from_postal_code,
+      processed_results.from_unlisted,
+      processed_results.from_verified_flag,
+      processed_results.address_line_1,
+      processed_results.address_line_2,
+      processed_results.address_line_3,
+      processed_results.address_line_4,
+      processed_results.country_code,
+      processed_results.room,
+      processed_results.building,
+      processed_results.city,
+      processed_results.state_code,
+      processed_results.postal_code,
+      processed_results.unlisted,
+      processed_results.verified_flag
+    ];
+  }
+  else if (change_type === 'A' ||
+  change_type === 'C') {
+    log_params = [
+      change_type,
+      byu_id,
+      address_type,
+      new_body.date_time_updated,
+      new_body.updated_by_id,
+      new_body.date_time_created,
+      new_body.created_by_id,
+      processed_results.address_line_1,
+      processed_results.address_line_2,
+      processed_results.address_line_3,
+      processed_results.address_line_4,
+      processed_results.country_code,
+      processed_results.room,
+      processed_results.building,
+      processed_results.city,
+      processed_results.state_code,
+      processed_results.postal_code,
+      processed_results.unlisted,
+      processed_results.verified_flag,
+      new_body.address_line_1,
+      new_body.address_line_2,
+      new_body.address_line_3,
+      new_body.address_line_4,
+      new_body.country_code,
+      new_body.room,
+      new_body.building,
+      new_body.city,
+      new_body.state_code,
+      new_body.postal_code,
+      new_body.unlisted,
+      new_body.verified_flag
+    ];
+  }
+  console.log('LOG PARAMS', log_params);
+  return connection.execute(sql_query, log_params);
 }
 
 async function addressEvents(connection, change_type, byu_id, address_type, body, processed_results) {
@@ -322,7 +402,9 @@ async function addressEvents(connection, change_type, byu_id, address_type, body
       'event_id',
       ' '
     ];
-    if (!processed_results.restricted && body.unlisted === 'N') {
+    body.unlisted = (body.unlisted === 'Y');
+    body.verified_flag = (body.verified_flag === 'Y');
+    if (!processed_results.restricted && !body.unlisted) {
       let event_body = [
         'person_id',
         processed_results.person_id,
@@ -396,7 +478,7 @@ async function addressEvents(connection, change_type, byu_id, address_type, body
         results = await connection.execute(sql_query, params);
       }
 
-      secure_url += results.rows[0]['intermediary_id'];
+      secure_url += results.rows[0].intermediary_id;
 
       let restricted_body = [
         'person_id',
@@ -452,12 +534,10 @@ async function addressEvents(connection, change_type, byu_id, address_type, body
 
     sql_query = db.raiseEvent;
     params = [JSON.stringify(event_frame)];
-    const event_log_results = await connection.execute(sql_query, params);
-    console.log('EVENT LOG RESULTS', event_log_results);
-    const commit = await connection.commit();
+    await connection.execute(sql_query, params);
+    connection.commit();
     sql_query = db.enqueue;
-    const enqueue_results = await connection.execute(sql_query, params);
-    console.log("ENQUEUE RESULTS", enqueue_results);
+    return connection.execute(sql_query, params);
   } catch (error) {
     console.log('EVENT ENQUEUE ERROR');
     console.error(error.stack);
@@ -494,7 +574,7 @@ exports.modifyAddress = async function (definitions, byu_id, address_type, body,
 
   const change_type = (!from_results.rows[0].address_type) ? 'A' : 'C';
   const processed_results = processFromResults(from_results.rows[0]);
-  console.log("PROCESS RESULTS", processed_results);
+  console.log('PROCESS RESULTS', processed_results);
   const is_different = (
     new_body.address_line_1 !== processed_results.address_line_1 ||
     new_body.address_line_2 !== processed_results.address_line_2 ||
@@ -553,57 +633,172 @@ exports.modifyAddress = async function (definitions, byu_id, address_type, body,
         address_type
       ];
     }
-    const put_results = await connection.execute(sql_query, params);
-    console.log('PUT RESULTS', put_results);
-    sql_query = sql.modifyAddress.logChange;
-    const log_params = [
-      change_type,
-      byu_id,
-      address_type,
-      new_body.date_time_updated,
-      new_body.updated_by_id,
-      new_body.date_time_created,
-      new_body.created_by_id,
-      processed_results.address_line_1,
-      processed_results.address_line_2,
-      processed_results.address_line_3,
-      processed_results.address_line_4,
-      processed_results.country_code,
-      processed_results.room,
-      processed_results.building,
-      processed_results.city,
-      processed_results.state_code,
-      processed_results.postal_code,
-      processed_results.unlisted,
-      processed_results.verified_flag,
-      new_body.address_line_1,
-      new_body.address_line_2,
-      new_body.address_line_3,
-      new_body.address_line_4,
-      new_body.country_code,
-      new_body.room,
-      new_body.building,
-      new_body.city,
-      new_body.state_code,
-      new_body.postal_code,
-      new_body.unlisted,
-      new_body.verified_flag
-    ];
-
-    console.log("LOG PARAMS", log_params);
-    const address_change_log_results = await connection.execute(sql_query, log_params);
-    console.log("ADDRESS CHANGE LOG RESULTS", address_change_log_results);
-    const commit = await connection.commit();
-    const event_status = await addressEvents(connection, change_type, byu_id, address_type, new_body, processed_results);
-    console.log("EVENT STATUS", event_status);
+    await connection.execute(sql_query, params);
+    await logChange(connection, change_type, authorized_byu_id, byu_id, address_type, processed_results, new_body);
+    connection.commit();
+    await addressEvents(connection, change_type, byu_id, address_type, new_body, processed_results);
   }
 
   params = [address_type, byu_id];
   sql_query = sql.sql.getAddress;
   const results = await connection.execute(sql_query, params);
-  await connection.close();
+  connection.close();
   return mapDBResultsToDefinition(definitions, results.rows[0], 'modifiable');
 };
+
+async function addressDeletedEvents(connection, byu_id, address_type, processed_results) {
+  try {
+    const source_dt = new Date().toISOString();
+    const event_type = 'Address Deleted';
+    const event_type2 = 'Address Deleted v2';
+    const domain = 'edu.byu';
+    const entity = 'BYU-IAM';
+    const identity_type = 'Person';
+    const filters = [
+      'identity_type',
+      identity_type,
+      'employee_type',
+      processed_results.employee_type,
+      'student_status',
+      processed_results.student_status
+    ];
+    const address_url = `https://api.byu.edu/byuapi/persons/v1/${byu_id}/addresses/${address_type}`;
+    let secure_url = 'https://api.byu.edu/domains/legacy/identity/secureurl/v1/';
+    let event_frame = {
+      'events': {
+        'event': []
+      }
+    };
+    let header = [
+      'domain',
+      domain,
+      'entity',
+      entity,
+      'event_type',
+      event_type,
+      'source_dt',
+      source_dt,
+      'event_dt',
+      ' ',
+      'event_id',
+      ' '
+    ];
+    processed_results.unlisted = (processed_results.unlisted === 'Y');
+    processed_results.verified_flag = (processed_results.verified_flag === 'Y');
+
+    if (!processed_results.restricted && !processed_results.unlisted) {
+      let event_body = [
+        'person_id',
+        processed_results.person_id,
+        'byu_id',
+        byu_id,
+        'net_id',
+        processed_results.net_id,
+        'address_type',
+        address_type,
+        'callback_url',
+        address_url
+      ];
+      let eventness = event.Builder(header, event_body);
+      event_frame.events.event.push(eventness);
+
+      header[5] = event_type2;
+      eventness = event.Builder(header, event_body, filters);
+      event_frame.events.event.push(eventness);
+    }
+    else {
+      let sql_query = db.intermediaryId.get;
+      let params = [address_url];
+      let results = await connection.execute(sql_query, params);
+      if (!results.rows.length) {
+        sql_query = db.intermediaryId.put;
+        params = [
+          address_url,
+          ' ',    // actor
+          ' ',    // group_id
+          processed_results.created_by_id
+        ];
+        await connection.execute(sql_query, params);
+        sql_query = db.intermediaryId.get;
+        params = [address_url];
+        results = await connection.execute(sql_query, params);
+      }
+
+      secure_url += results.rows[0].intermediary_id;
+      let restricted_body = [
+        'person_id',
+        ' ',
+        'byu_id',
+        ' ',
+        'net_id',
+        ' ',
+        'address_type',
+        ' ',
+        'secure_url',
+        secure_url
+      ];
+      let eventness = event.Builder(header, restricted_body);
+      event_frame.events.event.push(eventness);
+
+      header[5] = event_type2;
+      restricted_body.push('verified_flag');
+      restricted_body.push(' ');
+      filters.push('restricted');
+      filters.push(processed_results.restricted);
+      eventness = event.Builder(header, restricted_body, filters);
+      event_frame.events.event.push(eventness);
+    }
+    let sql_query = db.raiseEvent;
+    let params = [JSON.stringify(event_frame)];
+    await connection.execute(sql_query, params);
+    await connection.commit();
+    sql_query = db.enqueue;
+    return connection.execute(sql_query, params);
+  } catch (error) {
+    console.log('EVENT ENQUEUE ERROR');
+    console.error(error.stack);
+    throw utils.Error(207, 'Record was deleted but event was not raised');
+  }
+}
+
+function processDeleteFromResults(from_results) {
+  let processed_results = {};
+  processed_results.date_time_created = moment.tz(from_results.date_time_created, 'America/Danmarkshavn');
+  processed_results.date_time_created = processed_results.date_time_created.clone().tz('America/Denver').format('YYYY-MM-DD HH:mm:ss.SSS');
+  processed_results.created_by_id = from_results.created_by_id;
+  processed_results.person_id = from_results.person_id || ' ';
+  processed_results.net_id = from_results.net_id || ' ';
+  processed_results.employee_type = /^[^-]$/.test(from_results.employee_type) ? from_results.employee_type : 'Not An Employee';
+  processed_results.student_status = from_results.student_status;
+  processed_results.restricted = (/^Y$/g.test(from_results.restricted));
+  processed_results.from_address_line_1 = (from_results.address_line_1) ? from_results.address_line_1 : ' ';
+  processed_results.from_address_line_2 = (from_results.address_line_2) ? from_results.address_line_2 : ' ';
+  processed_results.from_address_line_3 = (from_results.address_line_3) ? from_results.address_line_3 : ' ';
+  processed_results.from_address_line_4 = (from_results.address_line_4) ? from_results.address_line_4 : ' ';
+  processed_results.from_country_code = (from_results.country_code) ? from_results.country_code : ' ';
+  processed_results.from_room = (from_results.room) ? from_results.room : ' ';
+  processed_results.from_building = (from_results.building) ? from_results.building : ' ';
+  processed_results.from_city = (from_results.city) ? from_results.city : ' ';
+  processed_results.from_state_code = (from_results.state_code) ? from_results.state_code : ' ';
+  processed_results.from_postal_code = (from_results.postal_code) ? from_results.postal_code : ' ';
+  processed_results.from_unlisted = (from_results.unlisted) ? from_results.unlisted : ' ';
+  processed_results.from_verified_flag = (from_results.verified_flag) ? from_results.verified_flag : ' ';
+  processed_results.address_line_1 = ' ';
+  processed_results.address_line_2 = ' ';
+  processed_results.address_line_3 = ' ';
+  processed_results.address_line_4 = ' ';
+  processed_results.country_code = ' ';
+  processed_results.room = ' ';
+  processed_results.building = ' ';
+  processed_results.city = ' ';
+  processed_results.state_code = ' ';
+  processed_results.postal_code = ' ';
+  processed_results.unlisted = ' ';
+  processed_results.verified_flag = ' ';
+
+  console.log("DELETE PROCESS RESULTS", processed_results);
+  return processed_results;
+}
 
 exports.deleteAddress = async function (definitions, byu_id, address_type, authorized_byu_id, permissions) {
   const connection = await db.getConnection();
@@ -615,20 +810,25 @@ exports.deleteAddress = async function (definitions, byu_id, address_type, autho
     address_type,
     byu_id
   ];
+  const from_results = await connection.execute(sql_query, params);
 
-  const results = await connection.execute(sql_query, params);
-
-  if (results.rows.length === 0) {
-    throw utils.Error(404, 'Could not find BYU_ID')
+  console.log("FROM RESULTS", from_results);
+  if (!from_results.rows.length) {
+    throw utils.Error(404, 'Could not find BYU_ID');
   }
 
+
   /* This is the same as if a delete happened successfully. */
-  if (!results.rows[0].address_type) {
-    await connection.close();
+  if (!from_results.rows[0].address_type) {
+    connection.close();
   } else {
+    const change_type = 'D';
+    const processed_results = processDeleteFromResults(from_results.rows[0]);
     sql_query = sql.modifyAddress.delete;
     await connection.execute(sql_query, params);
+    await logChange(connection, change_type, authorized_byu_id, byu_id, address_type, processed_results);
     await connection.commit();
-    await connection.close();
+    await addressDeletedEvents(connection, byu_id, address_type, processed_results);
+    connection.close();
   }
 };

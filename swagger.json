@@ -677,6 +677,15 @@
           "204": {
             "description": "Address successfully deleted"
           },
+          "207": {
+            "type": "object",
+            "required": ["metadata"],
+            "properties": {
+              "metadata": {
+                "$ref": "#/definitions/simple_metadata"
+              }
+            }
+          },
           "400": { "$ref": "#/responses/400" },
           "401": { "$ref": "#/responses/401" },
           "403": { "$ref": "#/responses/403" },
@@ -1755,7 +1764,7 @@
         }
       }
     },
-    "/{byu_id}/family_phones/{phone_type},{phone_number}": {
+    "/{byu_id}/family_phones/{phone_type},{lookup_number}": {
       "get": {
         "summary": "Family phones",
         "description": "Returns information on a specified family phone",
@@ -1781,7 +1790,7 @@
             ]
           },
           {
-            "name": "phone_number",
+            "name": "lookup_number",
             "in": "path",
             "description": "The family member's phone number",
             "required": true,
@@ -1861,11 +1870,12 @@
             ]
           },
           {
-            "name": "phone_number",
+            "name": "lookup_number",
             "in": "path",
-            "description": "The family member's phone number",
+            "description": "The person's phone number, numbers only",
             "required": true,
-            "type": "string"
+            "type": "string",
+            "pattern": "^[0-9]{1,30}$"
           },
           {
             "name": "family_phone_put",
@@ -1956,11 +1966,12 @@
             ]
           },
           {
-            "name": "phone_number",
+            "name": "lookup_number",
             "in": "path",
-            "description": "The family member's phone number",
+            "description": "The person's phone number, numbers only",
             "required": true,
-            "type": "string"
+            "type": "string",
+            "pattern": "^[0-9]{1,30}$"
           }
         ],
         "tags": [
@@ -4013,7 +4024,7 @@
         }
       }
     },
-    "/{byu_id}/phones/{phone_number}": {
+    "/{byu_id}/phones/{lookup_number}": {
       "get": {
         "summary": "Phones",
         "description": "Returns phone information for a specific person/phone number",
@@ -4028,11 +4039,12 @@
             "pattern": "^[0-9]{9}$"
           },
           {
-            "name": "phone_number",
+            "name": "lookup_number",
             "in": "path",
-            "description": "The person's phone number",
+            "description": "The person's phone number, numbers only",
             "required": true,
-            "type": "string"
+            "type": "string",
+            "pattern": "^[0-9]{1,30}$"
           }
         ],
         "tags": [
@@ -4097,11 +4109,12 @@
             "pattern": "^[0-9]{9}$"
           },
           {
-            "name": "phone_number",
+            "name": "lookup_number",
             "in": "path",
-            "description": "The person's phone Number",
+            "description": "The person's phone number, numbers only",
             "required": true,
-            "type": "string"
+            "type": "string",
+            "pattern": "^[0-9]{1,30}$"
           },
           {
             "name": "phone_put",
@@ -4181,11 +4194,12 @@
             "pattern": "^[0-9]{9}$"
           },
           {
-            "name": "phone_number",
+            "name": "lookup_number",
             "in": "path",
-            "description": "The phone number",
+            "description": "The person's phone number, numbers only",
             "required": true,
-            "type": "string"
+            "type": "string",
+            "pattern": "^[0-9]{1,30}$"
           }
         ],
         "tags": [
@@ -6987,7 +7001,7 @@
           }
         },
         "metadata": {
-          "$ref": "#/definitions/simple_metadata"
+          "$ref": "#/definitions/sub_level_metadata"
         },
         "byu_id": {
           "$ref": "#/definitions/byu_id"
@@ -6995,11 +7009,8 @@
         "phone_type": {
           "$ref": "#/definitions/phone_type"
         },
-        "phone_number": {
-          "$ref": "#/definitions/phone_number"
-        },
-        "country_code": {
-          "$ref": "#/definitions/country_code"
+        "lookup_number": {
+          "$ref": "#/definitions/lookup_number"
         },
         "date_time_updated": {
           "$ref": "#/definitions/date_time_updated"
@@ -7012,6 +7023,12 @@
         },
         "created_by_id": {
           "$ref": "#/definitions/created_by_id"
+        },
+        "phone_number": {
+          "$ref": "#/definitions/phone_number"
+        },
+        "country_code": {
+          "$ref": "#/definitions/country_code"
         },
         "cell_flag": {
           "$ref": "#/definitions/cell_flag"
@@ -7033,7 +7050,6 @@
     "family_phone_put": {
       "type": "object",
       "required": [
-        "phone_number",
         "country_code",
         "cell_flag",
         "contact_person",
@@ -8760,6 +8776,36 @@
         }
       }
     },
+    "lookup_number": {
+      "type": "object",
+      "required": [
+        "value",
+        "api_type"
+      ],
+      "properties": {
+        "value": {
+          "type": "string",
+          "pattern": "^[0-9]{1,30}$",
+          "maxLength": 30,
+          "minLength": 1
+        },
+        "api_type": {
+          "type": "string",
+          "enum": [
+            "read-only",
+            "modifiable"
+          ]
+        },
+        "key": {
+          "type": "boolean"
+        }
+      },
+      "example": {
+        "value": "8014201684",
+        "api_type": "read-only",
+        "key": true
+      }
+    },
     "lost_or_stolen": {
       "type": "object",
       "required": [
@@ -10116,16 +10162,13 @@
           }
         },
         "metadata": {
-          "$ref": "#/definitions/simple_metadata"
+          "$ref": "#/definitions/sub_level_metadata"
         },
         "byu_id": {
           "$ref": "#/definitions/byu_id"
         },
-        "phone_number": {
-          "$ref": "#/definitions/phone_number"
-        },
-        "country_code": {
-          "$ref": "#/definitions/country_code"
+        "lookup_number": {
+          "$ref": "#/definitions/lookup_number"
         },
         "date_time_updated": {
           "$ref": "#/definitions/date_time_updated"
@@ -10138,6 +10181,12 @@
         },
         "created_by_id": {
           "$ref": "#/definitions/created_by_id"
+        },
+        "phone_number": {
+          "$ref": "#/definitions/phone_number"
+        },
+        "country_code": {
+          "$ref": "#/definitions/country_code"
         },
         "cell_flag": {
           "$ref": "#/definitions/cell_flag"
@@ -10176,9 +10225,6 @@
             "read-only",
             "modifiable"
           ]
-        },
-        "key": {
-          "type": "boolean"
         }
       },
       "example": {
@@ -10210,6 +10256,10 @@
         "country_code": {
           "type": "string",
           "pattern": "^[A-Z?]{3}$"
+        },
+        "phone_number": {
+          "type": "string",
+          "maxLength": 30
         },
         "cell_flag": {
           "type": "string",
