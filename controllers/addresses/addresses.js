@@ -142,8 +142,8 @@ exports.getAddresses = async function getAddresses(definitions, byu_id, permissi
   const values = (auth.canViewContact(permissions)) ? (
     results.rows.map(row => mapDBResultsToDefinition(definitions, row, 'modifiable'))
   ) : (
-    results.rows.filter(row => (row.unlisted === 'N' && row.address_type === 'WRK' &&
-      (row.primary_role === 'Employee' || row.primary_role === 'Faculty'))
+    results.rows.filter(row => (row.unlisted === 'N' &&
+      row.address_type === 'WRK' && /^(Employee|Faculty)$/g.test(row.primary_role))
     ).map(row => mapDBResultsToDefinition(definitions, row, 'read-only'))
   );
 
@@ -330,7 +330,7 @@ async function logChange(connection, change_type, authorized_byu_id, byu_id, add
     ];
   }
   else if (change_type === 'A' ||
-  change_type === 'C') {
+    change_type === 'C') {
     log_params = [
       change_type,
       byu_id,
@@ -366,7 +366,7 @@ async function logChange(connection, change_type, authorized_byu_id, byu_id, add
     ];
   }
   console.log('LOG PARAMS', log_params);
-  return connection.execute(sql_query, log_params);
+  return connection.execute(sql_query, log_params, { autoCommit: true });
 }
 
 async function addressEvents(connection, change_type, byu_id, address_type, body, processed_results) {
@@ -534,10 +534,10 @@ async function addressEvents(connection, change_type, byu_id, address_type, body
 
     sql_query = db.raiseEvent;
     params = [JSON.stringify(event_frame)];
-    await connection.execute(sql_query, params);
-    connection.commit();
+    await connection.execute(sql_query, params, { autoCommit: true });
+    // connection.commit();
     sql_query = db.enqueue;
-    return connection.execute(sql_query, params);
+    await connection.execute(sql_query, params);
   } catch (error) {
     console.log('EVENT ENQUEUE ERROR');
     console.error(error.stack);
@@ -560,7 +560,7 @@ exports.modifyAddress = async function (definitions, byu_id, address_type, body,
   ];
   let sql_query = sql.sql.fromAddress;
   const from_results = await connection.execute(sql_query, params);
-  if (from_results.rows.length === 0 ||
+  if (!from_results.rows.length ||
     (from_results.rows[0].restricted === 'Y' &&
       !auth.hasRestrictedRights(permissions))) {
     throw utils.Error(404, 'Could not find BYU_ID in Person Table')
@@ -635,7 +635,7 @@ exports.modifyAddress = async function (definitions, byu_id, address_type, body,
     }
     await connection.execute(sql_query, params);
     await logChange(connection, change_type, authorized_byu_id, byu_id, address_type, processed_results, new_body);
-    connection.commit();
+    // connection.commit();
     await addressEvents(connection, change_type, byu_id, address_type, new_body, processed_results);
   }
 
@@ -683,8 +683,8 @@ async function addressDeletedEvents(connection, byu_id, address_type, processed_
       'event_id',
       ' '
     ];
-    processed_results.unlisted = (processed_results.unlisted === 'Y');
-    processed_results.verified_flag = (processed_results.verified_flag === 'Y');
+    processed_results.unlisted = /^Y$/g.test(processed_results.unlisted);
+    processed_results.verified_flag = /^Y$/g.test(processed_results.verified_flag);
 
     if (!processed_results.restricted && !processed_results.unlisted) {
       let event_body = [
@@ -750,10 +750,9 @@ async function addressDeletedEvents(connection, byu_id, address_type, processed_
     }
     let sql_query = db.raiseEvent;
     let params = [JSON.stringify(event_frame)];
-    await connection.execute(sql_query, params);
-    await connection.commit();
+    await connection.execute(sql_query, params, { autoCommit: true });
     sql_query = db.enqueue;
-    return connection.execute(sql_query, params);
+    await connection.execute(sql_query, params);
   } catch (error) {
     console.log('EVENT ENQUEUE ERROR');
     console.error(error.stack);
@@ -770,7 +769,7 @@ function processDeleteFromResults(from_results) {
   processed_results.net_id = from_results.net_id || ' ';
   processed_results.employee_type = /^[^-]$/.test(from_results.employee_type) ? from_results.employee_type : 'Not An Employee';
   processed_results.student_status = from_results.student_status;
-  processed_results.restricted = (/^Y$/g.test(from_results.restricted));
+  processed_results.restricted = /^Y$/g.test(from_results.restricted);
   processed_results.from_address_line_1 = (from_results.address_line_1) ? from_results.address_line_1 : ' ';
   processed_results.from_address_line_2 = (from_results.address_line_2) ? from_results.address_line_2 : ' ';
   processed_results.from_address_line_3 = (from_results.address_line_3) ? from_results.address_line_3 : ' ';
@@ -818,17 +817,13 @@ exports.deleteAddress = async function (definitions, byu_id, address_type, autho
   }
 
 
-  /* This is the same as if a delete happened successfully. */
-  if (!from_results.rows[0].address_type) {
-    connection.close();
-  } else {
+  if (from_results.rows[0].address_type) {
     const change_type = 'D';
     const processed_results = processDeleteFromResults(from_results.rows[0]);
     sql_query = sql.modifyAddress.delete;
     await connection.execute(sql_query, params);
     await logChange(connection, change_type, authorized_byu_id, byu_id, address_type, processed_results);
-    await connection.commit();
     await addressDeletedEvents(connection, byu_id, address_type, processed_results);
-    connection.close();
   }
+  connection.close();
 };
