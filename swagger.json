@@ -4927,22 +4927,173 @@
           }
         },
         "building": {
-          "$ref": "#/definitions/building"
+          "type": "object",
+          "description": "The building code, validated through the meta/building service, set only for a BYU office",
+          "required": [
+            "value",
+            "description",
+            "long_description",
+            "api_type"
+          ],
+          "properties": {
+            "value": {
+              "type": "string",
+              "maxLength": 4,
+              "minLength": 1,
+              "default": "",
+              "x-variable": "building_code"
+            },
+            "description": {
+              "type": "string",
+              "maxLength": 15,
+              "default": "",
+              "x-variable": "building_name"
+            },
+            "long_description": {
+              "type": "string",
+              "maxLength": 30,
+              "default": "",
+              "x-variable": "long_building_name"
+            },
+            "api_type": {
+              "type": "string",
+              "default": "read-only",
+              "x-variable": "api_type",
+              "enum": [
+                "read-only",
+                "modifiable"
+              ]
+            }
+          },
+          "example": {
+            "value": "ITB",
+            "description": "Information Tec",
+            "long_description": "Information Technology Bldg",
+            "api_type": "read-only"
+          }
         },
         "room": {
-          "$ref": "#/definitions/room"
+          "type": "object",
+          "required": [
+            "value",
+            "api_type"
+          ],
+          "properties": {
+            "value": {
+              "type": "string",
+              "maxLength": 5,
+              "default": " ",
+              "x-variable": "room"
+            },
+            "api_type": {
+              "type": "string",
+              "default": "read-only",
+              "x-variable": "api_type",
+              "enum": [
+                "read-only",
+                "modifiable"
+              ]
+            }
+          },
+          "example": {
+            "value": "C-144",
+            "api_type": "read-only"
+          }
         },
         "country_code": {
           "$ref": "#/definitions/country_code"
         },
         "city": {
-          "$ref": "#/definitions/city"
+          "type": "object",
+          "required": [
+            "value",
+            "api_type"
+          ],
+          "properties": {
+            "value": {
+              "type": "string",
+              "maxLength": 30,
+              "minLength": 1,
+              "default": " ",
+              "x-variable": "city"
+            },
+            "api_type": {
+              "type": "string",
+              "default": "read-only",
+              "x-variable": "api_type",
+              "enum": [
+                "read-only",
+                "modifiable"
+              ]
+            }
+          },
+          "example": {
+            "value": "Provo",
+            "api_type": "read-only"
+          }
         },
         "state_code": {
-          "$ref": "#/definitions/state_code"
+          "type": "object",
+          "required": [
+            "value",
+            "description",
+            "api_type"
+          ],
+          "properties": {
+            "value": {
+              "type": "string",
+              "default": "??",
+              "pattern": "^([?]{2}|[A-Z]{2,5})$",
+              "maxLength": 4,
+              "x-variable": "state_code"
+            },
+            "description": {
+              "type": "string",
+              "maxLength": 30,
+              "x-variable": "state_name"
+            },
+            "api_type": {
+              "type": "string",
+              "default": "read-only",
+              "x-variable": "api_type",
+              "enum": [
+                "read-only",
+                "modifiable"
+              ]
+            }
+          },
+          "example": {
+            "value": "UT",
+            "description": "Utah",
+            "api_type": "read-only"
+          }
         },
         "postal_code": {
-          "$ref": "#/definitions/postal_code"
+          "type": "object",
+          "required": [
+            "value",
+            "api_type"
+          ],
+          "properties": {
+            "value": {
+              "type": "string",
+              "maxLength": 20,
+              "x-variable": "postal_code"
+            },
+            "api_type": {
+              "type": "string",
+              "default": "read-only",
+              "x-variable": "api_type",
+              "enum": [
+                "read-only",
+                "modifiable"
+              ]
+            }
+          },
+          "example": {
+            "value": "84604",
+            "api_type": "read-only"
+          }
         },
         "unlisted": {
           "$ref": "#/definitions/unlisted"
@@ -5104,34 +5255,6 @@
           },
           "x-variable": "addresses_values"
         }
-      }
-    },
-    "associated_device": {
-      "type": "object",
-      "required": [
-        "value",
-        "api_type"
-      ],
-      "properties": {
-        "value": {
-          "type": "string",
-          "maxLength": 20,
-          "default": " ",
-          "x-variable": "associated_device"
-        },
-        "api_type": {
-          "type": "string",
-          "default": "read-only",
-          "x-variable": "api_type",
-          "enum": [
-            "read-only",
-            "modifiable"
-          ]
-        }
-      },
-      "example": {
-        "value": "CARD_READER",
-        "api_type": "read-only"
       }
     },
     "basic": {
@@ -5382,52 +5505,6 @@
         "api_type": "read-only"
       }
     },
-    "building": {
-      "description": "The building code, validated through the meta/building service, set only for a BYU office",
-      "type": "object",
-      "required": [
-        "value",
-        "description",
-        "long_description",
-        "api_type"
-      ],
-      "properties": {
-        "value": {
-          "type": "string",
-          "maxLength": 4,
-          "minLength": 1,
-          "default": "",
-          "x-variable": "building_code"
-        },
-        "description": {
-          "type": "string",
-          "maxLength": 15,
-          "default": "",
-          "x-variable": "building_name"
-        },
-        "long_description": {
-          "type": "string",
-          "maxLength": 30,
-          "default": "",
-          "x-variable": "long_building_name"
-        },
-        "api_type": {
-          "type": "string",
-          "default": "read-only",
-          "x-variable": "api_type",
-          "enum": [
-            "read-only",
-            "modifiable"
-          ]
-        }
-      },
-      "example": {
-        "value": "ITB",
-        "description": "Information Tec",
-        "long_description": "Information Technology Bldg",
-        "api_type": "read-only"
-      }
-    },
     "byu_id": {
       "type": "object",
       "required": [
@@ -5560,35 +5637,6 @@
         "api_type": "read-only"
       }
     },
-    "city": {
-      "type": "object",
-      "required": [
-        "value",
-        "api_type"
-      ],
-      "properties": {
-        "value": {
-          "type": "string",
-          "maxLength": 30,
-          "minLength": 1,
-          "default": " ",
-          "x-variable": "city"
-        },
-        "api_type": {
-          "type": "string",
-          "default": "read-only",
-          "x-variable": "api_type",
-          "enum": [
-            "read-only",
-            "modifiable"
-          ]
-        }
-      },
-      "example": {
-        "value": "Provo",
-        "api_type": "read-only"
-      }
-    },
     "contact_person": {
       "type": "object",
       "required": [
@@ -5693,13 +5741,85 @@
           "type": "object",
           "properties": {
             "credentials.info": {
-              "$ref": "#/definitions/links"
+              "description": "Hypermedia links format",
+              "type": "object",
+              "required": [
+                "rel",
+                "href",
+                "method"
+              ],
+              "properties": {
+                "rel": {
+                  "type": "string",
+                  "default": "self"
+                },
+                "href": {
+                  "type": "string",
+                  "format": "uri",
+                  "default": "https://api.byu.edu/byuapi/persons/v1/:byu_id/credentials/:credential_type,:credential_id"
+                },
+                "method": {
+                  "type": "string",
+                  "default": "GET",
+                  "enum": [
+                    "GET"
+                  ]
+                }
+              }
             },
             "credentials.modify": {
-              "$ref": "#/definitions/links"
+              "description": "Hypermedia links format",
+              "type": "object",
+              "required": [
+                "rel",
+                "href",
+                "method"
+              ],
+              "properties": {
+                "rel": {
+                  "type": "string",
+                  "default": "self"
+                },
+                "href": {
+                  "type": "string",
+                  "format": "uri",
+                  "default": "https://api.byu.edu/byuapi/persons/v1/:byu_id/credentials/:credential_type,:credential_id"
+                },
+                "method": {
+                  "type": "string",
+                  "default": "PUT",
+                  "enum": [
+                    "PUT"
+                  ]
+                }
+              }
             },
             "credentials.delete": {
-              "$ref": "#/definitions/links"
+              "description": "Hypermedia links format",
+              "type": "object",
+              "required": [
+                "rel",
+                "href",
+                "method"
+              ],
+              "properties": {
+                "rel": {
+                  "type": "string",
+                  "default": "self"
+                },
+                "href": {
+                  "type": "string",
+                  "format": "uri",
+                  "default": "https://api.byu.edu/byuapi/persons/v1/:byu_id/credentials/:credential_type,:credential_id"
+                },
+                "method": {
+                  "type": "string",
+                  "default": "DELETE",
+                  "enum": [
+                    "DELETE"
+                  ]
+                }
+              }
             }
           }
         },
@@ -5709,32 +5829,78 @@
         "byu_id": {
           "$ref": "#/definitions/byu_id"
         },
-        "credential_id": {
-          "$ref": "#/definitions/credential_id"
-        },
         "credential_type": {
-          "$ref": "#/definitions/credential_type"
+          "type": "object",
+          "required": [
+            "value",
+            "api_type"
+          ],
+          "properties": {
+            "value": {
+              "type": "string",
+              "x-variable": "credential_type",
+              "enum": [
+                "BYU_HAWAII_ID",
+                "BYU_IDAHO_ID",
+                "FACEBOOK_ID",
+                "GOOGLE_ID",
+                "ID_CARD",
+                "LDS_ACCOUNT_ID",
+                "LDS_CMIS_ID",
+                "NET_ID",
+                "PROX_CARD",
+                "SEMINARY_STUDENT_ID",
+                "WSO2_CLIENT_ID"
+              ]
+            },
+            "api_type": {
+              "type": "string",
+              "enum": [
+                "read-only",
+                "modifiable"
+              ]
+            },
+            "key": {
+              "type": "boolean",
+              "default": true
+            }
+          },
+          "example": {
+            "value": "NET_ID",
+            "api_type": "read-only",
+            "key": true
+          }
         },
-        "user_name": {
-          "$ref": "#/definitions/user_name"
-        },
-        "lost_or_stolen": {
-          "$ref": "#/definitions/lost_or_stolen"
-        },
-        "status": {
-          "$ref": "#/definitions/status"
-        },
-        "expiration_date": {
-          "$ref": "#/definitions/expiration_date"
-        },
-        "issuing_location": {
-          "$ref": "#/definitions/issuing_location"
-        },
-        "physical_form": {
-          "$ref": "#/definitions/physical_form"
-        },
-        "associated_device": {
-          "$ref": "#/definitions/associated_device"
+        "credential_id": {
+          "type": "object",
+          "required": [
+            "value",
+            "api_type"
+          ],
+          "properties": {
+            "value": {
+              "type": "string",
+              "x-variable": "credential_id",
+              "maxLength": 100,
+              "minLength": 1
+            },
+            "api_type": {
+              "type": "string",
+              "enum": [
+                "read-only",
+                "modifiable"
+              ]
+            },
+            "key": {
+              "type": "boolean",
+              "default": true
+            }
+          },
+          "example": {
+            "value": "js279",
+            "api_type": "read-only",
+            "key": true
+          }
         },
         "date_time_updated": {
           "$ref": "#/definitions/date_time_updated"
@@ -5747,32 +5913,180 @@
         },
         "created_by_id": {
           "$ref": "#/definitions/created_by_id"
-        }
-      }
-    },
-    "credential_id": {
-      "type": "object",
-      "required": [
-        "value",
-        "api_type"
-      ],
-      "properties": {
-        "value": {
-          "type": "string",
-          "maxLength": 100,
-          "minLength": 1
         },
-        "api_type": {
-          "type": "string",
-          "enum": [
-            "read-only",
-            "modifiable"
-          ]
+        "user_name": {
+          "type": "object",
+          "required": [
+            "value",
+            "api_type"
+          ],
+          "properties": {
+            "value": {
+              "type": "string",
+              "x-variable": "user_name",
+              "maxLength": 100
+            },
+            "api_type": {
+              "type": "string",
+              "x-variable": "api_type",
+              "default": "read-only",
+              "enum": [
+                "read-only",
+                "modifiable"
+              ]
+            }
+          },
+          "example": {
+            "value": "js279",
+            "api_type": "read-only"
+          }
+        },
+        "lost_or_stolen": {
+          "type": "object",
+          "required": [
+            "value",
+            "api_type"
+          ],
+          "properties": {
+            "value": {
+              "type": "string",
+              "x-variable": "lost_or_stolen",
+              "default": "N",
+              "enum": [
+                "Y",
+                "N"
+              ]
+            },
+            "api_type": {
+              "type": "string",
+              "x-variable": "api_type",
+              "default": "read-only",
+              "enum": [
+                "read-only",
+                "modifiable"
+              ]
+            }
+          },
+          "example": {
+            "value": "N",
+            "api_type": "read-only"
+          }
+        },
+        "status": {
+          "type": "object",
+          "description": "The credential status, validated through the meta/credential_status service",
+          "required": [
+            "value",
+            "api_type"
+          ],
+          "properties": {
+            "value": {
+              "type": "string",
+              "x-variable": "status",
+              "maxLength": 20
+            },
+            "api_type": {
+              "type": "string",
+              "x-variable": "api_type",
+              "default": "read-only",
+              "enum": [
+                "read-only",
+                "modifiable"
+              ]
+            }
+          },
+          "example": {
+            "value": "ACTIVE",
+            "api_type": "read-only"
+          }
+        },
+        "expiration_date": {
+          "$ref": "#/definitions/expiration_date"
+        },
+        "issuing_location": {
+          "type": "object",
+          "required": [
+            "value",
+            "api_type"
+          ],
+          "properties": {
+            "value": {
+              "type": "string",
+              "x-variable": "issuing_location",
+              "maxLength": 20,
+              "minLength": 1,
+              "default": " "
+            },
+            "api_type": {
+              "type": "string",
+              "x-variable": "api_type",
+              "default": "read-only",
+              "enum": [
+                "read-only",
+                "modifiable"
+              ]
+            }
+          },
+          "example": {
+            "value": "ID_CENTER",
+            "api_type": "read-only"
+          }
+        },
+        "physical_form": {
+          "type": "object",
+          "required": [
+            "value",
+            "api_type"
+          ],
+          "properties": {
+            "value": {
+              "type": "string",
+              "x-variable": "physical_form",
+              "maxLength": 20
+            },
+            "api_type": {
+              "type": "string",
+              "x-variable": "api_type",
+              "default": "read-only",
+              "enum": [
+                "read-only",
+                "modifiable"
+              ]
+            }
+          },
+          "example": {
+            "value": "ID_CARD",
+            "api_type": "read-only"
+          }
+        },
+        "associated_device": {
+          "type": "object",
+          "required": [
+            "value",
+            "api_type"
+          ],
+          "properties": {
+            "value": {
+              "type": "string",
+              "maxLength": 20,
+              "default": " ",
+              "x-variable": "associated_device"
+            },
+            "api_type": {
+              "type": "string",
+              "default": "read-only",
+              "x-variable": "api_type",
+              "enum": [
+                "read-only",
+                "modifiable"
+              ]
+            }
+          },
+          "example": {
+            "value": "CARD_READER",
+            "api_type": "read-only"
+          }
         }
-      },
-      "example": {
-        "value": "js279",
-        "api_type": "read-only"
       }
     },
     "credential_put": {
@@ -5784,7 +6098,17 @@
         },
         "updated_by_id": {
           "type": "string",
-          "pattern": "^([]{0}|[0-9]{9})$"
+          "maxLength": 9,
+          "minLength": 1
+        },
+        "date_time_created": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "created_by_id": {
+          "type": "string",
+          "maxLength": 9,
+          "minLength": 1
         },
         "user_name": {
           "type": "string",
@@ -5831,42 +6155,6 @@
         }
       }
     },
-    "credential_type": {
-      "type": "object",
-      "required": [
-        "value",
-        "api_type"
-      ],
-      "properties": {
-        "value": {
-          "type": "string",
-          "enum": [
-            "BYU_HAWAII_ID",
-            "BYU_IDAHO_ID",
-            "FACEBOOK_ID",
-            "GOOGLE_ID",
-            "ID_CARD",
-            "LDS_ACCOUNT_ID",
-            "LDS_CMIS_ID",
-            "NET_ID",
-            "PROX_CARD",
-            "SEMINARY_STUDENT_ID",
-            "WSO2_CLIENT_ID"
-          ]
-        },
-        "api_type": {
-          "type": "string",
-          "enum": [
-            "read-only",
-            "modifiable"
-          ]
-        }
-      },
-      "example": {
-        "value": "NET_ID",
-        "api_type": "read-only"
-      }
-    },
     "credentials": {
       "description": "The credentials sub-resource data",
       "type": "object",
@@ -5879,13 +6167,31 @@
           "type": "object",
           "properties": {
             "credentials.info": {
-              "$ref": "#/definitions/links"
-            },
-            "credentials.next": {
-              "$ref": "#/definitions/links"
-            },
-            "credentials.prev": {
-              "$ref": "#/definitions/links"
+              "description": "Hypermedia links format",
+              "type": "object",
+              "required": [
+                "rel",
+                "href",
+                "method"
+              ],
+              "properties": {
+                "rel": {
+                  "type": "string",
+                  "default": "self"
+                },
+                "href": {
+                  "type": "string",
+                  "format": "uri",
+                  "default": "https://api.byu.edu/byuapi/persons/v1/:byu_id/credentials"
+                },
+                "method": {
+                  "type": "string",
+                  "default": "GET",
+                  "enum": [
+                    "GET"
+                  ]
+                }
+              }
             }
           }
         },
@@ -6968,12 +7274,16 @@
       "properties": {
         "value": {
           "type": "string",
+          "x-variable": "expiration_date",
           "format": "date"
         },
         "api_type": {
           "type": "string",
+          "x-variable": "api_type",
+          "default": "read-only",
           "enum": [
-            "system"
+            "read-only",
+            "modifiable"
           ]
         }
       },
@@ -8440,32 +8750,6 @@
         }
       }
     },
-    "issuing_location": {
-      "type": "object",
-      "required": [
-        "value",
-        "api_type"
-      ],
-      "properties": {
-        "value": {
-          "type": "string",
-          "maxLength": 20,
-          "minLength": 1,
-          "default": " "
-        },
-        "api_type": {
-          "type": "string",
-          "enum": [
-            "read-only",
-            "modifiable"
-          ]
-        }
-      },
-      "example": {
-        "value": "ID_CENTER",
-        "api_type": "read-only"
-      }
-    },
     "job_title": {
       "description": "The person's job title",
       "type": "object",
@@ -8804,34 +9088,6 @@
         "value": "8014201684",
         "api_type": "read-only",
         "key": true
-      }
-    },
-    "lost_or_stolen": {
-      "type": "object",
-      "required": [
-        "value",
-        "api_type"
-      ],
-      "properties": {
-        "value": {
-          "type": "string",
-          "default": "N",
-          "enum": [
-            "Y",
-            "N"
-          ]
-        },
-        "api_type": {
-          "type": "string",
-          "enum": [
-            "read-only",
-            "modifiable"
-          ]
-        }
-      },
-      "example": {
-        "value": "N",
-        "api_type": "read-only"
       }
     },
     "marital_status": {
@@ -10368,57 +10624,6 @@
         }
       }
     },
-    "physical_form": {
-      "type": "object",
-      "required": [
-        "value",
-        "api_type"
-      ],
-      "properties": {
-        "value": {
-          "type": "string",
-          "maxLength": 20
-        },
-        "api_type": {
-          "type": "string",
-          "enum": [
-            "read-only",
-            "modifiable"
-          ]
-        }
-      },
-      "example": {
-        "value": "ID_CARD",
-        "api_type": "read-only"
-      }
-    },
-    "postal_code": {
-      "type": "object",
-      "required": [
-        "value",
-        "api_type"
-      ],
-      "properties": {
-        "value": {
-          "type": "string",
-          "maxLength": 20,
-          "x-variable": "postal_code"
-        },
-        "api_type": {
-          "type": "string",
-          "default": "read-only",
-          "x-variable": "api_type",
-          "enum": [
-            "read-only",
-            "modifiable"
-          ]
-        }
-      },
-      "example": {
-        "value": "84604",
-        "api_type": "read-only"
-      }
-    },
     "preferred_first_name": {
       "description": "The preferred first name of the person",
       "type": "object",
@@ -11194,34 +11399,6 @@
         "description": "Access delegation expiration process"
       }
     },
-    "room": {
-      "type": "object",
-      "required": [
-        "value",
-        "api_type"
-      ],
-      "properties": {
-        "value": {
-          "type": "string",
-          "maxLength": 5,
-          "default": " ",
-          "x-variable": "room"
-        },
-        "api_type": {
-          "type": "string",
-          "default": "read-only",
-          "x-variable": "api_type",
-          "enum": [
-            "read-only",
-            "modifiable"
-          ]
-        }
-      },
-      "example": {
-        "value": "C-144",
-        "api_type": "read-only"
-      }
-    },
     "secondary_role": {
       "type": "object",
       "required": [
@@ -11448,67 +11625,6 @@
       "example": {
         "value": "2014-05-11T13:45:53.20Z",
         "api_type": "system"
-      }
-    },
-    "state_code": {
-      "type": "object",
-      "required": [
-        "value",
-        "description",
-        "api_type"
-      ],
-      "properties": {
-        "value": {
-          "type": "string",
-          "default": "??",
-          "pattern": "^([?]{2}|[A-Z]{2,5})$",
-          "maxLength": 4,
-          "x-variable": "state_code"
-        },
-        "description": {
-          "type": "string",
-          "maxLength": 30,
-          "x-variable": "state_name"
-        },
-        "api_type": {
-          "type": "string",
-          "default": "read-only",
-          "x-variable": "api_type",
-          "enum": [
-            "read-only",
-            "modifiable"
-          ]
-        }
-      },
-      "example": {
-        "value": "UT",
-        "description": "Utah",
-        "api_type": "read-only"
-      }
-    },
-    "status": {
-      "description": "The credential status, validated through the meta/credential_status service",
-      "type": "object",
-      "required": [
-        "value",
-        "api_type"
-      ],
-      "properties": {
-        "value": {
-          "type": "string",
-          "maxLength": 20
-        },
-        "api_type": {
-          "type": "string",
-          "enum": [
-            "read-only",
-            "modifiable"
-          ]
-        }
-      },
-      "example": {
-        "value": "ACTIVE",
-        "api_type": "read-only"
       }
     },
     "student_status": {
@@ -12108,30 +12224,6 @@
       },
       "example": {
         "value": "N",
-        "api_type": "read-only"
-      }
-    },
-    "user_name": {
-      "type": "object",
-      "required": [
-        "value",
-        "api_type"
-      ],
-      "properties": {
-        "value": {
-          "type": "string",
-          "maxLength": 100
-        },
-        "api_type": {
-          "type": "string",
-          "enum": [
-            "read-only",
-            "modifiable"
-          ]
-        }
-      },
-      "example": {
-        "value": "js279",
         "api_type": "read-only"
       }
     },

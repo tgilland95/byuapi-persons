@@ -24,6 +24,7 @@
     "body-parser": "1.17.2",
     "byu-jwt": "0.2.3",
     "express": "4.15.3",
+    "handel-utils": "^1.1.4",
     "json-schema-ref-parser": "github:byu-oit/json-schema-ref-parser",
     "moment-timezone": "^0.5.13",
     "oracledb": "^1.13.1",

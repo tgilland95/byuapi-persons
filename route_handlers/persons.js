@@ -15,45 +15,45 @@
  *
  */
 
-const auth              = require('../controllers/auth');
+const auth = require('../controllers/auth');
 const personsController = require('../controllers/persons/persons');
-const utils             = require('../controllers/utils');
+const utils = require('../controllers/utils');
 
-exports.getPersons = function (req, res) {
-  return auth.getPermissions(req)
-    .then(function (permissions) {
-      return personsController.getPersons(req.swagger.root.definitions, req.query, permissions)
-        .then(function (address) {
-          res.send(address);
-        })
-    })
-    .catch(function (error) {
-      utils.defaultResponseHandler(req.swagger.root.definitions.simple_metadata, {}, res, error);
-    });
+exports.getPersons = async (req, res) => {
+  try {
+    const permissions = await auth.getPermissions(req);
+    const address = await personsController.getPersons(req.swagger.root.definitions,
+      req.query, permissions);
+
+    res.send(address);
+  } catch (error) {
+    console.error(error.stack);
+    utils.defaultResponseHandler(req.swagger.root.definitions.simple_metadata, {}, res, error);
+  }
 };
 
-exports.getPerson = function (req, res) {
-  return auth.getPermissions(req)
-    .then(function (permissions) {
-      return personsController.getPerson(req.swagger.root.definitions, req.params.byu_id, req.query, permissions)
-        .then(function (person) {
-          res.send(person);
-        })
-    })
-    .catch(function (error) {
-      utils.defaultResponseHandler(req.swagger.root.definitions.simple_metadata, {}, res, error);
-    });
+exports.getPerson = async (req, res) => {
+  try {
+    const permissions = await auth.getPermissions(req);
+    const person = await personsController.getPerson(req.swagger.root.definitions,
+      req.params.byu_id, req.query, permissions);
+
+    res.send(person);
+  } catch (error) {
+    console.error(error.stack);
+    utils.defaultResponseHandler(req.swagger.root.definitions.simple_metadata, {}, res, error);
+  }
 };
 
-exports.modifyPerson = function (req, res) {
-  return auth.getPermissions(req)
-    .then(function (permissions) {
-      return personsController.modifyPerson(req.swagger.root.definitions, req.params.byu_id, req.verifiedJWTs.prioritizedClaims.byuId, req.body, permissions)
-        .then(function (person) {
-          res.send(person);
-        })
-    })
-    .catch(function (error) {
-      utils.defaultResponseHandler(req.swagger.root.definitions.simple_metadata, {}, res, error);
-    });
+exports.modifyPerson = async (req, res) => {
+  try {
+    const permissions = await auth.getPermissions(req);
+    const person = await  personsController.modifyPerson(req.swagger.root.definitions,
+      req.params.byu_id, req.verifiedJWTs.prioritizedClaims.byuId, req.body, permissions);
+
+    res.send(person);
+  } catch (error) {
+    console.error(error.stack);
+    utils.defaultResponseHandler(req.swagger.root.definitions.simple_metadata, {}, res, error);
+  }
 };

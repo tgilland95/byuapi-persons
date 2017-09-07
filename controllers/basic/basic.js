@@ -14,30 +14,32 @@
  * limitations under the License.
  *
  */
-const Enforcer      = require('swagger-enforcer');
-const moment        = require('moment-timezone');
-const auth          = require('../auth');
-const db            = require('../db');
-const sql           = require('./sql');
-const utils         = require('../utils');
 
-function mapDBResultsToDefinition(definitions, row, api_type) {
+const Enforcer = require('swagger-enforcer');
+const moment = require('moment-timezone');
+const auth = require('../auth');
+const db = require('../db');
+const sql = require('./sql');
+const utils = require('../utils');
+
+function mapDBResultsToDefinition(definitions, row, name_api_type, basic_api_type) {
   return Enforcer.applyTemplate(definitions.basic, definitions,
     {
       byu_id: row.byu_id,
-      person_id: row.byu_id,
+      person_id: row.person_id,
       net_id: row.net_id || undefined,
-      api_type: api_type,
+      name_api_type: name_api_type,
+      basic_api_type: basic_api_type,
       deceased: row.deceased,
       sex: row.sex,
       personal_email_address: row.personal_email_address,
       primary_phone_number: row.primary_phone_number,
-      date_time_updated: row.date_time_updated ? row.date_time_updated.toISOString() : undefined,
+      date_time_updated: row.date_time_updated || undefined,
       updated_by_id: row.updated_by_id,
-      updated_by_name: row.updated_by_id,
-      date_time_created: row.date_time_created.toISOString(),
+      updated_by_name: row.updated_by_name || undefined,
+      date_time_created: row.date_time_created || undefined,
       created_by_id: row.created_by_id,
-      created_by_name: row.created_by_id,
+      created_by_name: row.created_by_name || undefined,
       first_name: row.first_name,
       middle_name: row.middle_name,
       surname: row.surname,
@@ -64,11 +66,100 @@ function mapDBResultsToDefinition(definitions, row, api_type) {
   );
 }
 
+function mapDBResultsToStudentDefinition(definitions, row, name_api_type, basic_api_type) {
+  return Enforcer.applyTemplate(definitions.basic, definitions,
+    {
+      byu_id: row.byu_id,
+      person_id: undefined,
+      net_id: undefined,
+      name_api_type: name_api_type,
+      basic_api_type: basic_api_type,
+      deceased: undefined,
+      sex: row.sex,
+      personal_email_address: undefined,
+      primary_phone_number: undefined,
+      date_time_updated: undefined,
+      updated_by_id: undefined,
+      updated_by_name: undefined,
+      date_time_created: undefined,
+      created_by_id: undefined,
+      created_by_name: undefined,
+      first_name: undefined,
+      middle_name: undefined,
+      surname: undefined,
+      suffix: undefined,
+      preferred_first_name: row.preferred_first_name,
+      preferred_surname: row.preferred_surname,
+      rest_of_name: undefined,
+      name_lnf: undefined,
+      name_fnf: undefined,
+      preferred_name: row.preferred_name,
+      home_town: row.home_town,
+      home_state_code: row.home_state_code,
+      home_state_name: row.home_state_name || undefined,
+      home_country_code: row.home_country_code,
+      home_country_name: row.home_country_name,
+      high_school_code: row.high_school_code,
+      high_school_name: row.high_school_name || undefined,
+      high_school_city: row.high_school_city || undefined,
+      high_school_state_code: row.high_school_state_code || undefined,
+      high_school_state_name: row.high_school_state_name || undefined,
+      restricted: undefined,
+      merge_in_process: undefined,
+    }
+  );
+}
+
+function mapDBResultsToEmployeeDefinition(definitions, row, name_api_type, basic_api_type) {
+  return Enforcer.applyTemplate(definitions.basic, definitions,
+    {
+      byu_id: row.byu_id,
+      person_id: undefined,
+      net_id: undefined,
+      name_api_type: name_api_type,
+      basic_api_type: basic_api_type,
+      deceased: undefined,
+      sex: row.sex,
+      personal_email_address: undefined,
+      primary_phone_number: undefined,
+      date_time_updated: undefined,
+      updated_by_id: undefined,
+      updated_by_name: undefined,
+      date_time_created: undefined,
+      created_by_id: undefined,
+      created_by_name: undefined,
+      first_name: undefined,
+      middle_name: undefined,
+      surname: undefined,
+      suffix: undefined,
+      preferred_first_name: row.preferred_first_name,
+      preferred_surname: row.preferred_surname,
+      rest_of_name: undefined,
+      name_lnf: undefined,
+      name_fnf: undefined,
+      preferred_name: row.preferred_name,
+      home_town: undefined,
+      home_state_code: undefined,
+      home_state_name: undefined,
+      home_country_code: undefined,
+      home_country_name: undefined,
+      high_school_code: undefined,
+      high_school_name: undefined,
+      high_school_city: undefined,
+      high_school_state_code: undefined,
+      high_school_state_name: undefined,
+      restricted: undefined,
+      merge_in_process: undefined,
+    }
+  );
+}
+
 exports.getBasic = async function getBasic(definitions, byu_id, permissions) {
-  // throw utils.Error(401, 'BYU_ID Not Found In Person Table');
   const params = [byu_id];
   const sql_query = sql.sql.getBasic;
   const results = await db.execute(sql_query, params);
+  const name_api_type = auth.canUpdatePersonBasic(permissions) ? 'modifiable' : 'read-only';
+  const basic_api_type = auth.canUpdatePersonBasic(permissions) ? 'modifiable' : 'read-only';
 
   if (!results.rows.length ||
     (results.rows[0].restricted === 'Y' &&
@@ -76,277 +167,370 @@ exports.getBasic = async function getBasic(definitions, byu_id, permissions) {
     throw utils.Error(404, 'BYU_ID Not Found In Person Table')
   }
 
-  // if (!auth.canViewBasic(permissions) &&
-  //   address_type !== 'WRK' &&
-  //   results.rows[0].primary_role !== 'Employee' &&
-  //   results.rows[0].primary_role !== 'Faculty' &&
-  //   results.rows[0].unlisted === 'Y') {
-  //   throw utils.Error(403, 'Not Authorized To View Address')
-  // }
+  if (!auth.canViewBasic(permissions)) {
+    if (results.rows[0].primary_role === 'Student') {
+      return mapDBResultsToStudentDefinition(definitions, results.rows[0], name_api_type, basic_api_type);
+    }
+    if (results.rows[0].primary_role === 'Employee') {
+      return mapDBResultsToEmployeeDefinition(definitions, results.rows[0], name_api_type, basic_api_type);
+    }
+    throw utils.Error(403, 'Not Authorized To View Address');
+  }
 
-  // const modifiable = auth.canUpdateContact(permissions) ? 'modifiable': 'read-only';
-  const modifiable = 'read-only';
-
-  return mapDBResultsToDefinition(definitions, results.rows[0], modifiable);
+  return mapDBResultsToDefinition(definitions, results.rows[0], name_api_type, basic_api_type);
 };
 
-exports.putBasic = async function putBasic(definitions, byu_id, authorized_byu_id, body, permissions) {
-  let preferred_surname = (body.preferred_surname) ? body.preferred_surname : body.surname;
-  let preferred_first_name = (body.preferred_first_name) ? body.preferred_first_name : body.first_name;
-  let preferred_name = preferred_first_name + " " + preferred_surname;
-  let middle_name = (body.middle_name) ? body.middle_name : " ";
-  let suffix = (body.suffix) ? body.suffix : " ";
-  let home_town = (body.home_town) ? body.home_town : " ";
-  let home_state_code = (body.home_state_code) ? body.home_state_code : "??";
-  let home_country_code = (body.home_country_code) ? body.home_country_code : "???";
-  let high_school_code = (body.high_school_code) ? body.high_school_code : " ";
-  let rest_of_name = (middle_name === " ") ? body.first_name : body.first_name + " " + middle_name;
-  let sort_name = body.surname + ", " + rest_of_name;
+function processBody(authorized_byu_id, body) {
   let current_date_time = moment();
-  let updated_by_id = (!body.updated_by_id || (body.updated_by_id === " ")) ? authorized_byu_id : body.updated_by_id;
-  let date_time_updated = (!body.date_time_updated || (body.date_time_updated === " ")) ? current_date_time["clone"]().tz("America/Denver").format("YYYY-MM-DD HH:mm:ss.SSS") : moment["tz"](body.date_time_updated, utils.accepted_date_formats, "America/Denver").format("YYYY-MM-DD HH:mm:ss.SSS");
-  var log_name_params = [];
-  var log_personal_params = [];
+  current_date_time = current_date_time.clone().tz('America/Denver').format('YYYY-MM-DD HH:mm:ss.SSS');
+  let new_body = {};
+  new_body.sex = (/^(M|F)$/.test(body.sex)) ? body.sex : '?';
+  new_body.surname = body.surname || '';
+  new_body.first_name = body.first_name || '';
+  new_body.preferred_surname = body.preferred_surname || body.surname;
+  new_body.preferred_first_name = body.preferred_first_name || body.first_name;
+  new_body.preferred_name = `${new_body.preferred_first_name} ${new_body.preferred_surname}`;
+  new_body.middle_name = body.middle_name || ' ';
+  new_body.suffix = body.suffix || ' ';
+  new_body.home_town = body.home_town || ' ';
+  new_body.home_state_code = body.home_state_code || '??';
+  new_body.home_country_code = body.home_country_code || '???';
+  new_body.high_school_code = body.high_school_code || ' ';
+  new_body.rest_of_name = new_body.middle_name === ' ' ? new_body.first_name : (
+    `${new_body.first_name} ${new_body.middle_name}`);
+  new_body.sort_name = new_body.surname + ", " + new_body.rest_of_name;
+  new_body.restricted = body.restricted ? 'Y' : 'N';
+  new_body.updated_by_id = (!body.updated_by_id || !body.updated_by_id.trim()) ? authorized_byu_id : body.updated_by_id;
+  if (!body.date_time_updated || !body.date_time_updated.trim()) {
+    new_body.date_time_updated = current_date_time;
+  } else {
+    new_body.date_time_updated = moment.tz(body.date_time_updated, 'America/Danmarkshavn');
+    new_body.date_time_updated = new_body.date_time_updated.clone().tz('America/Denver').format('YYYY-MM-DD HH:mm:ss.SSS');
+  }
 
-  var error = false;
-  var msg = "Incorrect BODY: Missing ";
-  if (!utils.isValidCountryCode(home_country_code)) {
-    msg += "\n\tInvalid Country Code if unknown use, ???";
-    error = true
+
+  let error = false;
+  let msg = 'Incorrect BODY: Missing or Invalid';
+  if (!new_body.first_name) {
+    msg += '\n\tFirst Name';
+    error = true;
   }
-  if (!utils.isValidStateCode(home_state_code, home_country_code)) {
-    msg += "\n\tInvalid State Code if unknown use, ??";
-    error = true
+  if (!new_body.surname) {
+    msg += '\n\tSurname';
+    error = true;
   }
-  if (!utils.isValidHighSchoolCode(high_school_code)) {
-    msg += "\n\tIncorrect High School Code if you don't have one use, single space";
-    error = true
+  if (!utils.isValidCountryCode(new_body.home_country_code)) {
+    msg += '\n\tCountry Code if unknown use, ???';
+    error = true;
   }
+  if (!utils.isValidStateCode(new_body.home_state_code, new_body.home_country_code)) {
+    msg += '\n\tState Code if unknown use, ??';
+    error = true;
+  }
+
+  for (let prop in new_body) {
+    if (new_body.hasOwnProperty(prop)) {
+      if (!/[\x00-\x7F]+/.test(new_body[prop])) {
+        msg += `${prop} contains unsupported characters`;
+        error = true;
+      }
+    }
+  }
+
   if (error) {
-    throw new utils.Error(409, msg)
+    throw utils.Error(409, msg)
   }
-  if (!auth.canUpdatePersonBasic(permissions)) {
+
+  return new_body;
+}
+
+function processFromResults(from_results) {
+  let process_results = {};
+  process_results.person_id = from_results.person_id || ' ';
+  process_results.net_id = from_results.net_id || ' ';
+  process_results.employee_type = /[^-]/.test(from_results.employee_type) ? from_results.employee_type : 'Not An Employee';
+  process_results.student_status = from_results.student_status;
+  process_results.primary_role = from_results.primary_role;
+  process_results.name_fnf = from_results.name_fnf || ' ';
+  process_results.from_date_of_birth = from_results.date_of_birth || '';
+  process_results.from_deceased = from_results.deceased || ' ';
+  process_results.from_date_of_death = from_results.date_of_death || '';
+  process_results.from_sex = from_results.sex || ' ';
+  process_results.from_marital_status = from_results.marital_status || ' ';
+  process_results.from_religion_code = from_results.religion_code || ' ';
+  process_results.from_lds_unit_number = from_results.lds_unit_number || ' ';
+  process_results.from_citizenship_country_code = from_results.citizenship_country_code || ' ';
+  process_results.from_birth_country_code = from_results.birth_country_code || ' ';
+  process_results.from_home_town = from_results.home_town || ' ';
+  process_results.from_home_state_code = from_results.home_state_code || ' ';
+  process_results.from_home_country_code = from_results.home_country_code || ' ';
+  process_results.from_high_school_code = from_results.high_school_code || ' ';
+  process_results.from_restricted = from_results.restricted || ' ';
+  process_results.from_ssn = from_results.ssn || ' ';
+  process_results.from_ssn_verification_date = from_results.ssn_verification_date || '';
+  process_results.from_visa_type = from_results.visa_type || ' ';
+  process_results.from_i20_expiration_date = from_results.i20_expiration_date || '';
+  process_results.from_visa_type_source = from_results.visa_type_source || ' ';
+  process_results.from_lds_confirmation_date = from_results.lds_confirmation_date || '';
+  process_results.date_of_birth = from_results.date_of_birth || '';
+  process_results.deceased = from_results.deceased || ' ';
+  process_results.date_of_death = from_results.date_of_death || '';
+  process_results.marital_status = from_results.marital_status || ' ';
+  process_results.religion_code = from_results.religion_code || ' ';
+  process_results.lds_unit_number = from_results.lds_unit_number || ' ';
+  process_results.citizenship_country_code = from_results.citizenship_country_code || ' ';
+  process_results.birth_country_code = from_results.birth_country_code || ' ';
+  process_results.ssn = from_results.ssn || ' ';
+  process_results.ssn_verification_date = from_results.ssn_verification_date || '';
+  process_results.visa_type = from_results.visa_type || ' ';
+  process_results.i20_expiration_date = from_results.i20_expiration_date || '';
+  process_results.visa_type_source = from_results.visa_type_source || ' ';
+  process_results.lds_confirmation_date = from_results.lds_confirmation_date || '';
+  process_results.from_surname = from_results.surname || ' ';
+  process_results.from_rest_of_name = from_results.rest_of_name || ' ';
+  process_results.from_suffix = from_results.suffix || ' ';
+  process_results.from_preferred_first_name = from_results.preferred_first_name || ' ';
+  process_results.from_preferred_surname = from_results.preferred_surname || ' ';
+  process_results.from_preferred_name = from_results.preferred_name || ' ';
+  process_results.from_sort_name = from_results.sort_name || ' ';
+  process_results.from_first_name = from_results.first_name || ' ';
+  process_results.from_middle_name = from_results.middle_name || ' ';
+  return process_results;
+}
+
+exports.putBasic = async function putBasic(definitions, byu_id, authorized_byu_id, body, permissions) {
+  const connection = await db.getConnection();
+  const new_body = processBody(authorized_byu_id, body);
+  const change_type = 'C';
+
+  let sql_query = sql.sql.fromBasic;
+  let params = [
+    byu_id
+  ];
+  const from_results = await connection.execute(sql_query, params);
+  if (!from_results.rows.length) {
+    throw utils.Error(404, 'Could not find BYU_ID in Person Table');
+  }
+  if (from_results.rows[0].merge_in_process === 'Y') {
     throw new utils.Error(403, "User not authorized to update PERSON data")
   }
 
-  return {};
+  let processed_body = processFromResults(from_results.rows[0]);
+  processed_body.display_name = new_body.preferred_name;
+  new_body.created_by_id = from_results.rows[0].created_by_id || new_body.created_by_id;
+  new_body.date_time_created = from_results.rows[0].date_time_created || new_body.date_time_created;
 
-  // var sql_query = sql.sql.fromPerson;
-  // var params = [
-  //   byu_id
-  // ];
-  // return connection["ces"].execute(sql_query, params)
-  //   .then(function (results) {
-  //     if (results.rows.length === 0) {
-  //       throw new ClientError(404, "Could not find BYU_ID in Person Table")
-  //     }
-  //     if (results.rows[0].merge_in_process === "Y") {
-  //       throw new ClientError(403, "User is not authorized to change a Person who is in process of being merged")
-  //     }
-  //     person_id = (results.rows[0].person_id) ? results.rows[0].person_id : " ";
-  //     net_id = (results.rows[0].net_id) ? results.rows[0].net_id : " ";
-  //     employee_type = (results.rows[0].employee_type && results.rows[0].employee_type !== "--") ? results.rows[0].employee_type : "Not An Employee";
-  //     student_status = results.rows[0].student_status;
-  //     primary_role = results.rows[0]["primary_role"];
-  //     display_name = preferred_name;
-  //     name_fnf = (results.rows[0].name_fnf) ? results.rows[0].name_fnf : " ";
-  //     created_by_id = (results.rows[0].created_by_id) ? results.rows[0].created_by_id : created_by_id;
-  //     date_time_created = (results.rows[0].date_time_created) ? moment(results.rows[0].date_time_created, utils.accepted_date_formats)["format"]("YYYY-MM-DD HH:mm:ss.SSS") : "";
-  //
-  //     change_type = "C";
-  //     from_date_of_birth = (results.rows[0].date_of_birth) ? moment(results.rows[0].date_of_birth, utils.accepted_date_formats)["format"]("YYYY-MM-DD") : "";
-  //     from_deceased = (results.rows[0].deceased) ? results.rows[0].deceased : " ";
-  //     from_date_of_death = (results.rows[0].date_of_death) ? moment(results.rows[0].date_of_death, utils.accepted_date_formats)["format"]("YYYY-MM-DD") : "";
-  //     from_sex = (results.rows[0].sex) ? results.rows[0].sex : " ";
-  //     from_marital_status = (results.rows[0].marital_status) ? results.rows[0].marital_status : " ";
-  //     from_religion_code = (results.rows[0].religion_code) ? results.rows[0].religion_code : " ";
-  //     from_lds_unit_number = (results.rows[0].lds_unit_number) ? results.rows[0].lds_unit_number : " ";
-  //     from_citizenship_country_code = (results.rows[0].citizenship_country_code) ? results.rows[0].citizenship_country_code : " ";
-  //     from_birth_country_code = (results.rows[0].birth_country_code) ? results.rows[0].birth_country_code : " ";
-  //     from_home_town = (results.rows[0].home_town) ? results.rows[0].home_town : " ";
-  //     from_home_state_code = (results.rows[0].home_state_code) ? results.rows[0].home_state_code : " ";
-  //     from_home_country_code = (results.rows[0].home_country_code) ? results.rows[0].home_country_code : " ";
-  //     from_high_school_code = (results.rows[0].high_school_code) ? results.rows[0].high_school_code : " ";
-  //     from_restricted = (results.rows[0].restricted) ? results.rows[0].restricted : " ";
-  //     from_ssn = (results.rows[0].ssn) ? results.rows[0].ssn : " ";
-  //     from_ssn_verification_date = (results.rows[0].ssn_verification_date) ? moment(results.rows[0].ssn_verification_date, utils.accepted_date_formats)["format"]("YYYY-MM-DD") : "";
-  //     from_visa_type = (results.rows[0].visa_type) ? results.rows[0].visa_type : " ";
-  //     from_i20_expiration_date = (results.rows[0].i20_expiration_date) ? moment(results.rows[0].i20_expiration_date, utils.accepted_date_formats)["format"]("YYYY-MM-DD") : "";
-  //     from_visa_type_source = (results.rows[0].visa_type_source) ? results.rows[0].visa_type_source : " ";
-  //     from_lds_confirmation_date = (results.rows[0].lds_confirmation_date) ? moment(results.rows[0].lds_confirmation_date, utils.accepted_date_formats)["format"]("YYYY-MM-DD") : "";
-  //     date_of_birth = (results.rows[0].date_of_birth) ? moment(results.rows[0].date_of_birth, utils.accepted_date_formats)["format"]("YYYY-MM-DD") : "";
-  //     deceased = (results.rows[0].deceased) ? results.rows[0].deceased : " ";
-  //     date_of_death = (results.rows[0].date_of_death) ? moment(results.rows[0].date_of_death, utils.accepted_date_formats)["format"]("YYYY-MM-DD") : "";
-  //     marital_status = (results.rows[0].marital_status) ? results.rows[0].marital_status : " ";
-  //     religion_code = (results.rows[0].religion_code) ? results.rows[0].religion_code : " ";
-  //     lds_unit_number = (results.rows[0].lds_unit_number) ? results.rows[0].lds_unit_number : " ";
-  //     citizenship_country_code = (results.rows[0].citizenship_country_code) ? results.rows[0].citizenship_country_code : " ";
-  //     birth_country_code = (results.rows[0].birth_country_code) ? results.rows[0].birth_country_code : " ";
-  //     ssn = (results.rows[0].ssn) ? results.rows[0].ssn : " ";
-  //     ssn_verification_date = (results.rows[0].ssn_verification_date) ? moment(results.rows[0].ssn_verification_date, utils.accepted_date_formats)["format"]("YYYY-MM-DD") : "";
-  //     visa_type = (results.rows[0].visa_type) ? results.rows[0].visa_type : " ";
-  //     i20_expiration_date = (results.rows[0].i20_expiration_date) ? moment(results.rows[0].i20_expiration_date, utils.accepted_date_formats)["format"]("YYYY-MM-DD") : "";
-  //     visa_type_source = (results.rows[0].visa_type_source) ? results.rows[0].visa_type_source : " ";
-  //     lds_confirmation_date = (results.rows[0].lds_confirmation_date) ? moment(results.rows[0].lds_confirmation_date, utils.accepted_date_formats)["format"]("YYYY-MM-DD") : "";
-  //     from_surname = (results.rows[0].surname) ? results.rows[0].surname : " ";
-  //     from_rest_of_name = (results.rows[0].rest_of_name) ? results.rows[0].rest_of_name : " ";
-  //     from_suffix = (results.rows[0].suffix) ? results.rows[0].suffix : " ";
-  //     from_preferred_first_name = (results.rows[0].preferred_first_name) ? results.rows[0].preferred_first_name : " ";
-  //     from_preferred_surname = (results.rows[0].preferred_surname) ? results.rows[0].preferred_surname : " ";
-  //     from_preferred_name = (results.rows[0].preferred_name) ? results.rows[0].preferred_name : " ";
-  //     from_sort_name = (results.rows[0].sort_name) ? results.rows[0].sort_name : " ";
-  //     from_first_name = (results.rows[0].first_name) ? results.rows[0].first_name : " ";
-  //     from_middle_name = (results.rows[0].middle_name) ? results.rows[0].middle_name : " ";
-  //
-  //     log_name_params = [
-  //       change_type,
-  //       byu_id,
-  //       date_time_updated,
-  //       updated_by_id,
-  //       date_time_created,
-  //       created_by_id,
-  //       from_surname,
-  //       from_rest_of_name,
-  //       from_suffix,
-  //       from_preferred_first_name,
-  //       from_preferred_surname,
-  //       from_preferred_name,
-  //       from_sort_name,
-  //       from_first_name,
-  //       from_middle_name,
-  //       surname,
-  //       rest_of_name,
-  //       suffix,
-  //       preferred_first_name,
-  //       preferred_surname,
-  //       preferred_name,
-  //       sort_name,
-  //       first_name,
-  //       middle_name
-  //     ];
-  //     log_personal_params = [
-  //       change_type,
-  //       byu_id,
-  //       date_time_updated,
-  //       updated_by_id,
-  //       date_time_created,
-  //       created_by_id,
-  //       from_date_of_birth,
-  //       from_deceased,
-  //       from_date_of_death,
-  //       from_sex,
-  //       from_marital_status,
-  //       from_religion_code,
-  //       from_lds_unit_number,
-  //       from_citizenship_country_code,
-  //       from_birth_country_code,
-  //       from_home_town,
-  //       from_home_state_code,
-  //       from_home_country_code,
-  //       from_high_school_code,
-  //       from_restricted,
-  //       from_ssn,
-  //       from_ssn_verification_date,
-  //       from_visa_type,
-  //       from_i20_expiration_date,
-  //       from_visa_type_source,
-  //       from_lds_confirmation_date,
-  //       date_of_birth,
-  //       deceased,
-  //       date_of_death,
-  //       sex,
-  //       marital_status,
-  //       religion_code,
-  //       lds_unit_number,
-  //       citizenship_country_code,
-  //       birth_country_code,
-  //       home_town,
-  //       home_state_code,
-  //       home_country_code,
-  //       high_school_code,
-  //       restricted,
-  //       ssn,
-  //       ssn_verification_date,
-  //       visa_type,
-  //       i20_expiration_date,
-  //       visa_type_source,
-  //       lds_confirmation_date
-  //     ];
-  //
-  //     var name_dif = false;
-  //     var basic_dif = false;
-  //     if ((from_surname !== surname) ||
-  //       (from_first_name !== first_name) ||
-  //       (from_middle_name !== middle_name)) {
-  //       if (!inArray("person_update_name", request.params.auth)) {
-  //         throw new ClientError(403, "User not authorized to update name")
-  //       }
-  //       name_dif = true
-  //     }
-  //     if ((from_home_town !== home_town) ||
-  //       (from_home_state_code !== home_state_code) ||
-  //       (from_home_country_code !== home_country_code) ||
-  //       (from_high_school_code !== high_school_code) ||
-  //       (from_preferred_surname !== preferred_surname) ||
-  //       (from_preferred_first_name !== preferred_first_name) ||
-  //       (from_suffix !== suffix) ||
-  //       (from_sex !== sex) ||
-  //       (from_restricted !== restricted)) {
-  //       if (!inArray("person_update_basic", request.params.auth)) {
-  //         throw new ClientError(403, "User not authorized")
-  //       }
-  //       basic_dif = true
-  //     }
-  //     if (name_dif || basic_dif) {
-  //       sql_query = sql.modifyPerson.update;
-  //       params = [
-  //         date_time_updated,
-  //         updated_by_id,
-  //         surname,
-  //         first_name,
-  //         rest_of_name,
-  //         preferred_surname,
-  //         preferred_first_name,
-  //         preferred_name,
-  //         sort_name,
-  //         middle_name,
-  //         suffix,
-  //         home_town,
-  //         home_state_code,
-  //         home_country_code,
-  //         high_school_code,
-  //         sex,
-  //         restricted,
-  //         byu_id
-  //       ];
-  //       return connection["ces"].executeWithCommit(sql_query, params)
-  //         .then(function () {
-  //           if (name_dif ||
-  //             (from_preferred_surname !== preferred_surname) ||
-  //             (from_preferred_first_name !== preferred_first_name) ||
-  //             (from_suffix !== suffix)) {
-  //             sql_query = sql.modifyPerson.logNameChange;
-  //             return connection["ces"].executeWithCommit(sql_query, log_name_params)
-  //           }
-  //         })
-  //         .then(function () {
-  //           if ((from_home_town !== home_town) ||
-  //             (from_home_state_code !== home_state_code) ||
-  //             (from_home_country_code !== home_country_code) ||
-  //             (from_high_school_code !== high_school_code) ||
-  //             (from_sex !== sex) ||
-  //             (from_restricted !== restricted)) {
-  //             sql_query = sql.modifyPerson.logPersonalChange;
-  //             return connection["ces"].executeWithCommit(sql_query, log_personal_params)
-  //           }
-  //         })
-  //         .then(function () {
-  //           return personChangedEvents(connection)
-  //         })
-  //     }
-  //   })
-  //   .then(function () {
-  //     return exports.get(connection, resources, request)
-  //   })
+  const name_dif = (
+    processed_body.from_surname !== new_body.surname ||
+    processed_body.from_first_name !== new_body.first_name ||
+    processed_body.from_middle_name !== new_body.middle_name);
 
+  if (name_dif && !auth.canUpdateName(permissions)) {
+    throw utils.Error(403, 'User not authorized to update name');
+  }
+
+  const basic_dif = (
+    processed_body.from_home_town !== new_body.home_town ||
+    processed_body.from_home_state_code !== new_body.home_state_code ||
+    processed_body.from_home_country_code !== new_body.home_country_code ||
+    processed_body.from_high_school_code !== new_body.high_school_code ||
+    processed_body.from_preferred_surname !== new_body.preferred_surname ||
+    processed_body.from_preferred_first_name !== new_body.preferred_first_name ||
+    processed_body.from_suffix !== new_body.suffix ||
+    processed_body.from_sex !== new_body.sex ||
+    processed_body.from_restricted !== new_body.restricted);
+
+  if (basic_dif && !auth.canUpdatePersonBasic(permissions)) {
+    throw utils.Error(403, 'User not authorized to update basic');
+  }
+
+  if (name_dif || basic_dif) {
+    sql_query = sql.modifyBasic.update;
+    params = [
+      new_body.date_time_updated,
+      new_body.updated_by_id,
+      new_body.surname,
+      new_body.first_name,
+      new_body.rest_of_name,
+      new_body.preferred_surname,
+      new_body.preferred_first_name,
+      new_body.preferred_name,
+      new_body.sort_name,
+      new_body.middle_name,
+      new_body.suffix,
+      new_body.home_town,
+      new_body.home_state_code,
+      new_body.home_country_code,
+      new_body.high_school_code,
+      new_body.sex,
+      new_body.restricted,
+      byu_id
+    ];
+    const update_results = await connection.execute(sql_query, params);
+    console.log('UPDATE RESULTS', update_results);
+
+    if (name_dif ||
+      processed_body.from_preferred_surname !== new_body.preferred_surname ||
+      processed_body.from_preferred_first_name !== new_body.preferred_first_name ||
+      processed_body.from_suffix !== new_body.suffix) {
+      sql_query = sql.modifyBasic.logNameChange;
+      const log_name_params = [
+        change_type,
+        byu_id,
+        new_body.date_time_updated,
+        new_body.updated_by_id,
+        new_body.date_time_created,
+        new_body.created_by_id,
+        processed_body.from_surname,
+        processed_body.from_rest_of_name,
+        processed_body.from_suffix,
+        processed_body.from_preferred_first_name,
+        processed_body.from_preferred_surname,
+        processed_body.from_preferred_name,
+        processed_body.from_sort_name,
+        processed_body.from_first_name,
+        processed_body.from_middle_name,
+        new_body.surname,
+        new_body.rest_of_name,
+        new_body.suffix,
+        new_body.preferred_first_name,
+        new_body.preferred_surname,
+        new_body.preferred_name,
+        new_body.sort_name,
+        new_body.first_name,
+        new_body.middle_name
+      ];
+      const name_change_log_results = await connection.execute(sql_query, log_name_params);
+      console.log('NAME CHANGE LOG RESULTS', name_change_log_results);
+    }
+
+
+    if (
+      processed_body.from_home_town !== new_body.home_town ||
+      processed_body.from_home_state_code !== new_body.home_state_code ||
+      processed_body.from_home_country_code !== new_body.home_country_code ||
+      processed_body.from_high_school_code !== new_body.high_school_code ||
+      processed_body.from_sex !== new_body.sex ||
+      processed_body.from_restricted !== new_body.restricted) {
+      sql_query = sql.modifyBasic.logPersonalChange;
+      const log_personal_params = [
+        change_type,
+        byu_id,
+        new_body.date_time_updated,
+        new_body.updated_by_id,
+        new_body.date_time_created,
+        new_body.created_by_id,
+        processed_body.from_date_of_birth,
+        processed_body.from_deceased,
+        processed_body.from_date_of_death,
+        processed_body.from_sex,
+        processed_body.from_marital_status,
+        processed_body.from_religion_code,
+        processed_body.from_lds_unit_number,
+        processed_body.from_citizenship_country_code,
+        processed_body.from_birth_country_code,
+        processed_body.from_home_town,
+        processed_body.from_home_state_code,
+        processed_body.from_home_country_code,
+        processed_body.from_high_school_code,
+        processed_body.from_restricted,
+        processed_body.from_ssn,
+        processed_body.from_ssn_verification_date,
+        processed_body.from_visa_type,
+        processed_body.from_i20_expiration_date,
+        processed_body.from_visa_type_source,
+        processed_body.from_lds_confirmation_date,
+        processed_body.date_of_birth,
+        processed_body.deceased,
+        processed_body.date_of_death,
+        new_body.sex,
+        processed_body.marital_status,
+        processed_body.religion_code,
+        processed_body.lds_unit_number,
+        processed_body.citizenship_country_code,
+        processed_body.birth_country_code,
+        new_body.home_town,
+        new_body.home_state_code,
+        new_body.home_country_code,
+        new_body.high_school_code,
+        new_body.restricted,
+        processed_body.ssn,
+        processed_body.ssn_verification_date,
+        processed_body.visa_type,
+        processed_body.i20_expiration_date,
+        processed_body.visa_type_source,
+        processed_body.lds_confirmation_date
+      ];
+      return connection.execute(sql_query, log_personal_params);
+    }
+    connection.commit();
+
+    return personChangedEvents(connection)
+
+  }
+
+  return exports.get(connection, resources, request)
 };
+
+async function personDeletedEvents(connection, body, processed_body) {
+  try {
+    const source_dt = new Date().toISOString();
+    const identity_type = 'Person';
+    const event_type = "Person Deleted";
+    const event_type2 = "Person Deleted v2";
+    const domain = "edu.byu";
+    const entity = "BYU-IAM";
+    let event_frame = {
+      "events": {
+        "event": []
+      }
+    };
+    let header = [
+      "domain",
+      domain,
+      "entity",
+      entity,
+      "event_type",
+      event_type,
+      "source_dt",
+      source_dt,
+      "event_dt",
+      " ",
+      "event_id",
+      " "
+    ];
+
+    let event_body = [
+      "person_id",
+      body.person_id,
+      "byu_id",
+      body.byu_id,
+      "net_id",
+      body.net_id
+    ];
+    let eventness = event.Builder(header, event_body);
+    event_frame.events.event.push(eventness);
+
+    header[5] = event_type2;
+    const filters = [
+      "identity_type",
+      identity_type,
+      "employee_type",
+      processed_body.employee_type,
+      "student_status",
+      processed_body.student_status
+    ];
+    eventness = event.Builder(header, event_body, filters);
+    event_frame.events.event.push(eventness);
+
+    let sql_query = db.raiseEvent;
+    let params = [JSON.stringify(event_frame)];
+    await connection.execute(sql_query, params);
+
+    sql_query = db.enqueue;
+    return connection["ces"].executeWithCommit(sql_query, params)
+  } catch (error) {
+    console.error(error.stack);
+    throw new ClientError(207, 'Person Deleted but event not raised');
+  }
+}
