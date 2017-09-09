@@ -24,11 +24,20 @@
   "x-controller": "persons",
   "paths": {
     "/": {
+      "x-controller": "persons",
       "get": {
         "summary": "Persons",
         "description": "Returns a collection of Persons",
         "operationId": "getPersons",
         "parameters": [
+          {
+            "name": "byu_id",
+            "in": "query",
+            "description": "The person's Net ID",
+            "required": false,
+            "type": "string",
+            "pattern": "^[0-9]{9}$"
+          },
           {
             "name": "net_id",
             "in": "query",
@@ -257,7 +266,9 @@
             "description": "indicates which field sets are to be returned",
             "required": false,
             "type": "array",
-            "default": ["basic"],
+            "default": [
+              "basic"
+            ],
             "items": {
               "type": "string",
               "enum": [
@@ -308,12 +319,24 @@
               "$ref": "#/definitions/persons"
             }
           },
-          "400": { "$ref": "#/responses/400" },
-          "401": { "$ref": "#/responses/401" },
-          "403": { "$ref": "#/responses/403" },
-          "404": { "$ref": "#/responses/404" },
-          "409": { "$ref": "#/responses/409" },
-          "default": { "$ref": "#/responses/default" }
+          "400": {
+            "$ref": "#/responses/400"
+          },
+          "401": {
+            "$ref": "#/responses/401"
+          },
+          "403": {
+            "$ref": "#/responses/403"
+          },
+          "404": {
+            "$ref": "#/responses/404"
+          },
+          "409": {
+            "$ref": "#/responses/409"
+          },
+          "default": {
+            "$ref": "#/responses/default"
+          }
         }
       },
       "post": {
@@ -341,16 +364,29 @@
               "$ref": "#/definitions/basic"
             }
           },
-          "400": { "$ref": "#/responses/400" },
-          "401": { "$ref": "#/responses/401" },
-          "403": { "$ref": "#/responses/403" },
-          "404": { "$ref": "#/responses/404" },
-          "409": { "$ref": "#/responses/409" },
-          "default": { "$ref": "#/responses/default" }
+          "400": {
+            "$ref": "#/responses/400"
+          },
+          "401": {
+            "$ref": "#/responses/401"
+          },
+          "403": {
+            "$ref": "#/responses/403"
+          },
+          "404": {
+            "$ref": "#/responses/404"
+          },
+          "409": {
+            "$ref": "#/responses/409"
+          },
+          "default": {
+            "$ref": "#/responses/default"
+          }
         }
       }
     },
     "/{byu_id}": {
+      "x-controller": "persons",
       "get": {
         "summary": "Persons",
         "description": "Returns the person with the specified BYU ID",
@@ -370,7 +406,9 @@
             "description": "indicates which field sets are to be returned",
             "required": false,
             "type": "array",
-            "default": ["basic"],
+            "default": [
+              "basic"
+            ],
             "items": {
               "type": "string",
               "enum": [
@@ -421,12 +459,24 @@
               "$ref": "#/definitions/person"
             }
           },
-          "400": { "$ref": "#/responses/400" },
-          "401": { "$ref": "#/responses/401" },
-          "403": { "$ref": "#/responses/403" },
-          "404": { "$ref": "#/responses/404" },
-          "409": { "$ref": "#/responses/409" },
-          "default": { "$ref": "#/responses/default" }
+          "400": {
+            "$ref": "#/responses/400"
+          },
+          "401": {
+            "$ref": "#/responses/401"
+          },
+          "403": {
+            "$ref": "#/responses/403"
+          },
+          "404": {
+            "$ref": "#/responses/404"
+          },
+          "409": {
+            "$ref": "#/responses/409"
+          },
+          "default": {
+            "$ref": "#/responses/default"
+          }
         }
       },
       "put": {
@@ -462,12 +512,24 @@
               "$ref": "#/definitions/basic"
             }
           },
-          "400": { "$ref": "#/responses/400" },
-          "401": { "$ref": "#/responses/401" },
-          "403": { "$ref": "#/responses/403" },
-          "404": { "$ref": "#/responses/404" },
-          "409": { "$ref": "#/responses/409" },
-          "default": { "$ref": "#/responses/default" }
+          "400": {
+            "$ref": "#/responses/400"
+          },
+          "401": {
+            "$ref": "#/responses/401"
+          },
+          "403": {
+            "$ref": "#/responses/403"
+          },
+          "404": {
+            "$ref": "#/responses/404"
+          },
+          "409": {
+            "$ref": "#/responses/409"
+          },
+          "default": {
+            "$ref": "#/responses/default"
+          }
         }
       },
       "delete": {
@@ -491,10 +553,18 @@
           "204": {
             "description": "Person successfully deleted"
           },
-          "400": { "$ref": "#/responses/400" },
-          "401": { "$ref": "#/responses/401" },
-          "403": { "$ref": "#/responses/403" },
-          "default": { "$ref": "#/responses/default" }
+          "400": {
+            "$ref": "#/responses/400"
+          },
+          "401": {
+            "$ref": "#/responses/401"
+          },
+          "403": {
+            "$ref": "#/responses/403"
+          },
+          "default": {
+            "$ref": "#/responses/default"
+          }
         }
       }
     },
@@ -524,12 +594,24 @@
               "$ref": "#/definitions/addresses"
             }
           },
-          "400": { "$ref": "#/responses/400" },
-          "401": { "$ref": "#/responses/401" },
-          "403": { "$ref": "#/responses/403" },
-          "404": { "$ref": "#/responses/404" },
-          "409": { "$ref": "#/responses/409" },
-          "default": { "$ref": "#/responses/default" }
+          "400": {
+            "$ref": "#/responses/400"
+          },
+          "401": {
+            "$ref": "#/responses/401"
+          },
+          "403": {
+            "$ref": "#/responses/403"
+          },
+          "404": {
+            "$ref": "#/responses/404"
+          },
+          "409": {
+            "$ref": "#/responses/409"
+          },
+          "default": {
+            "$ref": "#/responses/default"
+          }
         }
       }
     },
@@ -572,12 +654,24 @@
               "$ref": "#/definitions/address"
             }
           },
-          "400": { "$ref": "#/responses/400" },
-          "401": { "$ref": "#/responses/401" },
-          "403": { "$ref": "#/responses/403" },
-          "404": { "$ref": "#/responses/404" },
-          "409": { "$ref": "#/responses/409" },
-          "default": { "$ref": "#/responses/default" }
+          "400": {
+            "$ref": "#/responses/400"
+          },
+          "401": {
+            "$ref": "#/responses/401"
+          },
+          "403": {
+            "$ref": "#/responses/403"
+          },
+          "404": {
+            "$ref": "#/responses/404"
+          },
+          "409": {
+            "$ref": "#/responses/409"
+          },
+          "default": {
+            "$ref": "#/responses/default"
+          }
         }
       },
       "put": {
@@ -628,19 +722,33 @@
           },
           "207": {
             "type": "object",
-            "required": ["metadata"],
+            "required": [
+              "metadata"
+            ],
             "properties": {
               "metadata": {
                 "$ref": "#/definitions/simple_metadata"
               }
             }
           },
-          "400": { "$ref": "#/responses/400" },
-          "401": { "$ref": "#/responses/401" },
-          "403": { "$ref": "#/responses/403" },
-          "404": { "$ref": "#/responses/404" },
-          "409": { "$ref": "#/responses/409" },
-          "default": { "$ref": "#/responses/default" }
+          "400": {
+            "$ref": "#/responses/400"
+          },
+          "401": {
+            "$ref": "#/responses/401"
+          },
+          "403": {
+            "$ref": "#/responses/403"
+          },
+          "404": {
+            "$ref": "#/responses/404"
+          },
+          "409": {
+            "$ref": "#/responses/409"
+          },
+          "default": {
+            "$ref": "#/responses/default"
+          }
         }
       },
       "delete": {
@@ -679,21 +787,32 @@
           },
           "207": {
             "type": "object",
-            "required": ["metadata"],
+            "required": [
+              "metadata"
+            ],
             "properties": {
               "metadata": {
                 "$ref": "#/definitions/simple_metadata"
               }
             }
           },
-          "400": { "$ref": "#/responses/400" },
-          "401": { "$ref": "#/responses/401" },
-          "403": { "$ref": "#/responses/403" },
-          "default": { "$ref": "#/responses/default" }
+          "400": {
+            "$ref": "#/responses/400"
+          },
+          "401": {
+            "$ref": "#/responses/401"
+          },
+          "403": {
+            "$ref": "#/responses/403"
+          },
+          "default": {
+            "$ref": "#/responses/default"
+          }
         }
       }
     },
     "/{byu_id}/credentials": {
+      "x-controller": "credentials",
       "get": {
         "summary": "Credentials",
         "description": "Returns all credentials for the BYU ID",
@@ -778,6 +897,7 @@
       }
     },
     "/{byu_id}/credentials/{credential_type},{credential_id}": {
+      "x-controller": "credentials",
       "get": {
         "summary": "Credentials",
         "description": "Returns the credential for the BYU ID/credential_type",
@@ -1046,6 +1166,7 @@
       }
     },
     "/{byu_id}/email_addresses": {
+      "x-controller": "email_addresses",
       "get": {
         "summary": "Email addresses",
         "description": "Returns all email addresses for the BYU ID",
@@ -1110,6 +1231,7 @@
       }
     },
     "/{byu_id}/email_addresses/{email_address_type}": {
+      "x-controller": "email_addresses",
       "get": {
         "summary": "Email addresses",
         "description": "Returns the email address for the BYU ID/email_address_type",
@@ -1334,6 +1456,7 @@
       }
     },
     "/{byu_id}/employee_summaries": {
+      "x-controller": "employee_summaries",
       "get": {
         "summary": "Employee summaries",
         "description": "Returns employee summary data for a person",
@@ -1354,6 +1477,12 @@
         "responses": {
           "200": {
             "description": "Employee information for the person successfully returned",
+            "schema": {
+              "$ref": "#/definitions/employee_summaries"
+            }
+          },
+          "203": {
+            "description": "Employee information for the person successfully returned public info only",
             "schema": {
               "$ref": "#/definitions/employee_summaries"
             }
@@ -1398,6 +1527,7 @@
       }
     },
     "/{byu_id}/ethnicities": {
+      "x-controller": "ethnicities",
       "get": {
         "summary": "Ethnicities",
         "description": "Returns all addresses for the BYU ID",
@@ -1462,6 +1592,7 @@
       }
     },
     "/{byu_id}/ethnicities/{ethnicity_code}": {
+      "x-controller": "ethnicities",
       "get": {
         "summary": "Ethnicities",
         "description": "Returns the address for the specified BYU ID and address type",
@@ -1701,6 +1832,7 @@
       }
     },
     "/{byu_id}/family_phones": {
+      "x-controller": "family_phones",
       "get": {
         "summary": "Family phones",
         "description": "Returns the person's family phones",
@@ -1765,6 +1897,7 @@
       }
     },
     "/{byu_id}/family_phones/{phone_type},{lookup_number}": {
+      "x-controller": "family_phones",
       "get": {
         "summary": "Family phones",
         "description": "Returns information on a specified family phone",
@@ -2009,6 +2142,7 @@
       }
     },
     "/{byu_id}/government_records": {
+      "x-controller": "government_records",
       "get": {
         "summary": "Persons",
         "description": "Returns the person with the specified BYU ID",
@@ -2144,6 +2278,7 @@
       }
     },
     "/{byu_id}/group_membership_events": {
+      "x-controller": "group_membership_events",
       "get": {
         "summary": "Group memberships",
         "description": "Returns the group membership events for the BYU ID",
@@ -2208,6 +2343,7 @@
       }
     },
     "/{byu_id}/group_membership_events/{group_id}": {
+      "x-controller": "group_membership_events",
       "get": {
         "summary": "Group memberships",
         "description": "Returns the group event history for the specified BYU ID/group",
@@ -2279,6 +2415,7 @@
       }
     },
     "/{byu_id}/group_memberships": {
+      "x-controller": "group_memberships",
       "get": {
         "summary": "Group memberships",
         "description": "Returns the group memberships for the BYU ID",
@@ -2351,6 +2488,7 @@
       }
     },
     "/{byu_id}/group_memberships/{group_id}": {
+      "x-controller": "group_memberships",
       "get": {
         "summary": "Group memberships",
         "description": "Returns group membership information for the BYU ID/group",
@@ -2560,6 +2698,7 @@
       }
     },
     "/{byu_id}/groups_administered": {
+      "x-controller": "groups_administered",
       "get": {
         "summary": "Groups administered",
         "description": "Returns groups administered by a person",
@@ -2624,6 +2763,7 @@
       }
     },
     "/{byu_id}/groups_administered/{group_id}": {
+      "x-controller": "groups_administered",
       "get": {
         "summary": "Groups administered",
         "description": "Returns group administration information for the BYU ID/group",
@@ -2833,6 +2973,7 @@
       }
     },
     "/{byu_id}/my_delegators": {
+      "x-controller": "my_delegators",
       "get": {
         "summary": "Delegations",
         "description": "Returns a collection of guest rights delegator to the BYU ID",
@@ -2912,6 +3053,7 @@
       }
     },
     "/{byu_id}/my_delegators/{access_delegation_id}": {
+      "x-controller": "my_delegators",
       "get": {
         "summary": "Delegations",
         "description": "Returns the guest rights delegator to the BYU ID by the delegator BYU ID",
@@ -3059,6 +3201,7 @@
       }
     },
     "/{byu_id}/my_guests": {
+      "x-controller": "my_guests",
       "get": {
         "summary": "Guests",
         "description": "Returns a collection of guests who have or had access rights to this BYU_ID",
@@ -3215,6 +3358,7 @@
       }
     },
     "/{byu_id}/my_guests/{access_delegation_id}": {
+      "x-controller": "my_guests",
       "get": {
         "summary": "Guests",
         "description": "Returns a specific access delegation and information about to whom it was granted. NOTE: Guest ID is not used because the same person could have been granted access then had access revoked and then granted access again",
@@ -3364,6 +3508,7 @@
       }
     },
     "/{byu_id}/id_cards": {
+      "x-controller": "id_cards",
       "get": {
         "summary": "ID cards",
         "description": "Returns a person's ID card information",
@@ -3546,6 +3691,7 @@
       }
     },
     "/{byu_id}/languages": {
+      "x-controller": "languages",
       "get": {
         "summary": "Languages",
         "description": "Returns the languages for a person",
@@ -3610,6 +3756,7 @@
       }
     },
     "/{byu_id}/languages/{language_code}": {
+      "x-controller": "languages",
       "get": {
         "summary": "Languages",
         "description": "Returns a person's abilities for a specific language",
@@ -3819,6 +3966,7 @@
       }
     },
     "/{byu_id}/personal_records": {
+      "x-controller": "personal_records",
       "get": {
         "summary": "Persons",
         "description": "Returns the person with the specified BYU ID",
@@ -3954,6 +4102,7 @@
       }
     },
     "/{byu_id}/phones": {
+      "x-controller": "phones",
       "get": {
         "summary": "Phones",
         "description": "Returns a person's phones",
@@ -4025,6 +4174,7 @@
       }
     },
     "/{byu_id}/phones/{lookup_number}": {
+      "x-controller": "phones",
       "get": {
         "summary": "Phones",
         "description": "Returns phone information for a specific person/phone number",
@@ -4237,6 +4387,7 @@
       }
     },
     "/{byu_id}/relationships": {
+      "x-controller": "relationships",
       "get": {
         "summary": "Relationships",
         "description": "Returns a person's relationships",
@@ -4301,6 +4452,7 @@
       }
     },
     "/{byu_id}/relationships/{related_id}": {
+      "x-controller": "relationships",
       "get": {
         "summary": "Relationships",
         "description": "Returns information on a specific relationship between two identities",
@@ -4510,6 +4662,7 @@
       }
     },
     "/{byu_id}/student_summaries": {
+      "x-controller": "student_summaries",
       "get": {
         "summary": "Student summaries",
         "description": "Returns a summary of a person's academic information",
@@ -6317,7 +6470,7 @@
         },
         "api_type": {
           "type": "string",
-          "default":"system",
+          "default": "system",
           "enum": [
             "system"
           ]
@@ -6730,30 +6883,34 @@
       }
     },
     "department": {
-      "description": "The person's department",
       "type": "object",
+      "description": "The person's department",
       "required": [
         "value",
         "api_type",
-        "related_resources",
+        "related_resource",
         "domain"
       ],
       "properties": {
         "value": {
           "type": "string",
+          "x-variable": "department",
           "maxLength": 30
         },
         "api_type": {
           "type": "string",
+          "default": "related",
           "enum": [
             "related"
           ]
         },
-        "related_resources": {
-          "type": "string"
+        "related_resource": {
+          "type": "string",
+          "default": "https://api.byu.edu/byuapi/employees"
         },
         "domain": {
-          "type": "string"
+          "type": "string",
+          "default": "https://api.byu.edu/byuapi/meta/departments"
         }
       },
       "example": {
@@ -7026,15 +7183,44 @@
       }
     },
     "employee_summaries": {
-      "description": "Employee summaries for a person",
       "type": "object",
+      "description": "Employee summaries for a person",
+      "required": [
+        "byu_id",
+        "department",
+        "job_title"
+      ],
       "properties": {
         "links": {
           "description": "Hypermedia links for employee summaries",
           "type": "object",
           "properties": {
             "employee_summaries.info": {
-              "$ref": "#/definitions/links"
+              "description": "Hypermedia links format",
+              "type": "object",
+              "required": [
+                "rel",
+                "href",
+                "method"
+              ],
+              "properties": {
+                "rel": {
+                  "type": "string",
+                  "default": "self"
+                },
+                "href": {
+                  "type": "string",
+                  "format": "uri",
+                  "default": "https://api.byu.edu/byuapi/persons/v1/:byu_id/employee_summaries"
+                },
+                "method": {
+                  "type": "string",
+                  "default": "GET",
+                  "enum": [
+                    "GET"
+                  ]
+                }
+              }
             }
           }
         },
@@ -7054,10 +7240,72 @@
           "$ref": "#/definitions/job_title"
         },
         "hire_date": {
-          "$ref": "#/definitions/hire_date"
+          "type": "object",
+          "description": "The person's BYU hire date",
+          "required": [
+            "value",
+            "api_type",
+            "related_resource"
+          ],
+          "properties": {
+            "value": {
+              "type": "string",
+              "format": "date",
+              "x-variable": "hire_date"
+            },
+            "api_type": {
+              "type": "string",
+              "x-variable": "related",
+              "enum": [
+                "related"
+              ]
+            },
+            "related_resource": {
+              "type": "string",
+              "default": "https://api.byu.edu/byuapi/employees"
+            }
+          },
+          "example": {
+            "value": "2015-06-24",
+            "api-type": "related"
+          }
         },
         "reports_to_id": {
-          "$ref": "#/definitions/reports_to_id"
+          "type": "object",
+          "description": "The BYU ID of the supervisor that the person reports to",
+          "required": [
+            "value",
+            "api_type",
+            "description"
+          ],
+          "properties": {
+            "value": {
+              "type": "string",
+              "x-variable": "reports_to_id"
+            },
+            "description": {
+              "type": "string",
+              "x-variable": "reports_to_name",
+              "maxLength": 50
+            },
+            "api_type": {
+              "type": "string",
+              "default": "related",
+              "enum": [
+                "related"
+              ]
+            },
+            "related_resource": {
+              "type": "string",
+              "default": "https://api.byu.edu/byuapi/employees"
+            }
+          },
+          "example": {
+            "value": "456789123",
+            "description": "Douglas Walker",
+            "api-type": "related",
+            "related_resource": "https://api.byu.edu/byuapi/employees"
+          }
         }
       }
     },
@@ -7068,30 +7316,35 @@
         "value",
         "description",
         "api_type",
-        "related_resources"
+        "related_resource"
       ],
       "properties": {
         "value": {
           "type": "string",
+          "x-variable": "employee_type",
           "maxLength": 10
         },
         "description": {
-          "type": "string"
+          "type": "string",
+          "x-variable": "employee_type_desc"
         },
         "api_type": {
           "type": "string",
+          "default": "related",
           "enum": [
             "related"
           ]
         },
-        "related_resources": {
-          "type": "string"
+        "related_resource": {
+          "type": "string",
+          "default": "https://api.byu.edu/byuapi/employees"
         }
       },
       "example": {
         "value": "STD-PT-ACT",
         "description": "Student Part-Time Active",
-        "api-type": "related"
+        "api-type": "related",
+        "related_resource": "https://api.byu.edu/byuapi/employees"
       }
     },
     "error": {
@@ -7114,7 +7367,9 @@
     },
     "error_response": {
       "type": "object",
-      "required": ["metadata"],
+      "required": [
+        "metadata"
+      ],
       "properties": {
         "metadata": {
           "$ref": "#/definitions/simple_metadata"
@@ -8411,34 +8666,6 @@
         "api_type": "read-only"
       }
     },
-    "hire_date": {
-      "description": "The person's BYU hire date",
-      "type": "object",
-      "required": [
-        "value",
-        "api_type",
-        "related_resource"
-      ],
-      "properties": {
-        "value": {
-          "type": "string",
-          "format": "date"
-        },
-        "api_type": {
-          "type": "string",
-          "enum": [
-            "related"
-          ]
-        },
-        "related_resource": {
-          "type": "string"
-        }
-      },
-      "example": {
-        "value": "2015-06-24",
-        "api-type": "related"
-      }
-    },
     "home_country_code": {
       "description": "The home country code, validated through the meta/country service",
       "type": "object",
@@ -8757,24 +8984,28 @@
         "value",
         "description",
         "api_type",
-        "related_resources"
+        "related_resource"
       ],
       "properties": {
         "value": {
           "type": "string",
+          "x-variable": "job_title",
           "maxLength": 30
         },
         "description": {
-          "type": "string"
+          "type": "string",
+          "x-variable": "job_desc"
         },
         "api_type": {
           "type": "string",
+          "default": "related",
           "enum": [
             "related"
           ]
         },
-        "related_resources": {
-          "type": "string"
+        "related_resource": {
+          "type": "string",
+          "default": "https://api.byu.edu/byuapi/employees"
         }
       },
       "example": {
@@ -10205,26 +10436,6 @@
           "description": "Hypermedia links for a collection of persons",
           "type": "object",
           "properties": {
-            "persons__current": {
-              "rel": "persons__current",
-              "href": "https://api.byu.edu/byuapi/persons?page_start=1,page_size=50",
-              "method": "GET"
-            },
-            "persons__prev": {
-              "rel": "persons__prev",
-              "href": "https://api.byu.edu/byuapi/persons?page_start=1,page_size=50",
-              "method": "GET"
-            },
-            "persons__next": {
-              "rel": "persons__next",
-              "href": "https://api.byu.edu/byuapi/persons?page_start=101,page_size=50",
-              "method": "GET"
-            },
-            "persons__create": {
-              "rel": "persons__create",
-              "href": "https://api.byu.edu/byuapi/persons",
-              "method": "POST"
-            },
             "persons__info": {
               "description": "Hypermedia link for the default persons collection",
               "type": "object",
@@ -10237,7 +10448,9 @@
                 "rel": {
                   "type": "string",
                   "default": "self",
-                  "enum": ["self" ]
+                  "enum": [
+                    "self"
+                  ]
                 },
                 "href": {
                   "type": "string",
@@ -10247,7 +10460,9 @@
                 "method": {
                   "type": "string",
                   "default": "GET",
-                  "enum": [ "GET" ]
+                  "enum": [
+                    "GET"
+                  ]
                 }
               }
             },
@@ -10263,7 +10478,9 @@
                 "rel": {
                   "type": "string",
                   "default": "persons__first",
-                  "enum": [ "persons__first" ]
+                  "enum": [
+                    "persons__first"
+                  ]
                 },
                 "href": {
                   "type": "string",
@@ -10273,11 +10490,40 @@
                 "method": {
                   "type": "string",
                   "default": "GET",
-                  "enum": [ "GET" ]
+                  "enum": [
+                    "GET"
+                  ]
                 }
               }
             },
             "persons__last": {
+              "description": "Hypermedia links format",
+              "type": "object",
+              "required": [
+                "rel",
+                "href",
+                "method"
+              ],
+              "properties": {
+                "rel": {
+                  "type": "string",
+                  "default": "self"
+                },
+                "href": {
+                  "type": "string",
+                  "format": "uri",
+                  "default": "https://api.byu.edu/byuapi/persons/v1/"
+                },
+                "method": {
+                  "type": "string",
+                  "default": "GET",
+                  "enum": [
+                    "GET"
+                  ]
+                }
+              }
+            },
+            "persons__current": {
               "description": "Hypermedia links format",
               "type": "object",
               "required": [
@@ -11279,37 +11525,6 @@
         "api_type": "read-only"
       }
     },
-    "reports_to_id": {
-      "description": "The BYU ID of the supervisor that the person reports to",
-      "type": "object",
-      "required": [
-        "value",
-        "api_type",
-        "description"
-      ],
-      "properties": {
-        "value": {
-          "type": "string",
-          "pattern": "^([]{0}|[0-9]{9})$"
-        },
-        "api_type": {
-          "type": "string",
-          "enum": [
-            "related"
-          ]
-        },
-        "description": {
-          "type": "string",
-          "maxLength": 50
-        }
-      },
-      "example": {
-        "value": "456789123",
-        "description": "Douglas Walker",
-        "api-type": "related",
-        "related_resource": "https://api.byu.edu/byuapi/employees"
-      }
-    },
     "rest_of_name": {
       "description": "The person's complete name, excluding the surname",
       "type": "object",
@@ -11505,7 +11720,9 @@
     },
     "simple_metadata": {
       "type": "object",
-      "required": ["validation_response"],
+      "required": [
+        "validation_response"
+      ],
       "properties": {
         "validation_response": {
           "type": "object",
@@ -11731,7 +11948,9 @@
             }
           }
         },
-        { "$ref": "#/definitions/simple_metadata" }
+        {
+          "$ref": "#/definitions/simple_metadata"
+        }
       ]
     },
     "suffix": {
@@ -11850,7 +12069,9 @@
           "properties": {
             "field_sets_returned": {
               "type": "array",
-              "default": ["basic"],
+              "default": [
+                "basic"
+              ],
               "items": {
                 "type": "string",
                 "enum": [
@@ -11926,10 +12147,14 @@
             },
             "field_sets_default": {
               "type": "array",
-              "default": ["basic"],
+              "default": [
+                "basic"
+              ],
               "items": {
                 "type": "string",
-                "enum": [ "basic" ]
+                "enum": [
+                  "basic"
+                ]
               }
             },
             "contexts_available": {
@@ -12082,7 +12307,9 @@
             }
           }
         },
-        { "$ref": "#/definitions/sub_level_metadata" }
+        {
+          "$ref": "#/definitions/sub_level_metadata"
+        }
       ]
     },
     "translator": {
@@ -12401,35 +12628,2590 @@
   "responses": {
     "400": {
       "description": "Invalid Request - unable to interpret request",
-      "schema": { "$ref": "#/definitions/error_response" }
+      "schema": {
+        "$ref": "#/definitions/error_response"
+      }
     },
     "401": {
       "description": "Authentication required to access data",
-      "schema": { "$ref": "#/definitions/error_response" }
+      "schema": {
+        "$ref": "#/definitions/error_response"
+      }
     },
     "403": {
       "description": "Access denied to protected data",
-      "schema": { "$ref": "#/definitions/error_response" }
+      "schema": {
+        "$ref": "#/definitions/error_response"
+      }
     },
     "404": {
       "description": "The resource does not exist",
-      "schema": { "$ref": "#/definitions/error_response" }
+      "schema": {
+        "$ref": "#/definitions/error_response"
+      }
     },
     "409": {
       "description": "Query parameters conflict or are malformed",
-      "schema": { "$ref": "#/definitions/error_response" }
+      "schema": {
+        "$ref": "#/definitions/error_response"
+      }
     },
     "default": {
       "description": "Unexpected error",
-      "schema": { "$ref": "#/definitions/error_response" },
+      "schema": {
+        "$ref": "#/definitions/error_response"
+      },
       "x-handler": "defaultHandler"
     }
   },
   "x-mock_json": {
     "persons": {
-      "links": {},
-      "metadata": {},
-      "values": []
+      "links": {
+        "persons.info": {
+          "rel": "self",
+          "href": "https://api.byu.edu/byuapi/persons/v1/",
+          "method": "GET"
+        },
+        "persons.current": {
+          "rel": "persons.current",
+          "href": "https://api.byu.edu/byuapi/persons/v1/?page_start=1,page_size=50",
+          "method": "GET"
+        },
+        "persons.prev": {
+          "rel": "persons.prev",
+          "href": "https://api.byu.edu/byuapi/persons/v1/?page_start=1,page_size=50",
+          "method": "GET"
+        },
+        "persons.next": {
+          "rel": "persons.next",
+          "href": "https://api.byu.edu/byuapi/persons/v1/?page_start=101,page_size=50",
+          "method": "GET"
+        },
+        "persons.create": {
+          "rel": "persons.create",
+          "href": "https://api.byu.edu/byuapi/persons/v1/",
+          "method": "POST"
+        }
+      },
+      "metadata": {
+        "collection_size": 0,
+        "page_start": 1,
+        "page_end": 1,
+        "page_size": 50,
+        "default_page_size": 50,
+        "max_page_size": 200,
+        "field_sets_returned": [],
+        "field_sets_available": [
+          "basic",
+          "addresses",
+          "credentials",
+          "email_addresses",
+          "employee_summaries",
+          "ethnicities",
+          "family_phones",
+          "government_records",
+          "group_membership_events",
+          "group_memberships",
+          "groups_administered",
+          "id_cards",
+          "languages",
+          "my_delegators",
+          "my_guests",
+          "page_counts",
+          "personal_records",
+          "phones",
+          "relationships",
+          "student_summaries"
+        ],
+        "default_field_sets": [
+          "basic"
+        ],
+        "contexts_available": {
+          "all": [
+            "basic",
+            "addresses",
+            "credentials",
+            "email_addresses",
+            "employee_summaries",
+            "ethnicities",
+            "family_phones",
+            "government_records",
+            "group_membership_events",
+            "group_memberships",
+            "groups_administered",
+            "my_delegators",
+            "my_guests",
+            "id_cards",
+            "languages",
+            "personal_records",
+            "phones",
+            "relationships",
+            "student_summaries"
+          ],
+          "contact": [
+            "basic",
+            "addresses",
+            "email_addresses",
+            "family_phones",
+            "phones"
+          ],
+          "official": [
+            "credentials",
+            "government_records",
+            "personal_records",
+            "id_cards"
+          ],
+          "emergency": [
+            "family_phones",
+            "relationships"
+          ],
+          "marriott_school": [
+            "basic",
+            "addresses",
+            "credentials",
+            "email_addresses",
+            "employee_summaries",
+            "ethnicities",
+            "family_phones",
+            "government_records",
+            "group_memberships",
+            "groups_administered",
+            "id_cards",
+            "languages",
+            "personal_records",
+            "phones",
+            "relationships",
+            "student_summaries"
+          ]
+        },
+        "validation_response": {
+          "return_code": 200,
+          "response": "Success!"
+        }
+      },
+      "values": [
+        {
+          "addresses": {
+            "links": {
+              "addresses.info": {
+                "rel": "self",
+                "href": "https://api.byu.edu/byuapi/persons/v1/123456789/addresses",
+                "method": "GET"
+              },
+              "addresses.prev": {
+                "rel": "addresses.prev",
+                "href": "https://api.byu.edu/byuapi/persons/v1/123456789/addresses?page_start=:page_start,page_size=:page_size",
+                "method": "GET"
+              },
+              "addresses.next": {
+                "rel": "addresses.next",
+                "href": "https://api.byu.edu/byuapi/persons/v1/123456789/addresses?page_start=:page_start,page_size=:page_size",
+                "method": "GET"
+              }
+            },
+            "metadata": {
+              "collection_size": 0,
+              "page_start": 1,
+              "page_end": 1,
+              "page_size": 20,
+              "default_page_size": 20,
+              "max_page_size": 20,
+              "validation_response": {
+                "return_code": 0,
+                "response": ""
+              },
+              "default_db": [
+                "ces"
+              ]
+            },
+            "values": [
+              {
+                "links": {
+                  "addresses.info": {
+                    "rel": "self",
+                    "href": "https://api.byu.edu/byuapi/persons/v1/123456789/addresses/MAL",
+                    "method": "GET"
+                  },
+                  "addresses.modify": {
+                    "rel": "addresses.modify",
+                    "href": "https://api.byu.edu/byuapi/persons/v1/123456789/addresses/MAL",
+                    "method": "PUT"
+                  },
+                  "addresses.delete": {
+                    "rel": "addresses.delete",
+                    "href": "https://api.byu.edu/byuapi/persons/v1/123456789/addresses/MAL",
+                    "method": "DELETE"
+                  }
+                },
+                "metadata": {
+                  "collection_size": 0,
+                  "page_start": 1,
+                  "page_end": 1,
+                  "page_size": 20,
+                  "default_page_size": 20,
+                  "max_page_size": 20,
+                  "validation_response": {
+                    "return_code": 0,
+                    "response": ""
+                  },
+                  "default_db": [
+                    "ces"
+                  ]
+                },
+                "byu_id": {
+                  "value": "123456789",
+                  "description": "Cosmo Cougar",
+                  "api_type": "system",
+                  "key": true
+                },
+                "address_type": {
+                  "value": "MAL",
+                  "api_type": "modifiable",
+                  "key": true,
+                  "domain": [
+                    "RES",
+                    "MAL",
+                    "WRK",
+                    "PRM"
+                  ]
+                },
+                "date_time_updated": {
+                  "value": "2017-09-09T19:15:22.123Z",
+                  "api_type": "system"
+                },
+                "updated_by_id": {
+                  "value": "023296921",
+                  "description": "John Bench",
+                  "api_type": "system"
+                },
+                "date_time_created": {
+                  "value": "2017-09-09T19:15:22.123Z",
+                  "api_type": "system"
+                },
+                "created_by_id": {
+                  "value": "023296921",
+                  "description": "John Bench",
+                  "api_type": "system"
+                },
+                "address_line_1": {
+                  "value": "1234 Milky Way",
+                  "api_type": "modifiable"
+                },
+                "address_line_2": {
+                  "value": "Orem, UT 84062",
+                  "api_type": "modifiable"
+                },
+                "address_line_3": {
+                  "value": " ",
+                  "api_type": "modifiable"
+                },
+                "address_line_4": {
+                  "value": " ",
+                  "api_type": "modifiable"
+                },
+                "building": {
+                  "value": " ",
+                  "description": "",
+                  "long_description": "",
+                  "api_type": "modifiable",
+                  "domain": "https://api.byu.edu/byuapi/meta/buildings"
+                },
+                "room": {
+                  "value": " ",
+                  "api_type": "modifiable"
+                },
+                "city": {
+                  "value": "Orem",
+                  "api_type": "modifiable"
+                },
+                "state_code": {
+                  "value": "UT",
+                  "description": "Utah",
+                  "api_type": "modifiable",
+                  "domain": "https://api.byu.edu/byuapi/meta/states"
+                },
+                "country_code": {
+                  "value": "USA",
+                  "description": "United States of America",
+                  "api_type": "modifiable",
+                  "domain": "https://api.byu.edu/byuapi/meta/countries"
+                },
+                "postal_code": {
+                  "value": "84062",
+                  "api_type": "modifiable"
+                },
+                "unlisted": {
+                  "value": false,
+                  "api_type": "modifiable"
+                },
+                "verified_flag": {
+                  "value": true,
+                  "api_type": "modifiable"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "basic": {
+            "links": {
+              "persons.info": {
+                "rel": "self",
+                "href": "https://api.byu.edu/byuapi/persons/v1/123456789",
+                "method": "GET"
+              },
+              "persons.modify": {
+                "rel": "self",
+                "href": "https://api.byu.edu/byuapi/persons/v1/123456789",
+                "method": "PUT"
+              },
+              "persons.delete": {
+                "rel": "self",
+                "href": "https://api.byu.edu/byuapi/persons/v1/123456789",
+                "method": "DELETE"
+              }
+            },
+            "metadata": {
+              "collection_size": 0,
+              "page_start": 1,
+              "page_end": 1,
+              "page_size": 20,
+              "default_page_size": 20,
+              "max_page_size": 20,
+              "validation_response": {
+                "return_code": 0,
+                "response": ""
+              },
+              "default_db": [
+                "ces"
+              ]
+            },
+            "byu_id": {
+              "value": "123456789",
+              "api_type": "system",
+              "key": true
+            },
+            "person_id": {
+              "value": "987654321",
+              "api_type": "system"
+            },
+            "net_id": {
+              "value": "cosmo5",
+              "api_type": "related",
+              "related_resource": "https://api.byu.edu/byuapi/persons/v1/123456789/credentials/NET_ID,cosmo5"
+            },
+            "deceased": {
+              "value": false,
+              "api_type": "related",
+              "related_resource": "https://api.byu.edu/byuapi/persons/v1/123456789/personal_records"
+            },
+            "personal_email_address": {
+              "value": "cosmo5@byu.edu",
+              "api_type": "related",
+              "related_resource": "https://api.byu.edu/byuapi/persons/v1/123456789/email_addresses/PERSONAL"
+            },
+            "primary_phone_number": {
+              "value": "8014224000",
+              "api_type": "related",
+              "related_resource": "https://api.byu.edu/byuapi/persons/v1/123456789/phones/8014224000"
+            },
+            "date_time_updated": {
+              "value": "2017-09-09T19:15:22.123Z",
+              "api_type": "system"
+            },
+            "updated_by_id": {
+              "value": "023296921",
+              "description": "John Bench",
+              "api_type": "system"
+            },
+            "date_time_created": {
+              "value": "2017-09-09T19:15:22.123Z",
+              "api_type": "system"
+            },
+            "created_by_id": {
+              "value": "023296921",
+              "description": "John Bench",
+              "api_type": "system"
+            },
+            "sex": {
+              "value": "M",
+              "api_type": "modifiable"
+            },
+            "first_name": {
+              "value": "Abernathy",
+              "api_type": "modifiable"
+            },
+            "middle_name": {
+              "value": "Cosmo",
+              "api_type": "modifiable"
+            },
+            "surname": {
+              "value": "Cougar-Rodriguez",
+              "api_type": "modifiable"
+            },
+            "suffix": {
+              "value": "II",
+              "api_type": "modifiable"
+            },
+            "preferred_first_name": {
+              "value": "Cosmo",
+              "api_type": "modifiable"
+            },
+            "preferred_surname": {
+              "value": "Cougar",
+              "api_type": "modifiable"
+            },
+            "rest_of_name": {
+              "value": "Abernathy Cosmo",
+              "api_type": "derived"
+            },
+            "name_fnf": {
+              "value": "Abernathy Cosmo Cougar-Rodriguez II",
+              "api_type": "derived"
+            },
+            "name_lnf": {
+              "value": "Cougar-Rodriguez, Abernathy Cosmo, II",
+              "api_type": "derived"
+            },
+            "preferred_name": {
+              "value": "Cosmo Cougar",
+              "api_type": "derived"
+            },
+            "home_town": {
+              "value": "Cypress",
+              "api_type": "modifiable"
+            },
+            "home_state_code": {
+              "value": "CA",
+              "description": "California",
+              "api_type": "modifiable",
+              "domain": "https://api.byu.edu/byuapi/meta/states"
+            },
+            "home_country_code": {
+              "value": "USA",
+              "description": "United States of America",
+              "api_type": "modifiable",
+              "domain": "https://api.byu.edu/meta/countries"
+            },
+            "high_school_code": {
+              "value": "050714",
+              "description": "Cypress High School",
+              "api_type": "modifiable",
+              "domain": "https://api.byu.edu/meta/high_schools"
+            },
+            "high_school_city": {
+              "value": "Cypress",
+              "api_type": "derived"
+            },
+            "high_school_state_code": {
+              "value": "CA",
+              "description": "California",
+              "api_type": "derived",
+              "domain": "https://api.byu.edu/byuapi/meta/states"
+            },
+            "restricted": {
+              "value": false,
+              "api_type": "modifiable"
+            },
+            "merge_in_process": {
+              "value": false,
+              "api_type": "derived"
+            }
+          }
+        },
+        {
+          "credentials": {
+            "links": {
+              "credentials.info": {
+                "rel": "self",
+                "href": "https://api.byu.edu/byuapi/persons/v1/123456789/credentials",
+                "method": "GET"
+              }
+            },
+            "metadata": {
+              "collection_size": 0,
+              "page_start": 1,
+              "page_end": 1,
+              "page_size": 20,
+              "default_page_size": 20,
+              "max_page_size": 20,
+              "validation_response": {
+                "return_code": 0,
+                "response": ""
+              },
+              "default_db": [
+                "ces"
+              ]
+            },
+            "values": [
+              {
+                "links": {
+                  "credentials.info": {
+                    "rel": "self",
+                    "href": "https://api.byu.edu/byuapi/persons/v1/123456789/credentials/NET_ID,cosmo5",
+                    "method": "GET"
+                  },
+                  "credentials.modify": {
+                    "rel": "credentials.modify",
+                    "href": "https://api.byu.edu/byuapi/persons/v1/123456789/credentials/NET_ID,cosmo5",
+                    "method": "PUT"
+                  },
+                  "credentials.delete": {
+                    "rel": "credentials.delete",
+                    "href": "https://api.byu.edu/byuapi/persons/v1/123456789/credentials/NET_ID,cosmo5",
+                    "method": "DELETE"
+                  }
+                },
+                "metadata": {
+                  "collection_size": 0,
+                  "page_start": 1,
+                  "page_end": 1,
+                  "page_size": 20,
+                  "default_page_size": 20,
+                  "max_page_size": 20,
+                  "validation_response": {
+                    "return_code": 0,
+                    "response": ""
+                  },
+                  "default_db": [
+                    "ces"
+                  ]
+                },
+                "byu_id": {
+                  "value": "123456789",
+                  "description": "Cosmo Cougar",
+                  "api_type": "system",
+                  "key": true
+                },
+                "credential_id": {
+                  "value": "cosmo5",
+                  "api_type": "read-only",
+                  "key": true
+                },
+                "credential_type": {
+                  "value": "NET_ID",
+                  "api_type": "read-only",
+                  "key": true,
+                  "domain": "https://api.byu.edu/byuapi/meta/credential_types"
+                },
+                "user_name": {
+                  "value": " ",
+                  "api_type": "modifiable"
+                },
+                "date_time_updated": {
+                  "value": "2017-09-09T19:15:22.123Z",
+                  "api_type": "system"
+                },
+                "updated_by_id": {
+                  "value": "023296921",
+                  "description": "John Bench",
+                  "api_type": "system"
+                },
+                "date_time_created": {
+                  "value": "2017-09-09T19:15:22.123Z",
+                  "api_type": "system"
+                },
+                "created_by_id": {
+                  "value": "023296921",
+                  "description": "John Bench",
+                  "api_type": "system"
+                },
+                "lost_or_stolen": {
+                  "value": false,
+                  "api_type": "modifiable"
+                },
+                "status": {
+                  "value": "ACTIVE",
+                  "api_type": "modifiable"
+                },
+                "expiration_date": {
+                  "value": "2018-09-09",
+                  "api_type": "modifiable"
+                },
+                "issuing_location": {
+                  "value": "133",
+                  "api_type": "system",
+                  "domain": "https://api.byu.edu/meta/issuing_locations"
+                },
+                "physical_form": {
+                  "value": "",
+                  "api_type": "modifiable"
+                },
+                "associated_device": {
+                  "value": "",
+                  "api_type": "modifiable"
+                },
+                "scoped_affiliation": {
+                  "value": "BYU Provo Student",
+                  "api_type": "modifiable"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "email_addresses": {
+            "links": {
+              "email_addresses.info": {
+                "rel": "self",
+                "href": "https://api.byu.edu/byuapi/persons/v1/123456789/email_addresses",
+                "method": "GET"
+              }
+            },
+            "metadata": {
+              "collection_size": 0,
+              "page_start": 1,
+              "page_end": 1,
+              "page_size": 20,
+              "default_page_size": 20,
+              "max_page_size": 20,
+              "validation_response": {
+                "return_code": 0,
+                "response": ""
+              },
+              "default_db": [
+                "ces"
+              ]
+            },
+            "values": [
+              {
+                "links": {
+                  "email_addresses.info": {
+                    "rel": "self",
+                    "href": "https://api.byu.edu/byuapi/persons/v1/123456789/email_addresses/PERSONAL",
+                    "method": "GET"
+                  },
+                  "email_addresses.modify": {
+                    "rel": "email_address.modify",
+                    "href": "https://api.byu.edu/byuapi/persons/v1/123456789/email_addresses/PERSONAL",
+                    "method": "PUT"
+                  },
+                  "email_addresses.delete": {
+                    "rel": "email_address.delete",
+                    "href": "https://api.byu.edu/byuapi/persons/v1/123456789/email_addresses/PERSONAL",
+                    "method": "DELETE"
+                  }
+                },
+                "metadata": {
+                  "collection_size": 0,
+                  "page_start": 1,
+                  "page_end": 1,
+                  "page_size": 20,
+                  "default_page_size": 20,
+                  "max_page_size": 20,
+                  "validation_response": {
+                    "return_code": 0,
+                    "response": ""
+                  },
+                  "default_db": [
+                    "ces"
+                  ]
+                },
+                "byu_id": {
+                  "value": "123456789",
+                  "description": "Cosmo Cougar",
+                  "api_type": "system",
+                  "key": true
+                },
+                "email_address_type": {
+                  "value": "PERSONAL",
+                  "api_type": "modifiable",
+                  "key": true,
+                  "domain": [
+                    "PERSONAL",
+                    "SECURITY",
+                    "WORK"
+                  ]
+                },
+                "date_time_updated": {
+                  "value": "2017-09-09T19:15:22.123Z",
+                  "api_type": "system"
+                },
+                "updated_by_id": {
+                  "value": "023296921",
+                  "description": "John Bench",
+                  "api_type": "system"
+                },
+                "date_time_created": {
+                  "value": "2017-09-09T19:15:22.123Z",
+                  "api_type": "system"
+                },
+                "created_by_id": {
+                  "value": "023296921",
+                  "description": "John Bench",
+                  "api_type": "system"
+                },
+                "email_address": {
+                  "value": "cosmo5@byu.edu",
+                  "api_type": "modifiable"
+                },
+                "unlisted": {
+                  "value": false,
+                  "api_type": "modifiable"
+                },
+                "verified_flag": {
+                  "value": true,
+                  "api_type": "modifiable"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "email_aliases": {}
+        },
+        {
+          "employee_summaries": {
+            "links": {
+              "employee_summaries.info": {
+                "rel": "self",
+                "href": "https://api.byu.edu/byuapi/persons/v1/123456789/employee_summaries",
+                "method": "GET"
+              }
+            },
+            "metadata": {
+              "collection_size": 0,
+              "page_start": 1,
+              "page_end": 1,
+              "page_size": 20,
+              "default_page_size": 20,
+              "max_page_size": 20,
+              "validation_response": {
+                "return_code": 0,
+                "response": ""
+              },
+              "default_db": [
+                "ces"
+              ]
+            },
+            "byu_id": {
+              "value": "123456789",
+              "description": "Cosmo Cougar",
+              "api_type": "system",
+              "key": true
+            },
+            "employee_type": {
+              "value": "STD-PT-ACT",
+              "description": "Student, Part-time, Active",
+              "api_type": "related",
+              "related_resource": "https://api.byu.edu/byuapi/employees"
+            },
+            "department": {
+              "value": "",
+              "api_type": "related",
+              "related_resource": "https://api.byu.edu/byuapi/employees",
+              "domain": "https://api.byu.edu/byuapi/meta/departments"
+            },
+            "job_title": {
+              "value": "",
+              "description": "",
+              "api_type": "related",
+              "related_resource": "https://api.byu.edu/byuapi/employees"
+            },
+            "hire_date": {
+              "value": "",
+              "api_type": "related",
+              "related_resource": "https://api.byu.edu/byuapi/employees"
+            },
+            "reports_to_id": {
+              "value": "",
+              "description": "",
+              "api_type": "related",
+              "related_resource": "https://api.byu.edu/byuapi/employees"
+            }
+          }
+        },
+        {
+          "ethnicities": {
+            "links": {
+              "ethnicities.info": {
+                "rel": "self",
+                "href": "https://api.byu.edu/byuapi/persons/v1/123456789/ethnicities",
+                "method": "GET"
+              }
+            },
+            "metadata": {
+              "collection_size": 0,
+              "page_start": 1,
+              "page_end": 1,
+              "page_size": 20,
+              "default_page_size": 20,
+              "max_page_size": 20,
+              "validation_response": {
+                "return_code": 0,
+                "response": ""
+              },
+              "default_db": [
+                "ces"
+              ]
+            },
+            "values": [
+              {
+                "links": {
+                  "ethnicities.info": {
+                    "rel": "self",
+                    "href": "https://api.byu.edu/byuapi/persons/v1/123456789/ethnicities/:ethnicity_code",
+                    "method": "GET"
+                  },
+                  "ethnicities.modify": {
+                    "rel": "ethnicities.modify",
+                    "href": "https://api.byu.edu/byuapi/persons/v1/123456789/ethnicities/:ethnicity_code",
+                    "method": "PUT"
+                  },
+                  "ethnicities.delete": {
+                    "rel": "ethnicities.delete",
+                    "href": "https://api.byu.edu/byuapi/persons/v1/123456789/ethnicities/:ethnicity_code",
+                    "method": "DELETE"
+                  }
+                },
+                "metadata": {
+                  "collection_size": 0,
+                  "page_start": 1,
+                  "page_end": 1,
+                  "page_size": 20,
+                  "default_page_size": 20,
+                  "max_page_size": 20,
+                  "validation_response": {
+                    "return_code": 0,
+                    "response": ""
+                  },
+                  "default_db": [
+                    "ces"
+                  ]
+                },
+                "byu_id": {
+                  "value": "123456789",
+                  "description": "Cosmo Cougar",
+                  "api_type": "system",
+                  "key": true
+                },
+                "ethnicity_code": {
+                  "value": "",
+                  "description": "",
+                  "long_description": "",
+                  "api_type": "modifiable",
+                  "key": true,
+                  "domain": "https://api.byu.edu/rest/v1/meta/ethnicities"
+                },
+                "date_time_updated": {
+                  "value": "2017-09-09T19:15:22.123Z",
+                  "api_type": "system"
+                },
+                "updated_by_id": {
+                  "value": "023296921",
+                  "description": "John Bench",
+                  "api_type": "system"
+                },
+                "date_time_created": {
+                  "value": "2017-09-09T19:15:22.123Z",
+                  "api_type": "system"
+                },
+                "created_by_id": {
+                  "value": "023296921",
+                  "description": "John Bench",
+                  "api_type": "system"
+                },
+                "primary_flag": {
+                  "value": "",
+                  "api_type": "modifiable"
+                },
+                "active": {
+                  "value": "",
+                  "api_type": "modifiable"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "family_phones": {
+            "links": {
+              "family_phones.info": {
+                "rel": "self",
+                "href": "https://api.byu.edu/byuapi/persons/v1/123456789/family_phones",
+                "method": "GET"
+              }
+            },
+            "metadata": {
+              "collection_size": 0,
+              "page_start": 1,
+              "page_end": 1,
+              "page_size": 20,
+              "default_page_size": 20,
+              "max_page_size": 20,
+              "validation_response": {
+                "return_code": 0,
+                "response": ""
+              },
+              "default_db": [
+                "ces"
+              ]
+            },
+            "values": [
+              {
+                "links": {
+                  "family_phones.info": {
+                    "rel": "self",
+                    "href": "https://api.byu.edu/byuapi/persons/v1/123456789/family_phones/:phone_type,:lookup_number",
+                    "method": "GET"
+                  },
+                  "family_phones.modify": {
+                    "rel": "familyPhones.modify",
+                    "href": "https://api.byu.edu/byuapi/persons/v1/123456789/familyPhones/:phone_type,:lookup_number",
+                    "method": "PUT"
+                  },
+                  "family_phones.delete": {
+                    "rel": "familyPhones.delete",
+                    "href": "https://api.byu.edu/byuapi/persons/v1/123456789/familyPhones/:phone_type,:lookup_number",
+                    "method": "DELETE"
+                  }
+                },
+                "metadata": {
+                  "collection_size": 0,
+                  "page_start": 1,
+                  "page_end": 1,
+                  "page_size": 20,
+                  "default_page_size": 20,
+                  "max_page_size": 20,
+                  "validation_response": {
+                    "return_code": 0,
+                    "response": ""
+                  },
+                  "default_db": [
+                    "ces"
+                  ]
+                },
+                "byu_id": {
+                  "value": "123456789",
+                  "description": "Cosmo Cougar",
+                  "api_type": "system",
+                  "key": true
+                },
+                "phone_type": {
+                  "value": "",
+                  "api_type": "modifiable",
+                  "key": true,
+                  "domain": [
+                    "EMR",
+                    "PRM"
+                  ]
+                },
+                "lookup_number": {
+                  "value": "",
+                  "api_type": "modifiable",
+                  "key": true
+                },
+                "country_code": {
+                  "value": "",
+                  "description": "",
+                  "api_type": "modifiable",
+                  "domain": "https://api.byu.edu/byuapi/meta/countries"
+                },
+                "country_number": {
+                  "value": "",
+                  "api_type": "derived"
+                },
+                "phone_number": {
+                  "value": "",
+                  "api_type": "modifiable"
+                },
+                "preferred_language_code": {
+                  "value": "",
+                  "description": "",
+                  "api_type": "modifiable",
+                  "domain": "https://api.byu.edu/byuapi/meta/languages"
+                },
+                "date_time_updated": {
+                  "value": "2017-09-09T19:15:22.123Z",
+                  "api_type": "system"
+                },
+                "updated_by_id": {
+                  "value": "023296921",
+                  "description": "John Bench",
+                  "api_type": "system"
+                },
+                "date_time_created": {
+                  "value": "2017-09-09T19:15:22.123Z",
+                  "api_type": "system"
+                },
+                "created_by_id": {
+                  "value": "023296921",
+                  "description": "John Bench",
+                  "api_type": "system"
+                },
+                "cell_flag": {
+                  "value": "",
+                  "api_type": "modifiable"
+                },
+                "texts_okay": {
+                  "value": "",
+                  "api_type": "modifiable"
+                },
+                "contact_person": {
+                  "value": "",
+                  "api_type": "modifiable"
+                },
+                "relationship": {
+                  "value": "",
+                  "api_type": "modifiable"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "government_records": {
+            "links": {
+              "government_records.info": {
+                "rel": "self",
+                "href": "https://api.byu.edu/byuapi/persons/v1/123456789/government_records",
+                "method": "GET"
+              },
+              "government_records.modify": {
+                "rel": "self",
+                "href": "https://api.byu.edu/byuapi/persons/v1/123456789/government_records",
+                "method": "PUT"
+              }
+            },
+            "metadata": {
+              "collection_size": 0,
+              "page_start": 1,
+              "page_end": 1,
+              "page_size": 20,
+              "default_page_size": 20,
+              "max_page_size": 20,
+              "validation_response": {
+                "return_code": 0,
+                "response": ""
+              },
+              "default_db": [
+                "ces"
+              ]
+            },
+            "byu_id": {
+              "value": "123456789",
+              "description": "Cosmo Cougar",
+              "api_type": "system",
+              "key": true
+            },
+            "net_id": {
+              "value": "",
+              "api_type": "related",
+              "related_resource": "https://api.byu.edu/byuapi/persons/123456789/credentials/NET_ID,:net_id"
+            },
+            "date_time_updated": {
+              "value": "2017-09-09T19:15:22.123Z",
+              "api_type": "system"
+            },
+            "updated_by_id": {
+              "value": "023296921",
+              "description": "John Bench",
+              "api_type": "system"
+            },
+            "date_time_created": {
+              "value": "2017-09-09T19:15:22.123Z",
+              "api_type": "system"
+            },
+            "created_by_id": {
+              "value": "023296921",
+              "description": "John Bench",
+              "api_type": "system"
+            },
+            "citizenship_country_code": {
+              "value": "",
+              "description": "",
+              "api_type": "modifiable",
+              "domain": "https://api.byu.edu/meta/countries"
+            },
+            "birth_country_code": {
+              "value": "",
+              "description": "",
+              "api_type": "modifiable",
+              "domain": "https://api.byu.edu/meta/countries"
+            },
+            "ssn": {
+              "value": "",
+              "api_type": "modifiable"
+            },
+            "ssn_verification_date": {
+              "value": "",
+              "api_type": "modifiable"
+            },
+            "visa_type": {
+              "value": "",
+              "api_type": "modifiable"
+            },
+            "visa_type_source": {
+              "value": "",
+              "api_type": "modifiable"
+            },
+            "i20_expiration_date": {
+              "value": "",
+              "api_type": "modifiable"
+            }
+          }
+        },
+        {
+          "group_membership_events": {
+            "links": {
+              "group_membership_events.info": {
+                "rel": "self",
+                "href": "https://api.byu.edu/byuapi/persons/v1/123456789/group_membership_events",
+                "method": "GET"
+              },
+              "group_membership_events.prev": {
+                "rel": "group_membership_events.prev",
+                "href": "https://api.byu.edu/byuapi/persons/v1/123456789/group_membership_events?page_start=:page_start,page_size=:page_size",
+                "method": "GET"
+              },
+              "group_membership_events.next": {
+                "rel": "group_membership_events.next",
+                "href": "https://api.byu.edu/byuapi/persons/v1/123456789/group_membership_events?page_start=:page_start,page_size=:page_size",
+                "method": "GET"
+              }
+            },
+            "metadata": {
+              "collection_size": 0,
+              "page_start": 1,
+              "page_end": 1,
+              "page_size": 20,
+              "default_page_size": 20,
+              "max_page_size": 20,
+              "validation_response": {
+                "return_code": 0,
+                "response": ""
+              },
+              "default_db": [
+                "ces"
+              ]
+            },
+            "values": [
+              {
+                "links": {
+                  "group_membership_events.info": {
+                    "rel": "self",
+                    "href": "https://api.byu.edu/byuapi/persons/v1/123456789/group_membership_events/:event_id",
+                    "method": "GET"
+                  },
+                  "group_membership_events.modify": {
+                    "rel": "group_membership_events.modify",
+                    "href": "https://api.byu.edu/byuapi/persons/v1/123456789/group_membership_events/:event_id",
+                    "method": "PUT"
+                  },
+                  "group_membership_events.delete": {
+                    "rel": "group_membership_events.delete",
+                    "href": "https://api.byu.edu/byuapi/persons/v1/123456789/group_membership_events/:event_id",
+                    "method": "DELETE"
+                  }
+                },
+                "metadata": {
+                  "collection_size": 0,
+                  "page_start": 1,
+                  "page_end": 1,
+                  "page_size": 20,
+                  "default_page_size": 20,
+                  "max_page_size": 20,
+                  "validation_response": {
+                    "return_code": 0,
+                    "response": ""
+                  },
+                  "default_db": [
+                    "ces"
+                  ]
+                },
+                "event_id": {
+                  "value": "",
+                  "api_type": "system",
+                  "key": true
+                },
+                "group_id": {
+                  "value": "",
+                  "description": "",
+                  "api_type": "related",
+                  "related_resource": "https://api.byu.edu/byuapi/groups"
+                },
+                "group_type": {
+                  "value": "",
+                  "api_type": "related",
+                  "related_resource": "https://api.byu.edu/byuapi/groups"
+                },
+                "date_time_granted": {
+                  "value": "",
+                  "api_type": "system"
+                },
+                "granted_by_id": {
+                  "value": "",
+                  "description": "",
+                  "api_type": "system"
+                },
+                "effective_date": {
+                  "value": "",
+                  "api_type": "system"
+                },
+                "expiration_date": {
+                  "value": "",
+                  "api_type": "system"
+                },
+                "group_description": {
+                  "value": "",
+                  "api_type": "related",
+                  "related_resource": "https://api.byu.edu/byuapi/groups"
+                },
+                "date_time_inactivated": {
+                  "value": "",
+                  "api_type": "system"
+                },
+                "inactivated_by_id": {
+                  "value": "",
+                  "description": "",
+                  "api_type": "system"
+                },
+                "byu_id": {
+                  "value": "",
+                  "description": "",
+                  "api_type": "related",
+                  "related_resource": "https://api.byu.edu/byuapi/groups",
+                  "key": true
+                },
+                "job_title": {
+                  "value": "",
+                  "description": "",
+                  "api_type": "related",
+                  "related_resource": "https://api.byu.edu/byuapi/employees"
+                },
+                "department": {
+                  "value": "",
+                  "api_type": "related",
+                  "related_resource": "https://api.byu.edu/byuapi/employees"
+                },
+                "employee_type": {
+                  "value": "",
+                  "description": "",
+                  "api_type": "related",
+                  "related_resource": "https://api.byu.edu/byuapi/employees"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "group_memberships": {
+            "links": {
+              "group_memberships.info": {
+                "rel": "self",
+                "href": "https://api.byu.edu/byuapi/persons/v1/123456789/group_memberships",
+                "method": "GET"
+              },
+              "group_memberships.prev": {
+                "rel": "group_membership_events.prev",
+                "href": "https://api.byu.edu/byuapi/persons/v1/123456789/group_memberships?page_start=:page_start,page_size=:page_size",
+                "method": "GET"
+              },
+              "group_memberships.next": {
+                "rel": "group_membership_events.next",
+                "href": "https://api.byu.edu/byuapi/persons/v1/123456789/group_memberships?page_start=:page_start,page_size=:page_size",
+                "method": "GET"
+              }
+            },
+            "metadata": {
+              "collection_size": 0,
+              "page_start": 1,
+              "page_end": 1,
+              "page_size": 20,
+              "default_page_size": 20,
+              "max_page_size": 20,
+              "validation_response": {
+                "return_code": 0,
+                "response": ""
+              },
+              "default_db": [
+                "ces"
+              ]
+            },
+            "values": [
+              {
+                "links": {
+                  "group_memberships.info": {
+                    "rel": "self",
+                    "href": "https://api.byu.edu/byuapi/persons/v1/123456789/group_memberships/:group_id",
+                    "method": "GET"
+                  },
+                  "group_memberships.modify": {
+                    "rel": "group_membership_events.modify",
+                    "href": "https://api.byu.edu/byuapi/persons/v1/123456789/group_memberships/:group_id",
+                    "method": "PUT"
+                  },
+                  "group_memberships.delete": {
+                    "rel": "group_membership_events.delete",
+                    "href": "https://api.byu.edu/byuapi/persons/v1/123456789/group_memberships/:group_id",
+                    "method": "DELETE"
+                  }
+                },
+                "metadata": {
+                  "collection_size": 0,
+                  "page_start": 1,
+                  "page_end": 1,
+                  "page_size": 20,
+                  "default_page_size": 20,
+                  "max_page_size": 20,
+                  "validation_response": {
+                    "return_code": 0,
+                    "response": ""
+                  },
+                  "default_db": [
+                    "ces"
+                  ]
+                },
+                "group_id": {
+                  "value": "",
+                  "description": "",
+                  "api_type": "related",
+                  "related_resource": "https://api.byu.edu/byuapi/groups",
+                  "key": true
+                },
+                "group_type": {
+                  "value": "",
+                  "api_type": "related",
+                  "related_resource": "https://api.byu.edu/byuapi/groups"
+                },
+                "byu_id": {
+                  "value": "",
+                  "description": "",
+                  "api_type": "related",
+                  "related_resource": "https://api.byu.edu/byuapi/groups",
+                  "key": true
+                },
+                "job_title": {
+                  "value": "",
+                  "description": "",
+                  "api_type": "related",
+                  "related_resource": "https://api.byu.edu/byuapi/employees"
+                },
+                "department": {
+                  "value": "",
+                  "api_type": "related",
+                  "related_resource": "https://api.byu.edu/byuapi/employees"
+                },
+                "employee_type": {
+                  "value": "",
+                  "description": "",
+                  "api_type": "related",
+                  "related_resource": "https://api.byu.edu/byuapi/employees"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "groups_administered": {
+            "links": {
+              "groups_administered.info": {
+                "rel": "self",
+                "href": "https://api.byu.edu/byuapi/persons/v1/123456789/groups_administered",
+                "method": "GET"
+              },
+              "groups_administered.prev": {
+                "rel": "groups_administered.prev",
+                "href": "https://api.byu.edu/byuapi/persons/v1/123456789/groups_administered?page_start=:page_start,page_size=:page_size",
+                "method": "GET"
+              },
+              "groups_administered.next": {
+                "rel": "groups_administered.next",
+                "href": "https://api.byu.edu/byuapi/persons/v1/123456789/groups_administered?page_start=:page_start,page_size=:page_size",
+                "method": "GET"
+              }
+            },
+            "metadata": {
+              "collection_size": 0,
+              "page_start": 1,
+              "page_end": 1,
+              "page_size": 20,
+              "default_page_size": 20,
+              "max_page_size": 20,
+              "validation_response": {
+                "return_code": 0,
+                "response": ""
+              },
+              "default_db": [
+                "ces"
+              ]
+            },
+            "values": [
+              {
+                "links": {
+                  "groups_administered.info": {
+                    "rel": "self",
+                    "href": "https://api.byu.edu/byuapi/persons/v1/123456789/groups_administered/:group_id",
+                    "method": "GET"
+                  },
+                  "groups_administered.modify": {
+                    "rel": "groups_administered.modify",
+                    "href": "https://api.byu.edu/byuapi/persons/v1/123456789/groups_administered/:group_id",
+                    "method": "PUT"
+                  },
+                  "groups_administered.delete": {
+                    "rel": "groups_administered.delete",
+                    "href": "https://api.byu.edu/byuapi/persons/v1/123456789/groups_administered/:group_id",
+                    "method": "DELETE"
+                  }
+                },
+                "metadata": {
+                  "collection_size": 0,
+                  "page_start": 1,
+                  "page_end": 1,
+                  "page_size": 20,
+                  "default_page_size": 20,
+                  "max_page_size": 20,
+                  "validation_response": {
+                    "return_code": 0,
+                    "response": ""
+                  },
+                  "default_db": [
+                    "ces"
+                  ]
+                },
+                "group_id": {
+                  "value": "",
+                  "description": "",
+                  "api_type": "related",
+                  "related_resource": "https://api.byu.edu/byuapi/groups",
+                  "key": true
+                },
+                "group_type": {
+                  "value": "",
+                  "api_type": "related",
+                  "related_resource": "https://api.byu.edu/byuapi/groups"
+                },
+                "created_by_id": {
+                  "value": "023296921",
+                  "description": "John Bench",
+                  "api_type": "system"
+                },
+                "effective_date": {
+                  "value": "",
+                  "api_type": "system"
+                },
+                "expiration_date": {
+                  "value": "",
+                  "api_type": "system"
+                },
+                "group_description": {
+                  "value": "",
+                  "api_type": "related",
+                  "related_resource": "https://api.byu.edu/byuapi/groups"
+                },
+                "date_time_inactivated": {
+                  "value": "",
+                  "api_type": "system"
+                },
+                "inactivated_by_id": {
+                  "value": "",
+                  "description": "inactivated_by_name_lnf",
+                  "api_type": "system"
+                },
+                "byu_id": {
+                  "value": "",
+                  "description": "",
+                  "api_type": "related",
+                  "related_resource": "https://api.byu.edu/byuapi/groups",
+                  "key": true
+                },
+                "job_title": {
+                  "value": "",
+                  "description": "",
+                  "api_type": "related",
+                  "related_resource": "https://api.byu.edu/byuapi/employees"
+                },
+                "department": {
+                  "value": "",
+                  "api_type": "related",
+                  "related_resource": "https://api.byu.edu/byuapi/employees"
+                },
+                "employee_type": {
+                  "value": "",
+                  "description": "",
+                  "api_type": "related",
+                  "related_resource": "https://api.byu.edu/byuapi/employees"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "id_cards": {
+            "links": {
+              "id_cards.info": {
+                "rel": "self",
+                "href": "https://api.byu.edu/byuapi/persons/v1/123456789/id_cards",
+                "method": "GET"
+              },
+              "id_cards.modify": {
+                "rel": "self",
+                "href": "https://api.byu.edu/byuapi/persons/v1/123456789/id_cards",
+                "method": "PUT"
+              },
+              "id_cards.delete": {
+                "rel": "self",
+                "href": "https://api.byu.edu/byuapi/persons/v1/123456789/id_cards",
+                "method": "DELETE"
+              }
+            },
+            "metadata": {
+              "collection_size": 0,
+              "page_start": 1,
+              "page_end": 1,
+              "page_size": 20,
+              "default_page_size": 20,
+              "max_page_size": 20,
+              "validation_response": {
+                "return_code": 0,
+                "response": ""
+              },
+              "default_db": [
+                "ces"
+              ]
+            },
+            "byu_id": {
+              "value": "123456789",
+              "api_type": "system",
+              "key": true
+            },
+            "date_time_updated": {
+              "value": "2017-09-09T19:15:22.123Z",
+              "api_type": "system"
+            },
+            "updated_by_id": {
+              "value": "023296921",
+              "description": "John Bench",
+              "api_type": "system"
+            },
+            "date_time_created": {
+              "value": "2017-09-09T19:15:22.123Z",
+              "api_type": "system"
+            },
+            "created_by_id": {
+              "value": "023296921",
+              "description": "John Bench",
+              "api_type": "system"
+            },
+            "card_credential_id": {
+              "value": "",
+              "api_type": "system"
+            },
+            "site_id": {
+              "value": "",
+              "api_type": "system"
+            },
+            "dtf_flag": {
+              "value": "",
+              "api_type": "modifiable"
+            },
+            "unlisted": {
+              "value": "",
+              "api_type": "modifiable"
+            },
+            "lost_or_stolen": {
+              "value": "",
+              "api_type": "modifiable"
+            },
+            "prox_credential_id": {
+              "value": "",
+              "api_type": "modifiable"
+            },
+            "printed_name": {
+              "value": "",
+              "api_type": "modifiable"
+            },
+            "primary_role_when_issued": {
+              "value": "",
+              "api_type": "modifiable"
+            },
+            "secondary_role_when_issued": {
+              "value": "",
+              "api_type": "modifiable"
+            },
+            "primary_role_current": {
+              "value": "",
+              "api_type": "modifiable"
+            },
+            "secondary_role_current": {
+              "value": "",
+              "api_type": "modifiable"
+            },
+            "beard_flag": {
+              "value": "",
+              "api_type": "modifiable"
+            },
+            "use_preferred_name_on_id_card": {
+              "value": "",
+              "api_type": "modifiable"
+            },
+            "status": {
+              "value": "",
+              "api_type": "modifiable"
+            },
+            "expiration_date": {
+              "value": "",
+              "api_type": "modifiable"
+            },
+            "issuing_location": {
+              "value": "",
+              "api_type": "system",
+              "domain": "https://api.byu.edu/meta/issuing_locations"
+            },
+            "physical_form": {
+              "value": "",
+              "api_type": "modifiable"
+            },
+            "associated_device": {
+              "value": "",
+              "api_type": "modifiable"
+            },
+            "restricted": {
+              "value": "",
+              "api_type": "modifiable"
+            }
+          }
+        },
+        {
+          "languages": {
+            "links": {
+              "languages.info": {
+                "rel": "self",
+                "href": "https://api.byu.edu/byuapi/persons/v1/123456789/languages",
+                "method": "GET"
+              }
+            },
+            "metadata": {
+              "collection_size": 0,
+              "page_start": 1,
+              "page_end": 1,
+              "page_size": 20,
+              "default_page_size": 20,
+              "max_page_size": 20,
+              "validation_response": {
+                "return_code": 0,
+                "response": ""
+              },
+              "default_db": [
+                "ces"
+              ]
+            },
+            "values": [
+              {
+                "links": {
+                  "languages.info": {
+                    "rel": "self",
+                    "href": "https://api.byu.edu/byuapi/persons/v1/123456789/languages/:language_code",
+                    "method": "GET"
+                  },
+                  "languages.modify": {
+                    "rel": "languages.modify",
+                    "href": "https://api.byu.edu/byuapi/persons/v1/123456789/languages/:language_code",
+                    "method": "PUT"
+                  },
+                  "languages.delete": {
+                    "rel": "languages.delete",
+                    "href": "https://api.byu.edu/byuapi/persons/v1/123456789/languages/:language_code",
+                    "method": "DELETE"
+                  }
+                },
+                "metadata": {
+                  "collection_size": 0,
+                  "page_start": 1,
+                  "page_end": 1,
+                  "page_size": 20,
+                  "default_page_size": 20,
+                  "max_page_size": 20,
+                  "validation_response": {
+                    "return_code": 0,
+                    "response": ""
+                  },
+                  "default_db": [
+                    "ces"
+                  ]
+                },
+                "byu_id": {
+                  "value": "123456789",
+                  "description": "Cosmo Cougar",
+                  "api_type": "system",
+                  "key": true
+                },
+                "language_code": {
+                  "value": "",
+                  "description": "",
+                  "long_description": "",
+                  "api_type": "modifiable",
+                  "key": true,
+                  "domain": "https://api.byu.edu/byuapi/meta/languages"
+                },
+                "date_time_updated": {
+                  "value": "2017-09-09T19:15:22.123Z",
+                  "api_type": "system"
+                },
+                "updated_by_id": {
+                  "value": "023296921",
+                  "description": "John Bench",
+                  "api_type": "system"
+                },
+                "date_time_created": {
+                  "value": "2017-09-09T19:15:22.123Z",
+                  "api_type": "system"
+                },
+                "created_by_id": {
+                  "value": "023296921",
+                  "description": "John Bench",
+                  "api_type": "system"
+                },
+                "speak_proficiency": {
+                  "value": "",
+                  "api_type": "modifiable",
+                  "domain": [
+                    "H",
+                    "M",
+                    "L",
+                    "N"
+                  ]
+                },
+                "read_proficiency": {
+                  "value": "",
+                  "api_type": "modifiable",
+                  "domain": [
+                    "H",
+                    "M",
+                    "L",
+                    "N"
+                  ]
+                },
+                "write_proficiency": {
+                  "value": "",
+                  "api_type": "modifiable",
+                  "domain": [
+                    "H",
+                    "M",
+                    "L",
+                    "N"
+                  ]
+                },
+                "native": {
+                  "value": "",
+                  "api_type": "modifiable"
+                },
+                "translator": {
+                  "value": "",
+                  "api_type": "modifiable"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "my_delegators": {
+            "links": {
+              "my_delegators.info": {
+                "rel": "self",
+                "href": "https://api.byu.edu/byuapi/persons/v1/123456789/my_delegators",
+                "method": "GET"
+              }
+            },
+            "metadata": {
+              "collection_size": 0,
+              "page_start": 1,
+              "page_end": 1,
+              "page_size": 20,
+              "default_page_size": 20,
+              "max_page_size": 20,
+              "validation_response": {
+                "return_code": 0,
+                "response": ""
+              },
+              "default_db": [
+                "ces"
+              ]
+            },
+            "values": [
+              {
+                "links": {
+                  "my_delegators.info": {
+                    "rel": "self",
+                    "href": "https://api.byu.edu/byuapi/persons/v1/123456789/my_delegators/:access_delegation_id",
+                    "method": "GET"
+                  },
+                  "my_delegators.modify": {
+                    "rel": "my_delegators.modify",
+                    "href": "https://api.byu.edu/byuapi/persons/v1/123456789/my_delegators/:access_delegation_id",
+                    "method": "PUT"
+                  }
+                },
+                "metadata": {
+                  "collection_size": 0,
+                  "page_start": 1,
+                  "page_end": 1,
+                  "page_size": 20,
+                  "default_page_size": 20,
+                  "max_page_size": 20,
+                  "validation_response": {
+                    "return_code": 0,
+                    "response": ""
+                  },
+                  "default_db": [
+                    "ces"
+                  ]
+                },
+                "byu_id": {
+                  "value": "123456789",
+                  "description": "Cosmo Cougar",
+                  "api_type": "system",
+                  "key": true
+                },
+                "access_delegation_id": {
+                  "value": "",
+                  "api_type": "system",
+                  "key": true
+                },
+                "delegator_id": {
+                  "value": "",
+                  "api_type": "modifiable"
+                },
+                "delegator_net_id": {
+                  "value": "",
+                  "api_type": "related",
+                  "related_resource": "https://api.byu.edu/byuapi/persons/:delegator_id/credentials/NET_ID,:net_id"
+                },
+                "delegator_name_lnf": {
+                  "value": "",
+                  "api_type": "related",
+                  "related_resource": "https://api.byu.edu/byuapi/persons/:delegator_id"
+                },
+                "delegator_name_fnf": {
+                  "value": "",
+                  "api_type": "related",
+                  "related_resource": "https://api.byu.edu/byuapi/persons/:delegator_id"
+                },
+                "delegator_preferred_name": {
+                  "value": "",
+                  "api_type": "related",
+                  "related_resource": "https://api.byu.edu/byuapi/persons/:delegator_id"
+                },
+                "delegator_surname": {
+                  "value": "",
+                  "api_type": "related",
+                  "related_resource": "https://api.byu.edu/byuapi/persons/:delegator_id"
+                },
+                "delegator_rest_of_name": {
+                  "value": "",
+                  "api_type": "related",
+                  "related_resource": "https://api.byu.edu/byuapi/persons/:delegator_id"
+                },
+                "delegator_preferred_surname": {
+                  "value": "",
+                  "api_type": "related",
+                  "related_resource": "https://api.byu.edu/byuapi/persons/:delegator_id"
+                },
+                "delegator_preferred_first_name": {
+                  "value": "",
+                  "api_type": "related",
+                  "related_resource": "https://api.byu.edu/byuapi/persons/:delegator_id"
+                },
+                "access_type": {
+                  "value": "",
+                  "api_type": "modifiable",
+                  "domain": [
+                    "W",
+                    "B",
+                    "L"
+                  ]
+                },
+                "categories": {
+                  "value": "",
+                  "api_type": "modifiable",
+                  "domain": "https://api.byu.edu/meta/delegation_categories"
+                },
+                "date_time_updated": {
+                  "value": "2017-09-09T19:15:22.123Z",
+                  "api_type": "system"
+                },
+                "updated_by_id": {
+                  "value": "023296921",
+                  "description": "John Bench",
+                  "api_type": "system"
+                },
+                "date_time_created": {
+                  "value": "2017-09-09T19:15:22.123Z",
+                  "api_type": "system"
+                },
+                "created_by_id": {
+                  "value": "023296921",
+                  "description": "John Bench",
+                  "api_type": "system"
+                },
+                "date_time_accepted": {
+                  "value": "",
+                  "api_type": "system"
+                },
+                "date_time_revoked": {
+                  "value": "",
+                  "api_type": "system"
+                },
+                "revoked_by_id": {
+                  "value": "",
+                  "description": "",
+                  "api_type": "system"
+                },
+                "expiration_date": {
+                  "value": "",
+                  "api_type": "modifiable"
+                },
+                "operations_performed": [
+                  {
+                    "operation_performed_id": {
+                      "value": "",
+                      "api_type": "system",
+                      "key": true
+                    },
+                    "operation": {
+                      "value": "",
+                      "api_type": "modifiable",
+                      "domain": "https://api.byu.edu/rest/v1/meta/delegated_operations_performed"
+                    },
+                    "web_resource_id": {
+                      "value": "",
+                      "api_type": "modifiable"
+                    },
+                    "session_id": {
+                      "value": "",
+                      "api_type": "system"
+                    },
+                    "date_time_started": {
+                      "value": "",
+                      "api_type": "system"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "my_guests": {
+            "links": {
+              "my_guests.info": {
+                "rel": "self",
+                "href": "https://api.byu.edu/byuapi/persons/v1/123456789/my_guests",
+                "method": "GET"
+              }
+            },
+            "metadata": {
+              "collection_size": 0,
+              "page_start": 1,
+              "page_end": 1,
+              "page_size": 20,
+              "default_page_size": 20,
+              "max_page_size": 20,
+              "validation_response": {
+                "return_code": 0,
+                "response": ""
+              },
+              "default_db": [
+                "ces"
+              ]
+            },
+            "values": [
+              {
+                "links": {
+                  "my_guests.info": {
+                    "rel": "self",
+                    "href": "https://api.byu.edu/byuapi/persons/v1/123456789/my_guests/:access_delegation_id",
+                    "method": "GET"
+                  },
+                  "my_guests.modify": {
+                    "rel": "my_guests.modify",
+                    "href": "https://api.byu.edu/byuapi/persons/v1/123456789/my_guests/:access_delegation_id",
+                    "method": "PUT"
+                  }
+                },
+                "metadata": {
+                  "collection_size": 0,
+                  "page_start": 1,
+                  "page_end": 1,
+                  "page_size": 20,
+                  "default_page_size": 20,
+                  "max_page_size": 20,
+                  "validation_response": {
+                    "return_code": 0,
+                    "response": ""
+                  },
+                  "default_db": [
+                    "ces"
+                  ]
+                },
+                "byu_id": {
+                  "value": "123456789",
+                  "description": "Cosmo Cougar",
+                  "api_type": "system",
+                  "key": true
+                },
+                "access_delegation_id": {
+                  "value": "",
+                  "api_type": "system",
+                  "key": true
+                },
+                "guest_id": {
+                  "value": "",
+                  "api_type": "modifiable"
+                },
+                "guest_net_id": {
+                  "value": "",
+                  "api_type": "related",
+                  "related_resource": "https://api.byu.edu/byuapi/persons/:guest_id"
+                },
+                "guest_name_lnf": {
+                  "value": "",
+                  "api_type": "related",
+                  "related_resource": "https://api.byu.edu/byuapi/persons/:guest_id"
+                },
+                "guest_name_fnf": {
+                  "value": "",
+                  "api_type": "related",
+                  "related_resource": "https://api.byu.edu/byuapi/persons/:guest_id"
+                },
+                "guest_preferred_name": {
+                  "value": "",
+                  "api_type": "related",
+                  "related_resource": "https://api.byu.edu/byuapi/persons/:guest_id"
+                },
+                "guest_surname": {
+                  "value": "",
+                  "api_type": "related",
+                  "related_resource": "https://api.byu.edu/byuapi/persons/:guest_id"
+                },
+                "guest_rest_of_name": {
+                  "value": "",
+                  "api_type": "related",
+                  "related_resource": "https://api.byu.edu/byuapi/persons/:guest_id"
+                },
+                "guest_preferred_surname": {
+                  "value": "",
+                  "api_type": "related",
+                  "related_resource": "https://api.byu.edu/byuapi/persons/:guest_id"
+                },
+                "guest_preferred_first_name": {
+                  "value": "",
+                  "api_type": "related",
+                  "related_resource": "https://api.byu.edu/byuapi/persons/:guest_id"
+                },
+                "access_type": {
+                  "value": "",
+                  "api_type": "system",
+                  "domain": [
+                    "W",
+                    "B",
+                    "L"
+                  ]
+                },
+                "categories": {
+                  "value": "",
+                  "api_type": "",
+                  "domain": "https://api.byu.edu/meta/delegation_categories"
+                },
+                "date_time_created": {
+                  "value": "2017-09-09T19:15:22.123Z",
+                  "api_type": "system"
+                },
+                "created_by_id": {
+                  "value": "023296921",
+                  "description": "John Bench",
+                  "api_type": "system"
+                },
+                "date_time_accepted": {
+                  "value": "",
+                  "api_type": "system"
+                },
+                "date_time_updated": {
+                  "value": "2017-09-09T19:15:22.123Z",
+                  "api_type": "system"
+                },
+                "updated_by_id": {
+                  "value": "023296921",
+                  "description": "John Bench",
+                  "api_type": "system"
+                },
+                "date_time_revoked": {
+                  "value": "",
+                  "api_type": "system"
+                },
+                "revoked_by_id": {
+                  "value": "",
+                  "description": "",
+                  "api_type": "system"
+                },
+                "expiration_date": {
+                  "value": "",
+                  "api_type": "modifiable"
+                },
+                "operations_performed": [
+                  {
+                    "operation_performed_id": {
+                      "value": "",
+                      "api_type": "system",
+                      "key": true
+                    },
+                    "operation": {
+                      "value": "",
+                      "api_type": "related",
+                      "domain": "https://api.byu.edu/rest/v1/meta/delegated_operations_performed"
+                    },
+                    "web_resource_id": {
+                      "value": "",
+                      "api_type": "related"
+                    },
+                    "session_id": {
+                      "value": "",
+                      "api_type": "system"
+                    },
+                    "date_time_started": {
+                      "value": "",
+                      "api_type": "system"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "personal_records": {
+            "links": {
+              "personal_records.info": {
+                "rel": "self",
+                "href": "https://api.byu.edu/byuapi/persons/v1/123456789/personal_records",
+                "method": "GET"
+              },
+              "personal_records.modify": {
+                "rel": "self",
+                "href": "https://api.byu.edu/byuapi/persons/v1/123456789/personal_records",
+                "method": "PUT"
+              }
+            },
+            "metadata": {
+              "collection_size": 0,
+              "page_start": 1,
+              "page_end": 1,
+              "page_size": 20,
+              "default_page_size": 20,
+              "max_page_size": 20,
+              "validation_response": {
+                "return_code": 0,
+                "response": ""
+              },
+              "default_db": [
+                "ces"
+              ]
+            },
+            "byu_id": {
+              "value": "123456789",
+              "description": "Cosmo Cougar",
+              "api_type": "system",
+              "key": true
+            },
+            "net_id": {
+              "value": "",
+              "api_type": "related",
+              "related_resource": "https://api.byu.edu/byuapi/persons/123456789/credentials/NET_ID,:net_id"
+            },
+            "date_time_updated": {
+              "value": "2017-09-09T19:15:22.123Z",
+              "api_type": "system"
+            },
+            "updated_by_id": {
+              "value": "023296921",
+              "description": "John Bench",
+              "api_type": "system"
+            },
+            "date_time_created": {
+              "value": "2017-09-09T19:15:22.123Z",
+              "api_type": "system"
+            },
+            "created_by_id": {
+              "value": "023296921",
+              "description": "John Bench",
+              "api_type": "system"
+            },
+            "date_of_birth": {
+              "value": "",
+              "api_type": "modifiable"
+            },
+            "date_of_death": {
+              "value": "",
+              "api_type": "modifiable"
+            },
+            "deceased": {
+              "value": "",
+              "api_type": "modifiable"
+            },
+            "sex": {
+              "value": "",
+              "api_type": "modifiable"
+            },
+            "marital_status": {
+              "value": "",
+              "description": "",
+              "api_type": "modifiable",
+              "domain": [
+                "W",
+                "M",
+                "?",
+                "D",
+                "S"
+              ]
+            },
+            "religion_code": {
+              "value": "",
+              "description": "",
+              "api_type": "modifiable"
+            },
+            "lds_confirmation_date": {
+              "value": "",
+              "api_type": "system"
+            },
+            "lds_unit_number": {
+              "value": "",
+              "description": "",
+              "api_type": "modifiable",
+              "domain": "https://api.byu.edu/meta/lds_units"
+            },
+            "parent_lds_unit_number": {
+              "value": "",
+              "description": "",
+              "api_type": "modifiable",
+              "domain": "https://api.byu.edu/meta/lds_units"
+            }
+          }
+        },
+        {
+          "phones": {
+            "links": {
+              "phones.info": {
+                "rel": "self",
+                "href": "https://api.byu.edu/byuapi/persons/v1/123456789/phones",
+                "method": "GET"
+              }
+            },
+            "metadata": {
+              "collection_size": 0,
+              "page_start": 1,
+              "page_end": 1,
+              "page_size": 20,
+              "default_page_size": 20,
+              "max_page_size": 20,
+              "validation_response": {
+                "return_code": 0,
+                "response": ""
+              },
+              "default_db": [
+                "ces"
+              ]
+            },
+            "values": [
+              {
+                "links": {
+                  "phones.info": {
+                    "rel": "self",
+                    "href": "https://api.byu.edu/byuapi/persons/v1/123456789/phones/:lookup_number",
+                    "method": "GET"
+                  },
+                  "phones.modify": {
+                    "rel": "phones.modify",
+                    "href": "https://api.byu.edu/byuapi/persons/v1/123456789/phones/:lookup_number",
+                    "method": "PUT"
+                  },
+                  "phones.delete": {
+                    "rel": "phones.delete",
+                    "href": "https://api.byu.edu/byuapi/persons/v1/123456789/phones/:lookup_number",
+                    "method": "DELETE"
+                  }
+                },
+                "metadata": {
+                  "collection_size": 0,
+                  "page_start": 1,
+                  "page_end": 1,
+                  "page_size": 20,
+                  "default_page_size": 20,
+                  "max_page_size": 20,
+                  "validation_response": {
+                    "return_code": 0,
+                    "response": ""
+                  },
+                  "default_db": [
+                    "ces"
+                  ]
+                },
+                "byu_id": {
+                  "value": "123456789",
+                  "description": "Cosmo Cougar",
+                  "api_type": "system",
+                  "key": true
+                },
+                "lookup_number": {
+                  "value": "",
+                  "api_type": "modifiable",
+                  "key": true
+                },
+                "country_code": {
+                  "value": "",
+                  "description": "",
+                  "api_type": "modifiable",
+                  "domain": "https://api.byu.edu/byuapi/meta/countries"
+                },
+                "country_number": {
+                  "value": "",
+                  "api_type": "derived"
+                },
+                "phone_number": {
+                  "value": "",
+                  "api_type": "modifiable"
+                },
+                "date_time_updated": {
+                  "value": "2017-09-09T19:15:22.123Z",
+                  "api_type": "system"
+                },
+                "updated_by_id": {
+                  "value": "023296921",
+                  "description": "John Bench",
+                  "api_type": "system"
+                },
+                "date_time_created": {
+                  "value": "2017-09-09T19:15:22.123Z",
+                  "api_type": "system"
+                },
+                "created_by_id": {
+                  "value": "023296921",
+                  "description": "John Bench",
+                  "api_type": "system"
+                },
+                "cell_flag": {
+                  "value": "",
+                  "api_type": "modifiable"
+                },
+                "time_code": {
+                  "value": "",
+                  "api_type": "",
+                  "domain": "https://api.byu.edu/byuapi/meta/time_codes"
+                },
+                "texts_okay": {
+                  "value": "",
+                  "api_type": "modifiable"
+                },
+                "unlisted": {
+                  "value": "",
+                  "api_type": "modifiable"
+                },
+                "primary_flag": {
+                  "value": "",
+                  "api_type": "modifiable"
+                },
+                "tty": {
+                  "value": "",
+                  "api_type": "modifiable"
+                },
+                "work_flag": {
+                  "value": "",
+                  "api_type": "modifiable"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "relationships": {
+            "links": {
+              "relationships.info": {
+                "rel": "self",
+                "href": "https://api.byu.edu/byuapi/persons/v1/123456789/relationships",
+                "method": "GET"
+              }
+            },
+            "metadata": {
+              "collection_size": 0,
+              "page_start": 1,
+              "page_end": 1,
+              "page_size": 20,
+              "default_page_size": 20,
+              "max_page_size": 20,
+              "validation_response": {
+                "return_code": 0,
+                "response": ""
+              },
+              "default_db": [
+                "ces"
+              ]
+            },
+            "values": [
+              {
+                "links": {
+                  "relationships.info": {
+                    "rel": "self",
+                    "href": "https://api.byu.edu/byuapi/persons/v1/123456789/relationships/:related_id",
+                    "method": "GET"
+                  },
+                  "relationships.modify": {
+                    "rel": "relationships.modify",
+                    "href": "https://api.byu.edu/byuapi/persons/v1/123456789/relationships/:related_id",
+                    "method": "PUT"
+                  },
+                  "relationships.delete": {
+                    "rel": "relationships.delete",
+                    "href": "https://api.byu.edu/byuapi/persons/v1/123456789/relationships/:related_id",
+                    "method": "DELETE"
+                  }
+                },
+                "metadata": {
+                  "collection_size": 0,
+                  "page_start": 1,
+                  "page_end": 1,
+                  "page_size": 20,
+                  "default_page_size": 20,
+                  "max_page_size": 20,
+                  "validation_response": {
+                    "return_code": 0,
+                    "response": ""
+                  },
+                  "default_db": [
+                    "ces"
+                  ]
+                },
+                "byu_id": {
+                  "value": "123456789",
+                  "description": "Cosmo Cougar",
+                  "api_type": "system",
+                  "key": true
+                },
+                "related_id": {
+                  "value": "",
+                  "api_type": "related",
+                  "related_resource": "https://api.byu.edu/byuapi/persons/:related_id",
+                  "key": true
+                },
+                "related_net_id": {
+                  "value": "",
+                  "api_type": "related",
+                  "related_resource": "https://api.byu.edu/byuapi/persons/:related_id"
+                },
+                "relationship_type": {
+                  "value": "",
+                  "api_type": "modifiable"
+                },
+                "related_name_lnf": {
+                  "value": "",
+                  "api_type": "related",
+                  "related_resource": "https://api.byu.edu/byuapi/persons/:related_id"
+                },
+                "related_name_fnf": {
+                  "value": "",
+                  "api_type": "related",
+                  "related_resource": "https://api.byu.edu/byuapi/persons/:related_id"
+                },
+                "related_preferred_name": {
+                  "value": "",
+                  "api_type": "related",
+                  "related_resource": "https://api.byu.edu/byuapi/persons/:related_id"
+                },
+                "related_surname": {
+                  "value": "",
+                  "api_type": "related",
+                  "related_resource": "https://api.byu.edu/byuapi/persons/:related_id"
+                },
+                "related_rest_of_name": {
+                  "value": "",
+                  "api_type": "related",
+                  "related_resource": "https://api.byu.edu/byuapi/persons/:related_id"
+                },
+                "related_preferred_surname": {
+                  "value": "",
+                  "api_type": "related",
+                  "related_resource": "https://api.byu.edu/byuapi/persons/:related_id"
+                },
+                "related_preferred_first_name": {
+                  "value": "",
+                  "api_type": "related",
+                  "related_resource": "https://api.byu.edu/byuapi/persons/:related_id"
+                },
+                "date_time_updated": {
+                  "value": "2017-09-09T19:15:22.123Z",
+                  "api_type": "system"
+                },
+                "updated_by_id": {
+                  "value": "023296921",
+                  "description": "John Bench",
+                  "api_type": "system"
+                },
+                "date_time_created": {
+                  "value": "2017-09-09T19:15:22.123Z",
+                  "api_type": "system"
+                },
+                "created_by_id": {
+                  "value": "023296921",
+                  "description": "John Bench",
+                  "api_type": "system"
+                },
+                "date_time_verified": {
+                  "value": "",
+                  "api_type": "system"
+                },
+                "verified_by_id": {
+                  "value": "",
+                  "description": "",
+                  "api_type": "system"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "student_summaries": {
+            "links": {
+              "student_summaries.info": {
+                "rel": "self",
+                "href": "https://api.byu.edu/rest/v1/byuapi/persons/123456789/student_summaries",
+                "method": "GET"
+              }
+            },
+            "metadata": {
+              "collection_size": 0,
+              "page_start": 1,
+              "page_end": 1,
+              "page_size": 20,
+              "default_page_size": 20,
+              "max_page_size": 20,
+              "validation_response": {
+                "return_code": 0,
+                "response": ""
+              },
+              "default_db": [
+                "ces"
+              ]
+            },
+            "byu_id": {
+              "value": "123456789",
+              "description": "Cosmo Cougar",
+              "api_type": "system",
+              "key": true
+            },
+            "student_status": {
+              "value": "",
+              "api_type": "derived"
+            },
+            "current_student": {
+              "value": "",
+              "api_type": "derived"
+            },
+            "eligible_to_register": {
+              "value": "",
+              "api_type": "derived"
+            }
+          }
+        }
+      ]
     }
   }
 }
