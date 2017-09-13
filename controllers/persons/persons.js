@@ -363,23 +363,24 @@ exports.getPerson = async function (definitions, byu_id, query, permissions) {
   const result = {};
 
   if (query.field_sets.includes('basic')) {
-    promises.push(basic.getBasic(definitions, byu_id, permissions).then(function (basic_result) {
-      result.basic = basic_result;
-    })
+    promises.push(basic.getBasic(definitions, byu_id, permissions)
+      .then(function (basic_result) {
+        result.basic = basic_result;
+      })
       .catch(function (error) {
-        let basic = Enforcer.applyTemplate(definitions.basic, null,
+        result.basic = Enforcer.applyTemplate(definitions.basic, null,
           {
             byu_id: byu_id,
             validation_response_code: error.status || 500,
             validation_response_message: error.message || 'Internal Server Error'
           }, { ignoreMissingRequired: false });
-        result.basic = basic;
       }));
   }
   if (query.field_sets.includes('addresses')) {
-    promises.push(addresses.getAddresses(definitions, byu_id, permissions).then(function (addresses_result) {
-      result.addresses = addresses_result;
-    })
+    promises.push(addresses.getAddresses(definitions, byu_id, permissions)
+      .then(function (addresses_result) {
+        result.addresses = addresses_result;
+      })
       .catch(function (error) {
         let addresses = { values: [] };
         addresses.metadata = Enforcer.applyTemplate(definitions.sub_level_metadata, null,
@@ -388,6 +389,20 @@ exports.getPerson = async function (definitions, byu_id, query, permissions) {
             validation_response_message: error.message || 'Internal Server Error'
           });
         result.addresses = addresses;
+      }));
+  }
+  if (query.field_sets.includes('employee_summaries')) {
+    promises.push(basic.getBasic(definitions, byu_id, permissions)
+      .then(function (employee_summaries_result) {
+        result.employee_summaries = employee_summaries_result;
+      })
+      .catch(function (error) {
+        result.employee_summaries = Enforcer.applyTemplate(definitions.employee_summaries, null,
+          {
+            byu_id: byu_id,
+            validation_response_code: error.status || 500,
+            validation_response_message: error.message || 'Internal Server Error'
+          }, { ignoreMissingRequired: false });
       }));
   }
   await Promise.all(promises);

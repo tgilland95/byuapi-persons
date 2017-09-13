@@ -30,7 +30,7 @@ function mapDBResultsToDefinition(definitions, row, name_api_type, basic_api_typ
       net_id: row.net_id || undefined,
       name_api_type: name_api_type,
       basic_api_type: basic_api_type,
-      deceased: row.deceased,
+      deceased: /^Y$/g.test(row.deceased),
       sex: row.sex,
       personal_email_address: row.personal_email_address,
       primary_phone_number: row.primary_phone_number,
@@ -60,8 +60,8 @@ function mapDBResultsToDefinition(definitions, row, name_api_type, basic_api_typ
       high_school_state_code: row.high_school_state_code || undefined,
       high_school_state_name: row.high_school_state_name || undefined,
       high_school_city: row.high_school_city || undefined,
-      restricted: row.restricted,
-      merge_in_process: row.merge_in_process
+      restricted: /^Y$/g.test(row.restricted),
+      merge_in_process: /^Y$/g.test(row.merge_in_process)
     }
   );
 }
@@ -184,7 +184,7 @@ function processBody(authorized_byu_id, body) {
   let current_date_time = moment();
   current_date_time = current_date_time.clone().tz('America/Denver').format('YYYY-MM-DD HH:mm:ss.SSS');
   let new_body = {};
-  new_body.sex = (/^(M|F)$/.test(body.sex)) ? body.sex : '?';
+  new_body.sex = /^(M|F)$/.test(body.sex) ? body.sex : '?';
   new_body.surname = body.surname || '';
   new_body.first_name = body.first_name || '';
   new_body.preferred_surname = body.preferred_surname || body.surname;

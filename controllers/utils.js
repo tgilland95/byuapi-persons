@@ -15,7 +15,7 @@
  *
  */
 
-const Enforcer            = require('swagger-enforcer');
+const Enforcer = require('swagger-enforcer');
 
 exports.Error = function (status, message) {
   const err = Error(message);
@@ -23,15 +23,15 @@ exports.Error = function (status, message) {
   return err;
 };
 
-const clearNull = function(arr) {
-  for(let i = 0; i < arr.length; i++) {
+const clearNull = function (arr) {
+  const len = arr.length;
+  for (let i = 0; i < len; i++) {
     for (let property in arr[i]) {
       if (arr[i].hasOwnProperty(property)) {
-        //console.log(typeof arr[i][property]);
         if (arr[i][property] === null) {
           arr[i][property] = "";
         }
-        if (typeof arr[i][property] === "number") {
+        if (typeof arr[i][property] === 'number') {
           arr[i][property] = arr[i][property].toString();
         }
       }
@@ -53,70 +53,44 @@ exports.defaultResponseHandler = function (metadata_definition, initial, res, er
 // if it does not then an error is returned
 exports.isValidCountryCode = function (country_code) {
   if (/^([?]{3}|UK|HK|EL|CW|SX|[A-Z]{3})$/.test(country_code)) {
-    let countryCode = require("../meta/countries/countryCodes.json");
-    let country_codes = countryCode.items;
+    const country_codes = require("../meta/countries/countryCodes.json");
 
-    for (let i = country_codes.length; i--;) {
-      if (country_code === country_codes[i].country_code) {
-        return true
+    for (let i = country_codes.items.length; i--;) {
+      if (country_code === country_codes.items[i].country_code) {
+        return true;
       }
     }
   }
-  else {
-    return false
-  }
+  return false;
 };
 
 //This function checks the state codes for USA, CAN, and AUS input by the user
 // if the user has entered an invalid state code an error is returned
 exports.isValidStateCode = function (state_code, country_code) {
-  if ((!country_code) || (!state_code)) {
-    return false
-  }
-  else if (((country_code === "USA") ||
-      (country_code === "CAN") ||
-      (country_code === "AUS")) &&
-    state_code.match(/^([?]{2}|[A-Z]{2,5})$/)) {
-    let stateCode = require("../meta/states/stateCodes.json");
-    let state_codes = stateCode.items;
+  if (/^(USA|CAN|AUS)$/g.test(country_code) &&
+    /^([?]{2}|[A-Z]{2,5})$/g.test(state_code)) {
+    const state_codes = require("../meta/states/stateCodes.json");
 
-    for (let i = state_codes.length; i--;) {
-      if ((state_code === state_codes[i].state_code) &&
-        (country_code === state_codes[i].country_code)) {
-        return true
+    for (let i = state_codes.items.length; i--;) {
+      if ((state_code === state_codes.items[i].state_code) &&
+        (country_code === state_codes.items[i].country_code)) {
+        return true;
       }
     }
-    return false
+    return false;
   }
-  else {
-    return true
-  }
+  return true;
 };
 
 //This function is used in the PUT to validate an on campus building code
 exports.isValidBuildingCode = function (building_code) {
-  const buildingCode = require("../meta/buildings/buildingCodes.json");
-  const building_codes = buildingCode.items;
+  const building_codes = require("../meta/buildings/buildingCodes.json");
 
-  for (let i = building_codes.length; i--;) {
-    if (building_code && building_code === building_codes[i]["domain_value"]) {
-      return true
+  for (let i = building_codes.items.length; i--;) {
+    if (building_code && building_code === building_codes.items[i].domain_value) {
+      return true;
     }
   }
-  return false
-};
-
-exports.isValidHighSchoolCode = function (high_school_code) {
-  if (high_school_code && high_school_code.match(/^( |[0-9]{6})$/)) {
-    const highSchoolCode = require("../meta/high_schools/highSchoolCodes.json");
-    const high_school_codes = highSchoolCode.items;
-
-    for (let i = high_school_codes.length; i--;) {
-      if (high_school_code === high_school_codes[i].high_school_code) {
-        return true
-      }
-    }
-  }
-  return false
+  return false;
 };
 

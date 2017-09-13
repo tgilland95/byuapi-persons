@@ -21,7 +21,7 @@ const utils = require('../controllers/utils');
 
 exports.getAddress = async (req, res) => {
   try {
-    const permissions = await auth.getPermissions(req);
+    const permissions = await auth.getPermissions(req, ['addresses']);
     const address = await addressesController.getAddress(req.swagger.root.definitions,
       req.params.byu_id, req.params.address_type, permissions);
 
@@ -34,7 +34,7 @@ exports.getAddress = async (req, res) => {
 
 exports.getAddresses = async (req, res) => {
   try {
-    const permissions = await auth.getPermissions(req);
+    const permissions = await auth.getPermissions(req, ['addresses']);
     const addresses = await addressesController.getAddresses(req.swagger.root.definitions,
       req.params.byu_id, permissions);
 
@@ -47,7 +47,7 @@ exports.getAddresses = async (req, res) => {
 
 exports.modifyAddress = async (req, res) => {
   try {
-    const permissions = await auth.getPermissions(req);
+    const permissions = await auth.getPermissions(req, ['addresses']);
     const address = await addressesController.modifyAddress(req.swagger.root.definitions,
       req.params.byu_id, req.params.address_type, req.body, req.verifiedJWTs.prioritizedClaims.byuId, permissions);
 
@@ -60,7 +60,7 @@ exports.modifyAddress = async (req, res) => {
 
 exports.deleteAddress = async (req, res) => {
   try {
-    const permissions = await auth.getPermissions(req);
+    const permissions = await auth.getPermissions(req, ['addresses']);
     const success = await addressesController.deleteAddress(req.swagger.root.definitions,
       req.params.byu_id, req.params.address_type, req.verifiedJWTs.prioritizedClaims.byuId, permissions);
 

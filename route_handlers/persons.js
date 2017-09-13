@@ -21,7 +21,7 @@ const utils = require('../controllers/utils');
 
 exports.getPersons = async (req, res) => {
   try {
-    const permissions = await auth.getPermissions(req);
+    const permissions = await auth.getPermissions(req, ['basic']);
     const address = await personsController.getPersons(req.swagger.root.definitions,
       req.query, permissions);
 
@@ -34,7 +34,7 @@ exports.getPersons = async (req, res) => {
 
 exports.getPerson = async (req, res) => {
   try {
-    const permissions = await auth.getPermissions(req);
+    const permissions = await auth.getPermissions(req, ['basic']);
     const person = await personsController.getPerson(req.swagger.root.definitions,
       req.params.byu_id, req.query, permissions);
 
@@ -47,7 +47,7 @@ exports.getPerson = async (req, res) => {
 
 exports.modifyPerson = async (req, res) => {
   try {
-    const permissions = await auth.getPermissions(req);
+    const permissions = await auth.getPermissions(req, ['basic']);
     const person = await  personsController.modifyPerson(req.swagger.root.definitions,
       req.params.byu_id, req.verifiedJWTs.prioritizedClaims.byuId, req.body, permissions);
 

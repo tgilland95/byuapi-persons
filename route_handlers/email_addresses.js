@@ -15,54 +15,54 @@
  *
  */
 
-const credentialsController = require('../controllers/credentials/credentials');
+const emailAddressesController = require('../controllers/email_addresses/email_addresses');
 const auth = require('../controllers/auth');
 const utils = require('../controllers/utils');
 
-exports.getCredential = async (req, res) => {
+exports.getEmailAddress = async (req, res) => {
   try {
-    const permissions = await auth.getPermissions(req, ['credentials']);
-    const credential = await credentialsController.getCredential(req.swagger.root.definitions,
-      req.params.byu_id, req.params.credential_type, req.params.credential_id, permissions);
+    const permissions = await auth.getPermissions(req, ['email_addresses']);
+    const email_address = await emailAddressesController.getEmailAddress(req.swagger.root.definitions,
+      req.params.byu_id, req.params.email_address_type, permissions);
 
-    res.send(credential);
+    res.send(email_address);
   } catch (error) {
     console.error(error.stack);
     utils.defaultResponseHandler(req.swagger.root.definitions.simple_metadata, {}, res, error);
   }
 };
 
-exports.getCredentials = async (req, res) => {
+exports.getEmailEmailAddresses = async (req, res) => {
   try {
-    const permissions = await auth.getPermissions(req, ['credentials']);
-    const credentials = await credentialsController.getCredentials(req.swagger.root.definitions,
+    const permissions = await auth.getPermissions(req, ['email_addresses']);
+    const email_addresses = await emailAddressesController.getEmailEmailAddresses(req.swagger.root.definitions,
       req.params.byu_id, permissions);
 
-    res.send(credentials);
+    res.send(email_addresses);
   } catch (error) {
     console.error(error.stack);
     utils.defaultResponseHandler(req.swagger.root.definitions.simple_metadata, {}, res, error);
   }
 };
 
-exports.modifyCredential = async (req, res) => {
+exports.modifyEmailAddress = async (req, res) => {
   try {
-    const permissions = await auth.getPermissions(req, ['credentials']);
-    const credential = await credentialsController.modifyCredential(req.swagger.root.definitions,
-      req.params.byu_id, req.params.credential_type, req.params.credential_id, req.body, req.verifiedJWTs.prioritizedClaims.byuId, permissions);
+    const permissions = await auth.getPermissions(req, ['email_addresses']);
+    const email_address = await emailAddressesController.modifyEmailAddress(req.swagger.root.definitions,
+      req.params.byu_id, req.params.email_address_type, req.body, req.verifiedJWTs.prioritizedClaims.byuId, permissions);
 
-    res.send(credential);
+    res.send(email_address);
   } catch (error) {
     console.error(error.stack);
     utils.defaultResponseHandler(req.swagger.root.definitions.simple_metadata, {}, res, error);
   }
 };
 
-exports.deleteCredential = async (req, res) => {
+exports.deleteEmailAddress = async (req, res) => {
   try {
-    const permissions = await auth.getPermissions(req, ['credentials']);
-    const success = await credentialsController.deleteCredential(req.swagger.root.definitions,
-      req.params.byu_id, req.params.credential_type, req.params.credential_id, req.verifiedJWTs.prioritizedClaims.byuId, permissions);
+    const permissions = await auth.getPermissions(req, ['email_addresses']);
+    const success = await emailAddressesController.deleteEmailAddress(req.swagger.root.definitions,
+      req.params.byu_id, req.params.email_address_type, req.verifiedJWTs.prioritizedClaims.byuId, permissions);
 
     console.log(success);
     res.sendStatus(204);
