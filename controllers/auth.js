@@ -401,7 +401,6 @@ async function person_handle_auth(auth_info, info_areas) {
   //
   let student = false;
   let position;
-  let limitations;
 
   switch (auth_info.resource) {
     case 'person_change_net_id':
@@ -501,7 +500,6 @@ async function person_handle_auth(auth_info, info_areas) {
         auth_info.response = 'Deny';
         return auth_info;
       }
-
     case 'person_update_ssn':
       // If a person has the SSN informational area with update
       // and a limitation_value of:
@@ -865,14 +863,64 @@ exports.getPermissions = async function (req, field_sets) {
 
 exports.hasRestrictedRights = permissions => permissions.includes('person_restricted');
 
-exports.canViewContact = permissions => permissions.includes('person_view_contact');
+exports.canChangeNetId = permissions => permissions.includes('person_change_net_id');
+
+exports.canChangePassword = permissions => permissions.includes('person_change_password');
+
+exports.canAddPerson = permissions => permissions.includes('person_add_person');
+
+exports.canUpdatePermanentResidentStatus = permissions => permissions.includes('person_update_permanent_resident_status');
+
+exports.canMerge = permissions => permissions.includes('person_merge');
 
 exports.canViewBasic = permissions => permissions.includes('person_view_basic');
 
-exports.canUpdatePersonBasic = permissions => permissions.includes('person_update_basic');
+exports.canViewContact = permissions => permissions.includes('person_view_contact');
 
-exports.canUpdatePersonContact = permissions => permissions.includes('person_update_contact');
+exports.canUpdateContact = permissions => permissions.includes('person_update_contact');
 
-exports.canLookupSSN = permissions => permissions.includes('person_lookup_ssn');
+exports.canViewSSN = permissions => permissions.includes('person_view_ssn');
+
+exports.canUpdateSSN = permissions => permissions.includes('person_update_ssn');
+
+exports.canViewGuests = permissions => permissions.includes('person_view_guests');
+
+exports.canUpdateGuests = permissions => permissions.includes('person_update_guests');
+
+exports.canUpdateDelegations = permissions => permissions.includes('person_update_delegations');
+
+exports.canUpdatePreferredNameCard = permissions => permissions.includes('person_update_preferred_name_card');
+
+exports.canViewGroups = permissions => permissions.includes('person_view_groups');
+
+exports.canUpdateBasic = permissions => permissions.includes('person_update_basic');
+
+exports.canUpdateIdCardUnlisted = permissions => permissions.includes('person_update_id_card_unlisted');
+
+exports.canUpdateReligion = permissions => permissions.includes('person_update_religion');
+
+exports.canUpdateDoB = permissions => permissions.includes('person_update_DoB-DoD');
 
 exports.canUpdateName = permissions => permissions.includes('person_update_name');
+
+exports.canUpdateIdCard = permissions => permissions.includes('person_update_id_card');
+
+exports.canUpdateRelationship = permissions => permissions.includes('person_update_relationship');
+
+exports.canUpdateCitizenship = permissions => permissions.includes('person_update_citizenship');
+
+exports.canViewRelationship = permissions => permissions.includes('person_view_relationship');
+
+exports.canDeleteRelationship = permissions => permissions.includes('person_delete_relationship');
+
+exports.canUpdateWso2ClientId = permissions => permissions.includes('person_update_wso2_client_id');
+
+exports.canViewLdsCred = permissions => permissions.includes('person_view_lds_cred');
+
+exports.canIsLdsSync = permissions => permissions.includes('person_is_lds_sync');
+
+exports.canUpdateCasCredential = permissions => permissions.includes('person_update_cas_credential');
+
+exports.canDeletePerson = permissions => permissions.includes('person_delete_person');
+
+exports.canLookupSSN = permissions => permissions.includes('person_lookup_ssn');
