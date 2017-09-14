@@ -15,56 +15,57 @@
  *
  */
 
+const phonesController = require('../controllers/phones/phones');
 const auth = require('../controllers/auth');
-const personsController = require('../controllers/persons/persons');
 const utils = require('../controllers/utils');
 
-exports.getPersons = async (req, res) => {
+exports.getPhone = async (req, res) => {
   try {
-    const permissions = await auth.getPermissions(req, ['basic']);
-    const address = await personsController.getPersons(req.swagger.root.definitions,
-      req.query, permissions);
+    const permissions = await auth.getPermissions(req, ['phones']);
+    const phones = await phonesController.getPhone(req.swagger.root.definitions,
+      req.params.byu_id, req.params.lookup_number, permissions);
 
-    res.send(address);
+    res.send(phones);
   } catch (error) {
     console.error(error.stack);
     utils.defaultResponseHandler(req.swagger.root.definitions.simple_metadata, {}, res, error);
   }
 };
 
-exports.getPerson = async (req, res) => {
+exports.getPhones = async (req, res) => {
   try {
-    const permissions = await auth.getPermissions(req, ['basic']);
-    const person = await personsController.getPerson(req.swagger.root.definitions,
-      req.params.byu_id, req.query, permissions);
+    const permissions = await auth.getPermissions(req, ['phones']);
+    const phones = await phonesController.getPhones(req.swagger.root.definitions,
+      req.params.byu_id, permissions);
 
-    res.send(person);
+    res.send(phones);
   } catch (error) {
     console.error(error.stack);
     utils.defaultResponseHandler(req.swagger.root.definitions.simple_metadata, {}, res, error);
   }
 };
 
-exports.modifyPerson = async (req, res) => {
+exports.modifyPhone = async (req, res) => {
   try {
-    const permissions = await auth.getPermissions(req, ['basic']);
-    const person = await  personsController.modifyPerson(req.swagger.root.definitions,
-      req.params.byu_id, req.verifiedJWTs.prioritizedClaims.byuId, req.body, permissions);
+    const permissions = await auth.getPermissions(req, ['phones']);
+    const phones = await phonesController.modifyPhone(req.swagger.root.definitions,
+      req.params.byu_id, req.params.lookup_number, req.body, req.verifiedJWTs.prioritizedClaims.byuId, permissions);
 
-    res.send(person);
+    res.send(phones);
   } catch (error) {
     console.error(error.stack);
     utils.defaultResponseHandler(req.swagger.root.definitions.simple_metadata, {}, res, error);
   }
 };
 
-exports.createPerson = async (req, res) => {
+exports.deletePhone = async (req, res) => {
   try {
-    const permissions = await auth.getPermissions(req, ['basic']);
-    const person = await  personsController.createPerson(req.swagger.root.definitions,
-      req.verifiedJWTs.prioritizedClaims.byuId, req.body, permissions);
+    const permissions = await auth.getPermissions(req, ['phones']);
+    const success = await phonesController.deletePhone(req.swagger.root.definitions,
+      req.params.byu_id, req.params.lookup_number, req.verifiedJWTs.prioritizedClaims.byuId, permissions);
 
-    res.send(person);
+    console.log(success);
+    res.sendStatus(204);
   } catch (error) {
     console.error(error.stack);
     utils.defaultResponseHandler(req.swagger.root.definitions.simple_metadata, {}, res, error);

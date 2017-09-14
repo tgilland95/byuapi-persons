@@ -1,32 +1,32 @@
 "use strict";
 
 exports.sql = {
-    getEthnicities: ""
-    + "select a.byu_id              as \"byu_id\", "
-    + "       a.preferred_name      as \"name\", "
-    + "       a.restricted          as \"restricted\", "
-    + "       eth.ethnicity_code    as \"ethnicity_code\", "
-    + "       cev.desc_15           as \"ethnicity_name\", "
-    + "       cev.description       as \"long_ethnicity_name\", "
-    + "       eth.date_time_updated as \"date_time_updated\", "
-    + "       eth.updated_by_id     as \"updated_by_id\", "
-    + "       ii.identity_name      as \"updated_by_name\", "
-    + "       eth.date_time_created as \"date_time_created\", "
-    + "       eth.created_by_id     as \"created_by_id\", "
-    + "       iii.identity_name     as \"created_by_name\", "
-    + "       eth.primary_f         as \"primary_flag\", "
-    + "       cev.active_status     as \"active\" "
-    + "from   iam.person a "
-    + "       left join iam.ethnicity eth "
-    + "              on a.byu_id = eth.byu_id "
-    + "       left join iam.identity ii "
-    + "              on eth.updated_by_id = ii.byu_id "
-    + "       left join iam.identity iii "
-    + "              on eth.created_by_id = iii.byu_id "
-    + "       left join pro.code_edit_value cev "
-    + "              on eth.ethnicity_code = cev.domain_value "
-    + "                 and cev.domain_name = 'ETHNICITY_CODE' "
-    + "where  a.byu_id = :1",
+    getEthnicities: `
+      select a.byu_id              as \"byu_id\", 
+             a.preferred_name      as \"name\", 
+             a.restricted          as \"restricted\", 
+             eth.ethnicity_code    as \"ethnicity_code\", 
+             cev.desc_15           as \"ethnicity_name\", 
+             cev.description       as \"long_ethnicity_name\", 
+             eth.date_time_updated as \"date_time_updated\", 
+             eth.updated_by_id     as \"updated_by_id\", 
+             ii.identity_name      as \"updated_by_name\", 
+             eth.date_time_created as \"date_time_created\", 
+             eth.created_by_id     as \"created_by_id\", 
+             iii.identity_name     as \"created_by_name\", 
+             eth.primary_f         as \"primary_flag\", 
+             cev.active_status     as \"active\" 
+      from   iam.person a 
+             left join iam.ethnicity eth 
+                    on a.byu_id = eth.byu_id 
+             left join iam.identity ii 
+                    on eth.updated_by_id = ii.byu_id 
+             left join iam.identity iii 
+                    on eth.created_by_id = iii.byu_id 
+             left join pro.code_edit_value cev 
+                    on eth.ethnicity_code = cev.domain_value 
+                       and cev.domain_name = 'ETHNICITY_CODE' 
+      where  a.byu_id = :1`,
     getEthnicity: ""
     + "select a.byu_id              as \"byu_id\", "
     + "       a.preferred_name      as \"name\", "

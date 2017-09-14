@@ -23,7 +23,7 @@ const sql = require('./sql');
 const Enforcer = require('swagger-enforcer');
 const utils = require('../utils');
 
-exports.getPersons = async function (definitions, query, permisisons) {
+exports.getPersons = async function (definitions, query, permissions) {
   let data = {};
   let params = [];
   let sql_query_select = sql.getPersons.sql.select;
@@ -39,20 +39,20 @@ exports.getPersons = async function (definitions, query, permisisons) {
 
     for (let i = 0; i < length; i++) {
       params.push(byu_id_query_array[i]);
-      if (byu_id_query_array[i].search(/^[0-9]{9}$/) === -1) {
+      if (!/^[0-9]{9}$/g.test(byu_id_query_array[i])) {
         throw utils.Error(409, 'Incorrect URL: BYU_ID must be a 9 digit number with no spaces or dashes')
       }
       if (i === length - 1) {
-        sql_query_where += ':byu' + i + ')'
+        sql_query_where += `:byu${i})`
       }
       else {
-        sql_query_where += ':byu' + i + ','
+        sql_query_where += `:byu${i},`
       }
     }
   }
 
   if ('ssn' in request_query) {
-    if (!auth.canLookupSSN(permisisons)) {
+    if (!auth.canLookupSSN(permissions)) {
       throw utils.Error(403, 'User not authorized to lookup by SSN')
     }
     let ssn_query_array = request_query.ssn.split(',');
@@ -61,7 +61,7 @@ exports.getPersons = async function (definitions, query, permisisons) {
 
     for (let i = 0; i < length; i++) {
       params.push(ssn_query_array[i]);
-      if (ssn_query_array[i].search(/^[0-9]{9}$/) === -1) {
+      if (!/^[0-9]{9}$/g.test(ssn_query_array[i])) {
         throw utils.Error(409, 'Incorrect URL: SSN must be a 9 digit number with no spaces or dashes')
       }
       if (i === length - 1) {
@@ -84,7 +84,7 @@ exports.getPersons = async function (definitions, query, permisisons) {
   }
   if ('preferred_surname' in request_query) {
     let preferred_surname = '%' + decodeURIComponent(request_query.preferred_surname) + '%';
-    params.push(surname);
+    params.push(preferred_surname);
     sql_query_where += ' and iam.person.preferred_surname like :ps'
   }
   if ('preferred_first_name' in request_query) {
@@ -153,7 +153,7 @@ exports.getPersons = async function (definitions, query, permisisons) {
     length = net_id_query_array.length;
     for (let i = 0; i < length; i++) {
       params.push(net_id_query_array[i]);
-      if (net_id_query_array[i].search(/^[a-z][a-z0-9]{0,8}$/) === -1) {
+      if (!/^[a-z][a-z0-9]{0,8}$/g.test(net_id_query_array[i])) {
         throw utils.Error(409, 'Incorrect URL: NET_ID must be a 1 to 9 alphanumeric character string each net_id must be separated by a comma')
       }
       if (i === length - 1) {
@@ -169,7 +169,7 @@ exports.getPersons = async function (definitions, query, permisisons) {
     let credential_type = request_query.credential_type;
 
     if (credential_type !== 'NET_ID') {
-      if (auth.canViewBasic(permisisons)) {
+      if (auth.canViewBasic(permissions)) {
         throw utils.Error(403, 'User not authorized to lookup by ' + credential_type)
       }
     }
@@ -220,7 +220,7 @@ exports.getPersons = async function (definitions, query, permisisons) {
 
     length = email_address_query_array.length;
     for (let i = 0; i < length; i++) {
-      params.push(email_address_query_array[i]);
+      params.push(decodeURIComponent(email_address_query_array[i]));
       if (i === length - 1) {
         sql_query_where += ' :ea' + i + ')'
       }
@@ -231,11 +231,15 @@ exports.getPersons = async function (definitions, query, permisisons) {
   }
   if ('phone_number' in request_query) {
     let phone_number_query_array = query.phone_number.split(',');
+    phone_number_query_array = phone_number_query_array.forEach(phone_number => {
+      phone_number = decodeURIComponent(phone_number);
+      phone_number.replace(/\D/g, '');
+    });
 
     sql_query_from += ' left join iam.phone_number pn' +
       ' on iam.person.byu_id = pn.byu_id';
 
-    sql_query_where += ' and pn.phone_number in (';
+    sql_query_where += ' and pn.lookup_number in (';
 
     length = phone_number_query_array.length;
     for (let i = 0; i < length; i++) {
@@ -341,7 +345,7 @@ exports.getPersons = async function (definitions, query, permisisons) {
     }
   }
   const results = await db.execute(sql_query_select + sql_query_from + sql_query_where, params);
-  const values = await Promise.all(results.rows.map(row => exports.getPerson(definitions, row.byu_id, query, permisisons)));
+  const values = await Promise.all(results.rows.map(row => exports.getPerson(definitions, row.byu_id, query, permissions)));
   const persons = Enforcer.applyTemplate(definitions.persons, definitions,
     {
       collection_size: results.rows.length, // TODO: Can we use the length of the results.rows? We may get results back with no addresses but have results.
