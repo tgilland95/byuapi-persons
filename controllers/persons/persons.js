@@ -24,236 +24,194 @@ const Enforcer = require('swagger-enforcer');
 const utils = require('../utils');
 
 exports.getPersons = async function (definitions, query, permissions) {
-  let data = {};
   let params = [];
   let sql_query_select = sql.getPersons.sql.select;
   let sql_query_from = sql.getPersons.sql.from;
   let sql_query_where = sql.getPersons.sql.where;
-  let request_query = query;
-  let length = 0;
 
-  if ('byu_id' in request_query) {
-    let byu_id_query_array = request_query.byu_id.split(',');
-    length = byu_id_query_array.length;
-    sql_query_where += ' and iam.person.byu_id in (';
+  if ('byu_id' in query) {
+    let byu_id_query_array = query.byu_id.split(',');
 
-    for (let i = 0; i < length; i++) {
+    sql_query_where += ` and iam.person.byu_id in (`;
+
+    for (let i = 0, length = byu_id_query_array.length; i < length; i++) {
       params.push(byu_id_query_array[i]);
       if (!/^[0-9]{9}$/g.test(byu_id_query_array[i])) {
-        throw utils.Error(409, 'Incorrect URL: BYU_ID must be a 9 digit number with no spaces or dashes')
+        throw utils.Error(409, `Incorrect URL: 
+          BYU_ID '${byu_id_query_array[i]}' must be a 9 digit number with no spaces or dashes`)
       }
-      if (i === length - 1) {
-        sql_query_where += `:byu${i})`
-      }
-      else {
-        sql_query_where += `:byu${i},`
-      }
+      sql_query_where += (i === length - 1) ? `:byu${i})` : `:byu${i},`;
     }
   }
 
-  if ('ssn' in request_query) {
-    if (!auth.canLookupSSN(permissions)) {
-      throw utils.Error(403, 'User not authorized to lookup by SSN')
-    }
-    let ssn_query_array = request_query.ssn.split(',');
-    length = ssn_query_array.length;
-    sql_query_where += ' and iam.person.ssn in (';
+  if ('ssn' in query && auth.canLookupSSN(permissions)) {
+    let ssn_query_array = query.ssn.split(',');
 
-    for (let i = 0; i < length; i++) {
+    sql_query_where += ` and iam.person.ssn in (`;
+
+    for (let i = 0, length = ssn_query_array.length; i < length; i++) {
       params.push(ssn_query_array[i]);
       if (!/^[0-9]{9}$/g.test(ssn_query_array[i])) {
-        throw utils.Error(409, 'Incorrect URL: SSN must be a 9 digit number with no spaces or dashes')
+        throw utils.Error(409, `Incorrect URL: 
+          SSN '${ssn_query_array[i]}' must be a 9 digit number with no spaces or dashes`);
       }
-      if (i === length - 1) {
-        sql_query_where += ':ssn' + i + ')'
-      }
-      else {
-        sql_query_where += ':ssn' + i + ','
-      }
+      sql_query_where += (i === length - 1) ? `:ssn${i})` : `:ssn${i},`;
     }
+  } else if ('ssn' in query) {
+    throw utils.Error(403, 'User not authorized to lookup by SSN');
   }
-  if ('surname' in request_query) {
-    let surname = '%' + decodeURIComponent(request_query.surname) + '%';
+
+  if ('surname' in query) {
+    let surname = `%${decodeURIComponent(query.surname).replace('*', '%').toLowerCase()}%`;
     params.push(surname);
-    sql_query_where += ' and iam.person.surname like :s'
+    sql_query_where += ` and lower(iam.person.surname) like :s`;
   }
-  if ('rest_of_name' in request_query) {
-    let rest_of_name = '%' + decodeURIComponent(request_query.rest_of_name) + '%';
+  if ('rest_of_name' in query) {
+    let rest_of_name = `%${decodeURIComponent(query.rest_of_name).toLowerCase()}%`;
     params.push(rest_of_name);
-    sql_query_where += ' and iam.person.rest_of_name like :ron'
+    sql_query_where += ` and lower(iam.person.rest_of_name) like :ron`;
   }
-  if ('preferred_surname' in request_query) {
-    let preferred_surname = '%' + decodeURIComponent(request_query.preferred_surname) + '%';
+  if ('preferred_surname' in query) {
+    let preferred_surname = `%${decodeURIComponent(query.preferred_surname).toLowerCase()}%`;
     params.push(preferred_surname);
-    sql_query_where += ' and iam.person.preferred_surname like :ps'
+    sql_query_where += ` and lower(iam.person.preferred_surname) like :ps`;
   }
-  if ('preferred_first_name' in request_query) {
-    let preferred_first_name = '%' + decodeURIComponent(request_query.preferred_first_name) + '%';
+  if ('preferred_first_name' in query) {
+    let preferred_first_name = `%${decodeURIComponent(query.preferred_first_name).toLowerCase()}%`;
     params.push(preferred_first_name);
-    sql_query_where += ' and iam.person.preferred_first_name like :pf'
+    sql_query_where += ` and lower(iam.person.preferred_first_name) like :pf`;
   }
-  if ('sex' in request_query) {
-    let sex = decodeURIComponent(request_query.sex);
+  if ('sex' in query) {
+    //decode for question mark
+    let sex = decodeURIComponent(query.sex).toUpperCase();
     params.push(sex);
-    sql_query_where += ' and iam.person.sex = :g'
+    sql_query_where += ` and iam.person.sex = :g`;
   }
-  if ('deceased' in request_query) {
-    let deceased = '%' + decodeURIComponent(request_query.deceased) + '%';
+  if ('deceased' in query) {
+    let deceased = (query.deceased) ? "Y" : "N";
     params.push(deceased);
-    sql_query_where += ' and iam.person.deceased like :d'
+    sql_query_where += ` and nvl(iam.person.deceased, 'N') = :d`;
   }
-  if ('marital_status' in request_query) {
-    let marital_status = '%' + decodeURIComponent(request_query.marital_status) + '%';
+  if ('marital_status' in query) {
+    //decode for question mark
+    let marital_status = decodeURIComponent(query.marital_status).toUpperCase();
     params.push(marital_status);
-    sql_query_where += ' and iam.person.marital_status like :ms'
+    sql_query_where += ` and iam.person.marital_status = :ms`;
   }
-  if ('religion_code' in request_query) {
-    let religion_code = '%' + decodeURIComponent(request_query.religion_code) + '%';
+  if ('religion_code' in query) {
+    //decode for question marks
+    let religion_code = `%${decodeURIComponent(query.religion_code).toUpperCase()}%`;
     params.push(religion_code);
-    sql_query_where += ' and iam.person.religion_code like :r'
+    sql_query_where += ` and iam.person.religion_code like :r`;
   }
-  if ('citizenship_country_code' in request_query) {
-    let citizenship_country_code = '%' + decodeURIComponent(request_query.citizenship_country_code) + '%';
+  if ('citizenship_country_code' in query) {
+    let citizenship_country_code = `%${decodeURIComponent(query.citizenship_country_code).toUpperCase()}%`;
     params.push(citizenship_country_code);
-    sql_query_where += ' and iam.person.citizenship_country_code like :ccc'
+    sql_query_where += ` and iam.person.citizenship_country_code like :ccc`;
   }
-  if ('home_town' in request_query) {
-    let home_town = '%' + decodeURIComponent(request_query.home_town) + '%';
+  if ('home_town' in query) {
+    let home_town = decodeURIComponent(query.home_town).replace('*', '%').toLowerCase();
     params.push(home_town);
-    sql_query_where += ' and iam.person.home_town like :ht'
+    sql_query_where += ` and lower(iam.person.home_town) like :ht`;
   }
-  if ('home_state_code' in request_query) {
-    let home_state_code = '%' + decodeURIComponent(request_query.home_state_code) + '%';
+  if ('home_state_code' in query) {
+    let home_state_code = `%${decodeURIComponent(query.home_state_code).toUpperCase()}%`;
     params.push(home_state_code);
-    sql_query_where += ' and iam.person.home_state_code like :hsc'
+    sql_query_where += ` and iam.person.home_state_code like :hsc`;
   }
-  if ('home_country_code' in request_query) {
-    let home_country_code = '%' + decodeURIComponent(request_query.home_country_code) + '%';
+  if ('home_country_code' in query) {
+    let home_country_code = `%${decodeURIComponent(query.home_country_code).toUpperCase()}%`;
     params.push(home_country_code);
-    sql_query_where += ' and iam.person.home_country_code like :hcc'
+    sql_query_where += ` and iam.person.home_country_code like :hcc`;
   }
-  if ('restricted' in request_query) {
-    let restricted = '%' + decodeURIComponent(request_query.restricted) + '%';
+  if ('restricted' in query) {
+    let restricted = (query.restricted) ? "Y" : "N";
     params.push(restricted);
-    sql_query_where += ' and iam.person.restricted like :x'
+    sql_query_where += ` and nvl(iam.person.restricted, 'N') = :x`
   }
-  if ('visa_type' in request_query) {
-    let visa_type = '%' + decodeURIComponent(request_query.visa_type) + '%';
+  if ('visa_type' in query) {
+    let visa_type = `%${decodeURIComponent(query.visa_type).toUpperCase()}%`;
     params.push(visa_type);
-    sql_query_where += ' and iam.person.restricted like :vt'
+    sql_query_where += ` and REGEXP_REPLACE(visa_type,'-','') = REGEXP_REPLACE(:vt,'-','')`;
   }
-  if ('net_id' in request_query) {
-    let net_id_query_array = request_query.net_id.split(',');
+  if ('net_id' in query) {
+    let net_id_query_array = query.net_id.split(',');
 
-    sql_query_from += ' left join iam.credential n' +
-      ' on iam.person.byu_id = n.byu_id';
+    sql_query_from += ` left join iam.credential n on iam.person.byu_id = n.byu_id`;
 
-    sql_query_where += ' and n.credential_id in (';
+    sql_query_where += ` and n.credential_id in (`;
 
-    length = net_id_query_array.length;
+    let length = net_id_query_array.length;
     for (let i = 0; i < length; i++) {
       params.push(net_id_query_array[i]);
       if (!/^[a-z][a-z0-9]{0,8}$/g.test(net_id_query_array[i])) {
         throw utils.Error(409, 'Incorrect URL: NET_ID must be a 1 to 9 alphanumeric character string each net_id must be separated by a comma')
       }
-      if (i === length - 1) {
-        sql_query_where += ':net' + i + ')'
-      }
-      else {
-        sql_query_where += ':net' + i + ','
-      }
+      sql_query_where += (i === length - 1) ? ` :net${i})` : ` :net${i},`;
     }
-    sql_query_where += ' and n.credential_type = \'NET_ID\''
+    sql_query_where += ` and n.credential_type = 'NET_ID'`;
   }
-  if ('credential_type' in request_query) {
-    let credential_type = request_query.credential_type;
+  if ('credential_type' in query) {
+    let credential_type = query.credential_type;
 
-    if (credential_type !== 'NET_ID') {
-      if (auth.canViewBasic(permissions)) {
-        throw utils.Error(403, 'User not authorized to lookup by ' + credential_type)
+    if (!/^NET_ID$/g.test(credential_type)) {
+      if (!auth.canViewBasic(permissions)) {
+        throw utils.Error(403, `User not authorized to lookup by ${credential_type}`);
       }
     }
 
     params.push(credential_type);
 
-    sql_query_from += ' left join iam.credential ct' +
-      ' on iam.person.byu_id = ct.byu_id';
+    sql_query_from += ` left join iam.credential ct on iam.person.byu_id = ct.byu_id`;
 
-    sql_query_where += ' and ct.credential_type = :ct';
-    if ('credential_id' in request_query) {
-      let credential_id = request_query.credential_id;
+    sql_query_where += ` and ct.credential_type = :ct`;
+    if ('credential_id' in query) {
+      let credential_id = query.credential_id;
 
       params.push(credential_id);
-      sql_query_where += ' and ct.credential_id = :cid'
+      sql_query_where += ` and ct.credential_id = :cid`;
     }
   }
-  if (!('credential_type' in request_query) && ('credential_id' in request_query)) {
-    throw utils.Error(409, 'Invalid Query: You must include credential_type with credential_id')
+  if (!('credential_type' in query) && ('credential_id' in query)) {
+    throw utils.Error(409, 'Invalid Query: You must include credential_type with credential_id');
   }
-  if ('user_name' in request_query) {
+  if ('user_name' in query) {
     let user_name_query_array = query.user_name.split(',');
 
-    sql_query_from += ' left join iam.credential un' +
-      ' on iam.person.byu_id = un.byu_id';
+    sql_query_from += ` left join iam.credential un on iam.person.byu_id = un.byu_id`;
 
-    sql_query_where += ' and un.user_name in (';
+    sql_query_where += ` and un.user_name in (`;
 
-    length = user_name_query_array.length;
-    for (let i = 0; i < length; i++) {
+    for (let i = 0, length = user_name_query_array.length; i < length; i++) {
       params.push(user_name_query_array[i]);
-      if (i === length - 1) {
-        sql_query_where += ' :un' + i + ')'
-      }
-      else {
-        sql_query_where += ' :un' + i + ','
-      }
+      sql_query_where += (i === length - 1) ? ` :un${i})` : ` :un${i},`;
     }
-
   }
-  if ('email_address' in request_query) {
+  if ('email_address' in query) {
     let email_address_query_array = query.email_address.split(',');
 
-    sql_query_from += ' left join iam.email_address ea' +
-      ' on iam.person.byu_id = ea.byu_id';
+    sql_query_from += ` left join iam.email_address ea on iam.person.byu_id = ea.byu_id`;
 
-    sql_query_where += ' and ea.email_address in (';
+    sql_query_where += ` and lower(ea.email_address) like`;
 
-    length = email_address_query_array.length;
-    for (let i = 0; i < length; i++) {
-      params.push(decodeURIComponent(email_address_query_array[i]));
-      if (i === length - 1) {
-        sql_query_where += ' :ea' + i + ')'
-      }
-      else {
-        sql_query_where += ' :ea' + i + ','
-      }
+    for (let i = 0, length = email_address_query_array.length; i < length; i++) {
+      params.push(decodeURIComponent(email_address_query_array[i]).replace('*', '%').toLowerCase());
+      sql_query_where += (i === length - 1) ? ` :ea${i}` : ` :ea${i} or ea.email_address like`;
     }
   }
-  if ('phone_number' in request_query) {
+  if ('phone_number' in query) {
     let phone_number_query_array = query.phone_number.split(',');
-    phone_number_query_array = phone_number_query_array.forEach(phone_number => {
-      phone_number = decodeURIComponent(phone_number);
-      phone_number.replace(/\D/g, '');
-    });
 
-    sql_query_from += ' left join iam.phone_number pn' +
-      ' on iam.person.byu_id = pn.byu_id';
+    sql_query_from += ` left join iam.phone_number pn on iam.person.byu_id = pn.byu_id`;
+    sql_query_where += ` and pn.lookup_number in (`;
 
-    sql_query_where += ' and pn.lookup_number in (';
-
-    length = phone_number_query_array.length;
-    for (let i = 0; i < length; i++) {
-      params.push(phone_number_query_array[i]);
-      if (i === length - 1) {
-        sql_query_where += ' :pn' + i + ')'
-      }
-      else {
-        sql_query_where += ' :pn' + i + ','
-      }
+    for (let i = 0, length = phone_number_query_array.length; i < length; i++) {
+      params.push(decodeURIComponent(phone_number_query_array[i]).replace(/\D/g, ''));
+      sql_query_where += (i === length - 1) ? ` :pn${i})` : ` :pn${i},`;
     }
   }
-  if ('employee_type' in request_query) {
-    let employee_type = request_query.employee_type;
+  if ('employee_type' in query) {
+    let employee_type = query.employee_type;
     for (let i = 3; i--;) {
       params.push(employee_type)
     }
@@ -264,87 +222,85 @@ exports.getPersons = async function (definitions, query, permissions) {
       ' and hr.per_warehouse.status = substr(:et2, 5, 2)' +
       ' and hr.per_warehouse.standing = substr(:et3, 8, 3)'
   }
-  if ('student_status' in request_query) {
+  if ('student_status' in query) {
     let class_standing;
     let reg_status;
     let reg_eligibility;
     let class_standing_set = false;
-    switch (decodeURIComponent(request_query.student_status).toUpperCase()) {
-      case 'FRESHMAN':
+    switch (decodeURIComponent(query.student_status).toLowerCase()) {
+      case 'freshman':
         class_standing = '1';
         class_standing_set = true;
         break;
-      case 'SOPHOMORE':
+      case 'sophomore':
         class_standing = '2';
         class_standing_set = true;
         break;
-      case 'JUNIOR':
+      case 'junior':
         class_standing = '3';
         class_standing_set = true;
         break;
-      case 'SENIOR':
+      case 'senior':
         class_standing = '4';
         class_standing_set = true;
         break;
-      case 'POST BACCALAUREATE NON DEGREE':
+      case 'post baccalaureate non degree':
         class_standing = '6';
         class_standing_set = true;
         break;
-      case 'MASTERS PROGRAM':
+      case 'masters program':
         class_standing = '7';
         class_standing_set = true;
         break;
-      case 'DOCTORATE PROGRAM':
+      case 'doctorate program':
         class_standing = '8';
         class_standing_set = true;
         break;
-      case 'BGS':
+      case 'bgs':
         reg_status = 'B';
         reg_eligibility = 'BGS';
         break;
-      case 'AUDIT':
+      case 'audit':
         reg_status = 'A';
         reg_eligibility = 'AO';
         break;
-      case 'CONCURRENT ENROLLMENT':
+      case 'concurrent enrollment':
         reg_status = '2';
         reg_eligibility = 'CH';
         break;
-      case 'VISITING STUDENT':
+      case 'visiting student':
         reg_status = 'V';
         reg_eligibility = 'SO';
         break;
-      case 'ELC':
+      case 'elc':
         reg_status = 'E';
         reg_eligibility = 'LC';
         break;
-      case 'EVENING SCHOOL':
+      case 'evening school':
         reg_status = '3';
         reg_eligibility = 'CE';
         break;
-      case 'SALT LAKE CENTER STUDENT':
+      case 'salt lake center student':
         reg_status = '3';
         reg_eligibility = 'SL';
         break;
       default:
         class_standing = null;
-        class_standing_set = true
+        class_standing_set = true;
     }
-    sql_query_from += ' left join ods.std_reg_eligibility sre' +
-      ' on iam.person.person_id = sre.person_id';
+    sql_query_from += ` left join ods.std_reg_eligibility sre on iam.person.person_id = sre.person_id`;
 
     if (class_standing_set) {
       params.push(class_standing);
-      sql_query_where += ' and sre.class_standing = :cs'
+      sql_query_where += ` and sre.class_standing = :cs`;
     }
     else {
       params.push(reg_status);
       params.push(reg_eligibility);
-      sql_query_where += ' and sre.reg_status = :rs' +
-        ' and sre.reg_eligibility = :re'
+      sql_query_where += ` and sre.reg_status = :rs and sre.reg_eligibility = :re`;
     }
   }
-  const results = await db.execute(sql_query_select + sql_query_from + sql_query_where, params);
+  const results = await db.execute(`${sql_query_select}${sql_query_from}${sql_query_where}`, params);
   const values = await Promise.all(results.rows.map(row => exports.getPerson(definitions, row.byu_id, query, permissions)));
   const persons = Enforcer.applyTemplate(definitions.persons, definitions,
     {
@@ -356,19 +312,25 @@ exports.getPersons = async function (definitions, query, permissions) {
       maximum_page_size: 100,
       persons_values: values
     });
-  // TODO: Should we embellish the HATEOAS 'self' links with the query parameters specified on this specific request?
-  // TODO: Set :page_size in HATEOAS link to size of results from SQL query
+// TODO: Should we embellish the HATEOAS 'self' links with the query parameters specified on this specific request?
+// TODO: Set :page_size in HATEOAS link to size of results from SQL query
   persons.values = values;
   return persons;
 };
 
-exports.getPerson = async function (definitions, byu_id, query, permissions) {
+exports.getPerson = async (definitions, byu_id, query, permissions) => {
   const promises = [];
   const result = {};
+  const all_field_sets = [
+    {
+      name: 'addresses',
+      functionName: 'getAddresses'
+    }
+  ];
 
   if (query.field_sets.includes('basic')) {
     promises.push(basic.getBasic(definitions, byu_id, permissions)
-      .then(function (basic_result) {
+      .then(basic_result => {
         result.basic = basic_result;
       })
       .catch(function (error) {
@@ -380,35 +342,25 @@ exports.getPerson = async function (definitions, byu_id, query, permissions) {
           }, { ignoreMissingRequired: false });
       }));
   }
-  if (query.field_sets.includes('addresses')) {
-    promises.push(addresses.getAddresses(definitions, byu_id, permissions)
-      .then(function (addresses_result) {
-        result.addresses = addresses_result;
-      })
-      .catch(function (error) {
-        let addresses = { values: [] };
-        addresses.metadata = Enforcer.applyTemplate(definitions.sub_level_metadata, null,
-          {
-            validation_response_code: error.status || 500,
-            validation_response_message: error.message || 'Internal Server Error'
-          });
-        result.addresses = addresses;
-      }));
-  }
-  if (query.field_sets.includes('employee_summaries')) {
-    promises.push(basic.getBasic(definitions, byu_id, permissions)
-      .then(function (employee_summaries_result) {
-        result.employee_summaries = employee_summaries_result;
-      })
-      .catch(function (error) {
-        result.employee_summaries = Enforcer.applyTemplate(definitions.employee_summaries, null,
-          {
-            byu_id: byu_id,
-            validation_response_code: error.status || 500,
-            validation_response_message: error.message || 'Internal Server Error'
-          }, { ignoreMissingRequired: false });
-      }));
-  }
+
+  all_field_sets.forEach(field_set => {
+
+    if (query.field_sets.includes(field_set.name)) {
+      promises.push(field_set.name[field_set.functionName](definitions, byu_id, permissions)
+        .then(function (field_set_result) {
+          result[field_set.name] = field_set_result;
+        })
+        .catch(function (error) {
+          let objectResult = { values: [] };
+          objectResult.metadata = Enforcer.applyTemplate(definitions.sub_level_metadata, null,
+            {
+              validation_response_code: error.status || 500,
+              validation_response_message: error.message || 'Internal Server Error'
+            });
+          result[field_set.name] = objectResult;
+        }));
+    }
+  });
   await Promise.all(promises);
   return result;
 };
@@ -416,3 +368,138 @@ exports.getPerson = async function (definitions, byu_id, query, permissions) {
 exports.modifyPerson = async function (definitions, byu_id, authorized_byu_id, body, permissions) {
   return basic.putBasic(definitions, byu_id, authorized_byu_id, body, permissions);
 };
+
+// if (query.field_sets.includes('addresses')) {
+//   promises.push(addresses.getAddresses(definitions, byu_id, permissions)
+//     .then(function (addresses_result) {
+//       result.addresses = addresses_result;
+//     })
+//     .catch(function (error) {
+//       let addresses = { values: [] };
+//       addresses.metadata = Enforcer.applyTemplate(definitions.sub_level_metadata, null,
+//         {
+//           validation_response_code: error.status || 500,
+//           validation_response_message: error.message || 'Internal Server Error'
+//         });
+//       result.addresses = addresses;
+//     }));
+// }
+// if (query.field_sets.includes('alias_domains')) {
+//   promises.push(alias_domains.getAliasDomains(definitions, byu_id, permissions)
+//     .then(function (alias_domains_result) {
+//       result.alias_domains = alias_domains_result;
+//     })
+//     .catch(function (error) {
+//       let alias_domains = { values: [] };
+//       alias_domains.metadata = Enforcer.applyTemplate(definitions.sub_level_metadata, null,
+//         {
+//           validation_response_code: error.status || 500,
+//           validation_response_message: error.message || 'Internal Server Error'
+//         });
+//       result.alias_domains = alias_domains;
+//     }));
+// }
+// if (query.field_sets.includes('credentials')) {
+//   promises.push(credentials.getCredentials(definitions, byu_id, permissions)
+//     .then(function (credentials_result) {
+//       result.credentials = credentials_result;
+//     })
+//     .catch(function (error) {
+//       let credentials = { values: [] };
+//       credentials.metadata = Enforcer.applyTemplate(definitions.sub_level_metadata, null,
+//         {
+//           validation_response_code: error.status || 500,
+//           validation_response_message: error.message || 'Internal Server Error'
+//         });
+//       result.credentials = credentials;
+//     }));
+// }
+// if (query.field_sets.includes('email_addresses')) {
+//   promises.push(email_addresses.getEmailAddresses(definitions, byu_id, permissions)
+//     .then(function (email_addresses_result) {
+//       result.email_addresses = email_addresses_result;
+//     })
+//     .catch(function (error) {
+//       let email_addresses = { values: [] };
+//       email_addresses.metadata = Enforcer.applyTemplate(definitions.sub_level_metadata, null,
+//         {
+//           validation_response_code: error.status || 500,
+//           validation_response_message: error.message || 'Internal Server Error'
+//         });
+//       result.email_addresses = email_addresses;
+//     }));
+// }
+// if (query.field_sets.includes('email_aliases')) {
+//   promises.push(email_aliases.getEmailAliases(definitions, byu_id, permissions)
+//     .then(function (email_aliases_result) {
+//       result.email_aliases = email_aliases_result;
+//     })
+//     .catch(function (error) {
+//       let email_aliases = { values: [] };
+//       email_aliases.metadata = Enforcer.applyTemplate(definitions.sub_level_metadata, null,
+//         {
+//           validation_response_code: error.status || 500,
+//           validation_response_message: error.message || 'Internal Server Error'
+//         });
+//       result.email_aliases = email_aliases;
+//     }));
+// }
+// if (query.field_sets.includes('employee_summaries')) {
+//   promises.push(basic.getBasic(definitions, byu_id, permissions)
+//     .then(function (employee_summaries_result) {
+//       result.employee_summaries = employee_summaries_result;
+//     })
+//     .catch(function (error) {
+//       result.employee_summaries = Enforcer.applyTemplate(definitions.employee_summaries, null,
+//         {
+//           byu_id: byu_id,
+//           validation_response_code: error.status || 500,
+//           validation_response_message: error.message || 'Internal Server Error'
+//         }, { ignoreMissingRequired: false });
+//     }));
+// }
+// if (query.field_sets.includes('ethnicities')) {
+//   promises.push(ethnicities.getEthnicities(definitions, byu_id, permissions)
+//     .then(function (ethnicities_result) {
+//       result.ethnicities = ethnicities_result;
+//     })
+//     .catch(function (error) {
+//       let ethnicities = { values: [] };
+//       ethnicities.metadata = Enforcer.applyTemplate(definitions.sub_level_metadata, null,
+//         {
+//           validation_response_code: error.status || 500,
+//           validation_response_message: error.message || 'Internal Server Error'
+//         });
+//       result.ethnicities = ethnicities;
+//     }));
+// }
+// if (query.field_sets.includes('family_phones')) {
+//   promises.push(family_phones.getFamilyPhones(definitions, byu_id, permissions)
+//     .then(function (family_phones_result) {
+//       result.family_phones = family_phones_result;
+//     })
+//     .catch(function (error) {
+//       let family_phones = { values: [] };
+//       family_phones.metadata = Enforcer.applyTemplate(definitions.sub_level_metadata, null,
+//         {
+//           validation_response_code: error.status || 500,
+//           validation_response_message: error.message || 'Internal Server Error'
+//         });
+//       result.family_phones = family_phones;
+//     }));
+// }
+// if (query.field_sets.includes('addresses')) {
+//   promises.push(addresses.getAddresses(definitions, byu_id, permissions)
+//     .then(function (addresses_result) {
+//       result.addresses = addresses_result;
+//     })
+//     .catch(function (error) {
+//       let addresses = { values: [] };
+//       addresses.metadata = Enforcer.applyTemplate(definitions.sub_level_metadata, null,
+//         {
+//           validation_response_code: error.status || 500,
+//           validation_response_message: error.message || 'Internal Server Error'
+//         });
+//       result.addresses = addresses;
+//     }));
+// }

@@ -73,9 +73,9 @@ function mapDBResultsToDefinition(definitions, row, api_type) {
  * @param permissions - authorizations
  * @returns {Promise.<*>}
  */
-exports.getAliasDomain = async function getAliasDomain(definitions, byu_id, address_type, permissions) {
+exports.getAddress = async function getAddress(definitions, byu_id, address_type, permissions) {
   const params = [address_type, byu_id];
-  const sql_query = sql.sql.getAliasDomain;
+  const sql_query = sql.sql.getAddress;
   const modifiable = auth.canViewContact(permissions) ? 'modifiable' : 'read-only';
   const results = await db.execute(sql_query, params);
 
@@ -105,7 +105,7 @@ exports.getAliasDomain = async function getAliasDomain(definitions, byu_id, addr
     results.rows[0].primary_role !== 'Employee' &&
     results.rows[0].primary_role !== 'Faculty' &&
     results.rows[0].unlisted === 'Y') {
-    throw utils.Error(403, 'Not Authorized To View AliasDomain')
+    throw utils.Error(403, 'Not Authorized To View Address')
   }
 
   return mapDBResultsToDefinition(definitions, results.rows[0], modifiable);
@@ -118,9 +118,9 @@ exports.getAliasDomain = async function getAliasDomain(definitions, byu_id, addr
  * @param permissions - Authorizations
  * @returns {Promise.<*>}
  */
-exports.getAliasDomains = async function getAliasDomains(definitions, byu_id, permissions) {
+exports.getAddresses = async function getAddresses(definitions, byu_id, permissions) {
   const params = [byu_id];
-  const sql_query = sql.sql.getAliasDomains;
+  const sql_query = sql.sql.getAddresses;
   const results = await db.execute(sql_query, params);
   const return_code = auth.canViewContact(permissions) ? 200 : 203;
   const return_message = auth.canViewContact(permissions) ? 'Success' : 'Public Info Only';
@@ -231,7 +231,7 @@ function processBody(authorized_byu_id, body) {
   let error = false;
   let msg = 'Incorrect BODY: Missing\n';
   if (!new_body.address_line_1) {
-    msg += '\n\tAliasDomain Line 1 must not be blank or a space'
+    msg += '\n\tAddress Line 1 must not be blank or a space'
   }
 
   if (!utils.isValidCountryCode(new_body.country_code)) {
@@ -289,7 +289,7 @@ function processFromResults(from_results) {
 }
 
 async function logChange(connection, change_type, authorized_byu_id, byu_id, address_type, processed_results, new_body) {
-  const sql_query = sql.modifyAliasDomain.logChange;
+  const sql_query = sql.modifyAddress.logChange;
 
   let log_params = [];
   if (change_type === 'D') {
@@ -376,8 +376,8 @@ async function addressEvents(connection, change_type, byu_id, address_type, body
     const domain = 'edu.byu';
     const entity = 'BYU-IAM';
     const identity_type = 'Person';
-    let event_type = (change_type === 'A') ? 'AliasDomain Added' : 'AliasDomain Changed';
-    let event_type2 = (change_type === 'A') ? 'AliasDomain Added v2' : 'AliasDomain Changed v2';
+    let event_type = (change_type === 'A') ? 'Address Added' : 'Address Changed';
+    let event_type2 = (change_type === 'A') ? 'Address Added v2' : 'Address Changed v2';
     let secure_url = 'https://api.byu.edu/domains/legacy/identity/secureurl/v1/';
     let sql_query = '';
     let filters = [];
@@ -545,7 +545,7 @@ async function addressEvents(connection, change_type, byu_id, address_type, body
   }
 }
 
-exports.modifyAliasDomain = async function (definitions, byu_id, address_type, body, authorized_byu_id, permissions) {
+exports.modifyAddress = async function (definitions, byu_id, address_type, body, authorized_byu_id, permissions) {
   const connection = await db.getConnection();
   const new_body = processBody(authorized_byu_id, body);
   console.log('NEW BODY', new_body);
@@ -558,7 +558,7 @@ exports.modifyAliasDomain = async function (definitions, byu_id, address_type, b
     address_type,
     byu_id
   ];
-  let sql_query = sql.sql.fromAliasDomain;
+  let sql_query = sql.sql.fromAddress;
   const from_results = await connection.execute(sql_query, params);
   if (!from_results.rows.length ||
     (from_results.rows[0].restricted === 'Y' &&
@@ -591,7 +591,7 @@ exports.modifyAliasDomain = async function (definitions, byu_id, address_type, b
 
   if (is_different) {
     if (!from_results.rows[0].address_type) {
-      sql_query = sql.modifyAliasDomain.create;
+      sql_query = sql.modifyAddress.create;
       params = [
         byu_id,
         address_type,
@@ -613,7 +613,7 @@ exports.modifyAliasDomain = async function (definitions, byu_id, address_type, b
         new_body.verified_flag
       ];
     } else {
-      sql_query = sql.modifyAliasDomain.update;
+      sql_query = sql.modifyAddress.update;
       params = [
         new_body.date_time_updated,
         new_body.updated_by_id,
@@ -640,7 +640,7 @@ exports.modifyAliasDomain = async function (definitions, byu_id, address_type, b
   }
 
   params = [address_type, byu_id];
-  sql_query = sql.sql.getAliasDomain;
+  sql_query = sql.sql.getAddress;
   const results = await connection.execute(sql_query, params);
   connection.close();
   return mapDBResultsToDefinition(definitions, results.rows[0], 'modifiable');
@@ -649,8 +649,8 @@ exports.modifyAliasDomain = async function (definitions, byu_id, address_type, b
 async function addressDeletedEvents(connection, byu_id, address_type, processed_results) {
   try {
     const source_dt = new Date().toISOString();
-    const event_type = 'AliasDomain Deleted';
-    const event_type2 = 'AliasDomain Deleted v2';
+    const event_type = 'Address Deleted';
+    const event_type2 = 'Address Deleted v2';
     const domain = 'edu.byu';
     const entity = 'BYU-IAM';
     const identity_type = 'Person';
@@ -799,12 +799,12 @@ function processDeleteFromResults(from_results) {
   return processed_results;
 }
 
-exports.deleteAliasDomain = async function (definitions, byu_id, address_type, authorized_byu_id, permissions) {
+exports.deleteAddress = async function (definitions, byu_id, address_type, authorized_byu_id, permissions) {
   const connection = await db.getConnection();
   if (!auth.canUpdatePersonContact(permissions)) {
     throw utils.Error(403, 'User not authorized to update CONTACT data')
   }
-  let sql_query = sql.sql.fromAliasDomain;
+  let sql_query = sql.sql.fromAddress;
   let params = [
     address_type,
     byu_id
@@ -820,7 +820,7 @@ exports.deleteAliasDomain = async function (definitions, byu_id, address_type, a
   if (from_results.rows[0].address_type) {
     const change_type = 'D';
     const processed_results = processDeleteFromResults(from_results.rows[0]);
-    sql_query = sql.modifyAliasDomain.delete;
+    sql_query = sql.modifyAddress.delete;
     await connection.execute(sql_query, params);
     await logChange(connection, change_type, authorized_byu_id, byu_id, address_type, processed_results);
     await addressDeletedEvents(connection, byu_id, address_type, processed_results);
