@@ -11,26 +11,27 @@ environments:
         instance_type: m3.medium
       auto_scaling:
         min_tasks: 1
-        max_tasks: 21 #randomly picked by David
-        scaling_policies: # Optional
-          - type: up
-            adjustment:
-              value: 5 # Required
-              cooldown: 300 # Optional. Default: 300.
-            alarm:
-              metric_name: CPUUtilization # Required
-              comparison_operator: GreaterThanThreshold # Required. See http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-cw-alarm.html#cfn-cloudwatch-alarms-comparisonoperator for allowed values.
-              threshold: 70 # Required
-              period: 60 #seconds
-          - type: down
-            adjustment:
-              value: 5 # Required
-              cooldown: 300 # Optional. Default: 300.
-            alarm:
-              metric_name: CPUUtilization # Required
-              comparison_operator: LessThanThreshold # Required. See http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-cw-alarm.html#cfn-cloudwatch-alarms-comparisonoperator for allowed values.
-              threshold: 30 # Required percentage
-              period: 60 # seconds
+        max_tasks: 1
+#        max_tasks: 21 #randomly picked by David
+#        scaling_policies: # Optional
+#          - type: up
+#            adjustment:
+#              value: 5 # Required
+#              cooldown: 300 # Optional. Default: 300.
+#            alarm:
+#              metric_name: CPUUtilization # Required
+#              comparison_operator: GreaterThanThreshold # Required. See http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-cw-alarm.html#cfn-cloudwatch-alarms-comparisonoperator for allowed values.
+#             threshold: 70 # Required
+#              period: 60 #seconds
+#          - type: down
+#            adjustment:
+#              value: 5 # Required
+#              cooldown: 300 # Optional. Default: 300.
+#            alarm:
+#              metric_name: CPUUtilization # Required
+#              comparison_operator: LessThanThreshold # Required. See http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-cw-alarm.html#cfn-cloudwatch-alarms-comparisonoperator for allowed values.
+#              threshold: 30 # Required percentage
+#              period: 60 # seconds
       load_balancer:
         type: https
         https_certificate: b996d9d5-09fc-4b45-8bed-214dabde2ca0
