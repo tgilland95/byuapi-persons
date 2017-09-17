@@ -155,7 +155,7 @@ exports.sql = {
              to_char(a.date_of_death, 'YYYY-MM-DD')                                            as "date_of_death",
              a.religion_code                                                                   as "religion_code",
              a.visa_type                                                                       as "visa_type",
-             a.i20_expiration_date                                                             as "i20_expiration_date",
+             to_char(a.i20_expiration_date, 'YYYY-MM-DD')                                      as "i20_expiration_date",
              a.visa_type_source                                                                as "visa_type_source",
              case 
                when e.class_standing = '8' then 'Doctorate Program' 
