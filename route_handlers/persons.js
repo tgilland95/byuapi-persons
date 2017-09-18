@@ -17,15 +17,17 @@
 
 const auth = require('../controllers/auth');
 const personsController = require('../controllers/persons/persons');
+const basicController = require('../controllers/basic/basic');
 const utils = require('../controllers/utils');
 
 exports.getPersons = async (req, res) => {
   try {
-    const permissions = await auth.getPermissions(req, ['basic']);
-    const address = await personsController.getPersons(req.swagger.root.definitions,
+    const field_sets = req.query.field_sets || ['basic'];
+    const permissions = await auth.getPermissions(req, field_sets);
+    const persons = await personsController.getPersons(req.swagger.root.definitions,
       req.query, permissions);
 
-    res.send(address);
+    res.send(persons);
   } catch (error) {
     console.error(error.stack);
     utils.defaultResponseHandler(req.swagger.root.definitions.simple_metadata, {}, res, error);
@@ -34,9 +36,8 @@ exports.getPersons = async (req, res) => {
 
 exports.getPerson = async (req, res) => {
   try {
-    const permissions = await auth.getPermissions(req, ['basic']);
-    const person = await personsController.getPerson(req.swagger.root.definitions,
-      req.params.byu_id, req.query, permissions);
+    const permissions = await auth.getPermissions(req, req.query.field_sets);
+    const person = await personsController.getPerson(req.swagger.root.definitions, req.params.byu_id, req.query, permissions);
 
     res.send(person);
   } catch (error) {

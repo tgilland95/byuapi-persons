@@ -125,28 +125,28 @@ exports.sql = {
                      and d.date_type = 'CURRENT_YYT' 
                      and trunc(d.start_date) <= trunc(sysdate) 
                      and trunc(d.end_date) >= trunc(sysdate) 
-    where  a.byu_id = :BYU_ID`,
-  map: {
-    byu_id: byu_id.value,
-    name: byu_id.description,
-    email_address_type: email_address_type.value,
-    date_time_updated: date_time_updated.value,
-    updated_by_id: updated_by_id.value,
-    updated_by_name: updated_by_id.description,
-    date_time_created: date_time_created.value,
-    created_by_id: created_by_id.value,
-    created_by_name: created_by_id.description,
-    email_address: email_address.value,
-    unlisted: unlisted.value,
-    verified_flag: verified_flag.value
-  },
-  public_map: {
-    byu_id: byu_id.value,
-    email_address_type: email_address_type.value,
-    email_address: email_address.value,
-    unlisted: unlisted.value,
-    verified_flag: verified_flag.value
-  }
+    where  a.byu_id = :BYU_ID`
+  // map: {
+  //   byu_id: byu_id.value,
+  //   name: byu_id.description,
+  //   email_address_type: email_address_type.value,
+  //   date_time_updated: date_time_updated.value,
+  //   updated_by_id: updated_by_id.value,
+  //   updated_by_name: updated_by_id.description,
+  //   date_time_created: date_time_created.value,
+  //   created_by_id: created_by_id.value,
+  //   created_by_name: created_by_id.description,
+  //   email_address: email_address.value,
+  //   unlisted: unlisted.value,
+  //   verified_flag: verified_flag.value
+  // },
+  // public_map: {
+  //   byu_id: byu_id.value,
+  //   email_address_type: email_address_type.value,
+  //   email_address: email_address.value,
+  //   unlisted: unlisted.value,
+  //   verified_flag: verified_flag.value
+  // }
 };
 
 exports.modifyEmailAddress = {

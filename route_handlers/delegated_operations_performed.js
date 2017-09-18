@@ -15,54 +15,54 @@
  *
  */
 
-const emailAddressesController = require('../controllers/email_addresses/email_addresses');
+const addressesController = require('../controllers/addresses/addresses');
 const auth = require('../controllers/auth');
 const utils = require('../controllers/utils');
 
-exports.getEmailAddress = async (req, res) => {
+exports.getDelegatedOperationPerformed = async (req, res) => {
   try {
-    const permissions = await auth.getPermissions(req, ['email_addresses']);
-    const email_address = await emailAddressesController.getEmailAddress(req.swagger.root.definitions,
-      req.params.byu_id, req.params.email_address_type, permissions);
+    const permissions = await auth.getPermissions(req, ['addresses']);
+    const address = await addressesController.getAddress(req.swagger.root.definitions,
+      req.params.byu_id, req.params.address_type, permissions);
 
-    res.send(email_address);
+    res.send(address);
   } catch (error) {
     console.error(error.stack);
     utils.defaultResponseHandler(req.swagger.root.definitions.simple_metadata, {}, res, error);
   }
 };
 
-exports.getEmailAddresses = async (req, res) => {
+exports.getDelegatedOperationsPerformed = async (req, res) => {
   try {
-    const permissions = await auth.getPermissions(req, ['email_addresses']);
-    const email_addresses = await emailAddressesController.getEmailAddresses(req.swagger.root.definitions,
+    const permissions = await auth.getPermissions(req, ['addresses']);
+    const addresses = await addressesController.getAddresses(req.swagger.root.definitions,
       req.params.byu_id, permissions);
 
-    res.send(email_addresses);
+    res.send(addresses);
   } catch (error) {
     console.error(error.stack);
     utils.defaultResponseHandler(req.swagger.root.definitions.simple_metadata, {}, res, error);
   }
 };
 
-exports.modifyEmailAddress = async (req, res) => {
+exports.modifyAddress = async (req, res) => {
   try {
-    const permissions = await auth.getPermissions(req, ['email_addresses']);
-    const email_address = await emailAddressesController.modifyEmailAddress(req.swagger.root.definitions,
-      req.params.byu_id, req.params.email_address_type, req.body, req.verifiedJWTs.prioritizedClaims.byuId, permissions);
+    const permissions = await auth.getPermissions(req, ['addresses']);
+    const address = await addressesController.modifyAddress(req.swagger.root.definitions,
+      req.params.byu_id, req.params.address_type, req.body, req.verifiedJWTs.prioritizedClaims.byuId, permissions);
 
-    res.send(email_address);
+    res.send(address);
   } catch (error) {
     console.error(error.stack);
     utils.defaultResponseHandler(req.swagger.root.definitions.simple_metadata, {}, res, error);
   }
 };
 
-exports.deleteEmailAddress = async (req, res) => {
+exports.deleteAddress = async (req, res) => {
   try {
-    const permissions = await auth.getPermissions(req, ['email_addresses']);
-    const success = await emailAddressesController.deleteEmailAddress(req.swagger.root.definitions,
-      req.params.byu_id, req.params.email_address_type, req.verifiedJWTs.prioritizedClaims.byuId, permissions);
+    const permissions = await auth.getPermissions(req, ['addresses']);
+    const success = await addressesController.deleteAddress(req.swagger.root.definitions,
+      req.params.byu_id, req.params.address_type, req.verifiedJWTs.prioritizedClaims.byuId, permissions);
 
     console.log(success);
     res.sendStatus(204);

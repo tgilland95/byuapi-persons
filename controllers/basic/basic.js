@@ -21,25 +21,26 @@ const auth = require('../auth');
 const db = require('../db');
 const sql = require('./sql');
 const utils = require('../utils');
+const event = require('../event');
 
 function mapDBResultsToDefinition(definitions, row, name_api_type, basic_api_type) {
   return Enforcer.applyTemplate(definitions.basic, definitions,
     {
       byu_id: row.byu_id,
       person_id: row.person_id,
-      net_id: row.net_id || undefined,
+      net_id: row.net_id || "",
       name_api_type: name_api_type,
       basic_api_type: basic_api_type,
       deceased: /^Y$/g.test(row.deceased),
       sex: row.sex,
       personal_email_address: row.personal_email_address,
       primary_phone_number: row.primary_phone_number,
-      date_time_updated: row.date_time_updated || undefined,
+      date_time_updated: row.date_time_updated || "",
       updated_by_id: row.updated_by_id,
-      updated_by_name: row.updated_by_name || undefined,
-      date_time_created: row.date_time_created || undefined,
+      updated_by_name: row.updated_by_name || "",
+      date_time_created: row.date_time_created || "",
       created_by_id: row.created_by_id,
-      created_by_name: row.created_by_name || undefined,
+      created_by_name: row.created_by_name || "",
       first_name: row.first_name,
       middle_name: row.middle_name,
       surname: row.surname,
@@ -52,14 +53,14 @@ function mapDBResultsToDefinition(definitions, row, name_api_type, basic_api_typ
       preferred_name: row.preferred_name,
       home_town: row.home_town,
       home_state_code: row.home_state_code,
-      home_state_name: row.home_state_name || undefined,
+      home_state_name: row.home_state_name || "",
       home_country_code: row.home_country_code,
       home_country_name: row.home_country_name,
       high_school_code: row.high_school_code,
-      high_school_name: row.high_school_name || undefined,
-      high_school_state_code: row.high_school_state_code || undefined,
-      high_school_state_name: row.high_school_state_name || undefined,
-      high_school_city: row.high_school_city || undefined,
+      high_school_name: row.high_school_name || "",
+      high_school_state_code: row.high_school_state_code || "",
+      high_school_state_name: row.high_school_state_name || "",
+      high_school_city: row.high_school_city || "",
       restricted: /^Y$/g.test(row.restricted),
       merge_in_process: /^Y$/g.test(row.merge_in_process)
     }
@@ -70,42 +71,42 @@ function mapDBResultsToStudentDefinition(definitions, row, name_api_type, basic_
   return Enforcer.applyTemplate(definitions.basic, definitions,
     {
       byu_id: row.byu_id,
-      person_id: undefined,
-      net_id: undefined,
+      person_id: "",
+      net_id: "",
       name_api_type: name_api_type,
       basic_api_type: basic_api_type,
-      deceased: undefined,
+      deceased: "",
       sex: row.sex,
-      personal_email_address: undefined,
-      primary_phone_number: undefined,
-      date_time_updated: undefined,
-      updated_by_id: undefined,
-      updated_by_name: undefined,
-      date_time_created: undefined,
-      created_by_id: undefined,
-      created_by_name: undefined,
-      first_name: undefined,
-      middle_name: undefined,
-      surname: undefined,
-      suffix: undefined,
+      personal_email_address: "",
+      primary_phone_number: "",
+      date_time_updated: "",
+      updated_by_id: "",
+      updated_by_name: "",
+      date_time_created: "",
+      created_by_id: "",
+      created_by_name: "",
+      first_name: "",
+      middle_name: "",
+      surname: "",
+      suffix: "",
       preferred_first_name: row.preferred_first_name,
       preferred_surname: row.preferred_surname,
-      rest_of_name: undefined,
-      name_lnf: undefined,
-      name_fnf: undefined,
+      rest_of_name: "",
+      name_lnf: "",
+      name_fnf: "",
       preferred_name: row.preferred_name,
       home_town: row.home_town,
       home_state_code: row.home_state_code,
-      home_state_name: row.home_state_name || undefined,
+      home_state_name: row.home_state_name || "",
       home_country_code: row.home_country_code,
       home_country_name: row.home_country_name,
       high_school_code: row.high_school_code,
-      high_school_name: row.high_school_name || undefined,
-      high_school_city: row.high_school_city || undefined,
-      high_school_state_code: row.high_school_state_code || undefined,
-      high_school_state_name: row.high_school_state_name || undefined,
-      restricted: undefined,
-      merge_in_process: undefined,
+      high_school_name: row.high_school_name || "",
+      high_school_city: row.high_school_city || "",
+      high_school_state_code: row.high_school_state_code || "",
+      high_school_state_name: row.high_school_state_name || "",
+      restricted: "",
+      merge_in_process: "",
     }
   );
 }
@@ -114,42 +115,42 @@ function mapDBResultsToEmployeeDefinition(definitions, row, name_api_type, basic
   return Enforcer.applyTemplate(definitions.basic, definitions,
     {
       byu_id: row.byu_id,
-      person_id: undefined,
-      net_id: undefined,
+      person_id: "",
+      net_id: "",
       name_api_type: name_api_type,
       basic_api_type: basic_api_type,
-      deceased: undefined,
+      deceased: "",
       sex: row.sex,
-      personal_email_address: undefined,
-      primary_phone_number: undefined,
-      date_time_updated: undefined,
-      updated_by_id: undefined,
-      updated_by_name: undefined,
-      date_time_created: undefined,
-      created_by_id: undefined,
-      created_by_name: undefined,
-      first_name: undefined,
-      middle_name: undefined,
-      surname: undefined,
-      suffix: undefined,
+      personal_email_address: "",
+      primary_phone_number: "",
+      date_time_updated: "",
+      updated_by_id: "",
+      updated_by_name: "",
+      date_time_created: "",
+      created_by_id: "",
+      created_by_name: "",
+      first_name: "",
+      middle_name: "",
+      surname: "",
+      suffix: "",
       preferred_first_name: row.preferred_first_name,
       preferred_surname: row.preferred_surname,
-      rest_of_name: undefined,
-      name_lnf: undefined,
-      name_fnf: undefined,
+      rest_of_name: "",
+      name_lnf: "",
+      name_fnf: "",
       preferred_name: row.preferred_name,
-      home_town: undefined,
-      home_state_code: undefined,
-      home_state_name: undefined,
-      home_country_code: undefined,
-      home_country_name: undefined,
-      high_school_code: undefined,
-      high_school_name: undefined,
-      high_school_city: undefined,
-      high_school_state_code: undefined,
-      high_school_state_name: undefined,
-      restricted: undefined,
-      merge_in_process: undefined,
+      home_town: "",
+      home_state_code: "",
+      home_state_name: "",
+      home_country_code: "",
+      home_country_name: "",
+      high_school_code: "",
+      high_school_name: "",
+      high_school_city: "",
+      high_school_state_code: "",
+      high_school_state_name: "",
+      restricted: "",
+      merge_in_process: "",
     }
   );
 }
@@ -158,8 +159,8 @@ exports.getBasic = async function getBasic(definitions, byu_id, permissions) {
   const params = [byu_id];
   const sql_query = sql.sql.getBasic;
   const results = await db.execute(sql_query, params);
-  const name_api_type = auth.canUpdatePersonBasic(permissions) ? 'modifiable' : 'read-only';
-  const basic_api_type = auth.canUpdatePersonBasic(permissions) ? 'modifiable' : 'read-only';
+  const name_api_type = auth.canUpdateBasic(permissions) ? 'modifiable' : 'read-only';
+  const basic_api_type = auth.canUpdateBasic(permissions) ? 'modifiable' : 'read-only';
 
   if (!results.rows.length ||
     (results.rows[0].restricted === 'Y' &&
@@ -168,13 +169,13 @@ exports.getBasic = async function getBasic(definitions, byu_id, permissions) {
   }
 
   if (!auth.canViewBasic(permissions)) {
-    if (results.rows[0].primary_role === 'Student') {
+    if (/^Student$/g.test(results.rows[0].primary_role)) {
       return mapDBResultsToStudentDefinition(definitions, results.rows[0], name_api_type, basic_api_type);
-    }
-    if (results.rows[0].primary_role === 'Employee') {
+    } else if (/^Employee$/g.test(results.rows[0].primary_role)) {
       return mapDBResultsToEmployeeDefinition(definitions, results.rows[0], name_api_type, basic_api_type);
+    } else {
+      throw utils.Error(403, 'Not Authorized To View Address');
     }
-    throw utils.Error(403, 'Not Authorized To View Address');
   }
 
   return mapDBResultsToDefinition(definitions, results.rows[0], name_api_type, basic_api_type);
@@ -184,7 +185,7 @@ function processBody(authorized_byu_id, body) {
   let current_date_time = moment();
   current_date_time = current_date_time.clone().tz('America/Denver').format('YYYY-MM-DD HH:mm:ss.SSS');
   let new_body = {};
-  new_body.sex = /^(M|F)$/.test(body.sex) ? body.sex : '?';
+  new_body.sex = /^[?FM]$/.test(body.sex) ? body.sex : '?';
   new_body.surname = body.surname || '';
   new_body.first_name = body.first_name || '';
   new_body.preferred_surname = body.preferred_surname || body.surname;
@@ -525,10 +526,10 @@ async function personDeletedEvents(connection, body, processed_body) {
 
     let sql_query = db.raiseEvent;
     let params = [JSON.stringify(event_frame)];
-    await connection.execute(sql_query, params);
+    await connection.execute(sql_query, params, { autoCommit: true });
 
     sql_query = db.enqueue;
-    return connection["ces"].executeWithCommit(sql_query, params)
+    return connection.execute(sql_query, params)
   } catch (error) {
     console.error(error.stack);
     throw new ClientError(207, 'Person Deleted but event not raised');

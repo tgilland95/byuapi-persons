@@ -914,7 +914,7 @@
         }
       }
     },
-    "/{byu_id}/alias_domains/{alias_domain}": {
+    "/{byu_id}/alias_domains/{+alias_domain}": {
       "x-controller": "alias_domains",
       "get": {
         "summary": "Alias domains",
@@ -930,7 +930,7 @@
             "pattern": "^[0-9]{9}$"
           },
           {
-            "name": "alias_domain",
+            "name": "+alias_domain",
             "in": "path",
             "description": "The alias domain",
             "required": true,
@@ -1004,7 +1004,7 @@
             "pattern": "^[0-9]{9}$"
           },
           {
-            "name": "alias_domain",
+            "name": "+alias_domain",
             "in": "path",
             "description": "The alias domain",
             "required": true,
@@ -1087,7 +1087,7 @@
             "pattern": "^[0-9]{9}$"
           },
           {
-            "name": "alias_domain",
+            "name": "+alias_domain",
             "in": "path",
             "description": "The alias domain",
             "required": true,
@@ -6387,7 +6387,7 @@
       "type": "object",
       "properties": {
         "links": {
-          "description": "Hypermedia links for an email address",
+          "description": "Hypermedia links for an alias domains",
           "type": "object",
           "properties": {
             "alias_domains.info": {
@@ -6406,7 +6406,7 @@
                 "href": {
                   "type": "string",
                   "format": "uri",
-                  "default": "https://api.byu.edu/byuapi/persons/v1/:byu_id/alias_domains/:domain"
+                  "default": "https://api.byu.edu/byuapi/persons/v1/:byu_id/alias_domains/:alias_domain"
                 },
                 "method": {
                   "type": "string",
@@ -6433,7 +6433,7 @@
                 "href": {
                   "type": "string",
                   "format": "uri",
-                  "default": "https://api.byu.edu/byuapi/persons/v1/:byu_id/alias_domains/:domain"
+                  "default": "https://api.byu.edu/byuapi/persons/v1/:byu_id/alias_domains/:alias_domain"
                 },
                 "method": {
                   "type": "string",
@@ -6460,7 +6460,7 @@
                 "href": {
                   "type": "string",
                   "format": "uri",
-                  "default": "https://api.byu.edu/byuapi/persons/v1/:byu_id/alias_domains/:domain"
+                  "default": "https://api.byu.edu/byuapi/persons/v1/:byu_id/alias_domains/:alias_domain"
                 },
                 "method": {
                   "type": "string",
@@ -6841,6 +6841,7 @@
           "properties": {
             "value": {
               "type": "string",
+              "default": "",
               "x-variable": "primary_phone_number",
               "maxLength": 30
             },
@@ -7053,10 +7054,9 @@
             },
             "api_type": {
               "type": "string",
-              "x-variable": "api_type",
+              "default": "derived",
               "enum": [
-                "read-only",
-                "modifiable"
+                "derived"
               ]
             }
           }
@@ -7137,7 +7137,6 @@
           "properties": {
             "value": {
               "type": "string",
-              "pattern": "^([ ]|(?=.*?[A-Z])([A-Za-z-]+ )*?[A-Za-z-]+)$",
               "maxLength": 30,
               "minLength": 1,
               "default": " ",
@@ -7318,12 +7317,9 @@
           ],
           "properties": {
             "value": {
-              "type": "string",
-              "x-variable": "restricted",
-              "enum": [
-                "Y",
-                "N"
-              ]
+              "type": "boolean",
+              "default": false,
+              "x-variable": "restricted"
             },
             "api_type": {
               "type": "string",
@@ -7420,6 +7416,7 @@
         "home_town": {
           "type": "string",
           "default": " ",
+          "pattern": "^( |(?=.*?[A-Z])([A-Za-z-]+ )*?[A-Za-z-]+)$",
           "maxLength": 30
         },
         "home_state_code": {
@@ -15039,8 +15036,8 @@
               "default_page_size": 20,
               "max_page_size": 20,
               "validation_response": {
-                "return_code": 0,
-                "response": ""
+                "return_code": 200,
+                "response": "Success!"
               },
               "default_db": [
                 "ces"
@@ -15184,16 +15181,6 @@
                 "rel": "self",
                 "href": "https://api.byu.edu/byuapi/persons/v1/123456789/addresses",
                 "method": "GET"
-              },
-              "addresses.prev": {
-                "rel": "addresses.prev",
-                "href": "https://api.byu.edu/byuapi/persons/v1/123456789/addresses?page_start=:page_start,page_size=:page_size",
-                "method": "GET"
-              },
-              "addresses.next": {
-                "rel": "addresses.next",
-                "href": "https://api.byu.edu/byuapi/persons/v1/123456789/addresses?page_start=:page_start,page_size=:page_size",
-                "method": "GET"
               }
             },
             "metadata": {
@@ -15204,8 +15191,8 @@
               "default_page_size": 20,
               "max_page_size": 20,
               "validation_response": {
-                "return_code": 0,
-                "response": ""
+                "return_code": 200,
+                "response": "Success!"
               },
               "default_db": [
                 "ces"
@@ -15238,8 +15225,8 @@
                   "default_page_size": 20,
                   "max_page_size": 20,
                   "validation_response": {
-                    "return_code": 0,
-                    "response": ""
+                    "return_code": 200,
+                    "response": "Success!"
                   },
                   "default_db": [
                     "ces"
@@ -15338,7 +15325,103 @@
               }
             ]
           },
-          "alias_domains": {},
+          "alias_domains": {
+            "links": {
+              "alias_domains.info": {
+                "rel": "self",
+                "href": "https://api.byu.edu/byuapi/persons/v1/123456789/alias_domains",
+                "method": "GET"
+              }
+            },
+            "metadata": {
+              "collection_size": 1,
+              "page_start": 1,
+              "page_end": 1,
+              "page_size": 20,
+              "default_page_size": 20,
+              "max_page_size": 20,
+              "validation_response": {
+                "return_code": 200,
+                "response": "Success!"
+              },
+              "default_db": [
+                "ces"
+              ]
+            },
+            "values": [
+              {
+                "links": {
+                  "alias_domains.info": {
+                    "rel": "self",
+                    "href": "https://api.byu.edu/byuapi/persons/v1/123456789/alias_domains/@byu.edu",
+                    "method": "GET"
+                  },
+                  "alias_domains.modify": {
+                    "rel": "addresses.modify",
+                    "href": "https://api.byu.edu/byuapi/persons/v1/123456789/alias_domains/@byu.edu",
+                    "method": "PUT"
+                  },
+                  "alias_domains.delete": {
+                    "rel": "addresses.delete",
+                    "href": "https://api.byu.edu/byuapi/persons/v1/123456789/alias_domains/@byu.edu",
+                    "method": "DELETE"
+                  }
+                },
+                "metadata": {
+                  "collection_size": 1,
+                  "page_start": 1,
+                  "page_end": 1,
+                  "page_size": 20,
+                  "default_page_size": 20,
+                  "max_page_size": 20,
+                  "validation_response": {
+                    "return_code": 200,
+                    "response": "Success!"
+                  },
+                  "default_db": [
+                    "ces"
+                  ]
+                },
+                "byu_id": {
+                  "value": "123456789",
+                  "description": "Cosmo Cougar",
+                  "api_type": "system",
+                  "key": true
+                },
+                "alias_domain": {
+                  "value": "@byu.edu",
+                  "api_type": "read-only",
+                  "key": true
+                },
+                "date_time_updated": {
+                  "value": "2017-09-09T19:15:22.123Z",
+                  "api_type": "system"
+                },
+                "updated_by_id": {
+                  "value": "023296921",
+                  "description": "John Bench",
+                  "api_type": "system"
+                },
+                "date_time_created": {
+                  "value": "2017-09-09T19:15:22.123Z",
+                  "api_type": "system"
+                },
+                "created_by_id": {
+                  "value": "023296921",
+                  "description": "John Bench",
+                  "api_type": "system"
+                },
+                "limit": {
+                  "value": 25,
+                  "api_type": "read-only"
+                },
+                "quantity": {
+                  "value": 4,
+                  "api_type": "derived"
+                }
+              }
+            ]
+          },
           "credentials": {
             "links": {
               "credentials.info": {
@@ -15355,8 +15438,8 @@
               "default_page_size": 20,
               "max_page_size": 20,
               "validation_response": {
-                "return_code": 0,
-                "response": ""
+                "return_code": 200,
+                "response": "Success!"
               },
               "default_db": [
                 "ces"
@@ -15389,8 +15472,8 @@
                   "default_page_size": 20,
                   "max_page_size": 20,
                   "validation_response": {
-                    "return_code": 0,
-                    "response": ""
+                    "return_code": 200,
+                    "response": "Success!"
                   },
                   "default_db": [
                     "ces"
@@ -15483,8 +15566,8 @@
               "default_page_size": 20,
               "max_page_size": 20,
               "validation_response": {
-                "return_code": 0,
-                "response": ""
+                "return_code": 200,
+                "response": "Success!"
               },
               "default_db": [
                 "ces"
@@ -15517,8 +15600,8 @@
                   "default_page_size": 20,
                   "max_page_size": 20,
                   "validation_response": {
-                    "return_code": 0,
-                    "response": ""
+                    "return_code": 200,
+                    "response": "Success!"
                   },
                   "default_db": [
                     "ces"
@@ -15573,7 +15656,105 @@
               }
             ]
           },
-          "email_aliases": {},
+          "email_aliases": {
+            "links": {
+              "email_aliases.info": {
+                "rel": "self",
+                "href": "https://api.byu.edu/byuapi/persons/v1/123456789/email_aliases",
+                "method": "GET"
+              }
+            },
+            "metadata": {
+              "collection_size": 1,
+              "page_start": 1,
+              "page_end": 1,
+              "page_size": 20,
+              "default_page_size": 20,
+              "max_page_size": 20,
+              "validation_response": {
+                "return_code": 200,
+                "response": "Success!"
+              },
+              "default_db": [
+                "ces"
+              ]
+            },
+            "values": [
+              {
+                "links": {
+                  "email_aliases.info": {
+                    "rel": "self",
+                    "href": "https://api.byu.edu/byuapi/persons/v1/123456789/email_aliases/cosmo_cougar@byu.edu,cosmo5@gmail.com",
+                    "method": "GET"
+                  },
+                  "email_aliases.modify": {
+                    "rel": "addresses.modify",
+                    "href": "https://api.byu.edu/byuapi/persons/v1/123456789/email_aliases/cosmo_cougar@byu.edu,cosmo5@gmail.com",
+                    "method": "PUT"
+                  },
+                  "email_aliases.delete": {
+                    "rel": "addresses.delete",
+                    "href": "https://api.byu.edu/byuapi/persons/v1/123456789/email_aliases/cosmo_cougar@byu.edu,cosmo5@gmail.com",
+                    "method": "DELETE"
+                  }
+                },
+                "metadata": {
+                  "collection_size": 1,
+                  "page_start": 1,
+                  "page_end": 1,
+                  "page_size": 20,
+                  "default_page_size": 20,
+                  "max_page_size": 20,
+                  "validation_response": {
+                    "return_code": 200,
+                    "response": "Success!"
+                  },
+                  "default_db": [
+                    "ces"
+                  ]
+                },
+                "byu_id": {
+                  "value": "123456789",
+                  "description": "Cosmo Cougar",
+                  "api_type": "system",
+                  "key": true
+                },
+                "email_alias": {
+                  "value": "cosmo_cougar@byu.edu",
+                  "api_type": "read-only",
+                  "key": true
+                },
+                "forwarding_address": {
+                  "value": "cosmo5@gmail.com",
+                  "api_type": "read-only",
+                  "key": true
+                },
+                "date_time_updated": {
+                  "value": "2017-09-09T19:15:22.123Z",
+                  "api_type": "system"
+                },
+                "updated_by_id": {
+                  "value": "023296921",
+                  "description": "John Bench",
+                  "api_type": "system"
+                },
+                "date_time_created": {
+                  "value": "2017-09-09T19:15:22.123Z",
+                  "api_type": "system"
+                },
+                "created_by_id": {
+                  "value": "023296921",
+                  "description": "John Bench",
+                  "api_type": "system"
+                },
+                "alias_domain": {
+                  "value": "@byu.edu",
+                  "api_type": "read-only",
+                  "key": true
+                }
+              }
+            ]
+          },
           "employee_summaries": {
             "links": {
               "employee_summaries.info": {
@@ -15590,8 +15771,8 @@
               "default_page_size": 20,
               "max_page_size": 20,
               "validation_response": {
-                "return_code": 0,
-                "response": ""
+                "return_code": 200,
+                "response": "Success!"
               },
               "default_db": [
                 "ces"
@@ -15649,8 +15830,8 @@
               "default_page_size": 20,
               "max_page_size": 20,
               "validation_response": {
-                "return_code": 0,
-                "response": ""
+                "return_code": 200,
+                "response": "Success!"
               },
               "default_db": [
                 "ces"
@@ -15683,8 +15864,8 @@
                   "default_page_size": 20,
                   "max_page_size": 20,
                   "validation_response": {
-                    "return_code": 0,
-                    "response": ""
+                    "return_code": 200,
+                    "response": "Success!"
                   },
                   "default_db": [
                     "ces"
@@ -15749,8 +15930,8 @@
               "default_page_size": 20,
               "max_page_size": 20,
               "validation_response": {
-                "return_code": 0,
-                "response": ""
+                "return_code": 200,
+                "response": "Success!"
               },
               "default_db": [
                 "ces"
@@ -15783,8 +15964,8 @@
                   "default_page_size": 20,
                   "max_page_size": 20,
                   "validation_response": {
-                    "return_code": 0,
-                    "response": ""
+                    "return_code": 200,
+                    "response": "Success!"
                   },
                   "default_db": [
                     "ces"
@@ -15888,8 +16069,8 @@
               "default_page_size": 20,
               "max_page_size": 20,
               "validation_response": {
-                "return_code": 0,
-                "response": ""
+                "return_code": 200,
+                "response": "Success!"
               },
               "default_db": [
                 "ces"
@@ -15983,8 +16164,8 @@
               "default_page_size": 20,
               "max_page_size": 20,
               "validation_response": {
-                "return_code": 0,
-                "response": ""
+                "return_code": 200,
+                "response": "Success!"
               },
               "default_db": [
                 "ces"
@@ -16017,8 +16198,8 @@
                   "default_page_size": 20,
                   "max_page_size": 20,
                   "validation_response": {
-                    "return_code": 0,
-                    "response": ""
+                    "return_code": 200,
+                    "response": "Success!"
                   },
                   "default_db": [
                     "ces"
@@ -16124,8 +16305,8 @@
               "default_page_size": 20,
               "max_page_size": 20,
               "validation_response": {
-                "return_code": 0,
-                "response": ""
+                "return_code": 200,
+                "response": "Success!"
               },
               "default_db": [
                 "ces"
@@ -16158,8 +16339,8 @@
                   "default_page_size": 20,
                   "max_page_size": 20,
                   "validation_response": {
-                    "return_code": 0,
-                    "response": ""
+                    "return_code": 200,
+                    "response": "Success!"
                   },
                   "default_db": [
                     "ces"
@@ -16230,8 +16411,8 @@
               "default_page_size": 20,
               "max_page_size": 20,
               "validation_response": {
-                "return_code": 0,
-                "response": ""
+                "return_code": 200,
+                "response": "Success!"
               },
               "default_db": [
                 "ces"
@@ -16264,8 +16445,8 @@
                   "default_page_size": 20,
                   "max_page_size": 20,
                   "validation_response": {
-                    "return_code": 0,
-                    "response": ""
+                    "return_code": 200,
+                    "response": "Success!"
                   },
                   "default_db": [
                     "ces"
@@ -16363,8 +16544,8 @@
               "default_page_size": 20,
               "max_page_size": 20,
               "validation_response": {
-                "return_code": 0,
-                "response": ""
+                "return_code": 200,
+                "response": "Success!"
               },
               "default_db": [
                 "ces"
@@ -16487,8 +16668,8 @@
               "default_page_size": 20,
               "max_page_size": 20,
               "validation_response": {
-                "return_code": 0,
-                "response": ""
+                "return_code": 200,
+                "response": "Success!"
               },
               "default_db": [
                 "ces"
@@ -16521,8 +16702,8 @@
                   "default_page_size": 20,
                   "max_page_size": 20,
                   "validation_response": {
-                    "return_code": 0,
-                    "response": ""
+                    "return_code": 200,
+                    "response": "Success!"
                   },
                   "default_db": [
                     "ces"
@@ -16617,8 +16798,8 @@
               "default_page_size": 20,
               "max_page_size": 20,
               "validation_response": {
-                "return_code": 0,
-                "response": ""
+                "return_code": 200,
+                "response": "Success!"
               },
               "default_db": [
                 "ces"
@@ -16646,8 +16827,8 @@
                   "default_page_size": 20,
                   "max_page_size": 20,
                   "validation_response": {
-                    "return_code": 0,
-                    "response": ""
+                    "return_code": 200,
+                    "response": "Success!"
                   },
                   "default_db": [
                     "ces"
@@ -16802,8 +16983,8 @@
               "default_page_size": 20,
               "max_page_size": 20,
               "validation_response": {
-                "return_code": 0,
-                "response": ""
+                "return_code": 200,
+                "response": "Success!"
               },
               "default_db": [
                 "ces"
@@ -16831,8 +17012,8 @@
                   "default_page_size": 20,
                   "max_page_size": 20,
                   "validation_response": {
-                    "return_code": 0,
-                    "response": ""
+                    "return_code": 200,
+                    "response": "Success!"
                   },
                   "default_db": [
                     "ces"
@@ -16992,8 +17173,8 @@
               "default_page_size": 20,
               "max_page_size": 20,
               "validation_response": {
-                "return_code": 0,
-                "response": ""
+                "return_code": 200,
+                "response": "Success!"
               },
               "default_db": [
                 "ces"
@@ -17094,8 +17275,8 @@
               "default_page_size": 20,
               "max_page_size": 20,
               "validation_response": {
-                "return_code": 0,
-                "response": ""
+                "return_code": 200,
+                "response": "Success!"
               },
               "default_db": [
                 "ces"
@@ -17128,8 +17309,8 @@
                   "default_page_size": 20,
                   "max_page_size": 20,
                   "validation_response": {
-                    "return_code": 0,
-                    "response": ""
+                    "return_code": 200,
+                    "response": "Success!"
                   },
                   "default_db": [
                     "ces"
@@ -17226,8 +17407,8 @@
               "default_page_size": 20,
               "max_page_size": 20,
               "validation_response": {
-                "return_code": 0,
-                "response": ""
+                "return_code": 200,
+                "response": "Success!"
               },
               "default_db": [
                 "ces"
@@ -17260,8 +17441,8 @@
                   "default_page_size": 20,
                   "max_page_size": 20,
                   "validation_response": {
-                    "return_code": 0,
-                    "response": ""
+                    "return_code": 200,
+                    "response": "Success!"
                   },
                   "default_db": [
                     "ces"
@@ -17369,8 +17550,8 @@
               "default_page_size": 20,
               "max_page_size": 20,
               "validation_response": {
-                "return_code": 0,
-                "response": ""
+                "return_code": 200,
+                "response": "Success!"
               },
               "default_db": [
                 "ces"
