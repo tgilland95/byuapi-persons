@@ -142,8 +142,8 @@ exports.getAddresses = async function getAddresses(definitions, byu_id, permissi
   const values = (auth.canViewContact(permissions)) ? (
     results.rows.map(row => mapDBResultsToDefinition(definitions, row, 'modifiable'))
   ) : (
-    results.rows.filter(row => (row.unlisted === 'N' &&
-      row.address_type === 'WRK' && /^(Employee|Faculty)$/g.test(row.primary_role))
+    results.rows.filter(row => (/^N$/g.test(row.unlisted) &&
+      /^WRK$/g.test(row.address_type) && /^(Employee|Faculty)$/g.test(row.primary_role))
     ).map(row => mapDBResultsToDefinition(definitions, row, 'read-only'))
   );
 

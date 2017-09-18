@@ -16,12 +16,32 @@
  */
 
 const basic = require('../basic/basic');
-const addresses = require('../addresses/addresses');
 const auth = require('../auth');
 const db = require('../db');
 const sql = require('./sql');
 const Enforcer = require('swagger-enforcer');
 const utils = require('../utils');
+const addresses = require('../addresses/addresses');
+const alias_domains = require('../alias_domains/alias_domains');
+const credentials = require('../credentials/credentials');
+const delegated_operations_performed = require('../delegated_operations_performed/delegated_operations_performed');
+const email_addresses = require('../email_addresses/email_addresses');
+const email_aliases = require('../email_aliases/email_aliases');
+const employee_summaries = require('../employee_summaries/employee_summaries');
+const ethnicities = require('../ethnicities/ethnicities');
+const family_phones = require('../family_phones/family_phones');
+const government_records = require('../government_records/government_records');
+const group_membership_events = require('../group_membership_events/group_membership_events');
+const group_memberships = require('../group_memberships/group_memberships');
+const groups_administered = require('../groups_administered/groups_administered');
+const id_cards = require('../id_cards/id_cards');
+const languages = require('../languages/languages');
+const my_delegators = require('../my_delegators/my_delegators');
+const my_guests = require('../my_guests/my_guests');
+const personal_records = require('../personal_records/personal_records');
+const phones = require('../phones/phones');
+const relationships = require('../relationships/relationships');
+const student_summaries = require('../student_summaries/student_summaries');
 
 exports.getPersons = async function (definitions, query, permissions) {
   let params = [];
@@ -43,7 +63,6 @@ exports.getPersons = async function (definitions, query, permissions) {
       sql_query_where += (i === length - 1) ? `:byu${i})` : `:byu${i},`;
     }
   }
-
   if ('ssn' in query && auth.canLookupSSN(permissions)) {
     let ssn_query_array = query.ssn.split(',');
 
@@ -60,7 +79,6 @@ exports.getPersons = async function (definitions, query, permissions) {
   } else if ('ssn' in query) {
     throw utils.Error(403, 'User not authorized to lookup by SSN');
   }
-
   if ('surname' in query) {
     let surname = `%${decodeURIComponent(query.surname).replace('*', '%').toLowerCase()}%`;
     params.push(surname);
@@ -301,7 +319,11 @@ exports.getPersons = async function (definitions, query, permissions) {
     }
   }
   const results = await db.execute(`${sql_query_select}${sql_query_from}${sql_query_where}`, params);
-  const values = await Promise.all(results.rows.map(row => exports.getPerson(definitions, row.byu_id, query, permissions)));
+  const values = (auth.hasRestrictedRights(permissions)) ? (
+    await Promise.all(results.rows.map(row => exports.getPerson(definitions, row.byu_id, query, permissions)))
+  ): (
+    await Promise.all(results.rows.filter(row=> /^N$/g.test(row.restricted)).map(row => exports.getPerson(definitions, row.byu_id, query, permissions)))
+  );
   const persons = Enforcer.applyTemplate(definitions.persons, definitions,
     {
       collection_size: results.rows.length, // TODO: Can we use the length of the results.rows? We may get results back with no addresses but have results.
@@ -324,7 +346,87 @@ exports.getPerson = async (definitions, byu_id, query, permissions) => {
   const all_field_sets = [
     {
       name: 'addresses',
-      functionName: 'getAddresses'
+      functionName: addresses.getAddresses
+    },
+    {
+      name: 'alias_domains',
+      functionName: alias_domains.getAliasDomains
+    },
+    {
+      name: 'credentials',
+      functionName: credentials.getCredentials
+    },
+    {
+      name: 'delegated_operations_performed',
+      functionName: delegated_operations_performed.getDelegatedOperationsPerformed
+    },
+    {
+      name: 'email_addresses',
+      functionName: email_addresses.getEmailAddresses
+    },
+    {
+      name: 'email_aliases',
+      functionName: email_aliases.getEmailAliases
+    },
+    {
+      name: 'employee_summaries',
+      functionName: employee_summaries.getEmployeeSummaries
+    },
+    {
+      name: 'ethnicities',
+      functionName: ethnicities.getEthnicities
+    },
+    {
+      name: 'family_phones',
+      functionName: family_phones.getFamilyPhones
+    },
+    {
+      name: 'government_records',
+      functionName: government_records.getGovernmentRecords
+    },
+    {
+      name: 'group_membership_events',
+      functionName: group_membership_events.getGroupMembershipEvents
+    },
+    {
+      name: 'group_memberships',
+      functionName: group_memberships.getGroupMemberships
+    },
+    {
+      name: 'groups_administered',
+      functionName: groups_administered.getGroupsAdministered
+    },
+    {
+      name: 'id_cards',
+      functionName: id_cards.getIdCards
+    },
+    {
+      name: 'languages',
+      functionName: languages.getLanguages
+    },
+    {
+      name: 'my_delegators',
+      functionName: my_delegators.getMyDelegators
+    },
+    {
+      name: 'my_guests',
+      functionName: my_guests.getMyGuests
+    },
+    {
+      name: 'personal_records',
+      functionName: personal_records.getPersonalRecords
+    },
+    {
+      name: 'phones',
+      functionName: phones.getPhones
+    },
+    {
+      name: 'relationships',
+      functionName: relationships.getRelationships
+    },
+    {
+      name: 'student_summaries',
+      functionName: student_summaries.getStudentSummaries
     }
   ];
 
@@ -333,7 +435,7 @@ exports.getPerson = async (definitions, byu_id, query, permissions) => {
       .then(basic_result => {
         result.basic = basic_result;
       })
-      .catch(function (error) {
+      .catch(error => {
         result.basic = Enforcer.applyTemplate(definitions.basic, null,
           {
             byu_id: byu_id,
@@ -343,12 +445,11 @@ exports.getPerson = async (definitions, byu_id, query, permissions) => {
       }));
   }
 
-  all_field_sets.forEach(field_set => {
-
-    if (query.field_sets.includes(field_set.name)) {
-      promises.push(field_set.name[field_set.functionName](definitions, byu_id, permissions)
+  for (let i = 0, length = all_field_sets.length; i < length; i++) {
+    if (query.field_sets.includes(all_field_sets[i].name)) {
+      promises.push(all_field_sets[i].functionName(definitions, byu_id, permissions)
         .then(function (field_set_result) {
-          result[field_set.name] = field_set_result;
+          result[all_field_sets[i].name] = field_set_result;
         })
         .catch(function (error) {
           let objectResult = { values: [] };
@@ -357,10 +458,11 @@ exports.getPerson = async (definitions, byu_id, query, permissions) => {
               validation_response_code: error.status || 500,
               validation_response_message: error.message || 'Internal Server Error'
             });
-          result[field_set.name] = objectResult;
+          result[all_field_sets[i].name] = objectResult;
         }));
     }
-  });
+  }
+
   await Promise.all(promises);
   return result;
 };

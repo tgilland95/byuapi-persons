@@ -1,14 +1,14 @@
 exports.getPersons = {
   sql: {
-    select: `select iam.person.byu_id as "byu_id"`,
+    select: `select iam.person.byu_id as "byu_id", nvl(iam.person.restricted, 'N') as "restricted"`,
 
     from: ` from iam.person`,
 
     where: ` where 1=1`
-  },
-  map: {
-    byu_id: byu_id.value
   }
+  // map: {
+  //   byu_id: byu_id.value
+  // }
 };
 
 exports.addPerson = {
