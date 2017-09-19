@@ -190,7 +190,7 @@ exports.getPersons = async function (definitions, query, permissions) {
       sql_query_where += ` and ct.credential_id = :cid`;
     }
   }
-  if (!('credential_type' in query) && ('credential_id' in query)) {
+  if (!('credential_type' in query) && ('+credential_id' in query)) {
     throw utils.Error(409, 'Invalid Query: You must include credential_type with credential_id');
   }
   if ('user_name' in query) {
@@ -319,11 +319,14 @@ exports.getPersons = async function (definitions, query, permissions) {
     }
   }
   const results = await db.execute(`${sql_query_select}${sql_query_from}${sql_query_where}`, params);
-  const values = (auth.hasRestrictedRights(permissions)) ? (
-    await Promise.all(results.rows.map(row => exports.getPerson(definitions, row.byu_id, query, permissions)))
-  ): (
-    await Promise.all(results.rows.filter(row=> /^N$/g.test(row.restricted)).map(row => exports.getPerson(definitions, row.byu_id, query, permissions)))
-  );
+  console.log("HERE273");
+  const values = await Promise.all(results.rows.map(row => exports.getPerson(definitions, row.byu_id, query, permissions)));
+    // console.log("I am not filtering"),
+
+  // ): (
+  //   console.log("I am filtering"),
+  //   await Promise.all(results.rows.filter(row=> /^N$/g.test(row.restricted)).map(row => exports.getPerson(definitions, row.byu_id, query, permissions)))
+  // );
   const persons = Enforcer.applyTemplate(definitions.persons, definitions,
     {
       collection_size: results.rows.length, // TODO: Can we use the length of the results.rows? We may get results back with no addresses but have results.
@@ -436,12 +439,14 @@ exports.getPerson = async (definitions, byu_id, query, permissions) => {
         result.basic = basic_result;
       })
       .catch(error => {
+        console.error(error.stack);
         result.basic = Enforcer.applyTemplate(definitions.basic, null,
           {
             byu_id: byu_id,
             validation_response_code: error.status || 500,
             validation_response_message: error.message || 'Internal Server Error'
           }, { ignoreMissingRequired: false });
+      //
       }));
   }
 
