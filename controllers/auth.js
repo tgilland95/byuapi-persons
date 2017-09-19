@@ -519,8 +519,8 @@ async function person_handle_auth(auth_info, info_areas) {
         return auth_info;
       } else if (/^update employee$/g.test(info_areas[position].limitation_value)) {
         const results = await db.execute(`
-          select classification, 
-                 standing 
+          select classification as "classification", 
+                 standing       as "standing"
           from   hr.per_warehouse 
           where  byu_id = :BYU_ID`,
           [auth_info.resource_owner]);

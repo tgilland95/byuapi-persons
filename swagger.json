@@ -68,7 +68,7 @@
             ]
           },
           {
-            "name": "+credential_id",
+            "name": "credential_id",
             "in": "query",
             "description": "The credential id",
             "required": false,
@@ -77,7 +77,7 @@
             "minLength": 1
           },
           {
-            "name": "+user_name",
+            "name": "user_name",
             "in": "query",
             "description": "The user name belonging to the credential type",
             "required": false,
@@ -92,7 +92,7 @@
             "pattern": "^[0-9]{9}$"
           },
           {
-            "name": "+email_address",
+            "name": "email_address",
             "in": "query",
             "description": "The person's PERSONAL email address. A case-insensitive search is performed.  A wildcard character is automatically appended.",
             "required": false,
@@ -372,6 +372,9 @@
               }
             }
           },
+          "207": {
+            "$ref": "#/responses/207"
+          },
           "400": {
             "$ref": "#/responses/400"
           },
@@ -530,6 +533,9 @@
               }
             }
           },
+          "207": {
+            "$ref": "#/responses/207"
+          },
           "400": {
             "$ref": "#/responses/400"
           },
@@ -571,6 +577,9 @@
           "204": {
             "description": "Person successfully deleted"
           },
+          "207": {
+            "$ref": "#/responses/207"
+          },
           "400": {
             "$ref": "#/responses/400"
           },
@@ -579,6 +588,9 @@
           },
           "403": {
             "$ref": "#/responses/403"
+          },
+          "409": {
+            "$ref": "#/responses/409"
           },
           "default": {
             "$ref": "#/responses/default"
@@ -754,15 +766,7 @@
             }
           },
           "207": {
-            "type": "object",
-            "required": [
-              "metadata"
-            ],
-            "properties": {
-              "metadata": {
-                "$ref": "#/definitions/simple_metadata"
-              }
-            }
+            "$ref": "#/responses/207"
           },
           "400": {
             "$ref": "#/responses/400"
@@ -819,15 +823,7 @@
             "description": "Address successfully deleted"
           },
           "207": {
-            "type": "object",
-            "required": [
-              "metadata"
-            ],
-            "properties": {
-              "metadata": {
-                "$ref": "#/definitions/simple_metadata"
-              }
-            }
+            "$ref": "#/responses/207"
           },
           "400": {
             "$ref": "#/responses/400"
@@ -876,40 +872,22 @@
             }
           },
           "400": {
-            "description": "Invalid Request - unable to interpret request",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/400"
           },
           "401": {
-            "description": "Authentication required to access data",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/401"
           },
           "403": {
-            "description": "Access denied to protected data",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/403"
           },
           "404": {
-            "description": "Not found",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/404"
           },
           "409": {
-            "description": "Query parameters conflict or are malformed",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/409"
           },
           "default": {
-            "description": "Unexpected error",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/default"
           }
         }
       }
@@ -953,40 +931,22 @@
             }
           },
           "400": {
-            "description": "Invalid Request - unable to interpret request",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/400"
           },
           "401": {
-            "description": "Authentication required to access data",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/401"
           },
           "403": {
-            "description": "Access denied to protected data",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/403"
           },
           "404": {
-            "description": "Not found",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/404"
           },
           "409": {
-            "description": "Query parameters conflict or are malformed",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/409"
           },
           "default": {
-            "description": "Unexpected error",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/default"
           }
         }
       },
@@ -1035,41 +995,26 @@
               }
             }
           },
+          "207": {
+            "$ref": "#/responses/207"
+          },
           "400": {
-            "description": "Invalid Request - unable to interpret request",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/400"
           },
           "401": {
-            "description": "Authentication required to access data",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/401"
           },
           "403": {
-            "description": "Access denied to protected data",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/403"
           },
           "404": {
-            "description": "Not found",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/404"
           },
           "409": {
-            "description": "Query parameters conflict or are malformed",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/409"
           },
           "default": {
-            "description": "Unexpected error",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/default"
           }
         }
       },
@@ -1100,30 +1045,6 @@
         "responses": {
           "204": {
             "description": "Alias domain successfully deleted"
-          },
-          "400": {
-            "description": "Invalid Request - unable to interpret request",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
-          },
-          "401": {
-            "description": "Authentication required to access data",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
-          },
-          "403": {
-            "description": "Access denied to protected data",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
-          },
-          "default": {
-            "description": "Unexpected error",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
           }
         }
       }
@@ -1181,45 +1102,27 @@
             }
           },
           "400": {
-            "description": "Invalid Request - unable to interpret request",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/400"
           },
           "401": {
-            "description": "Authentication required to access data",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/401"
           },
           "403": {
-            "description": "Access denied to protected data",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/403"
           },
           "404": {
-            "description": "Not found",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/404"
           },
           "409": {
-            "description": "Query parameters conflict or are malformed",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/409"
           },
           "default": {
-            "description": "Unexpected error",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/default"
           }
         }
       }
     },
-    "/{byu_id}/credentials/{credential_type},{+credential_id}": {
+    "/{byu_id}/credentials/{credential_type},{credential_id}": {
       "x-controller": "credentials",
       "get": {
         "summary": "Credentials",
@@ -1256,7 +1159,7 @@
             ]
           },
           {
-            "name": "+credential_id",
+            "name": "credential_id",
             "in": "path",
             "description": "One of the credential types available through the meta/credential_type service.",
             "required": true,
@@ -1279,40 +1182,22 @@
             }
           },
           "400": {
-            "description": "Invalid Request - unable to interpret request",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/400"
           },
           "401": {
-            "description": "Authentication required to access data",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/401"
           },
           "403": {
-            "description": "Access denied to protected data",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/403"
           },
           "404": {
-            "description": "Not found",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/404"
           },
           "409": {
-            "description": "Query parameters conflict or are malformed",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/409"
           },
           "default": {
-            "description": "Unexpected error",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/default"
           }
         }
       },
@@ -1351,7 +1236,7 @@
             ]
           },
           {
-            "name": "+credential_id",
+            "name": "credential_id",
             "in": "path",
             "description": "One of the credential types available through the meta/credential_type service.",
             "required": true,
@@ -1382,41 +1267,26 @@
               }
             }
           },
+          "207": {
+            "$ref": "#/responses/207"
+          },
           "400": {
-            "description": "Invalid Request - unable to interpret request",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/400"
           },
           "401": {
-            "description": "Authentication required to access data",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/401"
           },
           "403": {
-            "description": "Access denied to protected data",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/403"
           },
           "404": {
-            "description": "Not found",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/404"
           },
           "409": {
-            "description": "Query parameters conflict or are malformed",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/409"
           },
           "default": {
-            "description": "Unexpected error",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/default"
           }
         }
       },
@@ -1453,7 +1323,7 @@
             ]
           },
           {
-            "name": "+credential_id",
+            "name": "credential_id",
             "in": "path",
             "description": "One of the credential types available through the meta/credential_type service.",
             "required": true,
@@ -1467,29 +1337,20 @@
           "204": {
             "description": "Credential successfully deleted"
           },
+          "207": {
+            "$ref": "#/responses/207"
+          },
           "400": {
-            "description": "Invalid Request - unable to interpret request",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/400"
           },
           "401": {
-            "description": "Authentication required to access data",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/401"
           },
           "403": {
-            "description": "Access denied to protected data",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/403"
           },
           "default": {
-            "description": "Unexpected error",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/default"
           }
         }
       }
@@ -1535,15 +1396,7 @@
             }
           },
           "207": {
-            "type": "object",
-            "required": [
-              "metadata"
-            ],
-            "properties": {
-              "metadata": {
-                "$ref": "#/definitions/simple_metadata"
-              }
-            }
+            "$ref": "#/responses/207"
           },
           "400": {
             "$ref": "#/responses/400"
@@ -1598,40 +1451,22 @@
             }
           },
           "400": {
-            "description": "Invalid Request - unable to interpret request",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/400"
           },
           "401": {
-            "description": "Authentication required to access data",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/401"
           },
           "403": {
-            "description": "Access denied to protected data",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/403"
           },
           "404": {
-            "description": "Not found",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/404"
           },
           "409": {
-            "description": "Query parameters conflict or are malformed",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/409"
           },
           "default": {
-            "description": "Unexpected error",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/default"
           }
         }
       }
@@ -1680,40 +1515,22 @@
             }
           },
           "400": {
-            "description": "Invalid Request - unable to interpret request",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/400"
           },
           "401": {
-            "description": "Authentication required to access data",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/401"
           },
           "403": {
-            "description": "Access denied to protected data",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/403"
           },
           "404": {
-            "description": "Not found",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/404"
           },
           "409": {
-            "description": "Query parameters conflict or are malformed",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/409"
           },
           "default": {
-            "description": "Unexpected error",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/default"
           }
         }
       },
@@ -1767,41 +1584,26 @@
               }
             }
           },
+          "207": {
+            "$ref": "#/responses/207"
+          },
           "400": {
-            "description": "Invalid Request - unable to interpret request",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/400"
           },
           "401": {
-            "description": "Authentication required to access data",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/401"
           },
           "403": {
-            "description": "Access denied to protected data",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/403"
           },
           "404": {
-            "description": "Not found",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/404"
           },
           "409": {
-            "description": "Query parameters conflict or are malformed",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/409"
           },
           "default": {
-            "description": "Unexpected error",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/default"
           }
         }
       },
@@ -1838,29 +1640,20 @@
           "204": {
             "description": "Email address successfully deleted"
           },
+          "207": {
+            "$ref": "#/responses/207"
+          },
           "400": {
-            "description": "Invalid Request - unable to interpret request",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/400"
           },
           "401": {
-            "description": "Authentication required to access data",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/401"
           },
           "403": {
-            "description": "Access denied to protected data",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/403"
           },
           "default": {
-            "description": "Unexpected error",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/default"
           }
         }
       }
@@ -1897,40 +1690,22 @@
             }
           },
           "400": {
-            "description": "Invalid Request - unable to interpret request",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/400"
           },
           "401": {
-            "description": "Authentication required to access data",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/401"
           },
           "403": {
-            "description": "Access denied to protected data",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/403"
           },
           "404": {
-            "description": "Not found",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/404"
           },
           "409": {
-            "description": "Query parameters conflict or are malformed",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/409"
           },
           "default": {
-            "description": "Unexpected error",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/default"
           }
         }
       }
@@ -1983,40 +1758,22 @@
             }
           },
           "400": {
-            "description": "Invalid Request - unable to interpret request",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/400"
           },
           "401": {
-            "description": "Authentication required to access data",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/401"
           },
           "403": {
-            "description": "Access denied to protected data",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/403"
           },
           "404": {
-            "description": "Not found",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/404"
           },
           "409": {
-            "description": "Query parameters conflict or are malformed",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/409"
           },
           "default": {
-            "description": "Unexpected error",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/default"
           }
         }
       },
@@ -2074,41 +1831,26 @@
               }
             }
           },
+          "207": {
+            "$ref": "#/responses/207"
+          },
           "400": {
-            "description": "Invalid Request - unable to interpret request",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/400"
           },
           "401": {
-            "description": "Authentication required to access data",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/401"
           },
           "403": {
-            "description": "Access denied to protected data",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/403"
           },
           "404": {
-            "description": "Not found",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/404"
           },
           "409": {
-            "description": "Query parameters conflict or are malformed",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/409"
           },
           "default": {
-            "description": "Unexpected error",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/default"
           }
         }
       },
@@ -2149,29 +1891,20 @@
           "204": {
             "description": "Email address successfully deleted"
           },
+          "207": {
+            "$ref": "#/responses/207"
+          },
           "400": {
-            "description": "Invalid Request - unable to interpret request",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/400"
           },
           "401": {
-            "description": "Authentication required to access data",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/401"
           },
           "403": {
-            "description": "Access denied to protected data",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/403"
           },
           "default": {
-            "description": "Unexpected error",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/default"
           }
         }
       }
@@ -2219,40 +1952,22 @@
             }
           },
           "400": {
-            "description": "Invalid Request - unable to interpret request",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/400"
           },
           "401": {
-            "description": "Authentication required to access data",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/401"
           },
           "403": {
-            "description": "Access denied to protected data",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/403"
           },
           "404": {
-            "description": "Not found",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/404"
           },
           "409": {
-            "description": "Query parameters conflict or are malformed",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/409"
           },
           "default": {
-            "description": "Unexpected error",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/default"
           }
         }
       }
@@ -2289,40 +2004,22 @@
             }
           },
           "400": {
-            "description": "Invalid Request - unable to interpret request",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/400"
           },
           "401": {
-            "description": "Authentication required to access data",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/401"
           },
           "403": {
-            "description": "Access denied to protected data",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/403"
           },
           "404": {
-            "description": "Not found",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/404"
           },
           "409": {
-            "description": "Query parameters conflict or are malformed",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/409"
           },
           "default": {
-            "description": "Unexpected error",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/default"
           }
         }
       }
@@ -2378,40 +2075,22 @@
             }
           },
           "400": {
-            "description": "Invalid Request - unable to interpret request",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/400"
           },
           "401": {
-            "description": "Authentication required to access data",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/401"
           },
           "403": {
-            "description": "Access denied to protected data",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/403"
           },
           "404": {
-            "description": "Not found",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/404"
           },
           "409": {
-            "description": "Query parameters conflict or are malformed",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/409"
           },
           "default": {
-            "description": "Unexpected error",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/default"
           }
         }
       },
@@ -2472,41 +2151,26 @@
               }
             }
           },
+          "207": {
+            "$ref": "#/responses/207"
+          },
           "400": {
-            "description": "Invalid Request - unable to interpret request",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/400"
           },
           "401": {
-            "description": "Authentication required to access data",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/401"
           },
           "403": {
-            "description": "Access denied to protected data",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/403"
           },
           "404": {
-            "description": "Not found",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/404"
           },
           "409": {
-            "description": "Query parameters conflict or are malformed",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/409"
           },
           "default": {
-            "description": "Unexpected error",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/default"
           }
         }
       },
@@ -2550,29 +2214,20 @@
           "204": {
             "description": "Address successfully deleted"
           },
+          "207": {
+            "$ref": "#/responses/207"
+          },
           "400": {
-            "description": "Invalid Request - unable to interpret request",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/400"
           },
           "401": {
-            "description": "Authentication required to access data",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/401"
           },
           "403": {
-            "description": "Access denied to protected data",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/403"
           },
           "default": {
-            "description": "Unexpected error",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/default"
           }
         }
       }
@@ -2609,40 +2264,22 @@
             }
           },
           "400": {
-            "description": "Invalid Request - unable to interpret request",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/400"
           },
           "401": {
-            "description": "Authentication required to access data",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/401"
           },
           "403": {
-            "description": "Access denied to protected data",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/403"
           },
           "404": {
-            "description": "Not found",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/404"
           },
           "409": {
-            "description": "Query parameters conflict or are malformed",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/409"
           },
           "default": {
-            "description": "Unexpected error",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/default"
           }
         }
       }
@@ -2697,40 +2334,22 @@
             }
           },
           "400": {
-            "description": "Invalid Request - unable to interpret request",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/400"
           },
           "401": {
-            "description": "Authentication required to access data",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/401"
           },
           "403": {
-            "description": "Access denied to protected data",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/403"
           },
           "404": {
-            "description": "Not found",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/404"
           },
           "409": {
-            "description": "Query parameters conflict or are malformed",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/409"
           },
           "default": {
-            "description": "Unexpected error",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/default"
           }
         }
       },
@@ -2791,41 +2410,26 @@
               }
             }
           },
+          "207": {
+            "$ref": "#/responses/207"
+          },
           "400": {
-            "description": "Invalid Request - unable to interpret request",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/400"
           },
           "401": {
-            "description": "Authentication required to access data",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/401"
           },
           "403": {
-            "description": "Access denied to protected data",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/403"
           },
           "404": {
-            "description": "Not found",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/404"
           },
           "409": {
-            "description": "Query parameters conflict or are malformed",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/409"
           },
           "default": {
-            "description": "Unexpected error",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/default"
           }
         }
       },
@@ -2869,29 +2473,20 @@
           "204": {
             "description": "Family phone successfully deleted"
           },
+          "207": {
+            "$ref": "#/responses/207"
+          },
           "400": {
-            "description": "Invalid Request - unable to interpret request",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/400"
           },
           "401": {
-            "description": "Authentication required to access data",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/401"
           },
           "403": {
-            "description": "Access denied to protected data",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/403"
           },
           "default": {
-            "description": "Unexpected error",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/default"
           }
         }
       }
@@ -2928,40 +2523,22 @@
             }
           },
           "400": {
-            "description": "Invalid Request - unable to interpret request",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/400"
           },
           "401": {
-            "description": "Authentication required to access data",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/401"
           },
           "403": {
-            "description": "Access denied to protected data",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/403"
           },
           "404": {
-            "description": "Not found",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/404"
           },
           "409": {
-            "description": "Query parameters conflict or are malformed",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/409"
           },
           "default": {
-            "description": "Unexpected error",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/default"
           }
         }
       },
@@ -3003,41 +2580,26 @@
               }
             }
           },
+          "207": {
+            "$ref": "#/responses/207"
+          },
           "400": {
-            "description": "Invalid Request - unable to interpret request",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/400"
           },
           "401": {
-            "description": "Authentication required to access data",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/401"
           },
           "403": {
-            "description": "Access denied to protected data",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/403"
           },
           "404": {
-            "description": "Not found",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/404"
           },
           "409": {
-            "description": "Query parameters conflict or are malformed",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/409"
           },
           "default": {
-            "description": "Unexpected error",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/default"
           }
         }
       }
@@ -3074,40 +2636,22 @@
             }
           },
           "400": {
-            "description": "Invalid Request - unable to interpret request",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/400"
           },
           "401": {
-            "description": "Authentication required to access data",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/401"
           },
           "403": {
-            "description": "Access denied to protected data",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/403"
           },
           "404": {
-            "description": "Not found",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/404"
           },
           "409": {
-            "description": "Query parameters conflict or are malformed",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/409"
           },
           "default": {
-            "description": "Unexpected error",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/default"
           }
         }
       },
@@ -3150,15 +2694,7 @@
             }
           },
           "207": {
-            "type": "object",
-            "required": [
-              "metadata"
-            ],
-            "properties": {
-              "metadata": {
-                "$ref": "#/definitions/simple_metadata"
-              }
-            }
+            "$ref": "#/responses/207"
           },
           "400": {
             "$ref": "#/responses/400"
@@ -3221,40 +2757,22 @@
             }
           },
           "400": {
-            "description": "Invalid Request - unable to interpret request",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/400"
           },
           "401": {
-            "description": "Authentication required to access data",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/401"
           },
           "403": {
-            "description": "Access denied to protected data",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/403"
           },
           "404": {
-            "description": "Not found",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/404"
           },
           "409": {
-            "description": "Query parameters conflict or are malformed",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/409"
           },
           "default": {
-            "description": "Unexpected error",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/default"
           }
         }
       },
@@ -3305,15 +2823,7 @@
             }
           },
           "207": {
-            "type": "object",
-            "required": [
-              "metadata"
-            ],
-            "properties": {
-              "metadata": {
-                "$ref": "#/definitions/simple_metadata"
-              }
-            }
+            "$ref": "#/responses/207"
           },
           "400": {
             "$ref": "#/responses/400"
@@ -3365,15 +2875,7 @@
             "description": "Address successfully deleted"
           },
           "207": {
-            "type": "object",
-            "required": [
-              "metadata"
-            ],
-            "properties": {
-              "metadata": {
-                "$ref": "#/definitions/simple_metadata"
-              }
-            }
+            "$ref": "#/responses/207"
           },
           "400": {
             "$ref": "#/responses/400"
@@ -3422,40 +2924,22 @@
             }
           },
           "400": {
-            "description": "Invalid Request - unable to interpret request",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/400"
           },
           "401": {
-            "description": "Authentication required to access data",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/401"
           },
           "403": {
-            "description": "Access denied to protected data",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/403"
           },
           "404": {
-            "description": "Not found",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/404"
           },
           "409": {
-            "description": "Query parameters conflict or are malformed",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/409"
           },
           "default": {
-            "description": "Unexpected error",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/default"
           }
         }
       }
@@ -3499,40 +2983,22 @@
             }
           },
           "400": {
-            "description": "Invalid Request - unable to interpret request",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/400"
           },
           "401": {
-            "description": "Authentication required to access data",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/401"
           },
           "403": {
-            "description": "Access denied to protected data",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/403"
           },
           "404": {
-            "description": "Not found",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/404"
           },
           "409": {
-            "description": "Query parameters conflict or are malformed",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/409"
           },
           "default": {
-            "description": "Unexpected error",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/default"
           }
         }
       },
@@ -3573,15 +3039,7 @@
             }
           },
           "207": {
-            "type": "object",
-            "required": [
-              "metadata"
-            ],
-            "properties": {
-              "metadata": {
-                "$ref": "#/definitions/simple_metadata"
-              }
-            }
+            "$ref": "#/responses/207"
           },
           "400": {
             "$ref": "#/responses/400"
@@ -3632,15 +3090,7 @@
             "description": "Group Membership successfully deleted"
           },
           "207": {
-            "type": "object",
-            "required": [
-              "metadata"
-            ],
-            "properties": {
-              "metadata": {
-                "$ref": "#/definitions/simple_metadata"
-              }
-            }
+            "$ref": "#/responses/207"
           },
           "400": {
             "$ref": "#/responses/400"
@@ -3689,40 +3139,22 @@
             }
           },
           "400": {
-            "description": "Invalid Request - unable to interpret request",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/400"
           },
           "401": {
-            "description": "Authentication required to access data",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/401"
           },
           "403": {
-            "description": "Access denied to protected data",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/403"
           },
           "404": {
-            "description": "Not found",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/404"
           },
           "409": {
-            "description": "Query parameters conflict or are malformed",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/409"
           },
           "default": {
-            "description": "Unexpected error",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/default"
           }
         }
       }
@@ -3766,40 +3198,22 @@
             }
           },
           "400": {
-            "description": "Invalid Request - unable to interpret request",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/400"
           },
           "401": {
-            "description": "Authentication required to access data",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/401"
           },
           "403": {
-            "description": "Access denied to protected data",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/403"
           },
           "404": {
-            "description": "Not found",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/404"
           },
           "409": {
-            "description": "Query parameters conflict or are malformed",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/409"
           },
           "default": {
-            "description": "Unexpected error",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/default"
           }
         }
       },
@@ -3849,15 +3263,7 @@
             }
           },
           "207": {
-            "type": "object",
-            "required": [
-              "metadata"
-            ],
-            "properties": {
-              "metadata": {
-                "$ref": "#/definitions/simple_metadata"
-              }
-            }
+            "$ref": "#/responses/207"
           },
           "400": {
             "$ref": "#/responses/400"
@@ -3908,15 +3314,7 @@
             "description": "Group administration successfully deleted"
           },
           "207": {
-            "type": "object",
-            "required": [
-              "metadata"
-            ],
-            "properties": {
-              "metadata": {
-                "$ref": "#/definitions/simple_metadata"
-              }
-            }
+            "$ref": "#/responses/207"
           },
           "400": {
             "$ref": "#/responses/400"
@@ -3965,40 +3363,22 @@
             }
           },
           "400": {
-            "description": "Invalid Request - unable to interpret request",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/400"
           },
           "401": {
-            "description": "Authentication required to access data",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/401"
           },
           "403": {
-            "description": "Access denied to protected data",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/403"
           },
           "404": {
-            "description": "Not found",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/404"
           },
           "409": {
-            "description": "Query parameters conflict or are malformed",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/409"
           },
           "default": {
-            "description": "Unexpected error",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/default"
           }
         }
       },
@@ -4040,41 +3420,26 @@
               }
             }
           },
+          "207": {
+            "$ref": "#/responses/207"
+          },
           "400": {
-            "description": "Invalid Request - unable to interpret request",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/400"
           },
           "401": {
-            "description": "Authentication required to access data",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/401"
           },
           "403": {
-            "description": "Access denied to protected data",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/403"
           },
           "404": {
-            "description": "Not found",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/404"
           },
           "409": {
-            "description": "Query parameters conflict or are malformed",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/409"
           },
           "default": {
-            "description": "Unexpected error",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/default"
           }
         }
       },
@@ -4099,29 +3464,20 @@
           "204": {
             "description": "Person's ID card information successfully deleted"
           },
+          "207": {
+            "$ref": "#/responses/207"
+          },
           "400": {
-            "description": "Invalid Request - unable to interpret request",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/400"
           },
           "401": {
-            "description": "Authentication required to access data",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/401"
           },
           "403": {
-            "description": "Access denied to protected data",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/403"
           },
           "default": {
-            "description": "Unexpected error",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/default"
           }
         }
       }
@@ -4158,40 +3514,22 @@
             }
           },
           "400": {
-            "description": "Invalid Request - unable to interpret request",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/400"
           },
           "401": {
-            "description": "Authentication required to access data",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/401"
           },
           "403": {
-            "description": "Access denied to protected data",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/403"
           },
           "404": {
-            "description": "Not found",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/404"
           },
           "409": {
-            "description": "Query parameters conflict or are malformed",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/409"
           },
           "default": {
-            "description": "Unexpected error",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/default"
           }
         }
       }
@@ -4235,40 +3573,22 @@
             }
           },
           "400": {
-            "description": "Invalid Request - unable to interpret request",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/400"
           },
           "401": {
-            "description": "Authentication required to access data",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/401"
           },
           "403": {
-            "description": "Access denied to protected data",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/403"
           },
           "404": {
-            "description": "Not found",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/404"
           },
           "409": {
-            "description": "Query parameters conflict or are malformed",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/409"
           },
           "default": {
-            "description": "Unexpected error",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/default"
           }
         }
       },
@@ -4317,41 +3637,26 @@
               }
             }
           },
+          "207": {
+            "$ref": "#/responses/207"
+          },
           "400": {
-            "description": "Invalid Request - unable to interpret request",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/400"
           },
           "401": {
-            "description": "Authentication required to access data",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/401"
           },
           "403": {
-            "description": "Access denied to protected data",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/403"
           },
           "404": {
-            "description": "Not found",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/404"
           },
           "409": {
-            "description": "Query parameters conflict or are malformed",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/409"
           },
           "default": {
-            "description": "Unexpected error",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/default"
           }
         }
       },
@@ -4383,29 +3688,20 @@
           "204": {
             "description": "Address successfully deleted"
           },
+          "207": {
+            "$ref": "#/responses/207"
+          },
           "400": {
-            "description": "Invalid Request - unable to interpret request",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/400"
           },
           "401": {
-            "description": "Authentication required to access data",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/401"
           },
           "403": {
-            "description": "Access denied to protected data",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/403"
           },
           "default": {
-            "description": "Unexpected error",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/default"
           }
         }
       }
@@ -4457,40 +3753,22 @@
             }
           },
           "400": {
-            "description": "Invalid Request - unable to interpret request",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/400"
           },
           "401": {
-            "description": "Authentication required to access data",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/401"
           },
           "403": {
-            "description": "Access denied to protected data",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/403"
           },
           "404": {
-            "description": "Not found",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/404"
           },
           "409": {
-            "description": "Query parameters conflict or are malformed",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/409"
           },
           "default": {
-            "description": "Unexpected error",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/default"
           }
         }
       }
@@ -4533,40 +3811,22 @@
             }
           },
           "400": {
-            "description": "Invalid Request - unable to interpret request",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/400"
           },
           "401": {
-            "description": "Authentication required to access data",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/401"
           },
           "403": {
-            "description": "Access denied to protected data",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/403"
           },
           "404": {
-            "description": "Not found",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/404"
           },
           "409": {
-            "description": "Query parameters conflict or are malformed",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/409"
           },
           "default": {
-            "description": "Unexpected error",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/default"
           }
         }
       },
@@ -4614,41 +3874,26 @@
               }
             }
           },
+          "207": {
+            "$ref": "#/responses/207"
+          },
           "400": {
-            "description": "Invalid Request - unable to interpret request",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/400"
           },
           "401": {
-            "description": "Authentication required to access data",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/401"
           },
           "403": {
-            "description": "Access denied to protected data",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/403"
           },
           "404": {
-            "description": "Not found",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/404"
           },
           "409": {
-            "description": "Query parameters conflict or are malformed",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/409"
           },
           "default": {
-            "description": "Unexpected error",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/default"
           }
         }
       }
@@ -4700,40 +3945,22 @@
             }
           },
           "400": {
-            "description": "Invalid Request - unable to interpret request",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/400"
           },
           "401": {
-            "description": "Authentication required to access data",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/401"
           },
           "403": {
-            "description": "Access denied to protected data",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/403"
           },
           "404": {
-            "description": "Not found",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/404"
           },
           "409": {
-            "description": "Query parameters conflict or are malformed",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/409"
           },
           "default": {
-            "description": "Unexpected error",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/default"
           }
         }
       },
@@ -4775,41 +4002,26 @@
               }
             }
           },
+          "207": {
+            "$ref": "#/responses/207"
+          },
           "400": {
-            "description": "Invalid Request - unable to interpret request",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/400"
           },
           "401": {
-            "description": "Authentication required to access data",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/401"
           },
           "403": {
-            "description": "Access denied to protected data",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/403"
           },
           "404": {
-            "description": "Not found",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/404"
           },
           "409": {
-            "description": "Query parameters conflict or are malformed",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/409"
           },
           "default": {
-            "description": "Unexpected error",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/default"
           }
         }
       }
@@ -4853,40 +4065,22 @@
             }
           },
           "400": {
-            "description": "Invalid Request - unable to interpret request",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/400"
           },
           "401": {
-            "description": "Authentication required to access data",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/401"
           },
           "403": {
-            "description": "Access denied to protected data",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/403"
           },
           "404": {
-            "description": "Not found",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/404"
           },
           "409": {
-            "description": "Query parameters conflict or are malformed",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/409"
           },
           "default": {
-            "description": "Unexpected error",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/default"
           }
         }
       },
@@ -4935,41 +4129,26 @@
               }
             }
           },
+          "207": {
+            "$ref": "#/responses/207"
+          },
           "400": {
-            "description": "Invalid Request - unable to interpret request",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/400"
           },
           "401": {
-            "description": "Authentication required to access data",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/401"
           },
           "403": {
-            "description": "Access denied to protected data",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/403"
           },
           "404": {
-            "description": "Not found",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/404"
           },
           "409": {
-            "description": "Query parameters conflict or are malformed",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/409"
           },
           "default": {
-            "description": "Unexpected error",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/default"
           }
         }
       }
@@ -5006,40 +4185,22 @@
             }
           },
           "400": {
-            "description": "Invalid Request - unable to interpret request",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/400"
           },
           "401": {
-            "description": "Authentication required to access data",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/401"
           },
           "403": {
-            "description": "Access denied to protected data",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/403"
           },
           "404": {
-            "description": "Not found",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/404"
           },
           "409": {
-            "description": "Query parameters conflict or are malformed",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/409"
           },
           "default": {
-            "description": "Unexpected error",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/default"
           }
         }
       },
@@ -5081,41 +4242,26 @@
               }
             }
           },
+          "207": {
+            "$ref": "#/responses/207"
+          },
           "400": {
-            "description": "Invalid Request - unable to interpret request",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/400"
           },
           "401": {
-            "description": "Authentication required to access data",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/401"
           },
           "403": {
-            "description": "Access denied to protected data",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/403"
           },
           "404": {
-            "description": "Not found",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/404"
           },
           "409": {
-            "description": "Query parameters conflict or are malformed",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/409"
           },
           "default": {
-            "description": "Unexpected error",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/default"
           }
         }
       }
@@ -5159,40 +4305,22 @@
             }
           },
           "400": {
-            "description": "Invalid Request - unable to interpret request",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/400"
           },
           "401": {
-            "description": "Authentication required to access data",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/401"
           },
           "403": {
-            "description": "Access denied to protected data",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/403"
           },
           "404": {
-            "description": "Not found",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/404"
           },
           "409": {
-            "description": "Query parameters conflict or are malformed",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/409"
           },
           "default": {
-            "description": "Unexpected error",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/default"
           }
         }
       }
@@ -5237,40 +4365,22 @@
             }
           },
           "400": {
-            "description": "Invalid Request - unable to interpret request",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/400"
           },
           "401": {
-            "description": "Authentication required to access data",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/401"
           },
           "403": {
-            "description": "Access denied to protected data",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/403"
           },
           "404": {
-            "description": "Not found",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/404"
           },
           "409": {
-            "description": "Query parameters conflict or are malformed",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/409"
           },
           "default": {
-            "description": "Unexpected error",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/default"
           }
         }
       },
@@ -5320,41 +4430,26 @@
               }
             }
           },
+          "207": {
+            "$ref": "#/responses/207"
+          },
           "400": {
-            "description": "Invalid Request - unable to interpret request",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/400"
           },
           "401": {
-            "description": "Authentication required to access data",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/401"
           },
           "403": {
-            "description": "Access denied to protected data",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/403"
           },
           "404": {
-            "description": "Not found",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/404"
           },
           "409": {
-            "description": "Query parameters conflict or are malformed",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/409"
           },
           "default": {
-            "description": "Unexpected error",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/default"
           }
         }
       },
@@ -5387,29 +4482,20 @@
           "204": {
             "description": "Address successfully deleted"
           },
+          "207": {
+            "$ref": "#/responses/207"
+          },
           "400": {
-            "description": "Invalid Request - unable to interpret request",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/400"
           },
           "401": {
-            "description": "Authentication required to access data",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/401"
           },
           "403": {
-            "description": "Access denied to protected data",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/403"
           },
           "default": {
-            "description": "Unexpected error",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/default"
           }
         }
       }
@@ -5446,40 +4532,22 @@
             }
           },
           "400": {
-            "description": "Invalid Request - unable to interpret request",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/400"
           },
           "401": {
-            "description": "Authentication required to access data",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/401"
           },
           "403": {
-            "description": "Access denied to protected data",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/403"
           },
           "404": {
-            "description": "Not found",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/404"
           },
           "409": {
-            "description": "Query parameters conflict or are malformed",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/409"
           },
           "default": {
-            "description": "Unexpected error",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/default"
           }
         }
       }
@@ -5523,40 +4591,22 @@
             }
           },
           "400": {
-            "description": "Invalid Request - unable to interpret request",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/400"
           },
           "401": {
-            "description": "Authentication required to access data",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/401"
           },
           "403": {
-            "description": "Access denied to protected data",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/403"
           },
           "404": {
-            "description": "Not found",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/404"
           },
           "409": {
-            "description": "Query parameters conflict or are malformed",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/409"
           },
           "default": {
-            "description": "Unexpected error",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/default"
           }
         }
       },
@@ -5605,41 +4655,26 @@
               }
             }
           },
+          "207": {
+            "$ref": "#/responses/207"
+          },
           "400": {
-            "description": "Invalid Request - unable to interpret request",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/400"
           },
           "401": {
-            "description": "Authentication required to access data",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/401"
           },
           "403": {
-            "description": "Access denied to protected data",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/403"
           },
           "404": {
-            "description": "Not found",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/404"
           },
           "409": {
-            "description": "Query parameters conflict or are malformed",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/409"
           },
           "default": {
-            "description": "Unexpected error",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/default"
           }
         }
       },
@@ -5671,29 +4706,20 @@
           "204": {
             "description": "Relationship successfully deleted"
           },
+          "207": {
+            "$ref": "#/responses/207"
+          },
           "400": {
-            "description": "Invalid Request - unable to interpret request",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/400"
           },
           "401": {
-            "description": "Authentication required to access data",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/401"
           },
           "403": {
-            "description": "Access denied to protected data",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/403"
           },
           "default": {
-            "description": "Unexpected error",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/default"
           }
         }
       }
@@ -5730,40 +4756,22 @@
             }
           },
           "400": {
-            "description": "Invalid Request - unable to interpret request",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/400"
           },
           "401": {
-            "description": "Authentication required to access data",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/401"
           },
           "403": {
-            "description": "Access denied to protected data",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/403"
           },
           "404": {
-            "description": "Not found",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/404"
           },
           "409": {
-            "description": "Query parameters conflict or are malformed",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/409"
           },
           "default": {
-            "description": "Unexpected error",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+            "$ref": "#/responses/default"
           }
         }
       }
@@ -6761,14 +5769,16 @@
           "properties": {
             "value": {
               "type": "string",
-              "pattern": "^[0-9]{9}$",
+              "default": " ",
               "x-variable": "person_id"
             },
             "api_type": {
               "type": "string",
+              "x-variable": "unauthorized_api_type",
               "default": "system",
               "enum": [
-                "system"
+                "system",
+                "unauthorized"
               ]
             }
           }
@@ -6780,20 +5790,20 @@
           "type": "object",
           "description": "Whether or not the person is deceased",
           "required": [
-            "value",
             "api_type"
           ],
           "properties": {
             "value": {
               "type": "boolean",
-              "default": false,
               "x-variable": "deceased"
             },
             "api_type": {
               "type": "string",
               "default": "related",
+              "x-variable": "unauthorized_api_type",
               "enum": [
-                "related"
+                "related",
+                "unauthorized"
               ]
             },
             "related_resource": {
@@ -6806,7 +5816,6 @@
           "type": "object",
           "description": "The email address",
           "required": [
-            "value",
             "api_type",
             "related_resource"
           ],
@@ -6814,15 +5823,16 @@
             "value": {
               "type": "string",
               "format": "email",
-              "x-variable": "personal_email_address",
-              "maxLength": 70,
-              "minLength": 7
+              "default": " ",
+              "x-variable": "personal_email_address"
             },
             "api_type": {
               "type": "string",
               "default": "related",
+              "x-variable": "unauthorized_api_type",
               "enum": [
-                "related"
+                "related",
+                "unauthorized"
               ]
             },
             "related_resource": {
@@ -6834,22 +5844,23 @@
         "primary_phone_number": {
           "type": "object",
           "required": [
-            "value",
             "api_type",
             "related_resource"
           ],
           "properties": {
             "value": {
               "type": "string",
-              "default": "",
+              "default": " ",
               "x-variable": "primary_phone_number",
               "maxLength": 30
             },
             "api_type": {
               "type": "string",
               "default": "related",
+              "x-variable": "unauthorized_api_type",
               "enum": [
-                "related"
+                "related",
+                "unauthorized"
               ]
             }
           }
@@ -6886,6 +5897,7 @@
             },
             "api_type": {
               "type": "string",
+              "default": "read-only",
               "x-variable": "basic_api_type",
               "enum": [
                 "read-only",
@@ -6904,16 +5916,18 @@
           "properties": {
             "value": {
               "type": "string",
-              "pattern": "^(?=.*?[A-Z])([A-Za-z-]+ )*?[A-Za-z-]+$",
+              "default": " ",
               "maxLength": 40,
               "x-variable": "first_name"
             },
             "api_type": {
               "type": "string",
+              "default": "unauthorized",
               "x-variable": "name_api_type",
               "enum": [
                 "read-only",
-                "modifiable"
+                "modifiable",
+                "unauthorized"
               ]
             }
           }
@@ -6929,14 +5943,17 @@
             "value": {
               "type": "string",
               "maxLength": 40,
+              "default": "",
               "x-variable": "middle_name"
             },
             "api_type": {
               "type": "string",
+              "default": "unauthorized",
               "x-variable": "name_api_type",
               "enum": [
                 "read-only",
-                "modifiable"
+                "modifiable",
+                "unauthorized"
               ]
             }
           }
@@ -6952,14 +5969,17 @@
             "value": {
               "type": "string",
               "maxLength": 40,
+              "default": "",
               "x-variable": "surname"
             },
             "api_type": {
               "type": "string",
+              "default": "unauthorized",
               "x-variable": "name_api_type",
               "enum": [
                 "read-only",
-                "modifiable"
+                "modifiable",
+                "unauthorized"
               ]
             }
           }
@@ -6975,18 +5995,18 @@
             "value": {
               "type": "string",
               "description": "Generational suffix for name: Roman Numeral, JR, SR, Jr, or Sr",
-              "default": " ",
-              "pattern": "^( |Sr|SR|JR|Jr|M{0,4}(CM|CD|D?C{0,3})(XC|XL|L?X{0,3})(IX|IV|V?I{0,3}))$",
+              "default": "",
               "maxLength": 10,
-              "minLength": 1,
               "x-variable": "suffix"
             },
             "api_type": {
               "type": "string",
+              "default": "unauthorized",
               "x-variable": "basic_api_type",
               "enum": [
                 "read-only",
-                "modifiable"
+                "modifiable",
+                "unauthorized"
               ]
             }
           }
@@ -7001,12 +6021,13 @@
           "properties": {
             "value": {
               "type": "string",
-              "pattern": "^(?=.*?[A-Z])([A-Za-z-]+ )*?[A-Za-z-]+$",
               "maxLength": 25,
+              "default": "",
               "x-variable": "preferred_first_name"
             },
             "api_type": {
               "type": "string",
+              "default": "read-only",
               "x-variable": "basic_api_type",
               "enum": [
                 "read-only",
@@ -7026,10 +6047,12 @@
             "value": {
               "type": "string",
               "maxLength": 40,
+              "default": "",
               "x-variable": "preferred_surname"
             },
             "api_type": {
               "type": "string",
+              "default": "read-only",
               "x-variable": "basic_api_type",
               "enum": [
                 "read-only",
@@ -7048,15 +6071,17 @@
           "properties": {
             "value": {
               "type": "string",
-              "pattern": "^(?=.*?[A-Z])([A-Za-z-]+ )*?[A-Za-z-]+$",
               "maxLength": 80,
+              "default": "",
               "x-variable": "rest_of_name"
             },
             "api_type": {
               "type": "string",
               "default": "derived",
+              "x-variable": "unauthorized_api_type",
               "enum": [
-                "derived"
+                "derived",
+                "unauthorized"
               ]
             }
           }
@@ -7072,13 +6097,16 @@
             "value": {
               "type": "string",
               "maxLength": 122,
+              "default": "",
               "x-variable": "name_lnf"
             },
             "api_type": {
               "type": "string",
               "default": "derived",
+              "x-variable": "unauthorized_api_type",
               "enum": [
-                "derived"
+                "derived",
+                "unauthorized"
               ]
             }
           }
@@ -7094,13 +6122,16 @@
             "value": {
               "type": "string",
               "maxLength": 121,
+              "default": "",
               "x-variable": "name_fnf"
             },
             "api_type": {
               "type": "string",
               "default": "derived",
+              "x-variable": "unauthorized_api_type",
               "enum": [
-                "derived"
+                "derived",
+                "unauthorized"
               ]
             }
           }
@@ -7116,6 +6147,7 @@
             "value": {
               "type": "string",
               "maxLength": 100,
+              "default": "",
               "x-variable": "preferred_name"
             },
             "api_type": {
@@ -7138,16 +6170,17 @@
             "value": {
               "type": "string",
               "maxLength": 30,
-              "minLength": 1,
-              "default": " ",
+              "default": "",
               "x-variable": "home_town"
             },
             "api_type": {
               "type": "string",
+              "default": "unauthorized",
               "x-variable": "basic_api_type",
               "enum": [
                 "read-only",
-                "modifiable"
+                "modifiable",
+                "unauthorized"
               ]
             }
           }
@@ -7163,7 +6196,7 @@
           "properties": {
             "value": {
               "type": "string",
-              "default": "??",
+              "default": "",
               "maxLength": 4,
               "x-variable": "home_state_code"
             },
@@ -7175,10 +6208,12 @@
             },
             "api_type": {
               "type": "string",
+              "default": "unauthorized",
               "x-variable": "basic_api_type",
               "enum": [
                 "read-only",
-                "modifiable"
+                "modifiable",
+                "unauthorized"
               ]
             }
           }
@@ -7194,22 +6229,24 @@
           "properties": {
             "value": {
               "type": "string",
-              "default": "???",
-              "pattern": "^[A-Z?]{3}$",
               "maxLength": 3,
+              "default": "",
               "x-variable": "home_country_code"
             },
             "description": {
               "type": "string",
               "maxLength": 35,
+              "default": "",
               "x-variable": "home_country_name"
             },
             "api_type": {
               "type": "string",
+              "default": "unauthorized",
               "x-variable": "basic_api_type",
               "enum": [
                 "read-only",
-                "modifiable"
+                "modifiable",
+                "unauthorized"
               ]
             }
           }
@@ -7226,6 +6263,7 @@
             "value": {
               "type": "string",
               "maxLength": 6,
+              "default": "",
               "x-variable": "high_school_code"
             },
             "description": {
@@ -7236,10 +6274,12 @@
             },
             "api_type": {
               "type": "string",
+              "default": "unauthorized",
               "x-variable": "basic_api_type",
               "enum": [
                 "read-only",
-                "modifiable"
+                "modifiable",
+                "unauthorized"
               ]
             },
             "domain": {
@@ -7264,8 +6304,10 @@
             "api_type": {
               "type": "string",
               "default": "related",
+              "x-variable": "unauthorized_api_type",
               "enum": [
-                "related"
+                "related",
+                "unauthorized"
               ]
             },
             "related_resource": {
@@ -7285,8 +6327,8 @@
           "properties": {
             "value": {
               "type": "string",
-              "default": "??",
               "maxLength": 4,
+              "default": "",
               "x-variable": "high_school_state_code"
             },
             "description": {
@@ -7298,8 +6340,10 @@
             "api_type": {
               "type": "string",
               "default": "related",
+              "x-variable": "unauthorized_api_type",
               "enum": [
-                "related"
+                "related",
+                "unauthorized"
               ]
             },
             "related_resource": {
@@ -7312,21 +6356,21 @@
           "type": "object",
           "description": "Indicates the restricted status, as defined by FERPA",
           "required": [
-            "value",
             "api_type"
           ],
           "properties": {
             "value": {
               "type": "boolean",
-              "default": false,
               "x-variable": "restricted"
             },
             "api_type": {
               "type": "string",
+              "default": "unauthorized",
               "x-variable": "basic_api_type",
               "enum": [
                 "read-only",
-                "modifiable"
+                "modifiable",
+                "unauthorized"
               ]
             }
           }
@@ -7335,20 +6379,20 @@
           "type": "object",
           "description": "Indicates whether a merge is pending for this record, in which case updates are not allowed",
           "required": [
-            "value",
             "api_type"
           ],
           "properties": {
             "value": {
               "type": "boolean",
-              "default": false,
               "x-variable": "merge_in_process"
             },
             "api_type": {
               "type": "string",
               "default": "derived",
+              "x-variable": "unauthorized_api_type",
               "enum": [
-                "derived"
+                "derived",
+                "unauthorized"
               ]
             }
           }
@@ -7576,26 +6620,28 @@
       "description": "The BYU ID of the person who performed the creation",
       "required": [
         "value",
-        "api_type",
-        "description"
+        "api_type"
       ],
       "properties": {
         "value": {
           "type": "string",
+          "default": " ",
           "x-variable": "created_by_id"
-        },
-        "api_type": {
-          "type": "string",
-          "default": "system",
-          "enum": [
-            "system"
-          ]
         },
         "description": {
           "type": "string",
           "maxLength": 50,
-          "default": "",
+          "default": " ",
           "x-variable": "created_by_name"
+        },
+        "api_type": {
+          "type": "string",
+          "default": "system",
+          "x-variable": "unauthorized_api_type",
+          "enum": [
+            "system",
+            "unauthorized"
+          ]
         }
       }
     },
@@ -7722,6 +6768,8 @@
             },
             "api_type": {
               "type": "string",
+              "default": "read-only",
+              "x-variable": "api_type",
               "enum": [
                 "read-only",
                 "modifiable"
@@ -7748,6 +6796,8 @@
             },
             "api_type": {
               "type": "string",
+              "default": "read-only",
+              "x-variable": "api_type",
               "enum": [
                 "read-only",
                 "modifiable"
@@ -7992,6 +7042,8 @@
       "description": "The credentials sub-resource data",
       "type": "object",
       "required": [
+        "links",
+        "metadata",
         "values"
       ],
       "properties": {
@@ -8063,7 +7115,6 @@
       "type": "object",
       "description": "The date/time when the entity was created, given in GMT (Greenwich Mean Time)",
       "required": [
-        "value",
         "api_type"
       ],
       "properties": {
@@ -8075,8 +7126,10 @@
         "api_type": {
           "type": "string",
           "default": "system",
+          "x-variable": "unauthorized_api_type",
           "enum": [
-            "system"
+            "system",
+            "unauthorized"
           ]
         }
       }
@@ -8126,7 +7179,6 @@
       "type": "object",
       "description": "The most recent date/time updated, given in GMT (Greenwich Mean Time)",
       "required": [
-        "value",
         "api_type"
       ],
       "properties": {
@@ -8138,8 +7190,10 @@
         "api_type": {
           "type": "string",
           "default": "system",
+          "x-variable": "unauthorized_api_type",
           "enum": [
-            "system"
+            "system",
+            "unauthorized"
           ]
         }
       }
@@ -8925,24 +7979,6 @@
         }
       }
     },
-    "error": {
-      "description": "Error Information",
-      "required": [
-        "return_code",
-        "explanation",
-        "error"
-      ],
-      "return_code": {
-        "type": "integer",
-        "format": "int32"
-      },
-      "explanation": {
-        "type": "string"
-      },
-      "error": {
-        "type": "string"
-      }
-    },
     "error_response": {
       "type": "object",
       "required": [
@@ -9206,8 +8242,8 @@
       "properties": {
         "value": {
           "type": "string",
-          "x-variable": "expiration_date",
-          "format": "date"
+          "format": "date",
+          "x-variable": "expiration_date"
         },
         "api_type": {
           "type": "string",
@@ -12321,8 +11357,10 @@
         "api_type": {
           "type": "string",
           "default": "related",
+          "x-variable": "unauthorized_api_type",
           "enum": [
-            "related"
+            "related",
+            "unauthorized"
           ]
         },
         "related_resource": {
@@ -14793,30 +13831,32 @@
       }
     },
     "updated_by_id": {
-      "description": "The BYU ID of the last person who performed the last update",
       "type": "object",
+      "description": "The BYU ID of the last person who performed the last update",
       "required": [
         "value",
-        "api_type",
-        "description"
+        "api_type"
       ],
       "properties": {
         "value": {
           "type": "string",
-          "pattern": "^[0-9]{9}$",
+          "default": " ",
           "x-variable": "updated_by_id"
-        },
-        "api_type": {
-          "type": "string",
-          "default": "system",
-          "enum": [
-            "system"
-          ]
         },
         "description": {
           "type": "string",
           "maxLength": 50,
+          "default": " ",
           "x-variable": "updated_by_name"
+        },
+        "api_type": {
+          "type": "string",
+          "default": "system",
+          "x-variable": "unauthorized_api_type",
+          "enum": [
+            "system",
+            "unauthorized"
+          ]
         }
       }
     },
@@ -14845,6 +13885,12 @@
     }
   },
   "responses": {
+    "207": {
+      "description": "Partial Success - unable to raise event",
+      "schema": {
+        "$ref": "#/definitions/error_response"
+      }
+    },
     "400": {
       "description": "Invalid Request - unable to interpret request",
       "schema": {

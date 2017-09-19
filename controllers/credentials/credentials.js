@@ -35,23 +35,23 @@ function mapDBResultsToDefinition(definitions, row, api_type) {
   return Enforcer.applyTemplate(definitions.credential, null,
     {
       byu_id: row.byu_id,
-      name: row.name,
+      name: row.name || ' ',
       credential_type: row.credential_type,
       credential_id: row.credential_id,
       api_type: api_type,
-      date_time_updated: row.date_time_updated,
+      date_time_updated: row.date_time_updated || undefined,
       updated_by_id: row.updated_by_id,
-      updated_by_name: row.updated_by_name || undefined,
-      date_time_created: row.date_time_created,
+      updated_by_name: row.updated_by_name || ' ',
+      date_time_created: row.date_time_created || undefined,
       created_by_id: row.created_by_id,
-      created_by_name: row.created_by_name || undefined,
-      user_name: row.user_name,
-      lost_or_stolen: row.lost_or_stolen,
-      status: row.status,
-      expiration_date: row.expiration_date,
-      issuing_location: row.issuing_location,
-      physical_form: row.physical_form,
-      associated_device: row.associated_device,
+      created_by_name: row.created_by_name || ' ',
+      user_name: row.user_name || ' ',
+      lost_or_stolen: row.lost_or_stolen || false,
+      status: row.status || ' ',
+      expiration_date: row.expiration_date || undefined,
+      issuing_location: row.issuing_location || ' ',
+      physical_form: row.physical_form || ' ',
+      associated_device: row.associated_device || ' ',
     }
   );
 }
@@ -64,12 +64,12 @@ function modifiableOrReadOnly(credential_type, permissions) {
     case "BYU_HAWAII_ID":
     case "LDS_ACCOUNT_ID":
     case "LDS_CMIS_ID":
-      if (auth.canUpdateCASCredential(permissions)) {
+      if (auth.canUpdateCasCredential(permissions)) {
         return 'modifiable';
       }
       break;
     case "SEMINARY_STUDENT_ID":
-      if (auth.canUpdateCASCredential(permissions) || auth.isLDSSync(permissions)) {
+      if (auth.canUpdateCasCredential(permissions) || auth.canIsLdsSync(permissions)) {
         return 'modifiable';
       }
       break;
@@ -80,7 +80,7 @@ function modifiableOrReadOnly(credential_type, permissions) {
       }
       break;
     case "WSO2_CLIENT_ID":
-      if (auth.canUpdateWSO2ClientId(permissions)) {
+      if (auth.canUpdateWso2ClientId(permissions)) {
         return 'modifiable';
       }
       break;
@@ -94,17 +94,50 @@ function modifiableOrReadOnly(credential_type, permissions) {
   }
 }
 
+function validateCredentialId(credential_type, credential_id) {
+  switch (credential_type) {
+    case "NET_ID":
+      if (!/^[a-z][a-z0-9]{0,8}$/g.test(credential_id)) {
+        throw new ClientError(409, `Invalid URL: Please Fix and Resubmit
+          \nNET_ID 1 to 9 lowercase alpha numeric characters`)
+      }
+      break;
+    case "PROX_CARD":
+      if (!/^[0-9]{3,7}$/g.test(credential_id)) {
+        throw new ClientError(409, `Invalid URL: Please Fix and Resubmit
+          \nPROX_CARD 3 to 7 digit numeric`)
+      }
+      break;
+    case "WSO2_CLIENT_ID":
+      if (!/^[a-zA-Z0-9_]{28}$/g.test(credential_id)) {
+        throw new ClientError(409, `Invalid URL: Please Fix and Resubmit
+          \nWSO2_CLIENT_ID 28 printable characters`)
+      }
+      break;
+    case "ID_CARD":
+      if (!/^[0-9]{11}$/g.test(credential_id)) {
+        throw new ClientError(409, `Invalid URL: Please Fix and Resubmit
+          \nID_CARD is an 11 digit number 9 digit BYU_ID + 2 digit issue number Example 12345678901`)
+      }
+      break;
+    default:
+  }
+}
+
 exports.getCredential = async function getCredential(definitions, byu_id, credential_type, credential_id, permissions) {
+  validateCredentialId(credential_type, credential_id);
   const params = [credential_type, credential_id, byu_id];
   const sql_query = sql.sql.getCredential;
   const results = await db.execute(sql_query, params);
 
+  console.log(results);
+  console.log(!results.rows[0].credential_type);
   // If no results are returned or the record is restricted
   // and the entity retrieving the record does not belong
   // to the GRO.PERSON_GROUP.GROUP_ID.RESTRICTED then
   // return 404 person not found
   if (!results.rows.length ||
-    (results.rows[0].restricted === 'Y' &&
+    (/^Y$/g.test(results.rows[0].restricted) &&
       !auth.hasRestrictedRights(permissions))) {
     throw utils.Error(404, 'BYU_ID Not Found In Person Table');
   }
@@ -112,6 +145,7 @@ exports.getCredential = async function getCredential(definitions, byu_id, creden
   // If the person exists but the type of credential requested
   // does not exist then return 404 credential not found
   if (!results.rows[0].credential_type) {
+    console.log("I should be a 404");
     throw utils.Error(404, `${credential_type},${credential_id} not associated with BYU_ID or not found`);
   }
 
@@ -120,10 +154,10 @@ exports.getCredential = async function getCredential(definitions, byu_id, creden
   // credential being retrieved does not belong to an employee
   // or faculty and it is not his or her work credential
   // and if it is unlisted then throw a 403 Not Authorized
-  if (auth.canViewBasic(permissions) || /^NET_ID$/g.test(credential_type) ||
-    (/^WSO2_CLIENT_ID$/g.test(credential_type) && auth.canUpdateWSO2ClientId(permissions)) ||
+  if (!auth.canViewBasic(permissions) && !/^NET_ID$/g.test(credential_type) &&
+    (/^WSO2_CLIENT_ID$/g.test(credential_type) && !auth.canUpdateWso2ClientId(permissions)) &&
     (/^(LDS_CMIS_ID|LDS_ACCOUNT_ID|SEMINARY_STUDENT_ID)$/g.test(credential_type) &&
-      auth.canViewLDSCred(permissions))) {
+      !auth.canViewLdsCred(permissions))) {
     throw utils.Error(403, 'Not Authorized To View Credential');
   }
 
@@ -146,26 +180,38 @@ exports.getCredentials = async function getCredentials(definitions, byu_id, perm
   const collection_size = (results.rows[0].credential_type) ? results.rows.length : 0;
   let values = [];
 
+  console.log(results);
   // If no results are returned or the record is restricted
   // and the entity retrieving the record does not belong
   // to the GRO.PERSON_GROUP.GROUP_ID.RESTRICTED then
   // return 404 person not found
   if (!results.rows.length ||
-    (results.rows[0].restricted === 'Y' &&
+    (/^Y$/g.test(results.rows[0].restricted) &&
       !auth.hasRestrictedRights(permissions))) {
     throw utils.Error(404, 'BYU_ID Not Found In Person Table')
   }
 
-  // If it is self service or the entity retrieving the record has the PERSON info area then
-  // return all credential information else if they are looking up an employee or faculty member
-  // return the employee's or faculty's work credential as long as it is not unlisted
-  if (auth.canViewBasic(permissions)) {
-    values = results.rows.map(row => mapDBResultsToDefinition(
-      definitions, row, modifiableOrReadOnly(row.credential_type, permissions)));
-  } else {
-    results.rows.filter(row => (row.credential_type === 'NET_ID' &&
-      (row.primary_role === 'Employee' || row.primary_role === 'Faculty'))
-    ).map(row => mapDBResultsToDefinition(definitions, row, 'read-only'))
+  if (results.rows[0].credential_type) {
+    if (auth.canViewBasic(permissions)) {
+      values = results.rows.map(row => mapDBResultsToDefinition(
+        definitions, row, modifiableOrReadOnly(row.credential_type, permissions)
+      ));
+
+    } else {
+      values = results.rows.filter(row => /^NET_ID/g.test(row.credential_type)).map(row => mapDBResultsToDefinition(
+        definitions, row, modifiableOrReadOnly(row.credential_type, permissions)
+      ));
+      if (auth.canUpdateWso2ClientId(permissions)) {
+        values.concat(results.rows.filter(row => /^WSO2_CLIENT_ID$/g.test(row.credential_type)).map(row => mapDBResultsToDefinition(
+          definitions, row, modifiableOrReadOnly(row.credential_type, permissions)
+        )))
+      }
+      if (auth.canViewLdsCred(permissions)) {
+        values.concat(results.rows.filter(row => /^(LDS_ACCOUNT_ID|LDS_CMIS_ID|SEMINARY_STUDENT_ID)/g.test(row.credential_type)).map(row => mapDBResultsToDefinition(
+          definitions, row, modifiableOrReadOnly(row.credential_type, permissions)
+        )))
+      }
+    }
   }
 
   const credentials = Enforcer.applyTemplate(definitions.credentials, definitions,
