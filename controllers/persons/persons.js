@@ -335,6 +335,7 @@ exports.getPersons = async function (definitions, query, permissions) {
       page_size: results.rows.length,
       default_page_size: 1,
       maximum_page_size: 100,
+      field_sets_returned: query,
       persons_values: values
     });
 // TODO: Should we embellish the HATEOAS 'self' links with the query parameters specified on this specific request?

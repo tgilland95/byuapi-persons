@@ -21,8 +21,8 @@
   "homepage": "https://github.com/byu-oit/byuapi-persons#readme",
   "dependencies": {
     "aws-sdk": "2.92.0",
-    "body-parser": "1.17.2",
     "bluebird": "^3.5.0",
+    "body-parser": "1.17.2",
     "byu-jwt": "0.2.3",
     "express": "4.15.3",
     "handel-utils": "^1.1.4",
@@ -32,6 +32,6 @@
     "sans-server": "1.5.1",
     "sans-server-express": "0.0.3",
     "sans-server-swagger": "0.3.7",
-    "swagger-enforcer": "1.3.9"
+    "swagger-enforcer": "^1.3.11"
   }
 }

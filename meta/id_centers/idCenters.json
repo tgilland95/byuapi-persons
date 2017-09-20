@@ -1,0 +1,247 @@
+{
+  "items": [
+    {
+      "domain_name": "ID_CENTER",
+      "domain_value": " ",
+      "active_status": " ",
+      "description": " ",
+      "desc_15": " ",
+      "updated_by_id": "023296921",
+      "date_time_updated": "20-FEB-17"
+    },
+    {
+      "domain_name": "ID_CENTER",
+      "domain_value": "1SP_ID",
+      "active_status": "A",
+      "description": "1SP_ID",
+      "desc_15": "1SP_ID",
+      "updated_by_id": "948204812",
+      "date_time_updated": "10-FEB-17"
+    },
+    {
+      "domain_name": "ID_CENTER",
+      "domain_value": "ADM_ID",
+      "active_status": "A",
+      "description": "ADM_ID",
+      "desc_15": "ADM_ID",
+      "updated_by_id": "948204812",
+      "date_time_updated": "10-FEB-17"
+    },
+    {
+      "domain_name": "ID_CENTER",
+      "domain_value": "BENEFI",
+      "active_status": "A",
+      "description": "BENEFI",
+      "desc_15": "BENEFI",
+      "updated_by_id": "948204812",
+      "date_time_updated": "10-FEB-17"
+    },
+    {
+      "domain_name": "ID_CENTER",
+      "domain_value": "BENEFITS",
+      "active_status": "A",
+      "description": "BENEFITS",
+      "desc_15": "BENEFITS",
+      "updated_by_id": "948204812",
+      "date_time_updated": "10-FEB-17"
+    },
+    {
+      "domain_name": "ID_CENTER",
+      "domain_value": "BYU",
+      "active_status": "A",
+      "description": "BYU",
+      "desc_15": "BYU",
+      "updated_by_id": "948204812",
+      "date_time_updated": "10-FEB-17"
+    },
+    {
+      "domain_name": "ID_CENTER",
+      "domain_value": "CARDID",
+      "active_status": "A",
+      "description": "CARDID",
+      "desc_15": "CARDID",
+      "updated_by_id": "948204812",
+      "date_time_updated": "10-FEB-17"
+    },
+    {
+      "domain_name": "ID_CENTER",
+      "domain_value": "CCURE",
+      "active_status": "A",
+      "description": "CCURE",
+      "desc_15": "CCURE",
+      "updated_by_id": "948204812",
+      "date_time_updated": "10-FEB-17"
+    },
+    {
+      "domain_name": "ID_CENTER",
+      "domain_value": "DT_ID",
+      "active_status": "A",
+      "description": "DT_ID",
+      "desc_15": "DT_ID",
+      "updated_by_id": "948204812",
+      "date_time_updated": "10-FEB-17"
+    },
+    {
+      "domain_name": "ID_CENTER",
+      "domain_value": "ERROR",
+      "active_status": "A",
+      "description": "ERROR",
+      "desc_15": "ERROR",
+      "updated_by_id": "948204812",
+      "date_time_updated": "10-FEB-17"
+    },
+    {
+      "domain_name": "ID_CENTER",
+      "domain_value": "HH_ID",
+      "active_status": "A",
+      "description": "HH_ID",
+      "desc_15": "HH_ID",
+      "updated_by_id": "948204812",
+      "date_time_updated": "10-FEB-17"
+    },
+    {
+      "domain_name": "ID_CENTER",
+      "domain_value": "HRC_ID",
+      "active_status": "A",
+      "description": "HRC_ID",
+      "desc_15": "HRC_ID",
+      "updated_by_id": "948204812",
+      "date_time_updated": "10-FEB-17"
+    },
+    {
+      "domain_name": "ID_CENTER",
+      "domain_value": "HR_ID",
+      "active_status": "A",
+      "description": "HR_ID",
+      "desc_15": "HR_ID",
+      "updated_by_id": "948204812",
+      "date_time_updated": "10-FEB-17"
+    },
+    {
+      "domain_name": "ID_CENTER",
+      "domain_value": "IDC_ID",
+      "active_status": "A",
+      "description": "IDC_ID",
+      "desc_15": "IDC_ID",
+      "updated_by_id": "948204812",
+      "date_time_updated": "10-FEB-17"
+    },
+    {
+      "domain_name": "ID_CENTER",
+      "domain_value": "ID_CEN",
+      "active_status": "A",
+      "description": "ID_CEN",
+      "desc_15": "ID_CEN",
+      "updated_by_id": "948204812",
+      "date_time_updated": "10-FEB-17"
+    },
+    {
+      "domain_name": "ID_CENTER",
+      "domain_value": "ID_CENTER",
+      "active_status": "A",
+      "description": "ID_CENTER",
+      "desc_15": "ID_CENTER",
+      "updated_by_id": "948204812",
+      "date_time_updated": "10-FEB-17"
+    },
+    {
+      "domain_name": "ID_CENTER",
+      "domain_value": "JRC_ID",
+      "active_status": "A",
+      "description": "JRC_ID",
+      "desc_15": "JRC_ID",
+      "updated_by_id": "948204812",
+      "date_time_updated": "10-FEB-17"
+    },
+    {
+      "domain_name": "ID_CENTER",
+      "domain_value": "KEY_ID",
+      "active_status": "A",
+      "description": "KEY_ID",
+      "desc_15": "KEY_ID",
+      "updated_by_id": "948204812",
+      "date_time_updated": "10-FEB-17"
+    },
+    {
+      "domain_name": "ID_CENTER",
+      "domain_value": "KEY_OF",
+      "active_status": "A",
+      "description": "KEY_OF",
+      "desc_15": "KEY_OF",
+      "updated_by_id": "948204812",
+      "date_time_updated": "10-FEB-17"
+    },
+    {
+      "domain_name": "ID_CENTER",
+      "domain_value": "MTC",
+      "active_status": "A",
+      "description": "MTC",
+      "desc_15": "MTC",
+      "updated_by_id": "948204812",
+      "date_time_updated": "10-FEB-17"
+    },
+    {
+      "domain_name": "ID_CENTER",
+      "domain_value": "MTC_ID",
+      "active_status": "A",
+      "description": "MTC_ID",
+      "desc_15": "MTC_ID",
+      "updated_by_id": "948204812",
+      "date_time_updated": "10-FEB-17"
+    },
+    {
+      "domain_name": "ID_CENTER",
+      "domain_value": "NET_ID",
+      "active_status": "A",
+      "description": "NET_ID",
+      "desc_15": "NET_ID",
+      "updated_by_id": "948204812",
+      "date_time_updated": "10-FEB-17"
+    },
+    {
+      "domain_name": "ID_CENTER",
+      "domain_value": "NSO_ID",
+      "active_status": "A",
+      "description": "NSO_ID",
+      "desc_15": "NSO_ID",
+      "updated_by_id": "948204812",
+      "date_time_updated": "10-FEB-17"
+    },
+    {
+      "domain_name": "ID_CENTER",
+      "domain_value": "REC_ID",
+      "active_status": "A",
+      "description": "REC_ID",
+      "desc_15": "REC_ID",
+      "updated_by_id": "948204812",
+      "date_time_updated": "10-FEB-17"
+    },
+    {
+      "domain_name": "ID_CENTER",
+      "domain_value": "SAS_ID",
+      "active_status": "A",
+      "description": "SAS_ID",
+      "desc_15": "SAS_ID",
+      "updated_by_id": "948204812",
+      "date_time_updated": "10-FEB-17"
+    },
+    {
+      "domain_name": "ID_CENTER",
+      "domain_value": "SLC",
+      "active_status": "A",
+      "description": "SLC",
+      "desc_15": "SLC",
+      "updated_by_id": "948204812",
+      "date_time_updated": "10-FEB-17"
+    },
+    {
+      "domain_name": "ID_CENTER",
+      "domain_value": "SLC_ID",
+      "active_status": "A",
+      "description": "SLC_ID",
+      "desc_15": "SLC_ID",
+      "updated_by_id": "948204812",
+      "date_time_updated": "10-FEB-17"
+    }
+  ]
+}

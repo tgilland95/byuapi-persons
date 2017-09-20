@@ -26,6 +26,7 @@ const event = require('../event');
 function mapDBResultsToDefinition(definitions, row, name_api_type, basic_api_type) {
   return Enforcer.applyTemplate(definitions.basic, definitions,
     {
+      cache_date_time: new Date().toISOString(),
       byu_id: row.byu_id,
       person_id: row.person_id || ' ',
       net_id: row.net_id || ' ',
@@ -53,13 +54,13 @@ function mapDBResultsToDefinition(definitions, row, name_api_type, basic_api_typ
       preferred_name: row.preferred_name || `${row.first_name} ${row.surname}`,
       home_town: row.home_town || ' ',
       home_state_code: row.home_state_code || '??',
-      home_state_name: row.home_state_name || 'Unknown',
+      home_state_name: row.home_state_name || undefined,
       home_country_code: row.home_country_code || '???',
-      home_country_name: row.home_country_name || 'Unknown',
+      home_country_name: row.home_country_name || undefined,
       high_school_code: row.high_school_code || ' ',
-      high_school_name: row.high_school_name || ' ',
+      high_school_name: row.high_school_name || undefined,
       high_school_state_code: row.high_school_state_code || '??',
-      high_school_state_name: row.high_school_state_name || ' ',
+      high_school_state_name: row.high_school_state_name || undefined,
       high_school_city: row.high_school_city || ' ',
       restricted: /^Y$/g.test(row.restricted) || false,
       merge_in_process: /^Y$/g.test(row.merge_in_process) || false
