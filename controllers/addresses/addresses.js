@@ -32,12 +32,14 @@ const moment = require('moment-timezone');
  * @returns {*}
  */
 function mapDBResultsToDefinition(definitions, row, api_type) {
+  const cache_date_time = new Date().toISOString();
   return Enforcer.applyTemplate(definitions.address, null,
     {
+      cache_date_time: cache_date_time,
+      api_type: api_type,
       byu_id: row.byu_id,
       name: row.name,
       address_type: row.address_type,
-      api_type: api_type,
       date_time_updated: row.date_time_updated,
       updated_by_id: row.updated_by_id,
       updated_by_name: row.updated_by_name,
@@ -53,13 +55,13 @@ function mapDBResultsToDefinition(definitions, row, api_type) {
       long_building_name: row.long_building_name || undefined,
       room: row.room,
       country_code: row.country_code,
-      country_name: row.country_name,
+      country_name: row.country_name || undefined,
       city: row.city,
       state_code: row.state_code,
       state_name: row.state_name,
       postal_code: row.postal_code,
-      unlisted: row.unlisted === 'Y',
-      verified_flag: row.verified_flag === 'Y',
+      unlisted: /^Y$/g.test(row.unlisted),
+      verified_flag: /^Y$/g.test(row.verified_flag)
     }
   );
 }
@@ -124,7 +126,8 @@ exports.getAddresses = async function getAddresses(definitions, byu_id, permissi
   const results = await db.execute(sql_query, params);
   const return_code = auth.canViewContact(permissions) ? 200 : 203;
   const return_message = auth.canViewContact(permissions) ? 'Success' : 'Public Info Only';
-  const collection_size = (results.rows[0].address_type) ? results.rows.length : 0;
+  const collection_size = (!results.rows[0].address_type) ? 0 : results.rows.length;
+  let values = [];
 
   // If no results are returned or the record is restricted
   // and the entity retrieving the record does not belong
@@ -139,16 +142,19 @@ exports.getAddresses = async function getAddresses(definitions, byu_id, permissi
   // If it is self service or the entity retrieving the record has the PERSON info area then
   // return all address information else if they are looking up an employee or faculty member
   // return the employee's or faculty's work address as long as it is not unlisted
-  const values = (auth.canViewContact(permissions)) ? (
-    results.rows.map(row => mapDBResultsToDefinition(definitions, row, 'modifiable'))
-  ) : (
-    results.rows.filter(row => (/^N$/g.test(row.unlisted) &&
-      /^WRK$/g.test(row.address_type) && /^(Employee|Faculty)$/g.test(row.primary_role))
-    ).map(row => mapDBResultsToDefinition(definitions, row, 'read-only'))
-  );
+  if (results.rows[0].address_type) {
+    values = (auth.canViewContact(permissions)) ? (
+      results.rows.map(row => mapDBResultsToDefinition(definitions, row, 'modifiable'))
+    ) : (
+      results.rows.filter(row => (/^N$/g.test(row.unlisted) &&
+        /^WRK$/g.test(row.address_type) && /^(Employee|Faculty)$/g.test(row.primary_role))
+      ).map(row => mapDBResultsToDefinition(definitions, row, 'read-only'))
+    );
+  }
 
   const addresses = Enforcer.applyTemplate(definitions.addresses, definitions,
     {
+      cache_date_time: new Date().toISOString(),
       byu_id: byu_id,
       collection_size: collection_size,
       page_start: 0,
