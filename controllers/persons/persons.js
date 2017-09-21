@@ -1312,7 +1312,6 @@ function mapPersonalRecords(definitions, row) {
       byu_id: row.byu_id,
       birth_api_type: (row.date_of_birth) ? 'read-only' : 'modifiable',
       death_api_type: 'read-only',
-      sex_api_type: (/^[MF]$/g.test(row.sex)) ? 'read-only' : 'modifiable',
       lds_api_type: (/^ $/g.test(row.lds_unit_number)) ? 'modifiable' : 'read-only',
       rel_api_type: (/^LDS$/g.test(row.religion_code)) ? 'read-only' : 'modifiable',
       api_type: 'modifiable',
