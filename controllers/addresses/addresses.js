@@ -556,7 +556,7 @@ exports.modifyAddress = async function (definitions, byu_id, address_type, body,
   const new_body = processBody(authorized_byu_id, body);
   console.log('NEW BODY', new_body);
 
-  if (!auth.canUpdatePersonContact(permissions)) {
+  if (!auth.canUpdateContact(permissions)) {
     throw utils.Error(403, 'User not authorized to update CONTACT data')
   }
 
@@ -807,7 +807,7 @@ function processDeleteFromResults(from_results) {
 
 exports.deleteAddress = async function (definitions, byu_id, address_type, authorized_byu_id, permissions) {
   const connection = await db.getConnection();
-  if (!auth.canUpdatePersonContact(permissions)) {
+  if (!auth.canUpdateContact(permissions)) {
     throw utils.Error(403, 'User not authorized to update CONTACT data')
   }
   let sql_query = sql.sql.fromAddress;

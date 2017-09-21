@@ -66,7 +66,7 @@ function inArray(needle, haystack) {
 }
 
 function isValidReligionCodes(religion_code) {
-  var religionCode = require("../../meta/religions/religionCodes.json");
+  var religionCode = require("../../meta/religions/religionCodes.js.json");
   var religion_codes = religionCode.items;
 
   for (var i = religion_codes.length; i--;) {

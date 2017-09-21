@@ -94,3 +94,9 @@ exports.isValidBuildingCode = function (building_code) {
   return false;
 };
 
+exports.isValidReligionCode = function (religion_code) {
+  const religions = require("../meta/religions/religion_codes");
+
+  return religions.religion_codes.includes(religion_code);
+};
+
