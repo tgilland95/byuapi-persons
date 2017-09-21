@@ -49,7 +49,7 @@ function mapDBResultsToDefinition(definitions, row, name_api_type, basic_api_typ
       preferred_first_name: row.preferred_first_name || row.first_name,
       preferred_surname: row.preferred_surname || row.surname,
       rest_of_name: row.rest_of_name || `${row.first_name} ${row.middle_name}`,
-      name_lnf: row.name_lnf || ' ',
+      name_lnf: row.name_lnf.trim() || ' ',
       name_fnf: row.name_fnf || ' ',
       preferred_name: row.preferred_name || `${row.first_name} ${row.surname}`,
       home_town: row.home_town || ' ',
