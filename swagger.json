@@ -4158,7 +4158,7 @@
       "get": {
         "summary": "Persons",
         "description": "Returns the person with the specified BYU ID",
-        "operationId": "getPersonal",
+        "operationId": "getPersonalRecords",
         "parameters": [
           {
             "name": "byu_id",
@@ -4167,6 +4167,14 @@
             "required": true,
             "type": "string",
             "pattern": "^[0-9]{9}$"
+          },
+          {
+            "name": "lds_cmis_id",
+            "in": "query",
+            "description": "The person's BYU ID",
+            "required": false,
+            "type": "string",
+            "pattern": "^[0-9]+$"
           }
         ],
         "tags": [
@@ -4207,7 +4215,7 @@
       "put": {
         "summary": "Persons",
         "description": "Modifies the Person with specified BYU ID",
-        "operationId": "modifyPersonal",
+        "operationId": "modifyPersonalRecords",
         "parameters": [
           {
             "name": "byu_id",
@@ -11839,15 +11847,6 @@
           "type": "boolean",
           "default": false
         },
-        "sex": {
-          "type": "string",
-          "default": "?",
-          "enum": [
-            "?",
-            "F",
-            "M"
-          ]
-        },
         "lds_unit_number": {
           "type": "string",
           "pattern": "^( |[0-9]{1,7})$",
@@ -12046,12 +12045,15 @@
             },
             "api_type": {
               "type": "string",
-              "default": "read-only",
+              "default": "related",
               "x-variable": "vital_api_type",
               "enum": [
-                "read-only",
-                "modifiable"
+                "related"
               ]
+            },
+            "related_resource": {
+              "type": "string",
+              "default": "https://api.byu.edu/byuapi/persons/v1/:byu_id"
             }
           }
         },

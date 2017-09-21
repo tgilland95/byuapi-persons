@@ -1,5 +1,5 @@
-exports.getPersonalRecord = {
-  sql: ` 
+exports.sql = {
+  getPersonalRecords: ` 
     select a.byu_id                                                                          as "byu_id",
            a.preferred_name                                                                  as "preferred_name",
            k.credential_id                                                                   as "net_id",
@@ -132,31 +132,7 @@ exports.getPersonalRecord = {
                                               where  a.person_id = e2.person_id) ) 
            left join hr.per_warehouse 
                   on a.byu_id = hr.per_warehouse.byu_id 
-    where  a.byu_id = :BYU_ID`,
-  map: {
-    byu_id: byu_id.value,
-    preferred_name: byu_id.description,
-    net_id: net_id.value,
-    date_time_updated: date_time_updated.value,
-    updated_by_id: updated_by_id.value,
-    updated_by_name: updated_by_id.description,
-    date_time_created: date_time_created.value,
-    created_by_id: created_by_id.value,
-    created_by_name: created_by_id.description,
-    date_of_birth: date_of_birth.value,
-    date_of_death: date_of_death.value,
-    deceased: deceased.value,
-    sex: sex.value,
-    marital_status: marital_status.value,
-    marital_status_description: marital_status.description,
-    religion_code: religion_code.value,
-    religion_name: religion_code.description,
-    lds_confirmation_date: lds_confirmation_date.value,
-    lds_unit_number: lds_unit_number.value,
-    lds_unit_name: lds_unit_number.description,
-    parent_lds_unit_number: parent_lds_unit_number.value,
-    parent_lds_unit_name: parent_lds_unit_number.description
-  }
+    where  a.byu_id = :BYU_ID`
 };
 
 exports.modifyPersonalRecord = {
@@ -167,11 +143,10 @@ exports.modifyPersonalRecord = {
             date_of_birth = to_date(:3, 'YYYY-MM-DD'), 
             date_of_death = to_date(:4, 'YYYY-MM-DD'), 
             deceased = :5, 
-            sex = :6, 
-            marital_status = :7, 
-            religion_code = :8, 
-            ward_lds_unit_code = :9, 
-            lds_confirmation_date = to_date(:10, 'YYYY-MM-DD') 
+            marital_status = :6, 
+            religion_code = :7, 
+            ward_lds_unit_code = :8, 
+            lds_confirmation_date = to_date(:9, 'YYYY-MM-DD') 
      where  byu_id = :10`,
   logChange: `
      insert into iam.person_change 

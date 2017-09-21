@@ -217,43 +217,6 @@ exports.sql = {
 };
 
 exports.modifyBasic = {
-    create: `
-      insert into iam.person
-      values      (:BYU_ID,
-                   to_timestamp(:DATE_TIME_UPDATED, 'YYYY-MM-DD HH24:MI:SS.FF'),
-                   :UPDATED_BY_ID,
-                   to_timestamp(:DATE_TIME_CREATED, 'YYYY-MM-DD HH24:MI:SS.FF'),
-                   :CREATED_BY_ID,
-                   :SURNAME,
-                   :REST_OF_NAME,
-                   :SUFFIX,
-                   :PREFERRED_FIRST_NAME,
-                   :PREFERRED_SURNAME,
-                   :PREFERRED_NAME,
-                   :SORT_NAME,
-                   :FIRST_NAME,
-                   :MIDDLE_NAME,
-                   to_date(:DATE_OF_BIRTH, 'YYYY-MM-DD'),
-                   :DECEASED,
-                   to_date(:DATE_OF_DEATH, 'YYYY-MM-DD'),
-                   :SEX,
-                   :MARITAL_STATUS,
-                   :RELIGION_CODE,
-                   :WARD_LDS_UNIT_CODE,
-                   :CITIZENSHIP_COUNTRY_CODE,
-                   :BIRTH_COUNTRY_CODE,
-                   :HOME_TOWN,
-                   :HOME_STATE_CODE,
-                   :HOME_COUNTRY_CODE,
-                   :HIGH_SCHOOL_CODE,
-                   :RESTRICTED,
-                   :SSN,
-                   to_date(:SSN_VERIFICATION_DATE, 'YYYY-MM-DD'),
-                   :VISA_TYPE,
-                   to_date(:I20_EXPIRATION_DATE, 'YYYY-MM-DD'),
-                   :VISA_TYPE_SOURCE,
-                   :PERSON_ID,
-                   to_date(:LDS_CONFIRMATION_DATE, 'YYYY-MM-DD'))`,
     update: `
       update iam.person
       set    date_time_updated = to_timestamp(:DATE_TIME_UPDATED, 'YYYY-MM-DD HH24:MI:SS.FF'),
