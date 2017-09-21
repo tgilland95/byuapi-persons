@@ -65,6 +65,7 @@ exports.createPerson = async (req, res) => {
     const person = await  personsController.createPerson(req.swagger.root.definitions,
       req.verifiedJWTs.prioritizedClaims.byuId, req.body, permissions);
 
+    res.status(201);
     res.send(person);
   } catch (error) {
     console.error(error.stack);

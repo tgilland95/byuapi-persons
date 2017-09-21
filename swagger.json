@@ -361,7 +361,7 @@
           "persons"
         ],
         "responses": {
-          "200": {
+          "201": {
             "description": "Person successfully created",
             "schema": {
               "$ref": "#/definitions/persons"
