@@ -1004,7 +1004,7 @@ function processBody(authorized_byu_id, body) {
   new_body.home_state_code = body.home_state_code || '??';
   new_body.home_country_code = body.home_country_code || '???';
   new_body.high_school_code = body.high_school_code || ' ';
-  new_body.rest_of_name = (body.middle_name === ' ') ? new_body.first_name : (
+  new_body.rest_of_name = (new_body.middle_name === ' ') ? new_body.first_name.trim() : (
     `${new_body.first_name} ${new_body.middle_name}`);
   new_body.sort_name = `${new_body.surname}, ${new_body.rest_of_name}`;
   new_body.citizenship_country_code = body.citizenship_country_code || '???';
