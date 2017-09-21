@@ -1,0 +1,196 @@
+{
+  "items": [
+    {
+      "religion_code": "???",
+      "religion_name": "Religion Unidentified"
+    },
+    {
+      "religion_code": "SNR",
+      "religion_name": "Specified no Religion"
+    },
+    {
+      "religion_code": "BAH",
+      "religion_name": "Bahai"
+    },
+    {
+      "religion_code": "BAL",
+      "religion_name": "Ballai"
+    },
+    {
+      "religion_code": "BPT",
+      "religion_name": "Baptist"
+    },
+    {
+      "religion_code": "BUD",
+      "religion_name": "Buddhism"
+    },
+    {
+      "religion_code": "CJW",
+      "religion_name": "Conservative Jew"
+    },
+    {
+      "religion_code": "COC",
+      "religion_name": "Church of Christ"
+    },
+    {
+      "religion_code": "CON",
+      "religion_name": "Congregational"
+    },
+    {
+      "religion_code": "COR",
+      "religion_name": "Coptic Orthodox"
+    },
+    {
+      "religion_code": "CSC",
+      "religion_name": "Christian Science"
+    },
+    {
+      "religion_code": "CTH",
+      "religion_name": "Catholic"
+    },
+    {
+      "religion_code": "DOC",
+      "religion_name": "Disciples of Christ"
+    },
+    {
+      "religion_code": "EPS",
+      "religion_name": "Episcopal"
+    },
+    {
+      "religion_code": "EVN",
+      "religion_name": "Evangelist"
+    },
+    {
+      "religion_code": "FCH",
+      "religion_name": "First Christian"
+    },
+    {
+      "religion_code": "GCT",
+      "religion_name": "Greek Catholic"
+    },
+    {
+      "religion_code": "GRF",
+      "religion_name": "Grace Reformed"
+    },
+    {
+      "religion_code": "HIN",
+      "religion_name": "Hinduism"
+    },
+    {
+      "religion_code": "ISL",
+      "religion_name": "Islam"
+    },
+    {
+      "religion_code": "JAI",
+      "religion_name": "Jainism"
+    },
+    {
+      "religion_code": "JEW",
+      "religion_name": "Jewish"
+    },
+    {
+      "religion_code": "LDS",
+      "religion_name": "Latter-day Saint"
+    },
+    {
+      "religion_code": "LTH",
+      "religion_name": "Lutheran"
+    },
+    {
+      "religion_code": "MOS",
+      "religion_name": "Muslim"
+    },
+    {
+      "religion_code": "MTH",
+      "religion_name": "Methodist"
+    },
+    {
+      "religion_code": "NRP",
+      "religion_name": "No Religious Preference"
+    },
+    {
+      "religion_code": "OCH",
+      "religion_name": "Other Christian"
+    },
+    {
+      "religion_code": "OCT",
+      "religion_name": "Other Catholic"
+    },
+    {
+      "religion_code": "OJE",
+      "religion_name": "Other Jew"
+    },
+    {
+      "religion_code": "OJW",
+      "religion_name": "Orthodox Jew"
+    },
+    {
+      "religion_code": "ONC",
+      "religion_name": "Other Non-Christian"
+    },
+    {
+      "religion_code": "OPR",
+      "religion_name": "Other Protestant"
+    },
+    {
+      "religion_code": "OTR",
+      "religion_name": "Other Religion"
+    },
+    {
+      "religion_code": "PLD",
+      "religion_name": "Preferred LDS (Non-member)"
+    },
+    {
+      "religion_code": "PRO",
+      "religion_name": "Protestant"
+    },
+    {
+      "religion_code": "PSB",
+      "religion_name": "Presbyterian"
+    },
+    {
+      "religion_code": "RCT",
+      "religion_name": "Roman Catholic"
+    },
+    {
+      "religion_code": "RJW",
+      "religion_name": "Reformed Jew"
+    },
+    {
+      "religion_code": "RLD",
+      "religion_name": "Reorganized LDS"
+    },
+    {
+      "religion_code": "ROX",
+      "religion_name": "Romanian Orthodox"
+    },
+    {
+      "religion_code": "SDA",
+      "religion_name": "Seventh-Day Adventist"
+    },
+    {
+      "religion_code": "SIK",
+      "religion_name": "Sikh"
+    },
+    {
+      "religion_code": "SOF",
+      "religion_name": "Society of Friends"
+    },
+    {
+      "religion_code": "TRN",
+      "religion_name": "Trinity Church"
+    },
+    {
+      "religion_code": "UNC",
+      "religion_name": "United Church"
+    },
+    {
+      "religion_code": "UNI",
+      "religion_name": "Unitarian"
+    },
+    {
+      "religion_code": "JAH",
+      "religion_name": "Jehovah's Witness"
+    }
+  ]
+}

@@ -15,12 +15,14 @@
  *
  */
 
+const moment = require('moment-timezone');
 const basic = require('../basic/basic');
 const auth = require('../auth');
 const db = require('../db');
 const sql = require('./sql');
 const Enforcer = require('swagger-enforcer');
 const utils = require('../utils');
+const eventy = require('../event');
 const addresses = require('../addresses/addresses');
 const alias_domains = require('../alias_domains/alias_domains');
 const credentials = require('../credentials/credentials');
@@ -43,7 +45,7 @@ const phones = require('../phones/phones');
 const relationships = require('../relationships/relationships');
 const student_summaries = require('../student_summaries/student_summaries');
 
-exports.getPersons = async function (definitions, query, permissions) {
+exports.getPersons = async (definitions, query, permissions) => {
   let params = [];
   let sql_query_select = sql.getPersons.sql.select;
   let sql_query_from = sql.getPersons.sql.from;
@@ -320,12 +322,12 @@ exports.getPersons = async function (definitions, query, permissions) {
   }
   const results = await db.execute(`${sql_query_select}${sql_query_from}${sql_query_where}`, params);
   console.log("HERE273");
-  const values = await Promise.all(results.rows.map(row => exports.getPerson(definitions, row.byu_id, query, permissions)));
-    // console.log("I am not filtering"),
+  const values = await Promise.all(results.rows.map(row => exports.getPerson(definitions, new_body.byu_id, query, permissions)));
+  // console.log("I am not filtering"),
 
   // ): (
   //   console.log("I am filtering"),
-  //   await Promise.all(results.rows.filter(row=> /^N$/g.test(row.restricted)).map(row => exports.getPerson(definitions, row.byu_id, query, permissions)))
+  //   await Promise.all(results.rows.filter(row=> /^N$/g.test(new_body.restricted)).map(row => exports.getPerson(definitions, new_body.byu_id, query, permissions)))
   // );
   const persons = Enforcer.applyTemplate(definitions.persons, definitions,
     {
@@ -447,7 +449,7 @@ exports.getPerson = async (definitions, byu_id, query, permissions) => {
             validation_response_code: error.status || 500,
             validation_response_message: error.message || 'Internal Server Error'
           }, { ignoreMissingRequired: false });
-      //
+        //
       }));
   }
 
@@ -473,141 +475,1119 @@ exports.getPerson = async (definitions, byu_id, query, permissions) => {
   return result;
 };
 
-exports.modifyPerson = async function (definitions, byu_id, authorized_byu_id, body, permissions) {
+exports.modifyPerson = async (definitions, byu_id, authorized_byu_id, body, permissions) => {
   return basic.putBasic(definitions, byu_id, authorized_byu_id, body, permissions);
 };
 
-// if (query.field_sets.includes('addresses')) {
-//   promises.push(addresses.getAddresses(definitions, byu_id, permissions)
-//     .then(function (addresses_result) {
-//       result.addresses = addresses_result;
-//     })
-//     .catch(function (error) {
-//       let addresses = { values: [] };
-//       addresses.metadata = Enforcer.applyTemplate(definitions.sub_level_metadata, null,
-//         {
-//           validation_response_code: error.status || 500,
-//           validation_response_message: error.message || 'Internal Server Error'
-//         });
-//       result.addresses = addresses;
-//     }));
-// }
-// if (query.field_sets.includes('alias_domains')) {
-//   promises.push(alias_domains.getAliasDomains(definitions, byu_id, permissions)
-//     .then(function (alias_domains_result) {
-//       result.alias_domains = alias_domains_result;
-//     })
-//     .catch(function (error) {
-//       let alias_domains = { values: [] };
-//       alias_domains.metadata = Enforcer.applyTemplate(definitions.sub_level_metadata, null,
-//         {
-//           validation_response_code: error.status || 500,
-//           validation_response_message: error.message || 'Internal Server Error'
-//         });
-//       result.alias_domains = alias_domains;
-//     }));
-// }
-// if (query.field_sets.includes('credentials')) {
-//   promises.push(credentials.getCredentials(definitions, byu_id, permissions)
-//     .then(function (credentials_result) {
-//       result.credentials = credentials_result;
-//     })
-//     .catch(function (error) {
-//       let credentials = { values: [] };
-//       credentials.metadata = Enforcer.applyTemplate(definitions.sub_level_metadata, null,
-//         {
-//           validation_response_code: error.status || 500,
-//           validation_response_message: error.message || 'Internal Server Error'
-//         });
-//       result.credentials = credentials;
-//     }));
-// }
-// if (query.field_sets.includes('email_addresses')) {
-//   promises.push(email_addresses.getEmailAddresses(definitions, byu_id, permissions)
-//     .then(function (email_addresses_result) {
-//       result.email_addresses = email_addresses_result;
-//     })
-//     .catch(function (error) {
-//       let email_addresses = { values: [] };
-//       email_addresses.metadata = Enforcer.applyTemplate(definitions.sub_level_metadata, null,
-//         {
-//           validation_response_code: error.status || 500,
-//           validation_response_message: error.message || 'Internal Server Error'
-//         });
-//       result.email_addresses = email_addresses;
-//     }));
-// }
-// if (query.field_sets.includes('email_aliases')) {
-//   promises.push(email_aliases.getEmailAliases(definitions, byu_id, permissions)
-//     .then(function (email_aliases_result) {
-//       result.email_aliases = email_aliases_result;
-//     })
-//     .catch(function (error) {
-//       let email_aliases = { values: [] };
-//       email_aliases.metadata = Enforcer.applyTemplate(definitions.sub_level_metadata, null,
-//         {
-//           validation_response_code: error.status || 500,
-//           validation_response_message: error.message || 'Internal Server Error'
-//         });
-//       result.email_aliases = email_aliases;
-//     }));
-// }
-// if (query.field_sets.includes('employee_summaries')) {
-//   promises.push(basic.getBasic(definitions, byu_id, permissions)
-//     .then(function (employee_summaries_result) {
-//       result.employee_summaries = employee_summaries_result;
-//     })
-//     .catch(function (error) {
-//       result.employee_summaries = Enforcer.applyTemplate(definitions.employee_summaries, null,
-//         {
-//           byu_id: byu_id,
-//           validation_response_code: error.status || 500,
-//           validation_response_message: error.message || 'Internal Server Error'
-//         }, { ignoreMissingRequired: false });
-//     }));
-// }
-// if (query.field_sets.includes('ethnicities')) {
-//   promises.push(ethnicities.getEthnicities(definitions, byu_id, permissions)
-//     .then(function (ethnicities_result) {
-//       result.ethnicities = ethnicities_result;
-//     })
-//     .catch(function (error) {
-//       let ethnicities = { values: [] };
-//       ethnicities.metadata = Enforcer.applyTemplate(definitions.sub_level_metadata, null,
-//         {
-//           validation_response_code: error.status || 500,
-//           validation_response_message: error.message || 'Internal Server Error'
-//         });
-//       result.ethnicities = ethnicities;
-//     }));
-// }
-// if (query.field_sets.includes('family_phones')) {
-//   promises.push(family_phones.getFamilyPhones(definitions, byu_id, permissions)
-//     .then(function (family_phones_result) {
-//       result.family_phones = family_phones_result;
-//     })
-//     .catch(function (error) {
-//       let family_phones = { values: [] };
-//       family_phones.metadata = Enforcer.applyTemplate(definitions.sub_level_metadata, null,
-//         {
-//           validation_response_code: error.status || 500,
-//           validation_response_message: error.message || 'Internal Server Error'
-//         });
-//       result.family_phones = family_phones;
-//     }));
-// }
-// if (query.field_sets.includes('addresses')) {
-//   promises.push(addresses.getAddresses(definitions, byu_id, permissions)
-//     .then(function (addresses_result) {
-//       result.addresses = addresses_result;
-//     })
-//     .catch(function (error) {
-//       let addresses = { values: [] };
-//       addresses.metadata = Enforcer.applyTemplate(definitions.sub_level_metadata, null,
-//         {
-//           validation_response_code: error.status || 500,
-//           validation_response_message: error.message || 'Internal Server Error'
-//         });
-//       result.addresses = addresses;
-//     }));
-// }
+async function generateByuId(connection) {
+  const sql_y_random = `
+      select y_random(9) as "card_id" 
+      from   dual`;
+  const sql_count = `
+      select count(*) as "count" 
+      from   person_log 
+      where  byu_id = :BYU_ID`;
+
+
+  async function validate_id(attempts_left) {
+    if (!attempts_left) {
+      throw utils.Error(504, `Unable to generate a valid BYU_ID. Please try again.`);
+    }
+
+    const y_rand_num = await connection.execute(sql_y_random, []);
+    const card_id = y_rand_num.rows[0].card_id;
+
+    const is_valid_card_id = (
+      !(card_id >= "000080000" && card_id <= "000199999") &&
+      !(card_id >= "042000000" && card_id <= "042309999") &&
+      !(card_id >= "051650000" && card_id <= "051659999") &&
+      !(card_id >= "777000000" && card_id <= "777009999") &&
+      !(card_id >= "800000000" && card_id <= "800100999") &&
+      !(card_id >= "887000000" && card_id <= "889999999") &&
+      !(card_id >= "999000000"));
+
+    if (is_valid_card_id) {
+      const count = await  connection.execute(sql_count, [card_id]);
+
+      if (!count.rows[0].count) {
+        return card_id;
+      }
+      return validate_id(attempts_left - 1);
+    }
+    return validate_id(attempts_left - 1);
+  }
+
+  return Promise.resolve(validate_id(10));
+}
+
+async function generatePersonId(connection) {
+  const sql_person_id = `
+    select ( substr(lpad(person_id_seq.nextval, 12, '0'), 10) 
+             || '2' 
+             || substr(lpad(person_id_seq.nextval, 12, '0'), 6, 4) 
+             || '2' ) as "person_id" 
+    from   dual`;
+  const sql_count = `
+    select count(*) as "count" 
+    from   (select person_id 
+            from   person_log 
+            where  person_id = :PERSON_ID 
+            union 
+            select identifier 
+            from   identifier 
+            where  identifier = :PERSON_ID)`;
+
+  async function validate_person_id(attempts_left) {
+    if (!attempts_left) {
+      throw utils.Error(504, 'Unable to generate a valid PERSON_ID. Please try again.')
+    }
+    let person_id = await connection.execute(sql_person_id, []);
+    person_id = person_id.rows[0].person_id;
+
+    const count = await connection.execute(sql_count, [person_id, person_id]);
+
+    if (!count.rows[0].count) {
+      return person_id;
+    }
+    return validate_person_id(attempts_left - 1);
+  }
+
+  return Promise.resolve(validate_person_id(10));
+}
+
+async function personAddedEvents(connection, new_body) {
+  console.log("EVENT NEW BODY", new_body);
+  try {
+    const source_dt = new Date().toISOString();
+    let event_type = "Person Added";
+    let event_type2 = "Person Added v2";
+    const domain = "edu.byu";
+    const entity = "BYU-IAM";
+    let filters = [
+      "identity_type",
+      new_body.identity_type,
+      "employee_type",
+      new_body.employee_type,
+      "student_status",
+      new_body.student_status
+    ];
+    const basic_url = `https://api.byu.edu/byuapi/persons/v1/?byu_id=${new_body.byu_id}&field_sets=basic,personal_records,government_records`;
+    let secure_url = `https://api.byu.edu/domains/legacy/identity/secureurl/v1/`;
+    let sql_query = '';
+    let params = [];
+    const header = [
+      "domain",
+      domain,
+      "entity",
+      entity,
+      "event_type",
+      event_type,
+      "source_dt",
+      source_dt,
+      "event_dt",
+      ' ',
+      "event_id",
+      ' '
+    ];
+    console.log(new_body.restricted);
+    const restricted = /^Y$/g.test(new_body.restricted);
+    console.log(restricted);
+    if (restricted) {
+      if (new_body.person_added) {
+        let event_frame = {
+          "events": {
+            "event": []
+          }
+        };
+        let body = [
+          "person_id",
+          new_body.person_id,
+          "byu_id",
+          new_body.byu_id,
+          "net_id",
+          new_body.net_id,
+          "updated_by_id",
+          new_body.updated_by_id,
+          "date_time_updated",
+          new_body.date_time_updated,
+          "created_by_id",
+          new_body.created_by_id,
+          "date_time_created",
+          new_body.date_time_created,
+          "callback_url",
+          basic_url,
+          "surname",
+          new_body.surname,
+          "rest_of_name",
+          new_body.rest_of_name,
+          "first_name",
+          new_body.first_name,
+          "middle_name",
+          new_body.middle_name,
+          "suffix",
+          new_body.suffix,
+          "preferred_first_name",
+          new_body.preferred_first_name,
+          "sort_name",
+          new_body.sort_name,
+          "home_town",
+          new_body.home_town,
+          "home_state_code",
+          new_body.home_state_code,
+          "home_country_code",
+          new_body.home_country_code,
+          "deceased",
+          new_body.deceased,
+          "sex",
+          new_body.sex,
+          "display_name",
+          new_body.display_name,
+          "prefix",
+          ' ',
+          "surname_position",
+          ' '
+        ];
+        let event = eventy.Builder(header, body);
+        event_frame.events.event.push(event);
+
+        //start of event v2
+        header[5] = event_type2;
+        //get rid of prefix and surname position
+        for (let i = 6; i--;) {
+          body.pop()
+        }
+        body.unshift(new_body.preferred_surname);
+        body.unshift("preferred_surname");
+        body.unshift(new_body.preferred_name);
+        body.unshift("preferred_name");
+        body.unshift(new_body.high_school_code);
+        body.unshift("high_school_code");
+        event = eventy.Builder(header, body, filters);
+        event_frame.events.event.push(event);
+
+        sql_query = db.raiseEvent;
+        params = [];
+        params.push(JSON.stringify(event_frame));
+        await connection.execute(sql_query, params, { autoCommit: true });
+        console.log("ENQUEUE SQL", sql_query);
+        console.log("ENQUEUE PARAMS", params);
+        sql_query = db.enqueue;
+        await connection.execute(sql_query, params);
+
+        let name_event_frame = {
+          "events": {
+            "event": []
+          }
+        };
+        event_type = "Name Added";
+        header[5] = event_type;
+        for (let i = 6; i--;) {
+          body.shift()
+        }
+        for (let i = 16; i--;) {
+          body.pop()
+        }
+        body.push("prefix");
+        body.push(' ');
+        body.push("surname_position");
+        body.push(' ');
+        body.push("display_name");
+        body.push(new_body.display_name);
+        let name_event = eventy.Builder(header, body);
+        name_event_frame.events.event.push(name_event);
+
+        event_type2 = "Name Added v2";
+        header[5] = event_type2;
+        for (let i = 6; i--;) {
+          body.pop()
+        }
+        body.push("preferred_surname");
+        body.push(new_body.preferred_surname);
+        body.push("preferred_name");
+        body.push(new_body.preferred_name);
+        body.push("name_fnf");
+        body.push(new_body.name_fnf);
+        body.push("name_lnf");
+        body.push(new_body.sort_name);
+        name_event = eventy.Builder(header, body, filters);
+        name_event_frame.events.event.push(name_event);
+
+        params = [];
+        sql_query = db.raiseEvent;
+        params.push(JSON.stringify(name_event_frame));
+        await connection.execute(sql_query, params, { autoCommit: true });
+
+        console.log("ENQUEUE SQL", sql_query);
+        console.log("ENQUEUE PARAMS", params);
+        sql_query = db.enqueue;
+        await connection.execute(sql_query, params);
+
+
+        if (new_body.identity_added) {
+          let identity_event_frame = {
+            "events": {
+              "event": []
+            }
+          };
+          event_type = "Identity Added";
+          header[5] = event_type;
+          body = [
+            "person_id",
+            person_id,
+            "byu_id",
+            byu_id,
+            "updated_by_id",
+            updated_by_id,
+            "date_time_updated",
+            date_time_updated,
+            "created_by_id",
+            created_by_id,
+            "date_time_created",
+            date_time_created,
+            "callback_url",
+            basic_url,
+            "identity_name",
+            preferred_name,
+            "identity_type",
+            identity_type
+          ];
+          let identity_event = eventy.Builder(header, body);
+          identity_event_frame.events.event.push(identity_event);
+
+          event_type2 = "Identity Added v2";
+          header[5] = event_type2;
+          for (let i = 6; i--;) {
+            body.pop()
+          }
+          body.push("preferred_surname");
+          body.push(new_body.preferred_surname);
+          body.push("preferred_name");
+          body.push(new_body.preferred_name);
+          body.push("name_fnf");
+          body.push(new_body.name_fnf);
+          body.push("name_lnf");
+          body.push(new_body.sort_name);
+          identity_event = eventy.Builder(header, body, filters);
+          identity_event_frame.events.event.push(identity_event);
+
+          sql_query = db.raiseEvent;
+          params = [];
+          params.push(JSON.stringify(identity_event_frame));
+          await connection.execute(sql_query, params, { autoCommit: true });
+
+          console.log("ENQUEUE SQL", sql_query);
+          console.log("ENQUEUE PARAMS", params);
+          sql_query = db.enqueue;
+          await connection.execute(sql_query, params);
+        }
+      }
+    } else {
+      sql_query = db.intermediaryId.put;
+      params = [
+        basic_url,
+        ' ',    // actor
+        ' ',    // group_id
+        new_body.created_by_id
+      ];
+      await connection.execute(sql_query, params);
+      sql_query = db.intermediaryId.get;
+      params = [basic_url];
+      const results = await connection.execute(sql_query, params);
+
+      secure_url += results.rows[0].intermediary_id;
+
+      if (new_body.person_added) {
+        let event_frame = {
+          "events": {
+            "event": []
+          }
+        };
+        let restricted_body = [
+          "person_id",
+          ' ',
+          "byu_id",
+          ' ',
+          "net_id",
+          ' ',
+          "updated_by_id",
+          ' ',
+          "date_time_updated",
+          ' ',
+          "created_by_id",
+          ' ',
+          "date_time_created",
+          ' ',
+          "secure_url",
+          secure_url,
+          "surname",
+          ' ',
+          "rest_of_name",
+          ' ',
+          "first_name",
+          ' ',
+          "middle_name",
+          ' ',
+          "suffix",
+          ' ',
+          "preferred_first_name",
+          ' ',
+          "sort_name",
+          ' ',
+          "home_town",
+          ' ',
+          "home_state_code",
+          ' ',
+          "home_country_code",
+          ' ',
+          "deceased",
+          ' ',
+          "sex",
+          ' ',
+          "display_name",
+          ' ',
+          "prefix",
+          ' ',
+          "surname_position",
+          ' '
+        ];
+        let event = eventy.Builder(header, restricted_body);
+        event_frame.events.event.push(event);
+
+        header[5] = event_type2;
+        //get rid of prefix and surname position
+        for (let i = 6; i--;) {
+          restricted_body.pop()
+        }
+        restricted_body.unshift("high_school_code");
+        restricted_body.unshift(' ');
+        filters.push("restricted");
+        filters.push(restricted);
+        event = eventy.Builder(header, restricted_body, filters);
+        event_frame.events.event.push(event);
+
+        sql_query = db.raiseEvent;
+        params = [];
+        params = [JSON.stringify(event_frame)];
+        await connection.execute(sql_query, params);
+        console.log("ENQUEUE SQL", sql_query);
+        console.log("ENQUEUE PARAMS", params);
+        sql_query = db.enqueue;
+        await connection.execute(sql_query, params);
+        let name_event_frame = {
+          "events": {
+            "event": []
+          }
+        };
+        event_type = "Name Added";
+        header[5] = event_type;
+        for (let i = 6; i--;) {
+          restricted_body.shift()
+        }
+        for (let i = 16; i--;) {
+          restricted_body.pop()
+        }
+        restricted_body.push("prefix");
+        restricted_body.push(' ');
+        restricted_body.push("surname_position");
+        restricted_body.push(' ');
+        restricted_body.push("display_name");
+        restricted_body.push(' ');
+        let name_event = eventy.Builder(header, restricted_body);
+        name_event_frame.events.event.push(name_event);
+
+        event_type2 = "Name Added v2";
+        header[5] = event_type2;
+        for (let i = 6; i--;) {
+          restricted_body.pop()
+        }
+        restricted_body.push("preferred_surname");
+        restricted_body.push(' ');
+        restricted_body.push("preferred_name");
+        restricted_body.push(' ');
+        restricted_body.push("name_fnf");
+        restricted_body.push(' ');
+        restricted_body.push("name_lnf");
+        restricted_body.push(' ');
+        name_event = eventy.Builder(header, restricted_body, filters);
+        name_event_frame.events.event.push(name_event);
+
+        sql_query = db.raiseEvent;
+        params = [];
+        params = [JSON.stringify(name_event_frame)];
+        await connection.execute(sql_query, params, { autoCommit: true });
+
+        console.log("ENQUEUE SQL", sql_query);
+        console.log("ENQUEUE PARAMS", params);
+        sql_query = db.enqueue;
+        await connection.execute(sql_query, params);
+
+
+        if (new_body.identity_added) {
+          let identity_event_frame = {
+            "events": {
+              "event": []
+            }
+          };
+          event_type = "Identity Added";
+          header[5] = event_type;
+          restricted_body = [
+            "person_id",
+            ' ',
+            "byu_id",
+            ' ',
+            "updated_by_id",
+            ' ',
+            "date_time_updated",
+            ' ',
+            "created_by_id",
+            ' ',
+            "date_time_created",
+            ' ',
+            "secure_url",
+            secure_url,
+            "identity_name",
+            ' ',
+            "identity_type",
+            ' '
+          ];
+          let identity_event = eventy.Builder(header, restricted_body);
+          identity_event_frame.events.event.push(identity_event);
+
+          event_type2 = "Identity Added v2";
+          header[5] = event_type2;
+          for (let i = 6; i--;) {
+            restricted_body.pop()
+          }
+          restricted_body.push("preferred_surname");
+          restricted_body.push(' ');
+          restricted_body.push("preferred_name");
+          restricted_body.push(' ');
+          restricted_body.push("name_fnf");
+          restricted_body.push(' ');
+          restricted_body.push("name_lnf");
+          restricted_body.push(' ');
+          identity_event = eventy.Builder(header, restricted_body, filters);
+          identity_event_frame.events.event.push(identity_event);
+
+          sql_query = db.raiseEvent;
+          params = [];
+          params = [JSON.stringify(identity_event_frame)];
+          await connection.execute(sql_query, params, { autoCommit: true });
+
+          console.log("ENQUEUE SQL", sql_query);
+          console.log("ENQUEUE PARAMS", params);
+          sql_query = db.enqueue;
+          await connection.execute(sql_query, params);
+        }
+      }
+    }
+  } catch (error) {
+    console.error(error.stack);
+    throw utils.Error(207, 'Person Created, Event Raising Failed');
+  }
+}
+
+function processBody(authorized_byu_id, body) {
+  let current_date_time = moment();
+  current_date_time = current_date_time.clone().tz('America/Denver');
+  let new_body = {};
+  new_body.byu_id = body.byu_id || '';
+  new_body.person_id = body.person_id || '';
+  new_body.surname = body.surname || '';
+  new_body.first_name = body.first_name || '';
+  new_body.preferred_surname = body.preferred_surname || body.surname;
+  new_body.preferred_first_name = body.preferred_first_name || body.first_name;
+  new_body.preferred_name = `${new_body.preferred_first_name} ${new_body.preferred_surname}`;
+  new_body.middle_name = body.middle_name || ' ';
+  new_body.suffix = body.suffix || ' ';
+  new_body.home_town = body.home_town || ' ';
+  new_body.home_state_code = body.home_state_code || '??';
+  new_body.home_country_code = body.home_country_code || '???';
+  new_body.high_school_code = body.high_school_code || ' ';
+  new_body.rest_of_name = (body.middle_name === ' ') ? new_body.first_name : (
+    `${new_body.first_name} ${new_body.middle_name}`);
+  new_body.sort_name = `${new_body.surname}, ${new_body.rest_of_name}`;
+  new_body.citizenship_country_code = body.citizenship_country_code || '???';
+  new_body.birth_country_code = body.birth_country_code || '???';
+  new_body.ssn = body.ssn || ' ';
+  new_body.ssn_verification_date = body.ssn_verification_date || '';
+  new_body.visa_type = body.visa_type || ' ';
+  new_body.visa_type_source = body.visa_type_source || ' ';
+  new_body.i20_expiration_date = body.i20_expiration_date || '';
+  new_body.updated_by_id = (!body.updated_by_id || !body.updated_by_id.trim()) ? authorized_byu_id : body.updated_by_id;
+  if (!body.date_time_updated || !body.date_time_updated.trim()) {
+    new_body.date_time_updated = current_date_time.format('YYYY-MM-DD HH:mm:ss.SSS');
+  } else {
+    new_body.date_time_updated = moment.tz(body.date_time_updated, 'America/Danmarkshavn');
+    new_body.date_time_updated = new_body.date_time_updated.clone().tz('America/Denver').format('YYYY-MM-DD HH:mm:ss.SSS');
+  }
+  new_body.created_by_id = (!body.created_by_id || !body.created_by_id.trim()) ? authorized_byu_id : body.created_by_id;
+  if (!body.date_time_created || !body.date_time_created.trim()) {
+    new_body.date_time_created = current_date_time.format('YYYY-MM-DD HH:mm:ss.SSS');
+  } else {
+    new_body.date_time_created = moment.tz(body.date_time_created, 'America/Danmarkshavn');
+    new_body.date_time_created = new_body.date_time_created.clone().tz('America/Denver').format('YYYY-MM-DD HH:mm:ss.SSS');
+  }
+  new_body.sex = (/^[?FM]$/g.test(body.sex)) ? body.sex : '?';
+  new_body.religion_code = body.religion_code || '???';
+  new_body.lds_unit_number = body.lds_unit_number || ' ';
+  new_body.lds_confirmation_date = body.lds_confirmation_date || '';
+  new_body.date_of_birth = body.date_of_birth || '';
+  new_body.date_of_death = body.date_of_death || '';
+  new_body.deceased = (body.deceased) ? 'Y' : 'N';
+  new_body.marital_status = body.marital_status || '?';
+  new_body.citizenship_country_code = body.citizenship_country_code || '???';
+  new_body.birth_country_code = body.birth_country_code || "???";
+  new_body.ssn = body.ssn || ' ';
+  new_body.ssn_verification_date = body.ssn_verification_date || '';
+  new_body.visa_type = body.visa_type || ' ';
+  new_body.visa_type_source = body.visa_type_source || ' ';
+  new_body.i20_expiration_date = body.i20_expiration_date || '';
+  new_body.display_name = new_body.preferred_name;
+  new_body.name_fnf = (new_body.suffix === ' ') ? `${new_body.rest_of_name} ${new_body.surname}` : (
+    `${new_body.rest_of_name} ${new_body.surname} ${new_body.suffix}`);
+  new_body.restricted = (body.restricted) ? 'Y' : 'N';
+
+  new_body.date_time_ferpa_last_displayed = '';
+  new_body.from_time_ferpa_last_displayed = '';
+  new_body.test_record_responsible_id = '';
+  new_body.validation_phrase = '';
+  new_body.identity_name = new_body.preferred_name;
+  new_body.identity_added = false;
+  new_body.person_added = false;
+  new_body.change_type = 'A';
+  new_body.identity_type = 'Person';
+  new_body.from_identity_name = ' ';
+  new_body.from_test_responsible_id = '';
+  new_body.from_validation_phrase = '';
+  new_body.from_date_of_birth = '';
+  new_body.from_deceased = ' ';
+  new_body.from_date_of_death = '';
+  new_body.from_sex = ' ';
+  new_body.from_marital_status = ' ';
+  new_body.from_religion_code = ' ';
+  new_body.from_lds_unit_number = ' ';
+  new_body.from_citizenship_country_code = ' ';
+  new_body.from_birth_country_code = ' ';
+  new_body.from_home_town = ' ';
+  new_body.from_home_state_code = ' ';
+  new_body.from_home_country_code = ' ';
+  new_body.from_high_school_code = ' ';
+  new_body.from_restricted = ' ';
+  new_body.from_ssn = ' ';
+  new_body.from_ssn_verification_date = '';
+  new_body.from_visa_type = ' ';
+  new_body.from_i20_expiration_date = '';
+  new_body.from_visa_type_source = ' ';
+  new_body.from_lds_confirmation_date = '';
+  new_body.from_surname = ' ';
+  new_body.from_rest_of_name = ' ';
+  new_body.from_suffix = ' ';
+  new_body.from_preferred_first_name = ' ';
+  new_body.from_preferred_surname = ' ';
+  new_body.from_preferred_name = ' ';
+  new_body.from_sort_name = ' ';
+  new_body.from_first_name = ' ';
+  new_body.from_middle_name = ' ';
+
+  let error = false;
+  let msg = `Invalid Body:`;
+  if (!utils.isValidStateCode(new_body.home_state_code, new_body.home_country_code)) {
+    msg += `\n\t${new_body.home_state_code} is an invalid state_code for the given country code`;
+    error = true;
+  }
+
+  if (new_body.date_of_birth && (moment.tz(new_body.date_of_birth, 'YYYY-MM-DD', 'America/Denver') > current_date_time.endOf('day') ||
+      moment(new_body.date_of_birth, 'YYYY-MM-DD') < moment('1850-01-01', 'YYYY-MM-DD'))) {
+    msg += `\n\tdate_of_birth must be after 1850 and before tomorrow`;
+    error = true;
+  }
+
+  if (new_body.date_of_death && (moment(new_body.date_of_death, 'YYYY-MM-DD', 'America/Denver') > current_date_time.endOf('day') ||
+      moment(new_body.date_of_death, 'YYYY-MM-DD') < moment(new_body.date_of_birth, 'YYYY-MM-DD'))) {
+    msg += `\n\tdate_of_death must be after date_of_birth and before tomorrow`;
+    error = true;
+  }
+
+  if (new_body.lds_confirmation_date && (moment.tz(new_body.lds_confirmation_date, 'YYYY-MM-DD', 'America/Denver') > current_date_time.endOf('day') ||
+      (new_body.date_of_birth && moment(new_body.lds_confirmation_date, 'YYYY-MM-DD') < moment(new_body.date_of_birth, 'YYYY-MM-DD').add(8, 'years')))) {
+    msg += `\n\tlds_confirmation_date must be after 8th birthday and before tomorrow`;
+    error = true;
+  }
+
+  if (!utils.isValidReligionCode(new_body.religion_code)) {
+    msg += `\n\t${new_body.religion_code} is an invalid religion code.`;
+    error = true;
+  }
+
+  if (new_body.ssn_verification_date && (moment(new_body.ssn_verification_date, 'YYYY-MM-DD') < moment('2004-01-01', 'YYYY-MM-DD') ||
+      moment.tz(new_body.ssn_verification_date, 'YYYY-MM-DD', "America/Denver") > current_date_time.endOf('day'))) {
+    msg += `\n\tssn_verification_date must be after 2004 and before tomorrow`;
+    error = true;
+  }
+
+  if (error) {
+    throw utils.Error(409, msg);
+  }
+  return new_body;
+}
+
+function getStateName(state_code, country_code) {
+  const state_codes = require('../../meta/states/stateCodes.json');
+  if (/^(|[? ]+)$/g.test(state_code)) {
+    return 'Unknown';
+  }
+
+  for (let i = state_codes.items.length; i--;) {
+    if (state_codes.items[i].state_code === state_code &&
+      state_codes.items[i].country_code === country_code) {
+      return state_codes.items[i].state;
+    }
+  }
+
+  return 'Unknown';
+}
+
+function getCountryName(country_code) {
+  const country_codes = require('../../meta/countries/countryCodes.json');
+  if (/^(|[? ]+)$/g.test(country_code)) {
+    return 'Unknown';
+  }
+
+  for (let i = country_codes.items.length; i--;) {
+    if (country_codes.items[i].country_code === country_code) {
+      return country_codes.items[i].country;
+    }
+  }
+
+  return 'Unknown';
+}
+
+function getReligionName(religion_code) {
+  const religion_codes = require('../../meta/religions/religionCodes.json');
+  if (/^(|[? ]+)$/g.test(religion_code)) {
+    return 'Religion Unidentified';
+  }
+  for (let i = religion_codes.items.length; i--;) {
+    if (religion_codes.items[i].religion_code === religion_code) {
+      return religion_codes.items[i].religion_name;
+    }
+  }
+  return 'Religion Unidentified';
+}
+
+function getHighSchool(high_school_code) {
+  const high_school_codes = require('../../meta/high_schools/highSchoolCodes.json');
+  if (/^(|[? ]+)$/g.test(high_school_code)) {
+    return {};
+  }
+
+  for (let i = high_school_codes.items.length; i--;) {
+    if (high_school_codes.items[i].high_school_code === high_school_code) {
+      return high_school_codes.items[i];
+    }
+  }
+  return {};
+}
+
+function mapBasic(definitions, row, name_api_type, basic_api_type) {
+  const high_school = getHighSchool(row.high_school_code);
+  row.date_time_updated = moment.tz(row.date_time_updated, 'YYYY-MM-DD HH:mm:ss.SSS', 'America/Denver');
+  row.date_time_updated = row.date_time_updated.clone().tz('America/Danmarkshavn').toISOString();
+  row.date_time_created = moment.tz(row.date_time_created, 'YYYY-MM-DD HH:mm:ss.SSS', 'America/Denver');
+  row.date_time_created = row.date_time_created.clone().tz('America/Danmarkshavn').toISOString();
+
+  return Enforcer.applyTemplate(definitions.basic, definitions,
+    {
+      validation_response_code: 201,
+      cache_date_time: new Date().toISOString(),
+      byu_id: row.byu_id,
+      person_id: row.person_id,
+      name_api_type: name_api_type,
+      basic_api_type: basic_api_type,
+      deceased: /^Y$/g.test(row.deceased),
+      sex: row.sex,
+      date_time_updated: row.date_time_updated,
+      updated_by_id: row.updated_by_id,
+      date_time_created: row.date_time_created,
+      created_by_id: row.created_by_id,
+      first_name: row.first_name,
+      middle_name: row.middle_name,
+      surname: row.surname,
+      suffix: row.suffix,
+      preferred_first_name: row.preferred_first_name,
+      preferred_surname: row.preferred_surname,
+      rest_of_name: row.rest_of_name,
+      name_lnf: row.sort_name,
+      name_fnf: row.name_fnf,
+      preferred_name: row.preferred_name,
+      home_town: row.home_town,
+      home_state_code: row.home_state_code,
+      home_state_name: getStateName(row.home_state_code, row.home_country_code),
+      home_country_code: row.home_country_code,
+      home_country_name: getCountryName(row.home_country_code),
+      high_school_code: row.high_school_code,
+      high_school_name: high_school.high_school_name || '',
+      high_school_state_code: high_school.state_code || '',
+      high_school_state_name: getStateName(high_school.state_code, 'USA'),
+      high_school_city: high_school.city || '',
+      restricted: /^Y$/g.test(row.restricted) || false,
+      merge_in_process: /^Y$/g.test(row.merge_in_process) || false
+    }
+  );
+}
+
+function mapGovernmentRecords(definitions, row) {
+  row.date_time_updated = moment.tz(row.date_time_updated, 'YYYY-MM-DD HH:mm:ss.SSS', 'America/Denver');
+  row.date_time_updated = row.date_time_updated.clone().tz('America/Danmarkshavn').toISOString();
+  row.date_time_created = moment.tz(row.date_time_created, 'YYYY-MM-DD HH:mm:ss.SSS', 'America/Denver');
+  row.date_time_created = row.date_time_created.clone().tz('America/Danmarkshavn').toISOString();
+
+  return Enforcer.applyTemplate(definitions.government_records, definitions,
+    {
+      validation_response_code: 201,
+      cache_date_time: new Date().toISOString(),
+      byu_id: row.byu_id,
+      cit_api_type: (/^USA$/g.test(row.citizenship_country_code)) ? 'read-only' : 'modifiable',
+      api_type: 'modifiable',
+      ssn_api_type: (/^ $/g.test(row.ssn)) ? 'modifiable' : 'read-only',
+      date_time_updated: row.date_time_updated,
+      updated_by_id: row.updated_by_id,
+      date_time_created: row.date_time_created,
+      created_by_id: row.created_by_id,
+      citizenship_country_code: row.citizenship_country_code,
+      citizenship_country_name: getCountryName(row.citizenship_country_code),
+      birth_country_code: row.birth_country_code,
+      birth_country_name: getCountryName(row.birth_country_code),
+      ssn: row.ssn,
+      ssn_verification_date: row.ssn_verification_date || undefined,
+      visa_type: row.visa_type,
+      visa_type_source: row.visa_type_source,
+      i20_expiration_date: row.i20_expiration_date || undefined
+    }
+  );
+}
+
+function getLdsUnit(lds_unit_number) {
+  const lds_unit_numbers = require('../../meta/lds_units/ldsUnitNumbers.json');
+  if (!/^[0-9]{7}$/g.test(lds_unit_number)) {
+    return {};
+  }
+
+  for (let i = lds_unit_numbers.items.length; i--;) {
+    if (lds_unit_numbers.items[i].lds_unit_number === lds_unit_number) {
+      return lds_unit_numbers.items[i];
+    }
+  }
+
+  return {};
+}
+
+function getMaritalDescription(marital_status) {
+  switch (marital_status) {
+    case 'D':
+      return 'Divorced';
+    case 'M':
+      return 'Married';
+    case 'S':
+      return 'Single';
+    case 'W':
+      return 'Widowed';
+    default:
+      return 'Unknown'
+  }
+}
+
+function mapPersonalRecords(definitions, row) {
+  const lds_unit = getLdsUnit(row.lds_unit_number);
+  row.date_time_updated = moment.tz(row.date_time_updated, 'YYYY-MM-DD HH:mm:ss.SSS', 'America/Denver');
+  row.date_time_updated = row.date_time_updated.clone().tz('America/Danmarkshavn').toISOString();
+  row.date_time_created = moment.tz(row.date_time_created, 'YYYY-MM-DD HH:mm:ss.SSS', 'America/Denver');
+  row.date_time_created = row.date_time_created.clone().tz('America/Danmarkshavn').toISOString();
+
+  return Enforcer.applyTemplate(definitions.personal_records, definitions,
+    {
+      validation_response_code: 201,
+      cache_date_time: new Date().toISOString(),
+      byu_id: row.byu_id,
+      birth_api_type: (row.date_of_birth) ? 'read-only' : 'modifiable',
+      death_api_type: 'read-only',
+      sex_api_type: (/^[MF]$/g.test(row.sex)) ? 'read-only' : 'modifiable',
+      lds_api_type: (/^ $/g.test(row.lds_unit_number)) ? 'modifiable' : 'read-only',
+      rel_api_type: (/^LDS$/g.test(row.religion_code)) ? 'read-only' : 'modifiable',
+      api_type: 'modifiable',
+      date_time_updated: row.date_time_updated,
+      updated_by_id: row.updated_by_id,
+      date_time_created: row.date_time_created,
+      created_by_id: row.created_by_id,
+      date_of_birth: row.date_of_birth || undefined,
+      date_of_death: row.date_of_death || undefined,
+      deceased: /^Y$/g.test(row.deceased),
+      sex: row.sex,
+      lds_unit_number: row.lds_unit_number,
+      lds_unit_name: lds_unit.lds_unit_name || undefined,
+      parent_lds_unit_number: lds_unit.parent_lds_unit_number || undefined,
+      parent_lds_unit_name: lds_unit.parent_lds_unit_name || undefined,
+      lds_confirmation_date: row.lds_confirmation_date || undefined,
+      religion_code: row.religion_code,
+      religion_name: getReligionName(row.religion_code),
+      marital_status: row.marital_status,
+      marital_status_desc: getMaritalDescription(row.marital_status)
+    }
+  );
+}
+
+exports.createPerson = async (definitions, authorized_byu_id, body) => {
+  const connection = await db.getConnection();
+  let new_body = processBody(authorized_byu_id, body);
+  console.log('NEW BODY', new_body);
+
+  let sql_query = sql.addPerson.check;
+  let params = [
+    new_body.created_by_id,
+    new_body.byu_id,
+    new_body.person_id,
+    new_body.byu_id,
+    new_body.person_id,
+    new_body.surname,
+    new_body.first_name,
+    new_body.date_of_birth,
+    new_body.ssn
+  ];
+  const check = await connection.execute(sql_query, params);
+
+  const is_valid_auth = check.rows[0].is_valid_auth;
+  const is_identity = check.rows[0].is_identity;
+  const is_person = check.rows[0].is_person;
+  const match_found = check.rows[0].match_found;
+  const ssn_found = check.rows[0].ssn_found;
+  if (new_body.ssn !== ' ' && ssn_found) {
+    throw utils.Error(403, `Person already exists, use PUT to update`);
+  }
+  // if (match_found && ssn === ' ' ) {
+  //     throw new ClientError(403, "Possible match found please provide ssn")
+  // }
+  if ((!new_body.person_id && new_body.byu_id) || (new_body.person_id && !new_body.byu_id)) {
+    throw  utils.Error(403, `PERSON_ID must be included if BYU_ID is included in the body or vice versa`);
+  }
+
+  if (new_body.byu_id) {
+    if (!is_valid_auth) {
+      throw utils.Error(403, `User not authorized to include 'byu_id' nor 'person_id' in body`);
+    }
+    if (is_identity && is_person) {
+      throw utils.Error(405, `Person already exists, use PUT to update`);
+    }
+  } else {
+    new_body.byu_id = await generateByuId(connection);
+    console.log("BYU_ID", new_body.byu_id);
+    new_body.person_id = await generatePersonId(connection);
+    console.log("PERSON_ID", new_body.person_id);
+  }
+
+  if (!is_identity) {
+    //build SQL query to check if BYU_ID has an address of the specified type
+    sql_query = sql.addPerson.createIdentity;
+    new_body.identity_added = true;
+    params = [
+      new_body.byu_id,
+      new_body.date_time_updated,
+      new_body.updated_by_id,
+      new_body.date_time_created,
+      new_body.created_by_id,
+      new_body.identity_type,
+      new_body.identity_name,
+      new_body.test_record_responsible_id,
+      new_body.validation_phrase,
+      new_body.date_time_ferpa_last_displayed,
+      new_body.person_id
+    ];
+    console.log('Add Identity');
+    await connection.execute(sql_query, params);
+
+    sql_query = sql.addPerson.logIdentityChange;
+    params = [
+      new_body.change_type,
+      new_body.byu_id,
+      new_body.date_time_updated,
+      new_body.updated_by_id,
+      new_body.date_time_created,
+      new_body.created_by_id,
+      new_body.identity_type,
+      new_body.from_identity_name,
+      new_body.from_test_responsible_id,
+      new_body.from_validation_phrase,
+      new_body.from_time_ferpa_last_displayed,
+      new_body.identity_name,
+      new_body.test_record_responsible_id,
+      new_body.validation_phrase,
+      new_body.date_time_ferpa_last_displayed,
+      new_body.person_id
+    ];
+    console.log('Log Identity');
+    await connection.execute(sql_query, params, { autoCommit: true })
+
+  }
+
+  if (!is_person) {
+    new_body.person_added = true;
+    //SQL to add record
+    sql_query = sql.addPerson.createPerson;
+    params = [
+      new_body.byu_id,
+      new_body.date_time_updated,
+      new_body.updated_by_id,
+      new_body.date_time_created,
+      new_body.created_by_id,
+      new_body.surname,
+      new_body.rest_of_name,
+      new_body.suffix,
+      new_body.preferred_first_name,
+      new_body.preferred_surname,
+      new_body.preferred_name,
+      new_body.sort_name,
+      new_body.first_name,
+      new_body.middle_name,
+      new_body.date_of_birth,
+      new_body.deceased,
+      new_body.date_of_death,
+      new_body.sex,
+      new_body.marital_status,
+      new_body.religion_code,
+      new_body.lds_unit_number,
+      new_body.citizenship_country_code,
+      new_body.birth_country_code,
+      new_body.home_town,
+      new_body.home_state_code,
+      new_body.home_country_code,
+      new_body.high_school_code,
+      new_body.restricted,
+      new_body.ssn,
+      new_body.ssn_verification_date,
+      new_body.visa_type,
+      new_body.i20_expiration_date,
+      new_body.visa_type_source,
+      new_body.person_id,
+      new_body.lds_confirmation_date
+    ];
+    console.log("Add Person");
+    await connection.execute(sql_query, params);
+
+    //select new SQL query to log changes
+    sql_query = sql.addPerson.logPersonChange;
+    params = [
+      new_body.change_type,
+      new_body.byu_id,
+      new_body.date_time_updated,
+      new_body.updated_by_id,
+      new_body.date_time_created,
+      new_body.created_by_id,
+      new_body.from_date_of_birth,
+      new_body.from_deceased,
+      new_body.from_date_of_death,
+      new_body.from_sex,
+      new_body.from_marital_status,
+      new_body.from_religion_code,
+      new_body.from_lds_unit_number,
+      new_body.from_citizenship_country_code,
+      new_body.from_birth_country_code,
+      new_body.from_home_town,
+      new_body.from_home_state_code,
+      new_body.from_home_country_code,
+      new_body.from_high_school_code,
+      new_body.from_restricted,
+      new_body.from_ssn,
+      new_body.from_ssn_verification_date,
+      new_body.from_visa_type,
+      new_body.from_i20_expiration_date,
+      new_body.from_visa_type_source,
+      new_body.from_lds_confirmation_date,
+      new_body.date_of_birth,
+      new_body.deceased,
+      new_body.date_of_death,
+      new_body.sex,
+      new_body.marital_status,
+      new_body.religion_code,
+      new_body.lds_unit_number,
+      new_body.citizenship_country_code,
+      new_body.birth_country_code,
+      new_body.home_town,
+      new_body.home_state_code,
+      new_body.home_country_code,
+      new_body.high_school_code,
+      new_body.restricted,
+      new_body.ssn,
+      new_body.ssn_verification_date,
+      new_body.visa_type,
+      new_body.i20_expiration_date,
+      new_body.visa_type_source,
+      new_body.lds_confirmation_date
+    ];
+    console.log('Log Person');
+    await connection.execute(sql_query, params);
+
+    //select new SQL query to log changes
+    sql_query = sql.addPerson.logNameChange;
+    params = [
+      new_body.change_type,
+      new_body.byu_id,
+      new_body.date_time_updated,
+      new_body.updated_by_id,
+      new_body.date_time_created,
+      new_body.created_by_id,
+      new_body.from_surname,
+      new_body.from_rest_of_name,
+      new_body.from_suffix,
+      new_body.from_preferred_first_name,
+      new_body.from_preferred_surname,
+      new_body.from_preferred_name,
+      new_body.from_sort_name,
+      new_body.from_first_name,
+      new_body.from_middle_name,
+      new_body.surname,
+      new_body.rest_of_name,
+      new_body.suffix,
+      new_body.preferred_first_name,
+      new_body.preferred_surname,
+      new_body.preferred_name,
+      new_body.sort_name,
+      new_body.first_name,
+      new_body.middle_name
+    ];
+    console.log("Log Name");
+    await connection.execute(sql_query, params, { autoCommit: true })
+  }
+
+  await personAddedEvents(connection, new_body);
+
+  connection.close();
+
+  let values = [{
+    basic: {},
+    government_records: {},
+    "personal_records": {}
+  }];
+
+  values[0].basic = mapBasic(definitions, new_body, 'modifiable', 'modifiable');
+  console.log(values[0].basic);
+  values[0].government_records = mapGovernmentRecords(definitions, new_body);
+  console.log(values[0].government_records);
+  values[0].personal_records = mapPersonalRecords(definitions, new_body);
+  console.log(values[0].personal_records);
+  const persons = Enforcer.applyTemplate(definitions.persons, definitions,
+    {
+      validation_response_code: 201,
+      collection_size: 1, // TODO: Can we use the length of the results.rows? We may get results back with no addresses but have results.
+      page_start: 0,
+      page_end: 1,
+      page_size: 1,
+      default_page_size: 1,
+      maximum_page_size: 100,
+      field_sets_returned: ['basic', 'personal_records', 'government_records'],
+      persons_values: values
+    });
+
+  persons.values = values;
+  console.log(persons);
+  return persons;
+};
