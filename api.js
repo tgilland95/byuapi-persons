@@ -15,9 +15,9 @@
  *
  */
 
-const SansServer        = require('sans-server');
+const SansServer = require('sans-server');
 const SansServerSwagger = require('sans-server-swagger');
-const byuJwt            = require('byu-jwt');
+const byuJwt = require('byu-jwt');
 
 byuJwt.cacheWellknowns = true;
 const wellknown = 'https://api.byu.edu/.well-known/openid-configuration';
@@ -26,13 +26,13 @@ const wellknown = 'https://api.byu.edu/.well-known/openid-configuration';
 const api = SansServer();
 module.exports = api;
 
-api.use(function (req, res, next) {
+api.use((req, res, next) => {
   if (req.path === "/") {
     next();
   }
   else {
     byuJwt.authenticate(req.headers, wellknown)
-      .then(function (verifiedJWTs) {
+      .then(verifiedJWTs => {
         req.verifiedJWTs = verifiedJWTs;
         next();
       })
@@ -49,11 +49,11 @@ api.use(SansServerSwagger({
   logs: 'verbose',
   swagger: './swagger.json',
   exception: function exception(res, state) {
-    if(state.body instanceof Error && state.body.status) {
-      res.body({ metadata: { validation_response: { code: state.body.status, message: state.body.message}}});
+    if (state.body instanceof Error && state.body.status) {
+      res.body({ metadata: { validation_response: { code: state.body.status, message: state.body.message } } });
     }
     else {
-      res.body({ metadata: { validation_response: { code: state.statusCode, message: state.body}}});
+      res.body({ metadata: { validation_response: { code: state.statusCode, message: state.body } } });
     }
   }
 }));
