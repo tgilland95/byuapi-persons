@@ -11807,7 +11807,6 @@
         "religion_code",
         "marital_status",
         "deceased",
-        "sex",
         "lds_unit_number"
       ],
       "properties": {
@@ -11858,14 +11857,7 @@
         }
       },
       "example": {
-        "date_of_birth": "YYYY-MM-DD",
-        "religion_code": "LDS",
-        "marital_status": "S",
-        "date_of_death": "YYYY-MM-DD",
-        "deceased": false,
-        "sex": "M",
-        "lds_unit_number": "1234567",
-        "lds_confirmation_date": "YYYY-MM-DD"
+        "$ref": "#/x-mock_json/personal_record_put"
       }
     },
     "personal_records": {
@@ -16916,6 +16908,15 @@
       "categories": "Financial",
       "action": " ",
       "expiration_date": "YYYY-MM-DD"
+    },
+    "personal_record_put": {
+      "date_of_birth": "YYYY-MM-DD",
+      "religion_code": "LDS",
+      "marital_status": "?",
+      "date_of_death": "YYYY-MM-DD",
+      "deceased": false,
+      "lds_unit_number": "1234567",
+      "lds_confirmation_date": "YYYY-MM-DD"
     },
     "delegated_operation_performed_post": {
       "operation_performed_id": "123",
