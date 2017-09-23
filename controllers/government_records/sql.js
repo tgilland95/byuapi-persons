@@ -1,7 +1,7 @@
-exports.getGovernmentRecords = {
-  sql: `
+exports.sql = {
+  getGovernmentRecords: `
     select a.byu_id                                                                          as "byu_id",
-           a.preferred_name                                                                  as "preferred_name",
+           a.preferred_name                                                                  as "name",
            k.credential_id                                                                   as "net_id",
            to_char(a.date_time_updated at time zone 'UTC', 'YYYY-MM-DD"T"HH24:MI:SS.FF3"Z"') as "date_time_updated", 
            a.updated_by_id                                                                   as "updated_by_id",
@@ -107,43 +107,7 @@ exports.getGovernmentRecords = {
            and ( e.year_term is null 
                   or e.year_term = (select max(e2.year_term) 
                                     from   std_reg_eligibility_lnk e2 
-                                    where  a.person_id = e2.person_id) )`,
-  map: {
-    byu_id: byu_id.value,
-    name: byu_id.description,
-    net_id: net_id.value,
-    date_time_updated: date_time_updated.value,
-    updated_by_id: updated_by_id.value,
-    updated_by_name: updated_by_id.description,
-    date_time_created: date_time_created.value,
-    created_by_id: created_by_id.value,
-    created_by_name: created_by_id.description,
-    citizenship_country_code: citizenship_country_code.value,
-    citizenship_country_name: citizenship_country_code.description,
-    birth_country_code: birth_country_code.value,
-    birth_country_name: birth_country_code.description,
-    ssn: ssn.value,
-    ssn_verification_date: ssn_verification_date.value,
-    visa_type: visa_type.value,
-    i20_expiration_date: i20_expiration_date.value,
-    visa_type_source: visa_type_source.value
-  },
-  public_map: {
-    byu_id: byu_id.value,
-    name: byu_id.description,
-    net_id: net_id.value,
-    date_time_updated: date_time_updated.value,
-    updated_by_id: updated_by_id.value,
-    date_time_created: date_time_created.value,
-    created_by_id: created_by_id.value,
-    visa_type: visa_type.value,
-    visa_type_source: visa_type.description,
-    i20_expiration_date: i20_expiration_date.value,
-    citizenship_country_code: citizenship_country_code.value,
-    citizenship_country_name: citizenship_country_code.description,
-    birth_country_code: birth_country_code.value,
-    birth_country_name: birth_country_code.description
-  }
+                                    where  a.person_id = e2.person_id) )`
 };
 
 exports.modifyGovernmentRecords = {

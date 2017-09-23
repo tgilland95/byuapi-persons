@@ -1,7 +1,7 @@
 exports.sql = {
   getPersonalRecords: ` 
     select a.byu_id                                                                          as "byu_id",
-           a.preferred_name                                                                  as "preferred_name",
+           a.preferred_name                                                                  as "name",
            k.credential_id                                                                   as "net_id",
            to_char(a.date_time_updated at time zone 'UTC', 'YYYY-MM-DD"T"HH24:MI:SS.FF3"Z"') as "date_time_updated", 
            a.updated_by_id                                                                   as "updated_by_id",
