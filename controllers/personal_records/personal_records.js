@@ -28,6 +28,7 @@ function mapDBResultsToDefinition(definitions, row, birth_api_type, death_api_ty
     {
       cache_date_time: new Date().toISOString(),
       byu_id: row.byu_id,
+      name: row.name,
       net_id: row.net_id,
       birth_api_type: (row.date_of_birth && birth_api_type === 'read-only') ? 'read-only' : 'modifiable',
       death_api_type: death_api_type,
@@ -36,8 +37,10 @@ function mapDBResultsToDefinition(definitions, row, birth_api_type, death_api_ty
       api_type: 'modifiable',
       date_time_updated: row.date_time_updated,
       updated_by_id: row.updated_by_id,
+      updated_by_name: row.updated_by_name,
       date_time_created: row.date_time_created,
       created_by_id: row.created_by_id,
+      created_by_name: row.created_by_name,
       date_of_birth: row.date_of_birth || undefined,
       date_of_death: row.date_of_death || undefined,
       deceased: /^Y$/g.test(row.deceased),
@@ -953,11 +956,11 @@ exports.modifyPersonalRecords = async (definitions, byu_id, body, authorized_byu
     await connection.execute(sql_query, log_params, { autoCommit: true });
     await personalRecordChangedEvents(connection, byu_id, new_body, processed_body);
   }
-  connection.close();
 
   params = [byu_id];
   sql_query = sql.sql.getPersonalRecords;
-  const results = await db.execute(sql_query, params);
+  const results = await connection.execute(sql_query, params);
+  connection.close();
   const vital_api_type = can_update_dob ? 'modifiable': 'read-only';
   const lds_api_type = is_lds_sync ? 'modifiable': 'read-only';
   const rel_api_type = can_update_rel ? 'modifiable': 'read-only';
