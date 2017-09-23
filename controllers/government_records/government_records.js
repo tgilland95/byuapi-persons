@@ -105,13 +105,13 @@ function processBody(authorized_byu_id, body) {
   let current_date_time = moment();
   current_date_time = current_date_time.clone().tz('America/Denver');
   let new_body = {};
-  new_body.religion_code = body.religion_code || '???';
-  new_body.lds_unit_number = body.lds_unit_number || ' ';
-  new_body.lds_confirmation_date = body.lds_confirmation_date || '';
-  new_body.date_of_birth = body.date_of_birth || '';
-  new_body.date_of_death = body.date_of_death || '';
-  new_body.deceased = (!body.deceased && !body.date_of_death) ? 'N' : 'Y';
-  new_body.marital_status = body.marital_status || '?';
+  new_body.citizenship_country_code = body.citizenship_country_code || '???';
+  new_body.birth_country_code = body.birth_country_code || '???';
+  new_body.ssn = body.ssn || ' ';
+  new_body.ssn_verification_date = body.ssn_verification_date || '';
+  new_body.visa_type = body.visa_type || ' ';
+  new_body.visa_type_source = body.visa_type_source || ' ';
+  new_body.i20_expiration_date = body.i20_expiration_date || '';
   new_body.updated_by_id = (!body.updated_by_id || !body.updated_by_id.trim()) ? authorized_byu_id : body.updated_by_id;
   if (!body.date_time_updated || !body.date_time_updated.trim()) {
     new_body.date_time_updated = current_date_time.format('YYYY-MM-DD HH:mm:ss.SSS');
@@ -121,28 +121,19 @@ function processBody(authorized_byu_id, body) {
   }
 
   let error = false;
-  let msg = `Invalid Body:`;
-  if (new_body.date_of_birth && (moment.tz(new_body.date_of_birth, 'YYYY-MM-DD', 'America/Denver') > current_date_time.endOf('day') ||
-      moment(new_body.date_of_birth, 'YYYY-MM-DD') < moment('1850-01-01', 'YYYY-MM-DD'))) {
-    msg += `\n\tdate_of_birth must be after 1850 and before tomorrow`;
+  let msg = `Incorrect BODY:`;
+  if (new_body.ssn_verification_date && (moment(new_body.ssn_verification_date, 'YYYY-MM-DD') < moment('2004-01-01', 'YYYY-MM-DD') ||
+      moment.tz(new_body.ssn_verification_date, 'YYYY-MM-DD', "America/Denver") > current_date_time.endOf('day'))) {
+    msg += `\n\tssn_verification_date must be after 2004 and before tomorrow`;
     error = true;
   }
-
-  if (new_body.date_of_death && (moment(new_body.date_of_death, 'YYYY-MM-DD', 'America/Denver') > current_date_time.endOf('day') ||
-      moment(new_body.date_of_death, 'YYYY-MM-DD') < moment(new_body.date_of_birth, 'YYYY-MM-DD'))) {
-    msg += `\n\tdate_of_death must be after date_of_birth and before tomorrow`;
-    error = true;
+  if (!utils.isValidCountryCode(new_body.citizenship_country_code)) {
+    msg += "\n\tcitizenship_country_code is invalid";
+    error = true
   }
-
-  if (new_body.lds_confirmation_date && (moment.tz(new_body.lds_confirmation_date, 'YYYY-MM-DD', 'America/Denver') > current_date_time.endOf('day') ||
-      (new_body.date_of_birth && moment(new_body.lds_confirmation_date, 'YYYY-MM-DD') < moment(new_body.date_of_birth, 'YYYY-MM-DD').add(8, 'years')))) {
-    msg += `\n\tlds_confirmation_date must be after 8th birthday and before tomorrow`;
-    error = true;
-  }
-
-  if (!utils.isValidReligionCode(new_body.religion_code)) {
-    msg += `\n\t${new_body.religion_code} is an invalid religion code.`;
-    error = true;
+  if (!utils.isValidCountryCode(new_body.birth_country_code)) {
+    msg += "\n\tbirth_country_code is invalid";
+    error = true
   }
 
   for (let prop in new_body) {
@@ -171,50 +162,51 @@ function processFromResults(authorized_byu_id, from_results) {
   }
   let process_results = {};
   process_results.change_type = 'C';
+  process_results.restricted = from_results.restricted || ' ';
   process_results.person_id = from_results.person_id;
   process_results.net_id = from_results.net_id;
   process_results.employee_type = from_results.employee_type;
   process_results.student_status = from_results.student_status;
-  process_results.restricted = from_results.restricted || ' ';
   process_results.primary_role = from_results.primary_role;
   process_results.preferred_name = from_results.preferred_name || ' ';
   process_results.display_name = from_results.preferred_name;
-  process_results.from_lds_confirmation_date = from_results.lds_confirmation_date || '';
-  process_results.from_deceased = from_results.deceased || ' ';
-  process_results.from_religion_code = from_results.religion_code || ' ';
-  process_results.from_lds_unit_number = from_results.lds_unit_number || ' ';
+  process_results.name_fnf = from_results.name_fnf;
   process_results.date_time_created = date_time_created || current_date_time;
   process_results.created_by_id = from_results.created_by_id || authorized_byu_id;
-  process_results.from_date_of_birth = from_results.date_of_birth || '';
-  process_results.from_date_of_death = from_results.date_of_death || '';
+  process_results.date_of_birth = from_results.date_of_birth || '';
+  process_results.deceased = from_results.deceased || ' ';
+  process_results.date_of_death = from_results.date_of_death || '';
   process_results.sex = from_results.sex || '';
-  process_results.from_marital_status = from_results.marital_status || ' ';
-  process_results.citizenship_country_code = from_results.citizenship_country_code || ' ';
-  process_results.birth_country_code = from_results.birth_country_code || ' ';
+  process_results.marital_status = from_results.marital_status || ' ';
+  process_results.religion_code = from_results.religion_code || ' ';
+  process_results.lds_unit_number = from_results.lds_unit_number || ' ';
+  process_results.from_citizenship_country_code = from_results.citizenship_country_code || ' ';
+  process_results.from_birth_country_code = from_results.birth_country_code || ' ';
   process_results.home_town = from_results.home_town || ' ';
   process_results.home_state_code = from_results.home_state_code || ' ';
   process_results.home_country_code = from_results.home_country_code || ' ';
   process_results.high_school_code = from_results.high_school_code || ' ';
-  process_results.ssn = from_results.ssn || ' ';
-  process_results.ssn_verification_date = from_results.ssn_verification_date || '';
-  process_results.visa_type = from_results.visa_type || ' ';
-  process_results.i20_expiration_date = from_results.i20_expiration_date || '';
-  process_results.visa_type_source = from_results.visa_type_source || ' ';
+  process_results.from_ssn = from_results.ssn || ' ';
+  process_results.from_ssn_verification_date = from_results.ssn_verification_date || '';
+  process_results.from_visa_type = from_results.visa_type || ' ';
+  process_results.from_i20_expiration_date = from_results.i20_expiration_date || '';
+  process_results.from_visa_type_source = from_results.visa_type_source || ' ';
+  process_results.lds_confirmation_date = from_results.lds_confirmation_date || '';
 
   return process_results;
 }
 
-async function personalRecordChangedEvents(connection, byu_id, new_body, processed_results) {
+async function governmentRecordChangedEvents(connection, byu_id, new_body, processed_results) {
   try {
     const source_dt = new Date().toISOString();
-    let event_type = 'Person Changed';
-    let event_type2 = 'Person Changed v2';
-    const domain = 'edu.byu';
-    const entity = 'BYU-IAM';
+    let event_type = "Person Changed";
+    let event_type2 = "Person Changed v2";
+    const domain = "edu.byu";
+    const entity = "BYU-IAM";
     let filters = [];
-    const identity_type = 'Person';
-    const personal_records_url = `https://api.byu.edu/byuapi/persons/v1/${byu_id}/personal_records`;
-    let secure_url = `https://api.byu.edu/domains/legacy/identity/secureurl/v1/`;
+    const identity_type = "Person";
+    const government_records_url = `https://api.byu.edu/byuapi/persons/v1/${byu_id}/government_records`;
+    let secure_url = "https://api.byu.edu/domains/legacy/identity/secureurl/v1/";
     let event_frame = {
       "events": {
         "event": []
@@ -236,7 +228,6 @@ async function personalRecordChangedEvents(connection, byu_id, new_body, process
     ];
     let sql_query = db.raiseEvent;
     let params = [];
-
     if (!/^Y$/g.test(processed_results.restricted)) {
       let body = [
         'person_id',
@@ -254,7 +245,7 @@ async function personalRecordChangedEvents(connection, byu_id, new_body, process
         'date_time_created',
         processed_results.date_time_created,
         'callback_url',
-        personal_records_url,
+        government_records_url,
         'surname',
         processed_results.surname,
         'rest_of_name',
@@ -296,22 +287,22 @@ async function personalRecordChangedEvents(connection, byu_id, new_body, process
         body.pop();
       }
       body.unshift(processed_results.preferred_surname);
-      body.unshift('preferred_surname');
+      body.unshift("preferred_surname");
       body.unshift(processed_results.preferred_name);
-      body.unshift('preferred_name');
+      body.unshift("preferred_name");
       body.unshift(processed_results.high_school_code);
-      body.unshift('high_school_code');
-      filters.push('identity_type');
+      body.unshift("high_school_code");
+      filters.push("identity_type");
       filters.push(identity_type);
-      filters.push('employee_type');
+      filters.push("employee_type");
       filters.push(processed_results.employee_type);
-      filters.push('student_status');
+      filters.push("student_status");
       filters.push(processed_results.student_status);
       event = eventy.Builder(header, body, filters);
       event_frame.events.event.push(event);
 
-      if (processed_results.from_date_of_birth !== new_body.date_of_birth) {
-        event_type = 'Birthday Changed';
+      if (processed_results.from_ssn !== new_body.ssn) {
+        event_type = "SSN Changed";
         header[5] = event_type;
         body = [
           'person_id',
@@ -329,21 +320,19 @@ async function personalRecordChangedEvents(connection, byu_id, new_body, process
           'date_time_created',
           processed_results.date_time_created,
           'callback_url',
-          personal_records_url
+          government_records_url
         ];
         event = eventy.Builder(header, body);
         event_frame.events.event.push(event);
 
-        event_type2 = 'Birthday Changed v2';
+        event_type2 = "SSN Changed v2";
         header[5] = event_type2;
         event = eventy.Builder(header, body, filters);
         event_frame.events.event.push(event)
       }
 
-      //deceased is set to yes if date_of_death is not null
-      if (!/^Y$/g.test(processed_results.from_deceased) &&
-        /^Y$/g.test(new_body.deceased)) {
-        event_type = 'Person Deceased';
+      if ((processed_results.from_citizenship_country_code !== "USA") && (new_body.citizenship_country_code === "USA")) {
+        event_type = "Person Granted US Citizenship";
         header[5] = event_type;
         body = [
           'person_id',
@@ -352,10 +341,8 @@ async function personalRecordChangedEvents(connection, byu_id, new_body, process
           byu_id,
           'net_id',
           processed_results.net_id,
-          'deceased',
-          new_body.deceased,
-          'date_of_death',
-          new_body.date_of_death,
+          'citizenship_country_code',
+          new_body.citizenship_country_code,
           'updated_by_id',
           new_body.updated_by_id,
           'date_time_updated',
@@ -365,22 +352,35 @@ async function personalRecordChangedEvents(connection, byu_id, new_body, process
           'date_time_created',
           processed_results.date_time_created,
           'callback_url',
-          personal_records_url
+          government_records_url
         ];
         event = eventy.Builder(header, body);
         event_frame.events.event.push(event);
 
-        event_type2 = 'Person Deceased v2';
+        event_type2 = "Person Granted US Citizenship v2";
         header[5] = event_type2;
+        body.push('name_lnf');
+        body.push(processed_results.sort_name);
+        body.push('name_fnf');
+        body.push(processed_results.name_fnf);
+        body.push('preferred_name');
+        body.push(processed_results.preferred_name);
+        body.push('surname');
+        body.push(processed_results.surname);
+        body.push('preferred_surname');
+        body.push(processed_results.preferred_surname);
+        body.push('rest_of_name');
+        body.push(processed_results.rest_of_name);
+        body.push('preferred_first_name');
+        body.push(processed_results.preferred_first_name);
+        body.push('suffix');
+        body.push(processed_results.suffix);
         event = eventy.Builder(header, body, filters);
         event_frame.events.event.push(event)
       }
 
-      if (
-        (/^Y$/g.test(processed_results.from_deceased) ||
-          processed_results.from_date_of_death) &&
-        !/^Y$/g.test(new_body.deceased)) {
-        event_type = 'Person Un-deceased';
+      if ((processed_results.from_citizenship_country_code === "USA") && (new_body.citizenship_country_code !== "USA")) {
+        event_type = "Person Un-granted US Citizenship";
         header[5] = event_type;
         body = [
           'person_id',
@@ -389,8 +389,8 @@ async function personalRecordChangedEvents(connection, byu_id, new_body, process
           byu_id,
           'net_id',
           processed_results.net_id,
-          'deceased',
-          new_body.deceased,
+          'citizenship_country_code',
+          new_body.citizenship_country_code,
           'updated_by_id',
           new_body.updated_by_id,
           'date_time_updated',
@@ -400,196 +400,81 @@ async function personalRecordChangedEvents(connection, byu_id, new_body, process
           'date_time_created',
           processed_results.date_time_created,
           'callback_url',
-          personal_records_url
+          government_records_url
         ];
         event = eventy.Builder(header, body);
         event_frame.events.event.push(event);
 
-        event_type2 = 'Person Un-deceased v2';
+        event_type2 = "Person Un-granted US Citizenship v2";
         header[5] = event_type2;
-        event = eventy.Builder(header, body, filters);
-        event_frame.events.event.push(event)
-      }
-
-      if (!/^M$/g.test(processed_results.from_marital_status) &&
-        /^M$/g.test(new_body.marital_status)) {
-        event_type = 'Person Married';
-        header[5] = event_type;
-        body = [
-          'person_id',
-          processed_results.person_id,
-          'byu_id',
-          byu_id,
-          'net_id',
-          processed_results.net_id,
-          'updated_by_id',
-          new_body.updated_by_id,
-          'date_time_updated',
-          new_body.date_time_updated,
-          'created_by_id',
-          processed_results.created_by_id,
-          'date_time_created',
-          processed_results.date_time_created,
-          'callback_url',
-          personal_records_url
-        ];
-        event = eventy.Builder(header, body, filters);
-        event_frame.events.event.push(event);
-
-        if (/^(Employee|Faculty)$/g.test(processed_results.primary_role) &&
-          /(?=.*?-FT-)/g.test(processed_results.employee_type)) {
-          event_type2 = 'Full-time Employee Married';
-          header[5] = event_type2;
-          event = eventy.Builder(header, body);
-          event_frame.events.event.push(event)
-        }
-        if (/^Student$/g.test(processed_results.primary_role)) {
-          event_type2 = 'Student Married';
-          header[5] = event_type2;
-          event = eventy.Builder(header, body);
-          event_frame.events.event.push(event)
-        }
-
-      }
-
-      if (/^M$/g.test(processed_results.from_marital_status) &&
-        !/^M$/g.test(new_body.marital_status)) {
-        event_type = 'Person Un-married';
-        header[5] = event_type;
-        body = [];
-        body.push('secure_url');
-        body.push(secure_url);
-        event = eventy.Builder(header, body, filters);
-        event_frame.events.event.push(event);
-
-        if (/^(Employee|Faculty)$/g.test(processed_results.primary_role) &&
-          /(?=.*?-FT-)/g.test(processed_results.employee_type)) {
-          event_type2 = 'Full-time Employee Un-married';
-          header[5] = event_type2;
-          event = eventy.Builder(header, body);
-          event_frame.events.event.push(event)
-        }
-        if (/^Student$/g.test(processed_results.primary_role)) {
-          event_type2 = 'Student Un-married';
-          header[5] = event_type2;
-          event = eventy.Builder(header, body);
-          event_frame.events.event.push(event)
-        }
-
-      }
-      if (!/^LDS$/g.test(processed_results.from_religion_code) &&
-        /^LDS$/g.test(new_body.religion_code)) {
-        event_type = 'Person Converted to LDS';
-        header[5] = event_type;
-        body = [];
-        body.push('secure_url');
-        body.push(secure_url);
-        event = eventy.Builder(header, body);
-        event_frame.events.event.push(event);
-
-        event_type2 = 'Person Converted to LDS v2';
-        header[5] = event_type2;
-        event = eventy.Builder(header, body, filters);
-        event_frame.events.event.push(event)
-      }
-
-      if (/^LDS$/g.test(processed_results.from_religion_code) &&
-        !/^LDS$/g.test(new_body.religion_code)) {
-        event_type = 'Person Converted from LDS';
-        header[5] = event_type;
-        body = [];
-        body.push('secure_url');
-        body.push(secure_url);
-        event = eventy.Builder(header, body);
-        event_frame.events.event.push(event);
-
-        event_type2 = 'Person Converted from LDS v2';
-        header[5] = event_type2;
-        event = eventy.Builder(header, body, filters);
-        event_frame.events.event.push(event)
-      }
-
-      if (processed_results.from_lds_unit_number !== new_body.lds_unit_number) {
-        event_type = 'LDS Unit Changed';
-        header[5] = event_type;
-        body = [
-          'person_id',
-          processed_results.person_id,
-          'byu_id',
-          byu_id,
-          'net_id',
-          processed_results.net_id,
-          'lds_unit_number',
-          new_body.lds_unit_number,
-          'updated_by_id',
-          new_body.updated_by_id,
-          'date_time_updated',
-          new_body.date_time_updated,
-          'created_by_id',
-          processed_results.created_by_id,
-          'date_time_created',
-          processed_results.date_time_created,
-          'callback_url',
-          personal_records_url,
-          secure_url
-        ];
-        event = eventy.Builder(header, body);
-        event_frame.events.event.push(event);
-
-        event_type2 = 'LDS Unit Changed v2';
-        header[5] = event_type2;
+        body.push('name_lnf');
+        body.push(processed_results.sort_name);
+        body.push('name_fnf');
+        body.push(processed_results.name_fnf);
+        body.push('preferred_name');
+        body.push(processed_results.preferred_name);
+        body.push('surname');
+        body.push(processed_results.surname);
+        body.push('preferred_surname');
+        body.push(processed_results.preferred_surname);
+        body.push('rest_of_name');
+        body.push(processed_results.rest_of_name);
+        body.push('preferred_first_name');
+        body.push(processed_results.preferred_first_name);
+        body.push('suffix');
+        body.push(processed_results.suffix);
         event = eventy.Builder(header, body, filters);
         event_frame.events.event.push(event)
       }
     }
     else {
       let body = [
-        'person_id',
-        ' ',
-        'byu_id',
-        ' ',
-        'net_id',
-        ' ',
-        'updated_by_id',
-        ' ',
-        'date_time_updated',
-        ' ',
-        'created_by_id',
-        ' ',
-        'date_time_created',
-        ' ',
-        'secure_url',
+        "person_id",
+        " ",
+        "byu_id",
+        " ",
+        "net_id",
+        " ",
+        "updated_by_id",
+        " ",
+        "date_time_updated",
+        " ",
+        "created_by_id",
+        " ",
+        "date_time_created",
+        " ",
+        "secure_url",
         secure_url,
-        'surname',
-        ' ',
-        'rest_of_name',
-        ' ',
-        'first_name',
-        ' ',
-        'middle_name',
-        ' ',
-        'suffix',
-        ' ',
-        'preferred_first_name',
-        ' ',
-        'sort_name',
-        ' ',
-        'home_town',
-        ' ',
-        'home_state_code',
-        ' ',
-        'home_country_code',
-        ' ',
-        'deceased',
-        ' ',
-        'sex',
-        ' ',
-        'display_name',
-        ' ',
-        'prefix',
-        ' ',
-        'surname_position',
-        ' '
+        "surname",
+        " ",
+        "rest_of_name",
+        " ",
+        "first_name",
+        " ",
+        "middle_name",
+        " ",
+        "suffix",
+        " ",
+        "preferred_first_name",
+        " ",
+        "sort_name",
+        " ",
+        "home_town",
+        " ",
+        "home_state_code",
+        " ",
+        "home_country_code",
+        " ",
+        "deceased",
+        " ",
+        "sex",
+        " ",
+        "display_name",
+        " ",
+        "prefix",
+        " ",
+        "surname_position",
+        " "
       ];
       let event = eventy.Builder(header, body);
       event_frame.events.event.push(event);
@@ -600,246 +485,140 @@ async function personalRecordChangedEvents(connection, byu_id, new_body, process
       for (let i = 6; i--;) {
         body.pop();
       }
-      body.unshift(' ');
-      body.unshift('preferred_surname');
-      body.unshift(' ');
-      body.unshift('preferred_name');
-      body.unshift(' ');
-      body.unshift('high_school_code');
-      filters.push('restricted');
-      filters.push(processed_results.restricted);
+      body.unshift(" ");
+      body.unshift("preferred_surname");
+      body.unshift(" ");
+      body.unshift("preferred_name");
+      body.unshift(" ");
+      body.unshift("high_school_code");
+      filters.push("restricted");
+      filters.push(restricted);
       event = eventy.Builder(header, body, filters);
       event_frame.events.event.push(event);
 
-      if (processed_results.from_date_of_birth !== new_body.date_of_birth) {
-        event_type = 'Birthday Changed';
+      if (processed_results.from_ssn !== new_body.ssn) {
+        event_type = "SSN Changed";
         header[5] = event_type;
         body = [
-          'person_id',
-          ' ',
-          'byu_id',
-          ' ',
-          'net_id',
-          ' ',
-          'updated_by_id',
-          ' ',
-          'date_time_updated',
-          ' ',
-          'created_by_id',
-          ' ',
-          'date_time_created',
-          ' ',
-          'secure_url',
+          "person_id",
+          " ",
+          "byu_id",
+          " ",
+          "net_id",
+          " ",
+          "updated_by_id",
+          " ",
+          "date_time_updated",
+          " ",
+          "created_by_id",
+          " ",
+          "date_time_created",
+          " ",
+          "secure_url",
           secure_url
         ];
         event = eventy.Builder(header, body);
         event_frame.events.event.push(event);
 
-        event_type2 = 'Birthday Changed v2';
+        event_type2 = "SSN Changed v2";
         header[5] = event_type2;
         event = eventy.Builder(header, body, filters);
         event_frame.events.event.push(event)
       }
 
-      //deceased is set to yes if date_of_death is not null
-      if (!/^Y$/g.test(processed_results.from_deceased) &&
-        /^Y$/g.test(new_body.deceased)) {
-        event_type = 'Person Deceased';
+      if ((processed_results.from_citizenship_country_code !== "USA") && (new_body.citizenship_country_code === "USA")) {
+        event_type = "Person Granted US Citizenship";
         header[5] = event_type;
         body = [
-          'person_id',
-          ' ',
-          'byu_id',
-          ' ',
-          'net_id',
-          ' ',
-          'deceased',
-          ' ',
-          'date_of_death',
-          ' ',
-          'updated_by_id',
-          ' ',
-          'date_time_updated',
-          ' ',
-          'created_by_id',
-          ' ',
-          'date_time_created',
-          ' ',
-          'secure_url',
+          "person_id",
+          " ",
+          "byu_id",
+          " ",
+          "net_id",
+          " ",
+          "citizenship_country_code",
+          " ",
+          "updated_by_id",
+          " ",
+          "date_time_updated",
+          " ",
+          "created_by_id",
+          " ",
+          "date_time_created",
+          " ",
+          "secure_url",
           secure_url
         ];
         event = eventy.Builder(header, body);
         event_frame.events.event.push(event);
 
-        event_type2 = 'Person Deceased v2';
+        event_type2 = "Person Granted US Citizenship v2";
         header[5] = event_type2;
+        body.push("name_lnf");
+        body.push(" ");
+        body.push("name_fnf");
+        body.push(" ");
+        body.push("preferred_name");
+        body.push(" ");
+        body.push("surname");
+        body.push(" ");
+        body.push("preferred_surname");
+        body.push(" ");
+        body.push("rest_of_name");
+        body.push(" ");
+        body.push("preferred_first_name");
+        body.push(" ");
+        body.push("suffix");
+        body.push(" ");
         event = eventy.Builder(header, body, filters);
         event_frame.events.event.push(event)
       }
 
-      if ((/^Y$/g.test(processed_results.from_deceased) ||
-          new_body.from_date_of_death) &&
-        /^N$/g.test(new_body.deceased)) {
-        event_type = 'Person Un-deceased';
+      if ((processed_results.from_citizenship_country_code === "USA") &&
+        (new_body.citizenship_country_code !== "USA")) {
+        event_type = "Person Un-granted US Citizenship";
         header[5] = event_type;
         body = [
-          'person_id',
-          ' ',
-          'byu_id',
-          ' ',
-          'net_id',
-          ' ',
-          'deceased',
-          ' ',
-          'updated_by_id',
-          ' ',
-          'date_time_updated',
-          ' ',
-          'created_by_id',
-          ' ',
-          'date_time_created',
-          ' ',
-          'secure_url',
+          "person_id",
+          " ",
+          "byu_id",
+          " ",
+          "net_id",
+          " ",
+          "citizenship_country_code",
+          " ",
+          "updated_by_id",
+          " ",
+          "date_time_updated",
+          " ",
+          "created_by_id",
+          " ",
+          "date_time_created",
+          " ",
+          "secure_url",
           secure_url
         ];
         event = eventy.Builder(header, body);
         event_frame.events.event.push(event);
 
-        event_type2 = 'Person Un-deceased v2';
+        event_type2 = "Person Un-granted US Citizenship v2";
         header[5] = event_type2;
-        event = eventy.Builder(header, body, filters);
-        event_frame.events.event.push(event)
-      }
-
-      if (!/^M$/g.test(processed_results.from_marital_status) &&
-        /^M$/g.test(new_body.marital_status)) {
-        event_type = 'Person Married';
-        header[5] = event_type;
-        body = [
-          'person_id',
-          ' ',
-          'byu_id',
-          ' ',
-          'net_id',
-          ' ',
-          'updated_by_id',
-          ' ',
-          'date_time_updated',
-          ' ',
-          'created_by_id',
-          ' ',
-          'date_time_created',
-          ' ',
-          'secure_url',
-          secure_url
-        ];
-        event = eventy.Builder(header, body, filters);
-        event_frame.events.event.push(event);
-
-        if (/^(Employee|Faculty)$/g.test(processed_results.primary_role) &&
-          /(?=.*?-FT-)/g.test(processed_results.employee_type)) {
-          event_type2 = 'Full-time Employee Married';
-          header[5] = event_type2;
-          event = eventy.Builder(header, body);
-          event_frame.events.event.push(event)
-        }
-        if (/^Student$/g.test(processed_results.primary_role)) {
-          event_type2 = 'Student Married';
-          header[5] = event_type2;
-          event = eventy.Builder(header, body);
-          event_frame.events.event.push(event)
-        }
-
-      }
-
-      if (/^M$/g.test(processed_results.from_marital_status) &&
-        !/^M$/g.test(new_body.marital_status)) {
-        event_type = 'Person Un-married';
-        header[5] = event_type;
-        body = [
-          'secure_url',
-          secure_url
-        ];
-        event = eventy.Builder(header, body, filters);
-        event_frame.events.event.push(event);
-
-        if (/^(Employee|Faculty)$/g.test(processed_results.primary_role) &&
-          /(?=.*?-FT-)/g.test(processed_results.employee_type)) {
-          event_type2 = 'Full-time Employee Un-married';
-          header[5] = event_type2;
-          event = eventy.Builder(header, body);
-          event_frame.events.event.push(event)
-        }
-        if (/^Student$/g.test(processed_results.primary_role)) {
-          event_type2 = 'Student Un-married';
-          header[5] = event_type2;
-          event = eventy.Builder(header, body);
-          event_frame.events.event.push(event)
-        }
-
-      }
-      if (!/^LDS$/g.test(processed_results.from_religion_code) &&
-        /^LDS$/g.test(new_body.religion_code)) {
-        event_type = 'Person Converted to LDS';
-        header[5] = event_type;
-        body = [
-          'secure_url',
-          secure_url
-        ];
-        event = eventy.Builder(header, body);
-        event_frame.events.event.push(event);
-
-        event_type2 = 'Person Converted to LDS v2';
-        header[5] = event_type2;
-        event = eventy.Builder(header, body, filters);
-        event_frame.events.event.push(event)
-      }
-
-      if (/^LDS$/g.test(processed_results.from_religion_code) &&
-        !/^LDS$/g.test(new_body.religion_code)) {
-        event_type = 'Person Converted from LDS';
-        header[5] = event_type;
-        body = [
-          'secure_url',
-          secure_url
-        ];
-        event = eventy.Builder(header, body);
-        event_frame.events.event.push(event);
-
-        event_type2 = 'Person Converted from LDS v2';
-        header[5] = event_type2;
-        event = eventy.Builder(header, body, filters);
-        event_frame.events.event.push(event)
-      }
-
-      if (processed_results.from_lds_unit_number !== new_body.lds_unit_number) {
-        event_type = 'LDS Unit Changed';
-        header[5] = event_type;
-        body = [
-          'person_id',
-          ' ',
-          'byu_id',
-          ' ',
-          'net_id',
-          ' ',
-          'lds_unit_number',
-          ' ',
-          'updated_by_id',
-          ' ',
-          'date_time_updated',
-          ' ',
-          'created_by_id',
-          ' ',
-          'date_time_created',
-          ' ',
-          'secure_url',
-          secure_url
-        ];
-        event = eventy.Builder(header, body);
-        event_frame.events.event.push(event);
-
-        event_type2 = 'LDS Unit Changed v2';
-        header[5] = event_type2;
+        body.push("name_lnf");
+        body.push(" ");
+        body.push("name_fnf");
+        body.push(" ");
+        body.push("preferred_name");
+        body.push(" ");
+        body.push("surname");
+        body.push(" ");
+        body.push("preferred_surname");
+        body.push(" ");
+        body.push("rest_of_name");
+        body.push(" ");
+        body.push("preferred_first_name");
+        body.push(" ");
+        body.push("suffix");
+        body.push(" ");
         event = eventy.Builder(header, body, filters);
         event_frame.events.event.push(event)
       }
@@ -854,7 +633,7 @@ async function personalRecordChangedEvents(connection, byu_id, new_body, process
 
   } catch (error) {
     console.error(error.stack);
-    throw utils.Error(207, 'Personal Record Updated, but event raising failed');
+    throw utils.Error(207, 'Government Record Updated, but event raising failed');
   }
 }
 
@@ -869,11 +648,11 @@ exports.modifyGovernmentRecords = async (definitions, byu_id, body, authorized_b
     throw utils.Error(403, `User not authorized to update PERSON data`);
   }
 
-  let sql_query = sql.sql.getPersonalRecords;
+  let sql_query = sql.sql.getGovernmentRecords;
   let params = [byu_id];
   const from_results = await connection.execute(sql_query, params);
   if (!from_results.rows.length ||
-    (from_results.rows[0].restricted === 'Y' &&
+    (/^Y$/g.test(from_results.rows[0].restricted) &&
       !auth.hasRestrictedRights(permissions))) {
     throw utils.Error(404, 'Could not find BYU_ID in Person Table');
   }
@@ -881,49 +660,46 @@ exports.modifyGovernmentRecords = async (definitions, byu_id, body, authorized_b
 
   let processed_body = processFromResults(authorized_byu_id, from_results.rows[0]);
 
-  let vitals_dif = (
-    new_body.date_of_birth !== processed_body.from_date_of_birth ||
-    new_body.date_of_death !== processed_body.from_date_of_death ||
-    new_body.deceased !== processed_body.deceased);
+  const cit_c_dif = (new_body.citizenship_country_code !== processed_body.from_citizenship_country_code);
+  const ssn_dif = (new_body.ssn !== processed_body.from_ssn ||
+    new_body.ssn_verification_date !== processed_body.from_ssn_verification_date);
+  const basic_dif = (new_body.visa_type !== processed_body.from_visa_type ||
+    new_body.visa_type_source !== processed_body.from_visa_type_source ||
+    new_body.i20_expiration_date !== processed_body.from_i20_expiration_date ||
+    new_body.birth_country_code !== processed_body.from_birth_country_code);
 
-  if (vitals_dif && !can_update_dob) {
-    throw utils.Error(403, `User not authorized to update date_of_birth, date_of_death, or deceased`);
+  let error = false;
+  let msg = '';
+  if (cit_c_dif && !auth.canUpdateCitizenship(permissions)) {
+    msg += `Not Authorized to update citizenship`;
+    error = true;
+  }
+  if (ssn_dif && !auth.canUpdateSSN(permissions)) {
+    msg += `Not Authorized to update SSN or SSN verification date`;
+    error = true;
+  }
+  if (error) {
+    throw utils.Error(403, msg);
   }
 
-  let lds_dif = (
-    new_body.lds_unit_number !== processed_body.from_lds_unit_number ||
-    new_body.lds_confirmation_date !== processed_body.from_lds_confirmation_date);
-
-  if (lds_dif && !is_lds_sync) {
-    throw utils.Error(403, `User not authorized to update lds_unit_number or lds_confirmation_date`);
-  }
-
-  let rel_dif = (new_body.religion_code !== processed_body.from_religion_code);
-
-  if (rel_dif && !can_update_rel) {
-    throw utils.Error(403, `User not authorized to update religion_code`);
-  }
-
-  let married_dif = (new_body.marital_status !== processed_body.from_marital_status);
-
-  if (vitals_dif || lds_dif || rel_dif || married_dif) {
-    sql_query = sql.modifyPersonalRecord.update;
+  if (cit_c_dif || ssn_dif || basic_dif) {
+    sql_query = sql.modifyGovernmentRecords.update;
     params = [
       new_body.date_time_updated,
       new_body.updated_by_id,
-      new_body.date_of_birth,
-      new_body.date_of_death,
-      new_body.deceased,
-      new_body.marital_status,
-      new_body.religion_code,
-      new_body.lds_unit_number,
-      new_body.lds_confirmation_date,
+      new_body.citizenship_country_code,
+      new_body.birth_country_code,
+      new_body.ssn,
+      new_body.ssn_verification_date,
+      new_body.visa_type,
+      new_body.visa_type_source,
+      new_body.i20_expiration_date,
       byu_id
     ];
     console.log(sql_query);
     console.log(params);
     await connection.execute(sql_query, params);
-    sql_query = sql.modifyPersonalRecord.logChange;
+    sql_query = sql.modifyGovernmentRecords.logChange;
     let log_params = [
       processed_body.change_type,
       byu_id,
@@ -931,60 +707,63 @@ exports.modifyGovernmentRecords = async (definitions, byu_id, body, authorized_b
       new_body.updated_by_id,
       processed_body.date_time_created,
       processed_body.created_by_id,
-      processed_body.from_date_of_birth,
-      processed_body.from_deceased,
-      processed_body.from_date_of_death,
+      processed_body.date_of_birth,
+      processed_body.deceased,
+      processed_body.date_of_death,
       processed_body.sex,
-      processed_body.from_marital_status,
-      processed_body.from_religion_code,
-      processed_body.from_lds_unit_number,
-      processed_body.citizenship_country_code,
-      processed_body.birth_country_code,
+      processed_body.marital_status,
+      processed_body.religion_code,
+      processed_body.lds_unit_number,
+      processed_body.from_citizenship_country_code,
+      processed_body.from_birth_country_code,
       processed_body.home_town,
       processed_body.home_state_code,
       processed_body.home_country_code,
       processed_body.high_school_code,
       processed_body.restricted,
-      processed_body.ssn,
-      processed_body.ssn_verification_date,
-      processed_body.visa_type,
-      processed_body.i20_expiration_date,
-      processed_body.visa_type_source,
-      processed_body.from_lds_confirmation_date,
-      new_body.date_of_birth,
-      new_body.deceased,
-      new_body.date_of_death,
+      processed_body.from_ssn,
+      processed_body.from_ssn_verification_date,
+      processed_body.from_visa_type,
+      processed_body.from_i20_expiration_date,
+      processed_body.from_visa_type_source,
+      processed_body.lds_confirmation_date,
+      processed_body.date_of_birth,
+      processed_body.deceased,
+      processed_body.date_of_death,
       processed_body.sex,
-      new_body.marital_status,
-      new_body.religion_code,
-      new_body.lds_unit_number,
-      processed_body.citizenship_country_code,
-      processed_body.birth_country_code,
+      processed_body.marital_status,
+      processed_body.religion_code,
+      processed_body.lds_unit_number,
+      new_body.citizenship_country_code,
+      new_body.birth_country_code,
       processed_body.home_town,
       processed_body.home_state_code,
       processed_body.home_country_code,
       processed_body.high_school_code,
       processed_body.restricted,
-      processed_body.ssn,
-      processed_body.ssn_verification_date,
-      processed_body.visa_type,
-      processed_body.i20_expiration_date,
-      processed_body.visa_type_source,
-      new_body.lds_confirmation_date,
+      new_body.ssn,
+      new_body.ssn_verification_date,
+      new_body.visa_type,
+      new_body.i20_expiration_date,
+      new_body.visa_type_source,
+      processed_body.lds_confirmation_date,
     ];
     console.log(sql_query);
     console.log(log_params);
     await connection.execute(sql_query, log_params, { autoCommit: true });
-    await personalRecordChangedEvents(connection, byu_id, new_body, processed_body);
+    await governmentRecordChangedEvents(connection, byu_id, new_body, processed_body);
   }
   connection.close();
 
   params = [byu_id];
-  sql_query = sql.sql.getPersonalRecords;
+  sql_query = sql.sql.getGovernmentRecords;
   const results = await db.execute(sql_query, params);
-  const vital_api_type = can_update_dob ? 'modifiable': 'read-only';
-  const lds_api_type = is_lds_sync ? 'modifiable': 'read-only';
-  const rel_api_type = can_update_rel ? 'modifiable': 'read-only';
+  const cit_api_type = auth.canUpdateCitizenship(permissions) ? 'modifiable' : 'read-only';
+  const api_type = auth.canUpdateBasic(permissions) ? 'modifiable' : 'read-only';
+  const ssn_api_type = auth.canUpdateSSN(permissions) ? 'modifiable' : 'read-only';
 
-  return mapDBResultsToDefinition(definitions, results.rows[0], vital_api_type, vital_api_type, lds_api_type, rel_api_type);
+  if (!auth.canViewSSN(permissions)) {
+    return mapPublicDefinition(definitions, results.rows[0], cit_api_type, api_type)
+  }
+  return mapDBResultsToDefinition(definitions, results.rows[0], cit_api_type, api_type, ssn_api_type);
 };

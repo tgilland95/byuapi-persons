@@ -8643,15 +8643,6 @@
     "government_record_put": {
       "description": "Basic person information to be updated",
       "type": "object",
-      "required": [
-        "citizenship_country_code",
-        "birth_country_code",
-        "ssn",
-        "ssn_verification_date",
-        "visa_type",
-        "visa_type_source",
-        "i20_expiration_date"
-      ],
       "properties": {
         "date_time_updated": {
           "type": "string",
