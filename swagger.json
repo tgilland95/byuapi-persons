@@ -7493,7 +7493,7 @@
             "value": {
               "type": "string",
               "format": "email",
-              "x-variable": "email_address_value",
+              "x-variable": "email_address",
               "maxLength": 70,
               "minLength": 7
             },

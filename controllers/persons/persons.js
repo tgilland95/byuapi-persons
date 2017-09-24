@@ -1590,3 +1590,182 @@ exports.createPerson = async (definitions, authorized_byu_id, body) => {
   console.log(persons);
   return persons;
 };
+
+exports.deletePerson = function (definitions, byu_id, authorized_byu_id, body, permissions) {
+  if (!auth.canDeletePerson(permissions)) {
+    throw new ClientError(403, "User not authorized to delete PERSON data")
+  }
+  byu_id = request.params.resource_id[0];
+  date_time_updated = moment()["tz"]("America/Denver").format("YYYY-MM-DD HH:mm:ss.SSS");
+  updated_by_id = request.verifiedJWTs.authorized_byu_id;
+  change_type = "D";
+
+  var sql_query = sql.sql.fromPerson;
+  var params = [
+    byu_id
+  ];
+  return connection["ces"].execute(sql_query, params)
+    .then(function (results) {
+      if (results.rows.length === 0) {
+        throw new ClientError(404, "Could not find BYU_ID in Person Table")
+      }
+      person_id = (results.rows[0].person_id) ? results.rows[0].person_id : " ";
+      net_id = (results.rows[0].net_id) ? results.rows[0].net_id : " ";
+      employee_type = (results.rows[0].employee_type && results.rows[0].employee_type === "--") ? results.rows[0].employee_type : "Not An Employee";
+      student_status = results.rows[0].student_status;
+      restricted = (results.rows[0].restricted && results.rows[0].restricted === "Y") ? "Y" : "N";
+
+      date_time_created = moment(results.rows[0].date_time_created, accepted_date_formats)["format"]("YYYY-MM-DD HH:mm:ss.SSS");
+      created_by_id = results.rows[0].created_by_id;
+      surname = " ";
+      rest_of_name = " ";
+      suffix = " ";
+      preferred_first_name = " ";
+      preferred_surname = " ";
+      preferred_name = " ";
+      sort_name = " ";
+      first_name = " ";
+      middle_name = " ";
+      date_of_birth = "";
+      deceased = " ";
+      date_of_death = "";
+      sex = " ";
+      marital_status = " ";
+      religion_code = " ";
+      lds_unit_number = " ";
+      citizenship_country_code = " ";
+      birth_country_code = " ";
+      home_town = " ";
+      home_state_code = " ";
+      home_country_code = " ";
+      high_school_code = " ";
+      ssn = " ";
+      ssn_verification_date = "";
+      visa_type = " ";
+      i20_expiration_date = "";
+      visa_type_source = " ";
+      person_id = " ";
+      lds_confirmation_date = "";
+      from_surname = results.rows[0].surname;
+      from_rest_of_name = results.rows[0].rest_of_name;
+      from_suffix = results.rows[0].suffix;
+      from_preferred_first_name = results.rows[0].preferred_first_name;
+      from_preferred_surname = results.rows[0].preferred_surname;
+      from_preferred_name = results.rows[0].preferred_name;
+      from_sort_name = results.rows[0].sort_name;
+      from_first_name = results.rows[0].first_name;
+      from_middle_name = results.rows[0].middle_name;
+      from_date_of_birth = (results.rows[0].date_of_birth) ? moment(results.rows[0].date_of_birth, accepted_date_formats)["format"]("YYYY-MM-DD") : "";
+      from_deceased = results.rows[0].deceased;
+      from_date_of_death = (results.rows[0].date_of_death) ? moment(results.rows[0].date_of_death, accepted_date_formats)["format"]("YYYY-MM-DD") : "";
+      from_sex = results.rows[0].sex;
+      from_marital_status = results.rows[0].marital_status;
+      from_religion_code = results.rows[0].religion_code;
+      from_lds_unit_number = results.rows[0].lds_unit_number;
+      from_citizenship_country_code = results.rows[0].citizenship_country_code;
+      from_birth_country_code = results.rows[0].birth_country_code;
+      from_home_town = results.rows[0].home_town;
+      from_home_state_code = results.rows[0].home_state_code;
+      from_home_country_code = results.rows[0].home_country_code;
+      from_high_school_code = results.rows[0].high_school_code;
+      from_restricted = results.rows[0].restricted;
+      from_ssn = results.rows[0].ssn;
+      from_ssn_verification_date = (results.rows[0].ssn_verification_date) ? moment(results.rows[0].ssn_verification_date, accepted_date_formats)["format"]("YYYY-MM-DD") : "";
+      from_visa_type = results.rows[0].visa_type;
+      from_i20_expiration_date = (results.rows[0].i20_expiration_date) ? moment(results.rows[0].i20_expiration_date, accepted_date_formats)["format"]("YYYY-MM-DD") : "";
+      from_visa_type_source = results.rows[0].visa_type_source;
+      from_lds_confirmation_date = (results.rows[0].lds_confirmation_date) ? moment(results.rows[0].lds_confirmation_date, accepted_date_formats)["format"]("YYYY-MM-DD") : "";
+
+      var log_name_params = [
+        change_type,
+        byu_id,
+        date_time_updated,
+        updated_by_id,
+        date_time_created,
+        created_by_id,
+        from_surname,
+        from_rest_of_name,
+        from_suffix,
+        from_preferred_first_name,
+        from_preferred_surname,
+        from_preferred_name,
+        from_sort_name,
+        from_first_name,
+        from_middle_name,
+        surname,
+        rest_of_name,
+        suffix,
+        preferred_first_name,
+        preferred_surname,
+        preferred_name,
+        sort_name,
+        first_name,
+        middle_name
+      ];
+      var log_personal_params = [
+        change_type,
+        byu_id,
+        date_time_updated,
+        updated_by_id,
+        date_time_created,
+        created_by_id,
+        from_date_of_birth,
+        from_deceased,
+        from_date_of_death,
+        from_sex,
+        from_marital_status,
+        from_religion_code,
+        from_lds_unit_number,
+        from_citizenship_country_code,
+        from_birth_country_code,
+        from_home_town,
+        from_home_state_code,
+        from_home_country_code,
+        from_high_school_code,
+        from_restricted,
+        from_ssn,
+        from_ssn_verification_date,
+        from_visa_type,
+        from_i20_expiration_date,
+        from_visa_type_source,
+        from_lds_confirmation_date,
+        date_of_birth,
+        deceased,
+        date_of_death,
+        sex,
+        marital_status,
+        religion_code,
+        lds_unit_number,
+        citizenship_country_code,
+        birth_country_code,
+        home_town,
+        home_state_code,
+        home_country_code,
+        high_school_code,
+        restricted,
+        ssn,
+        ssn_verification_date,
+        visa_type,
+        i20_expiration_date,
+        visa_type_source,
+        lds_confirmation_date
+      ];
+
+      sql_query = sql.deletePerson.sql;
+      return connection["ces"].executeWithCommit(sql_query, params)
+        .then(function () {
+          sql_query = sql.modifyPerson.logNameChange;
+          return connection["ces"].executeWithCommit(sql_query, log_name_params)
+        })
+        .then(function () {
+          sql_query = sql.modifyPerson.logPersonalChange;
+          return connection["ces"].executeWithCommit(sql_query, log_personal_params)
+        })
+        .then(function () {
+          return personDeletedEvents(connection)
+        })
+    })
+    .then(function () {
+      return ""
+    })
+};

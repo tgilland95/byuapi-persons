@@ -24,6 +24,7 @@
     "bluebird": "^3.5.0",
     "body-parser": "1.17.2",
     "byu-jwt": "0.2.3",
+    "email-validator": "^1.1.1",
     "express": "4.15.3",
     "handel-utils": "^1.1.4",
     "json-schema-ref-parser": "github:byu-oit/json-schema-ref-parser",
