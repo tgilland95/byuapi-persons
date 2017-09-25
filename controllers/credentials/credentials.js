@@ -551,6 +551,7 @@ async function credentialEvents(connection, change_type, byu_id, credential_type
 }
 
 exports.modifyCredential = async function (definitions, byu_id, credential_type, credential_id, body, authorized_byu_id, permissions) {
+  validateCredentialId(credential_type, credential_id);
   const connection = await db.getConnection();
   const new_body = processBody(authorized_byu_id, body, credential_type);
   console.log('NEW BODY', new_body);
@@ -800,6 +801,7 @@ function processDeleteFromResults(from_results) {
 }
 
 exports.deleteCredential = async function (definitions, byu_id, credential_type, credential_id, authorized_byu_id, permissions) {
+  validateCredentialId(credential_type, credential_id);
   const connection = await db.getConnection();
   if (modifiableOrReadOnly(credential_type, permissions) === 'read-only') {
     throw utils.Error(403, `User not authorized to delete ${credential_type} credentials`);
