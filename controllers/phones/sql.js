@@ -128,7 +128,7 @@ exports.sql = {
            phn.unlisted                                                                        as "unlisted",
            phn.primary_f                                                                       as "primary_flag",
            phn.tty                                                                             as "tty",
-           phn.verified_f                                                                      as "verified_flag",
+           nvl(phn.verified_f, 'N')                                                            as "verified_flag",
            phn.work_f                                                                          as "work_flag",
            idvw.primary_role                                                                   as "primary_role"
     from   iam.person a 
@@ -159,36 +159,7 @@ exports.sql = {
                      and d.date_type = 'CURRENT_YYT' 
                      and trunc(d.start_date) <= trunc(sysdate) 
                      and trunc(d.end_date) >= trunc(sysdate) 
-    where  a.byu_id = :BYU_ID`,
-  map: {
-    byu_id: byu_id.value,
-    name: byu_id.description,
-    lookup_number: lookup_number.value,
-    phone_number: phone_number.value,
-    date_time_updated: date_time_updated.value,
-    updated_by_id: updated_by_id.value,
-    updated_by_name: updated_by_id.description,
-    date_time_created: date_time_created.value,
-    created_by_id: created_by_id.value,
-    created_by_name: created_by_id.description,
-    cell_flag: cell_flag.value,
-    time_code: time_code.value,
-    texts_okay: texts_okay.value,
-    primary_flag: primary_flag.value,
-    tty: tty.value,
-    country_code: country_code.value,
-    country_name: country_code.description,
-    country_number: country_number.value,
-    unlisted: unlisted.value,
-    work_flag: work_flag.value
-  },
-  public_map: {
-    byu_id: byu_id.value,
-    country_number: country_number.value,
-    phone_number: phone_number.value,
-    unlisted: unlisted.value,
-    work_flag: work_flag.value
-  }
+    where  a.byu_id = :BYU_ID`
 };
 
 exports.modifyPhone = {
