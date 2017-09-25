@@ -12510,7 +12510,7 @@
           }
         },
         "metadata": {
-          "$ref": "#/definitions/sub_level_metadata"
+          "$ref": "#/definitions/simple_metadata"
         },
         "byu_id": {
           "$ref": "#/definitions/byu_id"
@@ -12529,6 +12529,33 @@
         },
         "created_by_id": {
           "$ref": "#/definitions/created_by_id"
+        },
+        "country_number": {
+          "type": "object",
+          "description": "The country code number",
+          "required": [
+            "value",
+            "api_type"
+          ],
+          "properties": {
+            "values": {
+              "type": "string",
+              "pattern": "^(|[0-9]+)$",
+              "default": "",
+              "x-variable": "country_number"
+            },
+            "api_type": {
+              "type": "string",
+              "default": "related",
+              "enum": [
+                "related"
+              ]
+            },
+            "related_resource": {
+              "type": "string",
+              "default": "https://api.byu.edu/meta/country_codes/v1/"
+            }
+          }
         },
         "phone_number": {
           "$ref": "#/definitions/phone_number"
@@ -12588,6 +12615,32 @@
               "type": "boolean",
               "default": false,
               "x-variable": "tty"
+            },
+            "api_type": {
+              "type": "string",
+              "default": "read-only",
+              "x-variable": "api_type",
+              "enum": [
+                "read-only",
+                "modifiable"
+              ]
+            }
+          }
+        },
+        "verified_flag": {
+          "$ref": "#/definitions/verified_flag"
+        },
+        "work_flag": {
+          "type": "object",
+          "required": [
+            "value",
+            "api_type"
+          ],
+          "properties": {
+            "value": {
+              "type": "boolean",
+              "default": false,
+              "x-variable": "work_flag"
             },
             "api_type": {
               "type": "string",
@@ -12683,21 +12736,14 @@
         "tty": {
           "type": "boolean",
           "default": false
+        },
+        "work_flag": {
+          "type": "boolean",
+          "default": false
         }
       },
       "example": {
-        "date_time_created": "YYYY-MM-DDTHH24:MI:SS.FFFZ",
-        "created_by_id": "123456789",
-        "date_time_updated": "YYYY-MM-DDTHH24:MI:SS.FFFZ",
-        "updated_by_id": "123456789",
-        "country_code": "USA",
-        "phone_number": "801-422-4000",
-        "cell_flag": false,
-        "time_code": "Mountain",
-        "texts_okay": false,
-        "unlisted": false,
-        "primary_flag": true,
-        "tty": false
+        "$ref": "#/x-mock_json/phone_put"
       }
     },
     "phones": {
@@ -16908,6 +16954,17 @@
       "deceased": false,
       "lds_unit_number": "1234567",
       "lds_confirmation_date": "YYYY-MM-DD"
+    },
+    "phone_put": {
+      "country_code": "USA",
+      "phone_number": "385-254-8788",
+      "cell_flag": false,
+      "time_code": "Mountain",
+      "texts_okay": false,
+      "unlisted": false,
+      "primary_flag": true,
+      "tty": false,
+      "work_flag": false
     },
     "delegated_operation_performed_post": {
       "operation_performed_id": "123",
