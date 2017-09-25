@@ -88,14 +88,14 @@ exports.getEmailAddress = async function getEmailAddress(definitions, byu_id, em
   // address being retrieved does not belong to an employee
   // or faculty and it is not his or her work address
   // and if it is unlisted then throw a 403 Not Authorized
-  if (!auth.canViewContact(permissions) &&
-    !/^WORK$/g.test(email_address_type) &&
-    !/^(Employee|Faculty)$/g.test(results.rows[0].primary_role) &&
-    /^Y$/g.test(results.rows[0].unlisted)) {
-    throw utils.Error(403, 'Not Authorized To View Email Address')
+  if (auth.canViewContact(permissions) ||
+    (/^WORK$/g.test(email_address_type) &&
+      /^(Employee|Faculty)$/g.test(results.rows[0].primary_role) &&
+      !/^Y$/g.test(results.rows[0].unlisted))) {
+    return mapDBResultsToDefinition(definitions, results.rows[0], modifiable);
   }
 
-  return mapDBResultsToDefinition(definitions, results.rows[0], modifiable);
+  throw utils.Error(403, 'Not Authorized To View Email Address');
 };
 
 /**

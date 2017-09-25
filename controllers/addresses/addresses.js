@@ -81,12 +81,13 @@ exports.getAddress = async function getAddress(definitions, byu_id, address_type
   const modifiable = auth.canViewContact(permissions) ? 'modifiable' : 'read-only';
   const results = await db.execute(sql_query, params);
 
+
   // If no results are returned or the record is restricted
   // and the entity retrieving the record does not belong
   // to the GRO.PERSON_GROUP.GROUP_ID.RESTRICTED then
   // return 404 person not found
   if (!results.rows.length ||
-    (results.rows[0].restricted === 'Y' &&
+    (/^Y$/g.test(results.rows[0].restricted) &&
       !auth.hasRestrictedRights(permissions))) {
     throw utils.Error(404, 'BYU_ID Not Found In Person Table')
   }
@@ -102,15 +103,14 @@ exports.getAddress = async function getAddress(definitions, byu_id, address_type
   // address being retrieved does not belong to an employee
   // or faculty and it is not his or her work address
   // and if it is unlisted then throw a 403 Not Authorized
-  if (!auth.canViewContact(permissions) &&
-    address_type !== 'WRK' &&
-    results.rows[0].primary_role !== 'Employee' &&
-    results.rows[0].primary_role !== 'Faculty' &&
-    results.rows[0].unlisted === 'Y') {
-    throw utils.Error(403, 'Not Authorized To View Address')
+  if (auth.canViewContact(permissions) ||
+    (/^WRK$/g.test(address_type) &&
+      /^(Employee|Faculty)$/g.test(results.rows[0].primary_role) &&
+      !/^Y$/g.test(results.rows[0].unlisted))) {
+    return mapDBResultsToDefinition(definitions, results.rows[0], modifiable);
   }
 
-  return mapDBResultsToDefinition(definitions, results.rows[0], modifiable);
+  throw utils.Error(403, 'Not Authorized To View Address');
 };
 
 /**
@@ -124,8 +124,10 @@ exports.getAddresses = async function getAddresses(definitions, byu_id, permissi
   const params = [byu_id];
   const sql_query = sql.sql.getAddresses;
   const results = await db.execute(sql_query, params);
-  const return_code = auth.canViewContact(permissions) ? 200 : 203;
-  const return_message = auth.canViewContact(permissions) ? 'Success' : 'Public Info Only';
+  const can_view_contact = auth.canViewContact(permissions);
+  const api_type = auth.canUpdateContact(permissions) ? 'modifiable' : 'read-only';
+  const return_code = can_view_contact ? 200 : 203;
+  const return_message = can_view_contact ? 'Success' : 'Public Info Only';
   const collection_size = (!results.rows[0].address_type) ? 0 : results.rows.length;
   let values = [];
 
@@ -134,7 +136,7 @@ exports.getAddresses = async function getAddresses(definitions, byu_id, permissi
   // to the GRO.PERSON_GROUP.GROUP_ID.RESTRICTED then
   // return 404 person not found
   if (!results.rows.length ||
-    (results.rows[0].restricted === 'Y' &&
+    (/^Y$/g.test(results.rows[0].restricted) &&
       !auth.hasRestrictedRights(permissions))) {
     throw utils.Error(404, 'BYU_ID Not Found In Person Table')
   }
@@ -143,12 +145,12 @@ exports.getAddresses = async function getAddresses(definitions, byu_id, permissi
   // return all address information else if they are looking up an employee or faculty member
   // return the employee's or faculty's work address as long as it is not unlisted
   if (results.rows[0].address_type) {
-    values = (auth.canViewContact(permissions)) ? (
-      results.rows.map(row => mapDBResultsToDefinition(definitions, row, 'modifiable'))
+    values = (can_view_contact) ? (
+      results.rows.map(row => mapDBResultsToDefinition(definitions, row, api_type))
     ) : (
       results.rows.filter(row => (/^N$/g.test(row.unlisted) &&
         /^WRK$/g.test(row.address_type) && /^(Employee|Faculty)$/g.test(row.primary_role))
-      ).map(row => mapDBResultsToDefinition(definitions, row, 'read-only'))
+      ).map(row => mapDBResultsToDefinition(definitions, row, api_type))
     );
   }
 
@@ -567,7 +569,7 @@ exports.modifyAddress = async function (definitions, byu_id, address_type, body,
   let sql_query = sql.sql.fromAddress;
   const from_results = await connection.execute(sql_query, params);
   if (!from_results.rows.length ||
-    (from_results.rows[0].restricted === 'Y' &&
+    (/^Y$/g.test(from_results.rows[0].restricted) &&
       !auth.hasRestrictedRights(permissions))) {
     throw utils.Error(404, 'Could not find BYU_ID in Person Table')
   }
