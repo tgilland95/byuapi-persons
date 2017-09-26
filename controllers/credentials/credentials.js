@@ -248,7 +248,7 @@ function processBody(authorized_byu_id, body, credential_type) {
   new_body.status = body.status || 'ACTIVE';
   new_body.expiration_date = body.expiration_date || '';
   if (/^LDS_ACCOUNT_ID$/g.test(credential_type)) {
-    new_body.expiration_date = current_date_time.add(1, "years").format("YYYY-MM-DD");
+    new_body.expiration_date = current_date_time.add(1, "years").format('YYYY-MM-DD');
   }
   new_body.issuing_location = body.issuing_location || ' ';
   new_body.physical_form = body.physical_form || ' ';
@@ -270,15 +270,15 @@ function processBody(authorized_byu_id, body, credential_type) {
   }
 
   let error = false;
-  let msg = `Incorrect BODY: Invalid field(s)\n`;
+  let msg = 'Incorrect BODY: Invalid field(s)\n\n\t';
 
   if (!isValidIssuingLocation(new_body.issuing_location)) {
-    msg += `\n\t${new_body.issuing_location} is an invalid issuing location`;
+    msg += `${new_body.issuing_location} is an invalid issuing location`;
     error = true;
   }
 
   if (moment.tz(new_body.expiration_date, 'YYYY-MM-DD', 'America/Denver').startOf('day') < current_date_time.startOf('day')) {
-    msg += `\n\texpiration_date cannot be before today`;
+    msg += '\n\texpiration_date cannot be before today';
     error = true;
   }
 

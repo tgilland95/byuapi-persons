@@ -25,7 +25,7 @@
   "paths": {
     "/": {
       "x-controller": "persons",
-      "x-http-passthrough-url": "https://persons.sim.byu.edu/services/persons",
+      "x-http-passthrough-url": "https://byuapi-persons-dev.arch.byu.edu/byuapi/persons/",
       "get": {
         "summary": "Persons",
         "description": "Returns a collection of Persons",
@@ -399,7 +399,7 @@
     },
     "/{byu_id}": {
       "x-controller": "persons",
-      "x-http-passthrough-url": "https://persons.sim.byu.edu/services/persons/{byu_id}",
+      "x-http-passthrough-url": "https://byuapi-persons-dev.arch.byu.edu/byuapi/persons/{byu_id}",
       "x-http-passthrough-path-params": {
         "byu_id": "byu_id"
       },
@@ -605,7 +605,7 @@
     },
     "/{byu_id}/addresses": {
       "x-controller": "addresses",
-      "x-http-passthrough-url": "https://persons.sim.byu.edu/services/persons/{byu_id}/addresses",
+      "x-http-passthrough-url": "https://byuapi-persons-dev.arch.byu.edu/byuapi/persons/{byu_id}/addresses",
       "x-http-passthrough-path-params": {
         "byu_id": "byu_id"
       },
@@ -661,7 +661,7 @@
     },
     "/{byu_id}/addresses/{address_type}": {
       "x-controller": "addresses",
-      "x-http-passthrough-url": "https://persons.sim.byu.edu/services/persons/{byu_id}/addresses/{address_type}",
+      "x-http-passthrough-url": "https://byuapi-persons-dev.arch.byu.edu/byuapi/persons/{byu_id}/addresses/{address_type}",
       "x-http-passthrough-path-params": {
         "byu_id": "byu_id",
         "address_type": "address_type"
@@ -856,7 +856,7 @@
     },
     "/{byu_id}/alias_domains": {
       "x-controller": "alias_domains",
-      "x-http-passthrough-url": "https://persons.sim.byu.edu/services/persons/{byu_id}/alias_domains",
+      "x-http-passthrough-url": "https://byuapi-persons-dev.arch.byu.edu/byuapi/persons/{byu_id}/alias_domains",
       "x-http-passthrough-path-params": {
         "byu_id": "byu_id"
       },
@@ -912,7 +912,7 @@
     },
     "/{byu_id}/alias_domains/{alias_domain}": {
       "x-controller": "alias_domains",
-      "x-http-passthrough-url": "https://persons.sim.byu.edu/services/persons/{byu_id}/alias_domains/{alias_domain}",
+      "x-http-passthrough-url": "https://byuapi-persons-dev.arch.byu.edu/byuapi/persons/{byu_id}/alias_domains/{alias_domain}",
       "x-http-passthrough-path-params": {
         "byu_id": "byu_id",
         "alias_domain": "alias_domain"
@@ -1074,7 +1074,7 @@
     },
     "/{byu_id}/credentials": {
       "x-controller": "credentials",
-      "x-http-passthrough-url": "https://persons.sim.byu.edu/services/persons/{byu_id}/credentials",
+      "x-http-passthrough-url": "https://byuapi-persons-dev.arch.byu.edu/byuapi/persons/{byu_id}/credentials",
       "x-http-passthrough-path-params": {
         "byu_id": "byu_id"
       },
@@ -1151,7 +1151,7 @@
     },
     "/{byu_id}/credentials/{credential_type},{credential_id}": {
       "x-controller": "credentials",
-      "x-http-passthrough-url": "https://persons.sim.byu.edu/services/persons/{byu_id}/credentials/{credential_type},{credential_id}",
+      "x-http-passthrough-url": "https://byuapi-persons-dev.arch.byu.edu/byuapi/persons/{byu_id}/credentials/{credential_type},{credential_id}",
       "x-http-passthrough-path-params": {
         "byu_id": "byu_id",
         "credential_type": "credential_type",
@@ -1390,7 +1390,7 @@
     },
     "/{byu_id}/delegated_operations_performed": {
       "x-controller": "delegated_operations_performed",
-      "x-http-passthrough-url": "https://persons.sim.byu.edu/services/persons/{byu_id}/delegated_operations_performed",
+      "x-http-passthrough-url": "https://byuapi-persons-dev.arch.byu.edu/byuapi/persons/{byu_id}/delegated_operations_performed",
       "x-http-passthrough-path-params": {
         "byu_id": "byu_id"
       },
@@ -1458,7 +1458,7 @@
     },
     "/{byu_id}/email_addresses": {
       "x-controller": "email_addresses",
-      "x-http-passthrough-url": "https://persons.sim.byu.edu/services/persons/{byu_id}/email_addresses",
+      "x-http-passthrough-url": "https://byuapi-persons-dev.arch.byu.edu/byuapi/persons/{byu_id}/email_addresses",
       "x-http-passthrough-path-params": {
         "byu_id": "byu_id"
       },
@@ -1514,7 +1514,7 @@
     },
     "/{byu_id}/email_addresses/{email_address_type}": {
       "x-controller": "email_addresses",
-      "x-http-passthrough-url": "https://persons.sim.byu.edu/services/persons/{byu_id}/email_addresses/{email_address_type}",
+      "x-http-passthrough-url": "https://byuapi-persons-dev.arch.byu.edu/byuapi/persons/{byu_id}/email_addresses/{email_address_type}",
       "x-http-passthrough-path-params": {
         "byu_id": "byu_id",
         "email_address_type": "email_address_type"
@@ -1706,7 +1706,7 @@
     },
     "/{byu_id}/email_aliases": {
       "x-controller": "email_aliases",
-      "x-http-passthrough-url": "https://persons.sim.byu.edu/services/persons/{byu_id}/email_aliases",
+      "x-http-passthrough-url": "https://byuapi-persons-dev.arch.byu.edu/byuapi/persons/{byu_id}/email_aliases",
       "x-http-passthrough-path-params": {
         "byu_id": "byu_id"
       },
@@ -1762,7 +1762,7 @@
     },
     "/{byu_id}/email_aliases/{email_alias},{forwarding_address}": {
       "x-controller": "email_aliases",
-      "x-http-passthrough-url": "https://persons.sim.byu.edu/services/persons/{byu_id}/email_aliases/{email_alias},{forwarding_address}",
+      "x-http-passthrough-url": "https://byuapi-persons-dev.arch.byu.edu/byuapi/persons/{byu_id}/email_aliases/{email_alias},{forwarding_address}",
       "x-http-passthrough-path-params": {
         "byu_id": "byu_id",
         "email_alias": "email_alias",
@@ -1967,7 +1967,7 @@
     },
     "/{byu_id}/employee_summaries": {
       "x-controller": "employee_summaries",
-      "x-http-passthrough-url": "https://persons.sim.byu.edu/services/persons/{byu_id}/employee_summaries",
+      "x-http-passthrough-url": "https://byuapi-persons-dev.arch.byu.edu/byuapi/persons/{byu_id}/employee_summaries",
       "x-http-passthrough-path-params": {
         "byu_id": "byu_id"
       },
@@ -2034,7 +2034,7 @@
     },
     "/{byu_id}/ethnicities": {
       "x-controller": "ethnicities",
-      "x-http-passthrough-url": "https://persons.sim.byu.edu/services/persons/{byu_id}/ethnicities",
+      "x-http-passthrough-url": "https://byuapi-persons-dev.arch.byu.edu/byuapi/persons/{byu_id}/ethnicities",
       "x-http-passthrough-path-params": {
         "byu_id": "byu_id"
       },
@@ -2090,7 +2090,7 @@
     },
     "/{byu_id}/ethnicities/{ethnicity_code}": {
       "x-controller": "ethnicities",
-      "x-http-passthrough-url": "https://persons.sim.byu.edu/services/persons/{byu_id}/ethnicities/{ethnicity_code}",
+      "x-http-passthrough-url": "https://byuapi-persons-dev.arch.byu.edu/byuapi/persons/{byu_id}/ethnicities/{ethnicity_code}",
       "x-http-passthrough-path-params": {
         "byu_id": "byu_id",
         "ethnicity_code": "ethnicity_code"
@@ -2303,7 +2303,7 @@
     },
     "/{byu_id}/family_phones": {
       "x-controller": "family_phones",
-      "x-http-passthrough-url": "https://persons.sim.byu.edu/services/persons/{byu_id}/family_phones",
+      "x-http-passthrough-url": "https://byuapi-persons-dev.arch.byu.edu/byuapi/persons/{byu_id}/family_phones",
       "x-http-passthrough-path-params": {
         "byu_id": "byu_id"
       },
@@ -2359,7 +2359,7 @@
     },
     "/{byu_id}/family_phones/{phone_type},{lookup_number}": {
       "x-controller": "family_phones",
-      "x-http-passthrough-url": "https://persons.sim.byu.edu/services/persons/{byu_id}/email_aliases/{phone_type},{lookup_number}",
+      "x-http-passthrough-url": "https://byuapi-persons-dev.arch.byu.edu/byuapi/persons/{byu_id}/email_aliases/{phone_type},{lookup_number}",
       "x-http-passthrough-path-params": {
         "byu_id": "byu_id",
         "phone_type": "phone_type",
@@ -2572,7 +2572,7 @@
     },
     "/{byu_id}/government_records": {
       "x-controller": "government_records",
-      "x-http-passthrough-url": "https://persons.sim.byu.edu/services/persons/{byu_id}/government_records",
+      "x-http-passthrough-url": "https://byuapi-persons-dev.arch.byu.edu/byuapi/persons/{byu_id}/government_records",
       "x-http-passthrough-path-params": {
         "byu_id": "byu_id"
       },
@@ -2689,7 +2689,7 @@
     },
     "/{byu_id}/group_membership_events": {
       "x-controller": "group_membership_events",
-      "x-http-passthrough-url": "https://persons.sim.byu.edu/services/persons/{byu_id}/group_membership_events",
+      "x-http-passthrough-url": "https://byuapi-persons-dev.arch.byu.edu/byuapi/persons/{byu_id}/group_membership_events",
       "x-http-passthrough-path-params": {
         "byu_id": "byu_id"
       },
@@ -2806,7 +2806,7 @@
     },
     "/{byu_id}/group_membership_events/{event_id}": {
       "x-controller": "group_membership_events",
-      "x-http-passthrough-url": "https://persons.sim.byu.edu/services/persons/{byu_id}/group_membership_events/{event_id}",
+      "x-http-passthrough-url": "https://byuapi-persons-dev.arch.byu.edu/byuapi/persons/{byu_id}/group_membership_events/{event_id}",
       "x-http-passthrough-path-params": {
         "byu_id": "byu_id",
         "event_id": "event_id"
@@ -2986,7 +2986,7 @@
     },
     "/{byu_id}/group_memberships": {
       "x-controller": "group_memberships",
-      "x-http-passthrough-url": "https://persons.sim.byu.edu/services/persons/{byu_id}/group_memberships",
+      "x-http-passthrough-url": "https://byuapi-persons-dev.arch.byu.edu/byuapi/persons/{byu_id}/group_memberships",
       "x-http-passthrough-path-params": {
         "byu_id": "byu_id"
       },
@@ -3042,7 +3042,7 @@
     },
     "/{byu_id}/group_memberships/{group_id}": {
       "x-controller": "group_memberships",
-      "x-http-passthrough-url": "https://persons.sim.byu.edu/services/persons/{byu_id}/group_memberships/{group_id}",
+      "x-http-passthrough-url": "https://byuapi-persons-dev.arch.byu.edu/byuapi/persons/{byu_id}/group_memberships/{group_id}",
       "x-http-passthrough-path-params": {
         "byu_id": "byu_id",
         "group_id": "group_id"
@@ -3210,7 +3210,7 @@
     },
     "/{byu_id}/groups_administered": {
       "x-controller": "groups_administered",
-      "x-http-passthrough-url": "https://persons.sim.byu.edu/services/persons/{byu_id}/groups_administered",
+      "x-http-passthrough-url": "https://byuapi-persons-dev.arch.byu.edu/byuapi/persons/{byu_id}/groups_administered",
       "x-http-passthrough-path-params": {
         "byu_id": "byu_id"
       },
@@ -3266,7 +3266,7 @@
     },
     "/{byu_id}/groups_administered/{group_id}": {
       "x-controller": "groups_administered",
-      "x-http-passthrough-url": "https://persons.sim.byu.edu/services/persons/{byu_id}/groups_administered/{group_id}",
+      "x-http-passthrough-url": "https://byuapi-persons-dev.arch.byu.edu/byuapi/persons/{byu_id}/groups_administered/{group_id}",
       "x-http-passthrough-path-params": {
         "byu_id": "byu_id",
         "group_id": "group_id"
@@ -3443,7 +3443,7 @@
     },
     "/{byu_id}/id_cards": {
       "x-controller": "id_cards",
-      "x-http-passthrough-url": "https://persons.sim.byu.edu/services/persons/{byu_id}/id_cards",
+      "x-http-passthrough-url": "https://byuapi-persons-dev.arch.byu.edu/byuapi/persons/{byu_id}/id_cards",
       "x-http-passthrough-path-params": {
         "byu_id": "byu_id"
       },
@@ -3598,7 +3598,7 @@
     },
     "/{byu_id}/languages": {
       "x-controller": "languages",
-      "x-http-passthrough-url": "https://persons.sim.byu.edu/services/persons/{byu_id}/languages",
+      "x-http-passthrough-url": "https://byuapi-persons-dev.arch.byu.edu/byuapi/persons/{byu_id}/languages",
       "x-http-passthrough-path-params": {
         "byu_id": "byu_id"
       },
@@ -3654,7 +3654,7 @@
     },
     "/{byu_id}/languages/{language_code}": {
       "x-controller": "languages",
-      "x-http-passthrough-url": "https://persons.sim.byu.edu/services/persons/{byu_id}/languages/{language_code}",
+      "x-http-passthrough-url": "https://byuapi-persons-dev.arch.byu.edu/byuapi/persons/{byu_id}/languages/{language_code}",
       "x-http-passthrough-path-params": {
         "byu_id": "byu_id",
         "language_code": "language_code"
@@ -3831,7 +3831,7 @@
     },
     "/{byu_id}/my_delegators": {
       "x-controller": "my_delegators",
-      "x-http-passthrough-url": "https://persons.sim.byu.edu/services/persons/{byu_id}/my_delegators",
+      "x-http-passthrough-url": "https://byuapi-persons-dev.arch.byu.edu/byuapi/persons/{byu_id}/my_delegators",
       "x-http-passthrough-path-params": {
         "byu_id": "byu_id"
       },
@@ -3902,7 +3902,7 @@
     },
     "/{byu_id}/my_delegators/{access_delegation_id}": {
       "x-controller": "my_delegators",
-      "x-http-passthrough-url": "https://persons.sim.byu.edu/services/persons/{byu_id}/my_delegators/{access_delegation_id}",
+      "x-http-passthrough-url": "https://byuapi-persons-dev.arch.byu.edu/byuapi/persons/{byu_id}/my_delegators/{access_delegation_id}",
       "x-http-passthrough-path-params": {
         "byu_id": "byu_id",
         "access_delegation_id": "access_delegation_id"
@@ -4032,7 +4032,7 @@
     },
     "/{byu_id}/my_guests": {
       "x-controller": "my_guests",
-      "x-http-passthrough-url": "https://persons.sim.byu.edu/services/persons/{byu_id}/my_guests",
+      "x-http-passthrough-url": "https://byuapi-persons-dev.arch.byu.edu/byuapi/persons/{byu_id}/my_guests",
       "x-http-passthrough-path-params": {
         "byu_id": "byu_id"
       },
@@ -4164,7 +4164,7 @@
     },
     "/{byu_id}/my_guests/{access_delegation_id}": {
       "x-controller": "my_guests",
-      "x-http-passthrough-url": "https://persons.sim.byu.edu/services/persons/{byu_id}/my_guests/{access_delegation_id}",
+      "x-http-passthrough-url": "https://byuapi-persons-dev.arch.byu.edu/byuapi/persons/{byu_id}/my_guests/{access_delegation_id}",
       "x-http-passthrough-path-params": {
         "byu_id": "byu_id",
         "access_delegation_id": "access_delegation_id"
@@ -4296,7 +4296,7 @@
     },
     "/{byu_id}/personal_records": {
       "x-controller": "personal_records",
-      "x-http-passthrough-url": "https://persons.sim.byu.edu/services/persons/{byu_id}/personal_records",
+      "x-http-passthrough-url": "https://byuapi-persons-dev.arch.byu.edu/byuapi/persons/{byu_id}/personal_records",
       "x-http-passthrough-path-params": {
         "byu_id": "byu_id"
       },
@@ -4421,7 +4421,7 @@
     },
     "/{byu_id}/phones": {
       "x-controller": "phones",
-      "x-http-passthrough-url": "https://persons.sim.byu.edu/services/persons/{byu_id}/phones",
+      "x-http-passthrough-url": "https://byuapi-persons-dev.arch.byu.edu/byuapi/persons/{byu_id}/phones",
       "x-http-passthrough-path-params": {
         "byu_id": "byu_id"
       },
@@ -4484,7 +4484,7 @@
     },
     "/{byu_id}/phones/{lookup_number}": {
       "x-controller": "phones",
-      "x-http-passthrough-url": "https://persons.sim.byu.edu/services/persons/{byu_id}/phones/{lookup_number}",
+      "x-http-passthrough-url": "https://byuapi-persons-dev.arch.byu.edu/byuapi/persons/{byu_id}/phones/{lookup_number}",
       "x-http-passthrough-path-params": {
         "byu_id": "byu_id",
         "lookup_number": "lookup_number"
@@ -4664,7 +4664,7 @@
     },
     "/{byu_id}/relationships": {
       "x-controller": "relationships",
-      "x-http-passthrough-url": "https://persons.sim.byu.edu/services/persons/{byu_id}/relationships",
+      "x-http-passthrough-url": "https://byuapi-persons-dev.arch.byu.edu/byuapi/persons/{byu_id}/relationships",
       "x-http-passthrough-path-params": {
         "byu_id": "byu_id"
       },
@@ -4720,7 +4720,7 @@
     },
     "/{byu_id}/relationships/{related_id}": {
       "x-controller": "relationships",
-      "x-http-passthrough-url": "https://persons.sim.byu.edu/services/persons/{byu_id}/relationships/{related_id}",
+      "x-http-passthrough-url": "https://byuapi-persons-dev.arch.byu.edu/byuapi/persons/{byu_id}/relationships/{related_id}",
       "x-http-passthrough-path-params": {
         "byu_id": "byu_id",
         "related_id": "related_id"
@@ -4897,7 +4897,7 @@
     },
     "/{byu_id}/student_summaries": {
       "x-controller": "student_summaries",
-      "x-http-passthrough-url": "https://persons.sim.byu.edu/services/persons/{byu_id}/student_summaries",
+      "x-http-passthrough-url": "https://byuapi-persons-dev.arch.byu.edu/byuapi/persons/{byu_id}/student_summaries",
       "x-http-passthrough-path-params": {
         "byu_id": "byu_id"
       },
