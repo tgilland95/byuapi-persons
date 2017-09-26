@@ -237,37 +237,34 @@ function processBody(authorized_byu_id, body) {
   }
 
   let error = false;
-  let msg = 'Incorrect BODY: Missing\n';
-  if (!new_body.address_line_1) {
-    msg += '\n\tAddress Line 1 must not be blank or a space'
-  }
-
+  let msg = 'Invalid Body';
+  let validation_information = [];
   if (!utils.isValidCountryCode(new_body.country_code)) {
-    msg += '\n\tInvalid Country Code if unknown use, ???';
+    validation_information.push(`${new_body.country_code} is an invalid country code`);
     error = true;
   }
 
   if (!utils.isValidStateCode(new_body.state_code, new_body.country_code)) {
-    msg += '\n\tInvalid State Code if unknown use, ??';
+    validation_information.push(`${new_body.state_code} is an invalid state code for ${new_body.country_code}`);
     error = true;
   }
 
   if (!utils.isValidBuildingCode(new_body.building)) {
-    msg += '\n\tInvalid Building Code';
+    validation_information.push(`${new_body.building} was not found, this is for BYU buildings only.`);
     error = true;
   }
 
   for (let prop in new_body) {
     if (new_body.hasOwnProperty(prop)) {
       if (!/[\x00-\x7F]+/.test(new_body[prop])) {
-        msg += `${prop} contains unsupported characters`;
+        validation_information.push(`${prop} contains unsupported characters`);
         error = true;
       }
     }
   }
 
   if (error) {
-    throw utils.Error(409, msg)
+    throw utils.Error(409, msg, validation_information)
   }
 
   return new_body;
@@ -549,7 +546,7 @@ async function addressEvents(connection, change_type, byu_id, address_type, body
   } catch (error) {
     console.log('EVENT ENQUEUE ERROR');
     console.error(error.stack);
-    throw utils.Error(207, 'Record was changed but event was not raised');
+    throw utils.Error(207, 'Partial Success',['Record was changed but event was not raised', error.stack.toString()]);
   }
 }
 
@@ -559,7 +556,7 @@ exports.modifyAddress = async function (definitions, byu_id, address_type, body,
   console.log('NEW BODY', new_body);
 
   if (!auth.canUpdateContact(permissions)) {
-    throw utils.Error(403, 'User not authorized to update CONTACT data')
+    throw utils.Error(403, 'Forbidden','User not authorized to update CONTACT data')
   }
 
   let params = [

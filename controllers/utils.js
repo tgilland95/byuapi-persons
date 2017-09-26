@@ -17,9 +17,10 @@
 
 const Enforcer = require('swagger-enforcer');
 
-exports.Error = function (status, message) {
+exports.Error = function (status, message, validation_information) {
   const err = Error(message);
   err.status = status;
+  err.validation_information = validation_information || undefined;
   return err;
 };
 
@@ -44,7 +45,8 @@ exports.defaultResponseHandler = function (metadata_definition, initial, res, er
   initial.metadata = Enforcer.applyTemplate(metadata_definition, null,
     {
       validation_response_code: error.status || 500,
-      validation_response_message: error.message || 'Internal Server Error'
+      validation_response_message: error.message || 'Internal Server Error',
+      validation_information: error.validation_information || ['No Information']
     });
   res.status(initial.metadata.validation_response.code).send(initial);
 };
@@ -56,7 +58,7 @@ exports.isValidCountryCode = function (country_code) {
     const country_codes = require("../meta/countries/countryCodes.json");
 
     for (let i = country_codes.items.length; i--;) {
-      if (country_code === country_codes.items[i].country_code) {
+      if (country_codes.items[i].country_code === country_code) {
         return true;
       }
     }
@@ -72,8 +74,8 @@ exports.isValidStateCode = function (state_code, country_code) {
     const state_codes = require("../meta/states/stateCodes.json");
 
     for (let i = state_codes.items.length; i--;) {
-      if ((state_code === state_codes.items[i].state_code) &&
-        (country_code === state_codes.items[i].country_code)) {
+      if (state_codes.items[i].state_code === state_code &&
+        state_codes.items[i].country_code === country_code) {
         return true;
       }
     }
@@ -87,7 +89,7 @@ exports.isValidBuildingCode = function (building_code) {
   const building_codes = require("../meta/buildings/buildingCodes.json");
 
   for (let i = building_codes.items.length; i--;) {
-    if (building_code && building_code === building_codes.items[i].domain_value) {
+    if (building_codes.items[i].domain_value === building_code) {
       return true;
     }
   }
