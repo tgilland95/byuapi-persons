@@ -5404,17 +5404,7 @@
       "type": "object",
       "required": [
         "address_line_1",
-        "address_line_2",
-        "address_line_3",
-        "address_line_4",
-        "building",
-        "room",
-        "country_code",
-        "city",
-        "state_code",
-        "postal_code",
-        "unlisted",
-        "verified_flag"
+        "address_line_2"
       ],
       "properties": {
         "date_time_created": {
@@ -5435,17 +5425,15 @@
         },
         "address_line_1": {
           "type": "string",
-          "pattern": "^( |([A-Za-z0-9-#.,]+ )*?[A-Za-z0-9-#.,]+)$",
+          "pattern": "^([A-Za-z0-9-#.,]+ )*?[A-Za-z0-9-#.,]+$",
           "maxLength": 40,
-          "minLength": 1,
-          "default": " "
+          "minLength": 1
         },
         "address_line_2": {
           "type": "string",
-          "pattern": "^( |([A-Za-z0-9-#., ]+ )*?[A-Za-z0-9-#., ]+)$",
+          "pattern": "^([A-Za-z0-9-#., ]+ )*?[A-Za-z0-9-#., ]+$",
           "maxLength": 40,
-          "minLength": 1,
-          "default": " "
+          "minLength": 1
         },
         "address_line_3": {
           "type": "string",
@@ -14138,6 +14126,7 @@
       "default": [
         "Success"
       ],
+      "x-variable": "validation_information",
       "items": {
         "type": "string"
       },
@@ -14199,43 +14188,43 @@
   },
   "responses": {
     "207": {
-      "description": "Partial Success - unable to raise event",
+      "description": "Multi-Status - Partial Success (e.g. The Record was updated but failed to raise the event)",
       "schema": {
         "$ref": "#/definitions/error_response"
       }
     },
     "400": {
-      "description": "Invalid Request - unable to interpret request",
+      "description": "Bad Request - The request could not be understood by the server due to malformed syntax. The client SHOULD NOT repeat the request without modifications.",
       "schema": {
         "$ref": "#/definitions/error_response"
       }
     },
     "401": {
-      "description": "Authentication required to access data",
+      "description": "Unauthorized - Credentials not included/invalid (e.g. Password doesn't match username)",
       "schema": {
         "$ref": "#/definitions/error_response"
       }
     },
     "403": {
-      "description": "Access denied to protected data",
+      "description": "Forbidden - Access denied to protected data (e.g. User has valid credentials but insufficient privileges)",
       "schema": {
         "$ref": "#/definitions/error_response"
       }
     },
     "404": {
-      "description": "The resource does not exist",
+      "description": "Not Found - The origin server did not find a current representation for the target resource or is not willing to disclose that one exists.",
       "schema": {
         "$ref": "#/definitions/error_response"
       }
     },
     "409": {
-      "description": "Query parameters conflict or are malformed",
+      "description": "Conflict - The request could not be completed due to a conflict with the current state of the target resource. This code is used in situations where the user might be able to resolve the conflict and resubmit the request.",
       "schema": {
         "$ref": "#/definitions/error_response"
       }
     },
     "default": {
-      "description": "Unexpected error",
+      "description": "Internal Server Error - The server encountered an unexpected condition that prevented it from fulfilling the request.",
       "schema": {
         "$ref": "#/definitions/error_response"
       },

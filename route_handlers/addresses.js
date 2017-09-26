@@ -38,6 +38,7 @@ exports.getAddresses = async (req, res) => {
     const addresses = await addressesController.getAddresses(req.swagger.root.definitions,
       req.params.byu_id, permissions);
 
+    res.status(addresses.metadata.validation_response.code);
     res.send(addresses);
   } catch (error) {
     console.error(error.stack);
