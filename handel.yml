@@ -4,6 +4,9 @@ name: byuapi-persons
 
 environments:
   dev:
+    app:
+      type: apigateway
+      swagger: ./swagger-dev.json
     webapp:
       type: ecs
       cluster:
@@ -37,8 +40,8 @@ environments:
         https_certificate: b996d9d5-09fc-4b45-8bed-214dabde2ca0
       containers:
       - name: app
-        max_mb: 1200 # change to support two docker containers per box
-        cpu_units: 450
+        max_mb: 350 # change to support two docker containers per box
+        cpu_units: 350
         port_mappings:
         - 3000
         routing:
@@ -49,5 +52,50 @@ environments:
       tags:
         team: identity
         env: dev
+        data-sensitivity: confidential
+        app: persons
+  prd:
+    app:
+      type: apigateway
+      swagger: ./swagger.json
+    webapp:
+      type: ecs
+      cluster:
+        key_name: persons
+        instance_type: m4.xlarge
+      auto_scaling:
+        min_tasks: 2
+        max_tasks: 4
+#        scaling_policies: # Optional
+#          - type: <up|down>
+#            adjustment:
+#              type: <string> # Optional. Default: 'ChangeInCapacity'. See http://docs.aws.amazon.com/ApplicationAutoScaling/latest/APIReference/API_StepScalingPolicyConfiguration.html for allowed values
+#              value: <number> # Required
+#              cooldown: <number> # Optional. Default: 300.
+#            alarm:
+#              namespace: <string> # Optional. Default: 'AWS/ECS'
+#              dimensions: # Optional. Default: Your ECS service dimensions
+#                <string>: <string>
+#              metric_name: <string> # Required
+#              comparison_operator: <string> # Required. See http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-cw-alarm.html#cfn-cloudwatch-alarms-comparisonoperator for allowed values.
+#              threshold: <number> # Required
+#              period: <number> #
+      load_balancer:
+        type: https
+        https_certificate: bfd9f3aa-9757-42ea-af88-4565f49a2de6
+      containers:
+      - name: app
+        max_mb: 1536
+        cpu_units: 1000
+        port_mappings:
+        - 3000
+        routing:
+          base_path: /
+        environment_variables:
+          DEPLOYED_ENVIRONMENT: prd
+          WELL_KNOWN: https://api.byu.edu/.well-known/openid-configuration
+      tags:
+        team: identity
+        env: prd
         data-sensitivity: confidential
         app: persons

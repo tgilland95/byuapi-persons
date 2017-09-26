@@ -22,6 +22,7 @@ const sql = require('./sql');
 const auth = require('../auth');
 const event = require('../event');
 const moment = require('moment-timezone');
+const PhoneNumber = require("awesome-phonenumber");
 
 /**
  * A helper function that takes the swagger definition sql results and
@@ -185,55 +186,32 @@ exports.getPhones = async function getPhones(definitions, byu_id, permissions) {
   return phones;
 };
 
-function processPostCode(postal_code, country_code) {
-  if (country_code === 'USA' &&
-    !/^( |[0-9]{5})$/g.test(postal_code)) {
+function GetIsoCode(country_code) {
+  if (/^([?]{3}|UK|HK|EL|CW|SX|[A-Z]{3})$/.test(country_code)) {
+    const country_codes = require("../../meta/countries/countryCodes.json");
 
-    if (/^[0-9]{5}$/g.test(postal_code.substr(0, 5))) {
-      postal_code = postal_code.substr(0, 5);
-    }
-    else {
-      postal_code = ' ';
-    }
-  }
-
-  if (country_code === 'CAN' &&
-    !/^( |[ABCEGHJ-NPRSTVXY]\d[ABCEGHJ-NPRSTV-Z][ ]\d[ABCEGHJ-NPRSTV-Z]\d)$/g.test(postal_code)) {
-
-    if (/^( |[ABCEGHJ-NPRSTVXY]\d[ABCEGHJ-NPRSTV-Z]\d[ABCEGHJ-NPRSTV-Z]\d)$/g.test(postal_code)) {
-      postal_code = postal_code.substr(0, 3) + ' ' + postal_code.substr(3, 3);
-    }
-    else if (/^( |[ABCEGHJ-NPRSTVXY]\d[ABCEGHJ-NPRSTV-Z][-]\d[ABCEGHJ-NPRSTV-Z]\d)$/g.test(postal_code)) {
-      postal_code = postal_code.replace(/-/, ' ');
-    }
-    else {
-      postal_code = ' ';
+    for (let i = country_codes.items.length; i--;) {
+      if (country_code === country_codes.items[i].country_code) {
+        return country_codes.items[i].iso_code;
+      }
     }
   }
-
-  if (!/^( |[A-Z0-9 -]{1,20})$/g.test(postal_code)) {
-    postal_code = ' ';
-  }
-
-  return postal_code;
 }
 
-function processBody(authorized_byu_id, body) {
+function processBody(authorized_byu_id, body, lookup_number) {
   let current_date_time = moment();
   current_date_time = current_date_time.clone().tz('America/Denver').format('YYYY-MM-DD HH:mm:ss.SSS');
   let new_body = {};
-  new_body.phone_line_1 = body.phone_line_1 || '';
-  new_body.phone_line_2 = body.phone_line_2 || ' ';
-  new_body.phone_line_3 = body.phone_line_3 || ' ';
-  new_body.phone_line_4 = body.phone_line_4 || ' ';
-  new_body.country_code = body.country_code || '???';
-  new_body.room = body.room || ' ';
-  new_body.building = body.building || ' ';
-  new_body.city = body.city || ' ';
-  new_body.state_code = body.state_code || '??';
-  new_body.postal_code = (body.postal_code) ? processPostCode(body.postal_code, new_body.country_code) : ' ';
-  new_body.verified_flag = body.verified_flag ? 'Y' : 'N';
+  new_body.country_code = body.country_code;
+  new_body.phone_number = body.phone_number || lookup_number;
+  new_body.cell_flag = body.cell_flag ? 'Y' : 'N';
+  new_body.time_code = body.time_code || 'Mountain';
+  new_body.texts_okay = body.texts_okay ? 'Y' : 'N';
   new_body.unlisted = body.unlisted ? 'Y' : 'N';
+  new_body.primary_flag = body.primary_flag ? 'Y' : 'N';
+  new_body.tty = body.tty ? 'Y' : 'N';
+  new_body.verified_flag = body.verified_flag ? 'Y' : 'N';
+  new_body.work_flag = body.work_flag ? 'Y' : 'N';
   new_body.updated_by_id = (!body.updated_by_id || !body.updated_by_id.trim()) ? authorized_byu_id : body.updated_by_id;
   if (!body.date_time_updated || !body.date_time_updated.trim()) {
     new_body.date_time_updated = current_date_time
@@ -251,22 +229,14 @@ function processBody(authorized_byu_id, body) {
 
   let error = false;
   let msg = 'Incorrect BODY: Missing\n';
-  if (!new_body.phone_line_1) {
-    msg += '\n\tPhone Line 1 must not be blank or a space'
-  }
 
   if (!utils.isValidCountryCode(new_body.country_code)) {
     msg += '\n\tInvalid Country Code if unknown use, ???';
     error = true;
   }
 
-  if (!utils.isValidStateCode(new_body.state_code, new_body.country_code)) {
-    msg += '\n\tInvalid State Code if unknown use, ??';
-    error = true;
-  }
-
-  if (!utils.isValidBuildingCode(new_body.building)) {
-    msg += '\n\tInvalid Building Code';
+  if (new_body.phone_number.replace(/\D/g, '') !== lookup_number) {
+    msg += `\n\tphone_number digits do not match url lookup number`;
     error = true;
   }
 
@@ -283,6 +253,22 @@ function processBody(authorized_byu_id, body) {
     throw utils.Error(409, msg)
   }
 
+  const pn = new PhoneNumber(new_body.phone_number, GetIsoCode(new_body.country_code));
+  const valid = pn.isValid();
+  const mobile = pn.isMobile();
+  if (valid) {
+    new_body.phone_number = pn.a.number.national;
+    if (/^(USA|CAN)$/.test(new_body.country_code)) {
+      new_body.phone_number = new_body.phone_number.replace(/\D/g, '').replace(/([0-9]{3})([0-9]{3})([0-9]{4}$)/gi, '$1-$2-$3');
+    }
+  }
+  else {
+    new_body.texts_okay = 'N';
+  }
+  if (mobile) {
+    new_body.cell_flag = 'Y';
+  }
+
   return new_body;
 }
 
@@ -292,19 +278,17 @@ function processFromResults(from_results) {
   process_results.net_id = from_results.net_id || ' ';
   process_results.employee_type = /[^-]/.test(from_results.employee_type) ? from_results.employee_type : 'Not An Employee';
   process_results.student_status = from_results.student_status;
-  process_results.restricted = (from_results.restricted && from_results.restricted === 'Y');
-  process_results.phone_line_1 = from_results.phone_line_1 || ' ';
-  process_results.phone_line_2 = from_results.phone_line_2 || ' ';
-  process_results.phone_line_3 = from_results.phone_line_3 || ' ';
-  process_results.phone_line_4 = from_results.phone_line_4 || ' ';
+  process_results.restricted = from_results.restricted || '';
   process_results.country_code = from_results.country_code || ' ';
-  process_results.room = from_results.room || ' ';
-  process_results.building = from_results.building || ' ';
-  process_results.city = from_results.city || ' ';
-  process_results.state_code = from_results.state_code || ' ';
-  process_results.postal_code = from_results.postal_code || ' ';
+  process_results.cell_flag = from_results.cell_flag || ' ';
+  process_results.time_code = from_results.time_code || ' ';
+  process_results.texts_okay = from_results.texts_okay || ' ';
   process_results.unlisted = from_results.unlisted || ' ';
+  process_results.primary_flag = from_results.primary_flag || ' ';
+  process_results.tty = from_results.tty || ' ';
   process_results.verified_flag = from_results.verified_flag || ' ';
+  process_results.work_flag = from_results.work_flag || ' ';
+  process_results.phone_number = from_results.phone_number || ' ';
 
   return process_results;
 }
@@ -313,7 +297,7 @@ async function logChange(connection, change_type, authorized_byu_id, byu_id, loo
   const sql_query = sql.modifyPhone.logChange;
 
   let log_params = [];
-  if (change_type === 'D') {
+  if (/^D$/.test(change_type)) {
     let date_time_updated = moment();
     date_time_updated = date_time_updated.clone().tz('America/Denver').format('YYYY-MM-DD HH:mm:ss.SSS');
     log_params = [
@@ -324,34 +308,28 @@ async function logChange(connection, change_type, authorized_byu_id, byu_id, loo
       authorized_byu_id,
       processed_results.date_time_created,
       processed_results.created_by_id,
-      processed_results.from_phone_line_1,
-      processed_results.from_phone_line_2,
-      processed_results.from_phone_line_3,
-      processed_results.from_phone_line_4,
+      processed_results.from_phone_number,
       processed_results.from_country_code,
-      processed_results.from_room,
-      processed_results.from_building,
-      processed_results.from_city,
-      processed_results.from_state_code,
-      processed_results.from_postal_code,
+      processed_results.from_cell_flag,
+      processed_results.from_time_code,
+      processed_results.from_texts_okay,
       processed_results.from_unlisted,
+      processed_results.from_primary_flag,
+      processed_results.from_tty,
       processed_results.from_verified_flag,
-      processed_results.phone_line_1,
-      processed_results.phone_line_2,
-      processed_results.phone_line_3,
-      processed_results.phone_line_4,
+      processed_results.from_work_flag,
+      processed_results.phone_number,
       processed_results.country_code,
-      processed_results.room,
-      processed_results.building,
-      processed_results.city,
-      processed_results.state_code,
-      processed_results.postal_code,
+      processed_results.cell_flag,
+      processed_results.time_code,
+      processed_results.texts_okay,
       processed_results.unlisted,
-      processed_results.verified_flag
+      processed_results.primary_flag,
+      processed_results.tty,
+      processed_results.verified_flag,
+      processed_results.work_flag
     ];
-  }
-  else if (change_type === 'A' ||
-    change_type === 'C') {
+  } else if (/^[AC]$/.test(change_type)) {
     log_params = [
       change_type,
       byu_id,
@@ -360,37 +338,33 @@ async function logChange(connection, change_type, authorized_byu_id, byu_id, loo
       new_body.updated_by_id,
       new_body.date_time_created,
       new_body.created_by_id,
-      processed_results.phone_line_1,
-      processed_results.phone_line_2,
-      processed_results.phone_line_3,
-      processed_results.phone_line_4,
+      processed_results.phone_number,
       processed_results.country_code,
-      processed_results.room,
-      processed_results.building,
-      processed_results.city,
-      processed_results.state_code,
-      processed_results.postal_code,
+      processed_results.cell_flag,
+      processed_results.time_code,
+      processed_results.texts_okay,
       processed_results.unlisted,
+      processed_results.primary_flag,
+      processed_results.tty,
       processed_results.verified_flag,
-      new_body.phone_line_1,
-      new_body.phone_line_2,
-      new_body.phone_line_3,
-      new_body.phone_line_4,
+      processed_results.work_flag,
+      new_body.phone_number,
       new_body.country_code,
-      new_body.room,
-      new_body.building,
-      new_body.city,
-      new_body.state_code,
-      new_body.postal_code,
+      new_body.cell_flag,
+      new_body.time_code,
+      new_body.texts_okay,
       new_body.unlisted,
-      new_body.verified_flag
+      new_body.primary_flag,
+      new_body.tty,
+      new_body.verified_flag,
+      new_body.work_flag
     ];
   }
   console.log('LOG PARAMS', log_params);
   return connection.execute(sql_query, log_params, { autoCommit: true });
 }
 
-async function phoneEvents(connection, change_type, byu_id, lookup_number, body, processed_results) {
+async function phoneEvents(connection, change_type, byu_id, lookup_number, new_body, processed_results) {
   try {
     const phone_url = `https://api.byu.edu/byuapi/persons/v1/${byu_id}/phones/${lookup_number}`;
     const source_dt = new Date().toISOString();
@@ -423,9 +397,7 @@ async function phoneEvents(connection, change_type, byu_id, lookup_number, body,
       'event_id',
       ' '
     ];
-    body.unlisted = (body.unlisted === 'Y');
-    body.verified_flag = (body.verified_flag === 'Y');
-    if (!processed_results.restricted && !body.unlisted) {
+    if (!/^Y$/.test(processed_results.restricted) && !/^Y$/.test(new_body.unlisted)) {
       let event_body = [
         'person_id',
         processed_results.person_id,
@@ -435,34 +407,34 @@ async function phoneEvents(connection, change_type, byu_id, lookup_number, body,
         processed_results.net_id,
         'lookup_number',
         lookup_number,
-        'phone_line_1',
-        body.phone_line_1,
-        'phone_line_2',
-        body.phone_line_2,
-        'phone_line_3',
-        body.phone_line_3,
-        'phone_line_4',
-        body.phone_line_4,
+        'phone_number',
+        new_body.phone_number,
+        'cell_flag',
+        /^Y$/.test(new_body.cell_flag),
+        'time_code',
+        new_body.time_code,
+        'texts_okay',
+        /^Y$/.test(new_body.texts_okay),
         'country_code',
-        body.country_code,
-        'city',
-        body.city,
-        'state_code',
-        body.state_code,
-        'postal_code',
-        body.postal_code,
-        'campus_phone_f',
-        body.building,
+        new_body.country_code,
+        'primary_flag',
+        /^Y$/.test(new_body.primary_flag),
+        'tty',
+        /^Y$/.test(new_body.tty),
         'unlisted',
-        body.unlisted,
+        /^Y$/.test(new_body.unlisted),
+        'work_flag',
+        /^Y$/.test(new_body.work_flag),
+        'verified_flag',
+        /^Y$/.test(new_body.verified_flag),
         'updated_by_id',
-        body.updated_by_id,
+        new_body.updated_by_id,
         'date_time_updated',
-        body.date_time_updated,
+        new_body.date_time_updated,
         'created_by_id',
-        body.created_by_id,
-        'date_time_created',
-        body.date_time_created,
+        new_body.created_by_id,
+        "date_time_created",
+        new_body.date_time_created,
         'callback_url',
         phone_url
       ];
@@ -472,16 +444,17 @@ async function phoneEvents(connection, change_type, byu_id, lookup_number, body,
       header[5] = event_type2;
       event_body.push('verified_flag');
       event_body.push(body.verified_flag);
-      filters.push('identity_type');
-      filters.push(identity_type);
-      filters.push('employee_type');
-      filters.push(processed_results.employee_type);
-      filters.push('student_status');
-      filters.push(processed_results.student_status);
+      filters = [
+        'identity_type',
+        identity_type,
+        'employee_type',
+        processed_results.employee_type,
+        'student_status',
+        processed_results.student_status
+      ];
       eventness = event.Builder(header, event_body, filters);
       event_frame.events.event.push(eventness);
-    }
-    else {
+    } else {
       sql_query = db.intermediaryId.get;
       params = [phone_url];
       let results = await connection.execute(sql_query, params);
@@ -491,7 +464,7 @@ async function phoneEvents(connection, change_type, byu_id, lookup_number, body,
           phone_url,
           ' ',    // actor
           ' ',    // group_id
-          body.created_by_id
+          new_body.created_by_id
         ];
         await connection.execute(sql_query, params);
         sql_query = db.intermediaryId.get;
@@ -510,26 +483,26 @@ async function phoneEvents(connection, change_type, byu_id, lookup_number, body,
         ' ',
         'lookup_number',
         ' ',
-        'phone_line_1',
+        'phone_number',
         ' ',
-        'phone_line_2',
+        'cell_flag',
         ' ',
-        'phone_line_3',
+        'time_code',
         ' ',
-        'phone_line_4',
+        'texts_okay',
         ' ',
         'country_code',
         ' ',
-        'city',
+        'primary_flag',
         ' ',
-        'state_code',
-        ' ',
-        'postal_code',
-        ' ',
-        'campus_phone_f',
+        'tty',
         ' ',
         'unlisted',
-        body.unlisted,
+        /^Y$/.test(new_body.unlisted),
+        'work_flag',
+        ' ',
+        'verified_flag',
+        ' ',
         'updated_by_id',
         ' ',
         'date_time_updated',
@@ -548,7 +521,7 @@ async function phoneEvents(connection, change_type, byu_id, lookup_number, body,
       restricted_body.push('verified_flag');
       restricted_body.push(' ');
       filters.push('restricted');
-      filters.push(body.restricted);
+      filters.push(new_body.restricted);
       eventness = event.Builder(header, restricted_body, filters);
       event_frame.events.event.push(eventness);
     }
@@ -568,7 +541,7 @@ async function phoneEvents(connection, change_type, byu_id, lookup_number, body,
 
 exports.modifyPhone = async function (definitions, byu_id, lookup_number, body, authorized_byu_id, permissions) {
   const connection = await db.getConnection();
-  const new_body = processBody(authorized_byu_id, body);
+  const new_body = processBody(authorized_byu_id, body, lookup_number);
   console.log('NEW BODY', new_body);
 
   if (!auth.canUpdateContact(permissions)) {
@@ -597,59 +570,53 @@ exports.modifyPhone = async function (definitions, byu_id, lookup_number, body, 
   const processed_results = processFromResults(from_results.rows[0]);
   console.log('PROCESS RESULTS', processed_results);
   const is_different = (
-    new_body.phone_line_1 !== processed_results.phone_line_1 ||
-    new_body.phone_line_2 !== processed_results.phone_line_2 ||
-    new_body.phone_line_3 !== processed_results.phone_line_3 ||
-    new_body.phone_line_4 !== processed_results.phone_line_4 ||
+    new_body.cell_flag !== processed_results.cell_flag ||
+    new_body.time_code !== processed_results.time_code ||
+    new_body.texts_okay !== processed_results.texts_okay ||
     new_body.country_code !== processed_results.country_code ||
-    new_body.room !== processed_results.room ||
-    new_body.building !== processed_results.building ||
-    new_body.city !== processed_results.city ||
-    new_body.state_code !== processed_results.state_code ||
-    new_body.postal_code !== processed_results.postal_code ||
+    new_body.primary_flag !== processed_results.primary_flag ||
+    new_body.tty !== processed_results.tty ||
     new_body.unlisted !== processed_results.unlisted ||
-    new_body.verified_flag !== processed_results.verified_flag);
+    new_body.verified_flag !== processed_results.verified_flag ||
+    new_body.work_flag !== processed_results.work_flag ||
+    new_body.phone_number !== processed_results.phone_number);
 
   if (is_different) {
     if (!from_results.rows[0].lookup_number) {
       sql_query = sql.modifyPhone.create;
       params = [
         byu_id,
-        lookup_number,
+        new_body.phone_number,
+        new_body.country_code,
         new_body.date_time_updated,
         new_body.updated_by_id,
         new_body.date_time_created,
         new_body.created_by_id,
-        new_body.phone_line_1,
-        new_body.phone_line_2,
-        new_body.phone_line_3,
-        new_body.phone_line_4,
-        new_body.country_code,
-        new_body.room,
-        new_body.building,
-        new_body.city,
-        new_body.state_code,
-        new_body.postal_code,
+        new_body.cell_flag,
+        new_body.time_code,
+        new_body.texts_okay,
         new_body.unlisted,
-        new_body.verified_flag
+        new_body.primary_flag,
+        new_body.tty,
+        new_body.verified_flag,
+        new_body.work_flag,
+        lookup_number
       ];
     } else {
       sql_query = sql.modifyPhone.update;
       params = [
         new_body.date_time_updated,
         new_body.updated_by_id,
-        new_body.phone_line_1,
-        new_body.phone_line_2,
-        new_body.phone_line_3,
-        new_body.phone_line_4,
+        new_body.cell_flag,
+        new_body.time_code,
+        new_body.texts_okay,
         new_body.country_code,
-        new_body.room,
-        new_body.building,
-        new_body.city,
-        new_body.state_code,
-        new_body.postal_code,
+        new_body.primary_flag,
+        new_body.tty,
         new_body.unlisted,
         new_body.verified_flag,
+        new_body.work_flag,
+        new_body.phone_number,
         byu_id,
         lookup_number
       ];
@@ -791,30 +758,26 @@ function processDeleteFromResults(from_results) {
   processed_results.employee_type = /^[^-]$/.test(from_results.employee_type) ? from_results.employee_type : 'Not An Employee';
   processed_results.student_status = from_results.student_status;
   processed_results.restricted = /^Y$/g.test(from_results.restricted);
-  processed_results.from_phone_line_1 = (from_results.phone_line_1) ? from_results.phone_line_1 : ' ';
-  processed_results.from_phone_line_2 = (from_results.phone_line_2) ? from_results.phone_line_2 : ' ';
-  processed_results.from_phone_line_3 = (from_results.phone_line_3) ? from_results.phone_line_3 : ' ';
-  processed_results.from_phone_line_4 = (from_results.phone_line_4) ? from_results.phone_line_4 : ' ';
-  processed_results.from_country_code = (from_results.country_code) ? from_results.country_code : ' ';
-  processed_results.from_room = (from_results.room) ? from_results.room : ' ';
-  processed_results.from_building = (from_results.building) ? from_results.building : ' ';
-  processed_results.from_city = (from_results.city) ? from_results.city : ' ';
-  processed_results.from_state_code = (from_results.state_code) ? from_results.state_code : ' ';
-  processed_results.from_postal_code = (from_results.postal_code) ? from_results.postal_code : ' ';
-  processed_results.from_unlisted = (from_results.unlisted) ? from_results.unlisted : ' ';
-  processed_results.from_verified_flag = (from_results.verified_flag) ? from_results.verified_flag : ' ';
-  processed_results.phone_line_1 = ' ';
-  processed_results.phone_line_2 = ' ';
-  processed_results.phone_line_3 = ' ';
-  processed_results.phone_line_4 = ' ';
-  processed_results.country_code = ' ';
-  processed_results.room = ' ';
-  processed_results.building = ' ';
-  processed_results.city = ' ';
-  processed_results.state_code = ' ';
-  processed_results.postal_code = ' ';
-  processed_results.unlisted = ' ';
-  processed_results.verified_flag = ' ';
+  processed_results.from_country_code = from_results.country_code || ' ';
+  processed_results.from_cell_flag = from_results.cell_flag || ' ';
+  processed_results.from_time_code = from_results.time_code || ' ';
+  processed_results.from_texts_okay = from_results.texts_okay || ' ';
+  processed_results.from_unlisted = from_results.unlisted || ' ';
+  processed_results.from_primary_flag = from_results.primary_flag || ' ';
+  processed_results.from_tty = from_results.tty || ' ';
+  processed_results.from_verified_flag = from_results.verified_flag || ' ';
+  processed_results.from_work_flag = from_results.work_flag || ' ';
+  processed_results.from_phone_number = from_results.phone_number || ' ';
+  processed_results.country_code = " ";
+  processed_results.cell_flag = " ";
+  processed_results.time_code = " ";
+  processed_results.texts_okay = " ";
+  processed_results.unlisted = " ";
+  processed_results.primary_flag = " ";
+  processed_results.tty = " ";
+  processed_results.verified_flag = " ";
+  processed_results.work_flag = " ";
+  processed_results.phone_number = ' ';
 
   console.log("DELETE PROCESS RESULTS", processed_results);
   return processed_results;
