@@ -20,3 +20,19 @@ pipelines:
       environments_to_deploy:
       - dev
 # https://handel-codepipeline.readthedocs.io
+  prd:
+    phases:
+    - type: github
+      name: Source
+      owner: byu-oit
+      repo: byuapi-persons
+      branch: master
+    - type: codebuild
+      name: Build
+      build_image: aws/codebuild/docker:1.12.1
+      environment_variables:
+        ENV_TO_DEPLOY: prd
+    - type: handel
+      name: DevDeploy
+      environments_to_deploy:
+      - prd
