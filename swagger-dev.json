@@ -355,7 +355,7 @@
             "description": "The address values to be set",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/person_post"
+              "$ref": "#/definitions/personPost"
             }
           }
         ],
@@ -524,7 +524,7 @@
             "description": "The person data to be updated",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/basic_put"
+              "$ref": "#/definitions/basicPut"
             }
           }
         ],
@@ -765,7 +765,7 @@
             "description": "The address values to be set",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/address_put"
+              "$ref": "#/definitions/addressPut"
             }
           }
         ],
@@ -886,7 +886,7 @@
           "200": {
             "description": "Alias domains successfully returned",
             "schema": {
-              "$ref": "#/definitions/alias_domains"
+              "$ref": "#/definitions/aliasDomains"
             },
             "examples": {
               "application/json": {
@@ -950,7 +950,7 @@
           "200": {
             "description": "The email address was successfully returned",
             "schema": {
-              "$ref": "#/definitions/alias_domains"
+              "$ref": "#/definitions/aliasDomain"
             },
             "examples": {
               "application/json": {
@@ -1004,7 +1004,7 @@
             "description": "The email address values to be set",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/alias_domain_put"
+              "$ref": "#/definitions/aliasDomainPut"
             }
           }
         ],
@@ -1015,7 +1015,7 @@
           "200": {
             "description": "Alias domain successfully updated",
             "schema": {
-              "$ref": "#/definitions/alias_domain"
+              "$ref": "#/definitions/aliasDomain"
             },
             "examples": {
               "application/json": {
@@ -1286,7 +1286,7 @@
             "description": "The attributes of the credential to be created or updated",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/credential_put"
+              "$ref": "#/definitions/credentialPut"
             }
           }
         ],
@@ -1418,7 +1418,7 @@
             "description": "The operation values to be set",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/delegated_operation_performed_post"
+              "$ref": "#/definitions/delegatedOperationPerformedPost"
             }
           }
         ],
@@ -1429,7 +1429,7 @@
           "201": {
             "description": "Operation successfully added",
             "schema": {
-              "$ref": "#/definitions/operation_performed"
+              "$ref": "#/definitions/operationPerformed"
             },
             "examples": {
               "application/json": {
@@ -1488,7 +1488,7 @@
           "200": {
             "description": "Email addresses successfully returned",
             "schema": {
-              "$ref": "#/definitions/email_addresses"
+              "$ref": "#/definitions/emailAddresses"
             },
             "examples": {
               "application/json": {
@@ -1557,7 +1557,7 @@
           "200": {
             "description": "The email address was successfully returned",
             "schema": {
-              "$ref": "#/definitions/email_address"
+              "$ref": "#/definitions/emailAddress"
             },
             "examples": {
               "application/json": {
@@ -1616,7 +1616,7 @@
             "description": "The email address values to be set",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/email_put"
+              "$ref": "#/definitions/emailPut"
             }
           }
         ],
@@ -1627,7 +1627,7 @@
           "200": {
             "description": "Email address successfully updated",
             "schema": {
-              "$ref": "#/definitions/email_address"
+              "$ref": "#/definitions/emailAddress"
             },
             "examples": {
               "application/json": {
@@ -1736,7 +1736,7 @@
           "200": {
             "description": "Email alias successfully returned",
             "schema": {
-              "$ref": "#/definitions/email_aliases"
+              "$ref": "#/definitions/emailAliases"
             },
             "examples": {
               "application/json": {
@@ -1810,7 +1810,7 @@
           "200": {
             "description": "The email address was successfully returned",
             "schema": {
-              "$ref": "#/definitions/email_alias"
+              "$ref": "#/definitions/emailAlias"
             },
             "examples": {
               "application/json": {
@@ -1852,7 +1852,7 @@
             "pattern": "^[0-9]{9}$"
           },
           {
-            "name": "+email_alias",
+            "name": "email_alias",
             "in": "path",
             "description": "The email alias",
             "required": true,
@@ -1860,7 +1860,7 @@
             "format": "email"
           },
           {
-            "name": "+forwarding_address",
+            "name": "forwarding_address",
             "in": "path",
             "description": "The forwarding email address for the given alias",
             "required": true,
@@ -1873,7 +1873,7 @@
             "description": "The email address values to be set",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/email_alias_put"
+              "$ref": "#/definitions/emailAliasPut"
             }
           }
         ],
@@ -1884,7 +1884,7 @@
           "200": {
             "description": "Email address successfully updated",
             "schema": {
-              "$ref": "#/definitions/email_alias"
+              "$ref": "#/definitions/emailAlias"
             },
             "examples": {
               "application/json": {
@@ -1929,7 +1929,7 @@
             "pattern": "^[0-9]{9}$"
           },
           {
-            "name": "+email_alias",
+            "name": "email_alias",
             "in": "path",
             "description": "The email alias",
             "required": true,
@@ -1937,7 +1937,7 @@
             "format": "email"
           },
           {
-            "name": "+forwarding_address",
+            "name": "forwarding_address",
             "in": "path",
             "description": "The forwarding email address for the given alias",
             "required": true,
@@ -1997,7 +1997,7 @@
           "200": {
             "description": "Employee information for the person successfully returned",
             "schema": {
-              "$ref": "#/definitions/employee_summaries"
+              "$ref": "#/definitions/employeeSummaries"
             },
             "examples": {
               "application/json": {
@@ -2008,7 +2008,7 @@
           "203": {
             "description": "Employee information for the person successfully returned public info only",
             "schema": {
-              "$ref": "#/definitions/employee_summaries"
+              "$ref": "#/definitions/employeeSummaries"
             },
             "examples": {
               "application/json": {
@@ -2206,7 +2206,7 @@
             "description": "The address values to be set",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/ethnicity_put"
+              "$ref": "#/definitions/ethnicityPut"
             }
           }
         ],
@@ -2333,7 +2333,7 @@
           "200": {
             "description": "Family phones successfully returned",
             "schema": {
-              "$ref": "#/definitions/family_phones"
+              "$ref": "#/definitions/familyPhones"
             },
             "examples": {
               "application/json": {
@@ -2409,7 +2409,7 @@
           "200": {
             "description": "Family phone successfully returned",
             "schema": {
-              "$ref": "#/definitions/family_phone"
+              "$ref": "#/definitions/familyPhone"
             },
             "examples": {
               "application/json": {
@@ -2475,7 +2475,7 @@
             "description": "The attributes associated with the family phone",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/family_phone_put"
+              "$ref": "#/definitions/familyPhonePut"
             }
           }
         ],
@@ -2486,7 +2486,7 @@
           "200": {
             "description": "Family phone successfully updated",
             "schema": {
-              "$ref": "#/definitions/family_phone"
+              "$ref": "#/definitions/familyPhone"
             },
             "examples": {
               "application/json": {
@@ -2602,7 +2602,7 @@
           "200": {
             "description": "Person successfully returned",
             "schema": {
-              "$ref": "#/definitions/government_records"
+              "$ref": "#/definitions/governmentRecords"
             },
             "examples": {
               "application/json": {
@@ -2649,7 +2649,7 @@
             "description": "The person data to be updated",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/government_record_put"
+              "$ref": "#/definitions/governmentRecordPut"
             }
           }
         ],
@@ -2660,7 +2660,7 @@
           "200": {
             "description": "Person successfully updated",
             "schema": {
-              "$ref": "#/definitions/government_records"
+              "$ref": "#/definitions/governmentRecords"
             },
             "examples": {
               "application/json": {
@@ -2719,7 +2719,7 @@
           "200": {
             "description": "Successfully returned the group events for the BYU ID",
             "schema": {
-              "$ref": "#/definitions/group_membership_events"
+              "$ref": "#/definitions/groupMembershipEvents"
             },
             "examples": {
               "application/json": {
@@ -2766,7 +2766,7 @@
             "description": "The group event values to be set",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/group_membership_event_put"
+              "$ref": "#/definitions/groupMembershipEventPut"
             }
           }
         ],
@@ -2777,7 +2777,7 @@
           "201": {
             "description": "Address successfully created",
             "schema": {
-              "$ref": "#/definitions/group_membership_event"
+              "$ref": "#/definitions/groupMembershipEvent"
             },
             "examples": {
               "application/json": {
@@ -2845,7 +2845,7 @@
           "200": {
             "description": "Successfully returned the person's group events for the specified group",
             "schema": {
-              "$ref": "#/definitions/group_membership_event"
+              "$ref": "#/definitions/groupMembershipEvent"
             },
             "examples": {
               "application/json": {
@@ -2900,7 +2900,7 @@
             "description": "The group event values to be set",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/group_membership_event_put"
+              "$ref": "#/definitions/groupMembershipEventPut"
             }
           }
         ],
@@ -2911,7 +2911,7 @@
           "200": {
             "description": "Address successfully updated",
             "schema": {
-              "$ref": "#/definitions/group_membership_event"
+              "$ref": "#/definitions/groupMembershipEvent"
             },
             "examples": {
               "application/json": {
@@ -3016,7 +3016,7 @@
           "200": {
             "description": "Group memberships successfully returned",
             "schema": {
-              "$ref": "#/definitions/group_memberships"
+              "$ref": "#/definitions/groupMemberships"
             },
             "examples": {
               "application/json": {
@@ -3080,7 +3080,7 @@
           "200": {
             "description": "Group memberships successfully returned",
             "schema": {
-              "$ref": "#/definitions/group_membership"
+              "$ref": "#/definitions/groupMembership"
             },
             "examples": {
               "application/json": {
@@ -3136,7 +3136,7 @@
           "200": {
             "description": "Group Membership successfully updated",
             "schema": {
-              "$ref": "#/definitions/group_membership"
+              "$ref": "#/definitions/groupMembership"
             },
             "examples": {
               "application/json": {
@@ -3240,7 +3240,7 @@
           "200": {
             "description": "The groups administered by the person successfully returned",
             "schema": {
-              "$ref": "#/definitions/groups_administered"
+              "$ref": "#/definitions/groupsAdministered"
             },
             "examples": {
               "application/json": {
@@ -3304,7 +3304,7 @@
           "200": {
             "description": "The group administration information for the BYU ID/group successfully returned",
             "schema": {
-              "$ref": "#/definitions/group_administered"
+              "$ref": "#/definitions/groupAdministered"
             },
             "examples": {
               "application/json": {
@@ -3358,7 +3358,7 @@
             "description": "The group_administered values to be set",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/group_administered_put"
+              "$ref": "#/definitions/groupAdministeredPut"
             }
           }
         ],
@@ -3369,7 +3369,7 @@
           "200": {
             "description": "Group Membership successfully updated",
             "schema": {
-              "$ref": "#/definitions/group_administered"
+              "$ref": "#/definitions/groupAdministered"
             },
             "examples": {
               "application/json": {
@@ -3473,7 +3473,7 @@
           "200": {
             "description": "Person's ID card information successfully returned",
             "schema": {
-              "$ref": "#/definitions/id_cards"
+              "$ref": "#/definitions/idCards"
             },
             "examples": {
               "application/json": {
@@ -3520,7 +3520,7 @@
             "description": "The ID card info being changed",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/id_cards_put"
+              "$ref": "#/definitions/idCardsPut"
             }
           }
         ],
@@ -3531,7 +3531,7 @@
           "200": {
             "description": "Person's ID card information successfully updated",
             "schema": {
-              "$ref": "#/definitions/id_cards"
+              "$ref": "#/definitions/idCards"
             },
             "examples": {
               "application/json": {
@@ -3746,7 +3746,7 @@
             "description": "The language parameters to be created",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/language_put"
+              "$ref": "#/definitions/languagePut"
             }
           }
         ],
@@ -3876,7 +3876,7 @@
           "200": {
             "description": "Guest rights successfully returned",
             "schema": {
-              "$ref": "#/definitions/my_delegators"
+              "$ref": "#/definitions/myDelegators"
             },
             "examples": {
               "application/json": {
@@ -3939,7 +3939,7 @@
           "200": {
             "description": "Guest rights successfully returned",
             "schema": {
-              "$ref": "#/definitions/my_delegator"
+              "$ref": "#/definitions/myDelegator"
             },
             "examples": {
               "application/json": {
@@ -3992,7 +3992,7 @@
             "description": "The details of the rights being granted.",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/my_delegator_put"
+              "$ref": "#/definitions/myDelegatorPut"
             }
           }
         ],
@@ -4003,7 +4003,7 @@
           "200": {
             "description": "Guest invitation successfully set",
             "schema": {
-              "$ref": "#/definitions/my_delegator"
+              "$ref": "#/definitions/myDelegator"
             },
             "examples": {
               "application/json": {
@@ -4077,7 +4077,7 @@
           "200": {
             "description": "Guest Access rights granted by a BYU ID successfully returned",
             "schema": {
-              "$ref": "#/definitions/my_guests"
+              "$ref": "#/definitions/myGuests"
             },
             "examples": {
               "application/json": {
@@ -4124,7 +4124,7 @@
             "description": "The guest access information to be set",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/my_guest_put"
+              "$ref": "#/definitions/myGuestPut"
             }
           }
         ],
@@ -4135,7 +4135,7 @@
           "201": {
             "description": "Guest access information for successfully created",
             "schema": {
-              "$ref": "#/definitions/my_guest"
+              "$ref": "#/definitions/myGuest"
             },
             "examples": {
               "application/json": {
@@ -4202,7 +4202,7 @@
           "200": {
             "description": "The guest access information for the person/guest successfully returned",
             "schema": {
-              "$ref": "#/definitions/my_guest"
+              "$ref": "#/definitions/myGuest"
             },
             "examples": {
               "application/json": {
@@ -4256,7 +4256,7 @@
             "description": "The guest access information to be set",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/my_guest_put"
+              "$ref": "#/definitions/myGuestPut"
             }
           }
         ],
@@ -4267,7 +4267,7 @@
           "200": {
             "description": "Guest access information for successfully updated",
             "schema": {
-              "$ref": "#/definitions/my_guest"
+              "$ref": "#/definitions/myGuest"
             },
             "examples": {
               "application/json": {
@@ -4334,7 +4334,7 @@
           "200": {
             "description": "Person successfully returned",
             "schema": {
-              "$ref": "#/definitions/personal_records"
+              "$ref": "#/definitions/personalRecords"
             },
             "examples": {
               "application/json": {
@@ -4381,7 +4381,7 @@
             "description": "The person data to be updated",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/personal_record_put"
+              "$ref": "#/definitions/personalRecordPut"
             }
           }
         ],
@@ -4392,7 +4392,7 @@
           "200": {
             "description": "Person successfully updated",
             "schema": {
-              "$ref": "#/definitions/personal_records"
+              "$ref": "#/definitions/personalRecords"
             },
             "examples": {
               "application/json": {
@@ -4578,7 +4578,7 @@
             "description": "The phone information to be updated or created",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/phone_put"
+              "$ref": "#/definitions/phonePut"
             }
           }
         ],
@@ -4812,7 +4812,7 @@
             "description": "The relationship information to be set",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/relationship_put"
+              "$ref": "#/definitions/relationshipPut"
             }
           }
         ],
@@ -4927,7 +4927,7 @@
           "200": {
             "description": "Person's academic summary information successfully returned",
             "schema": {
-              "$ref": "#/definitions/student_summaries"
+              "$ref": "#/definitions/studentSummaries"
             },
             "examples": {
               "application/json": {
@@ -4958,7 +4958,7 @@
     }
   },
   "definitions": {
-    "access_delegation_id": {
+    "accessDelegationId": {
       "type": "object",
       "required": [
         "value",
@@ -4987,7 +4987,7 @@
         "$ref": "#/x-mock_json/persons/values/0/my_delegators/values/0/access_delegation_id"
       }
     },
-    "access_type": {
+    "accessType": {
       "type": "object",
       "required": [
         "value",
@@ -5108,10 +5108,10 @@
           }
         },
         "metadata": {
-          "$ref": "#/definitions/simple_metadata"
+          "$ref": "#/definitions/simpleMetadata"
         },
         "byu_id": {
-          "$ref": "#/definitions/byu_id"
+          "$ref": "#/definitions/byuId"
         },
         "address_type": {
           "type": "object",
@@ -5147,16 +5147,16 @@
           }
         },
         "date_time_updated": {
-          "$ref": "#/definitions/date_time_updated"
+          "$ref": "#/definitions/dateTimeUpdated"
         },
         "updated_by_id": {
-          "$ref": "#/definitions/updated_by_id"
+          "$ref": "#/definitions/updatedById"
         },
         "date_time_created": {
-          "$ref": "#/definitions/date_time_created"
+          "$ref": "#/definitions/dateTimeCreated"
         },
         "created_by_id": {
-          "$ref": "#/definitions/created_by_id"
+          "$ref": "#/definitions/createdById"
         },
         "address_line_1": {
           "type": "object",
@@ -5319,7 +5319,7 @@
           }
         },
         "country_code": {
-          "$ref": "#/definitions/country_code"
+          "$ref": "#/definitions/countryCode"
         },
         "city": {
           "type": "object",
@@ -5401,11 +5401,11 @@
           "$ref": "#/definitions/unlisted"
         },
         "verified_flag": {
-          "$ref": "#/definitions/verified_flag"
+          "$ref": "#/definitions/verifiedFlag"
         }
       }
     },
-    "address_put": {
+    "addressPut": {
       "type": "object",
       "required": [
         "address_line_1",
@@ -5559,7 +5559,7 @@
           }
         },
         "metadata": {
-          "$ref": "#/definitions/sub_level_metadata"
+          "$ref": "#/definitions/subLevelMetadata"
         },
         "values": {
           "type": "array",
@@ -5570,7 +5570,7 @@
         }
       }
     },
-    "alias_domain": {
+    "aliasDomain": {
       "type": "object",
       "properties": {
         "links": {
@@ -5661,10 +5661,10 @@
           }
         },
         "metadata": {
-          "$ref": "#/definitions/simple_metadata"
+          "$ref": "#/definitions/simpleMetadata"
         },
         "byu_id": {
-          "$ref": "#/definitions/byu_id"
+          "$ref": "#/definitions/byuId"
         },
         "alias_domain": {
           "description": "The alias domain",
@@ -5706,16 +5706,16 @@
           }
         },
         "date_time_updated": {
-          "$ref": "#/definitions/date_time_updated"
+          "$ref": "#/definitions/dateTimeUpdated"
         },
         "updated_by_id": {
-          "$ref": "#/definitions/updated_by_id"
+          "$ref": "#/definitions/updatedById"
         },
         "date_time_created": {
-          "$ref": "#/definitions/date_time_created"
+          "$ref": "#/definitions/dateTimeCreated"
         },
         "created_by_id": {
-          "$ref": "#/definitions/created_by_id"
+          "$ref": "#/definitions/createdById"
         },
         "limit": {
           "type": "object",
@@ -5766,7 +5766,7 @@
         }
       }
     },
-    "alias_domain_put": {
+    "aliasDomainPut": {
       "type": "object",
       "properties": {
         "date_time_updated": {
@@ -5788,7 +5788,7 @@
         "limit": 25
       }
     },
-    "alias_domains": {
+    "aliasDomains": {
       "type": "object",
       "description": "A collection of alias domains",
       "required": [
@@ -5829,12 +5829,12 @@
           }
         },
         "metadata": {
-          "$ref": "#/definitions/sub_level_metadata"
+          "$ref": "#/definitions/subLevelMetadata"
         },
         "values": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/alias_domain"
+            "$ref": "#/definitions/aliasDomain"
           }
         }
       }
@@ -5934,10 +5934,10 @@
           }
         },
         "metadata": {
-          "$ref": "#/definitions/simple_metadata"
+          "$ref": "#/definitions/simpleMetadata"
         },
         "byu_id": {
-          "$ref": "#/definitions/byu_id"
+          "$ref": "#/definitions/byuId"
         },
         "person_id": {
           "type": "object",
@@ -5963,7 +5963,7 @@
           }
         },
         "net_id": {
-          "$ref": "#/definitions/net_id"
+          "$ref": "#/definitions/netId"
         },
         "deceased": {
           "type": "object",
@@ -6045,16 +6045,16 @@
           }
         },
         "date_time_updated": {
-          "$ref": "#/definitions/date_time_updated"
+          "$ref": "#/definitions/dateTimeUpdated"
         },
         "updated_by_id": {
-          "$ref": "#/definitions/updated_by_id"
+          "$ref": "#/definitions/updatedById"
         },
         "date_time_created": {
-          "$ref": "#/definitions/date_time_created"
+          "$ref": "#/definitions/dateTimeCreated"
         },
         "created_by_id": {
-          "$ref": "#/definitions/created_by_id"
+          "$ref": "#/definitions/createdById"
         },
         "sex": {
           "type": "object",
@@ -6570,7 +6570,7 @@
         }
       }
     },
-    "basic_put": {
+    "basicPut": {
       "description": "Basic person information to be updated",
       "type": "object",
       "required": [
@@ -6661,7 +6661,7 @@
         "$ref": "#/x-mock_json/basic_put"
       }
     },
-    "byu_id": {
+    "byuId": {
       "type": "object",
       "required": [
         "value",
@@ -6752,7 +6752,7 @@
         "$ref": "#/x-mock_json/persons/values/0/my_delegators/values/0/categories"
       }
     },
-    "cell_flag": {
+    "cellFlag": {
       "type": "object",
       "required": [
         "value",
@@ -6778,7 +6778,7 @@
         "$ref": "#/x-mock_json/persons/values/0/phones/values/0/cell_flag"
       }
     },
-    "country_code": {
+    "countryCode": {
       "type": "object",
       "required": [
         "value",
@@ -6810,7 +6810,7 @@
         "$ref": "#/x-mock_json/persons/values/0/addresses/values/0/country_code"
       }
     },
-    "created_by_id": {
+    "createdById": {
       "type": "object",
       "description": "The BYU ID of the person who performed the creation",
       "required": [
@@ -6933,10 +6933,10 @@
           }
         },
         "metadata": {
-          "$ref": "#/definitions/simple_metadata"
+          "$ref": "#/definitions/simpleMetadata"
         },
         "byu_id": {
-          "$ref": "#/definitions/byu_id"
+          "$ref": "#/definitions/byuId"
         },
         "credential_type": {
           "type": "object",
@@ -7007,16 +7007,16 @@
           }
         },
         "date_time_updated": {
-          "$ref": "#/definitions/date_time_updated"
+          "$ref": "#/definitions/dateTimeUpdated"
         },
         "updated_by_id": {
-          "$ref": "#/definitions/updated_by_id"
+          "$ref": "#/definitions/updatedById"
         },
         "date_time_created": {
-          "$ref": "#/definitions/date_time_created"
+          "$ref": "#/definitions/dateTimeCreated"
         },
         "created_by_id": {
-          "$ref": "#/definitions/created_by_id"
+          "$ref": "#/definitions/createdById"
         },
         "user_name": {
           "type": "object",
@@ -7093,7 +7093,7 @@
           }
         },
         "expiration_date": {
-          "$ref": "#/definitions/expiration_date"
+          "$ref": "#/definitions/expirationDate"
         },
         "issuing_location": {
           "type": "object",
@@ -7169,7 +7169,7 @@
         }
       }
     },
-    "credential_put": {
+    "credentialPut": {
       "type": "object",
       "properties": {
         "date_time_created": {
@@ -7278,7 +7278,7 @@
           }
         },
         "metadata": {
-          "$ref": "#/definitions/sub_level_metadata"
+          "$ref": "#/definitions/subLevelMetadata"
         },
         "values": {
           "type": "array",
@@ -7288,7 +7288,7 @@
         }
       }
     },
-    "date_time_accepted": {
+    "dateTimeAccepted": {
       "type": "object",
       "required": [
         "api_type"
@@ -7311,7 +7311,7 @@
         "$ref": "#/x-mock_json/persons/values/0/my_delegators/values/0/date_time_accepted"
       }
     },
-    "date_time_created": {
+    "dateTimeCreated": {
       "type": "object",
       "description": "The date/time when the entity was created, given in GMT (Greenwich Mean Time)",
       "required": [
@@ -7337,7 +7337,7 @@
         "$ref": "#/x-mock_json/persons/values/0/addresses/values/0/date_time_created"
       }
     },
-    "date_time_inactivated": {
+    "dateTimeInactivated": {
       "type": "object",
       "description": "The date/time the group or group membership was de-activated",
       "required": [
@@ -7361,7 +7361,7 @@
         "$ref": "#/x-mock_json/persons/values/0/group_membership_events/values/0/date_time_inactivated"
       }
     },
-    "date_time_revoked": {
+    "dateTimeRevoked": {
       "type": "object",
       "required": [
         "api_type"
@@ -7384,7 +7384,7 @@
         "$ref": "#/x-mock_json/persons/values/0/my_delegators/values/0/date_time_revoked"
       }
     },
-    "date_time_updated": {
+    "dateTimeUpdated": {
       "type": "object",
       "description": "The most recent date/time updated, given in GMT (Greenwich Mean Time)",
       "required": [
@@ -7410,7 +7410,7 @@
         "$ref": "#/x-mock_json/persons/values/0/addresses/values/0/date_time_updated"
       }
     },
-    "delegated_operation_performed_post": {
+    "delegatedOperationPerformedPost": {
       "type": "object",
       "properties": {
         "operation_performed_id": {
@@ -7490,7 +7490,7 @@
         "$ref": "#/x-mock_json/persons/values/0/employee_summaries/department"
       }
     },
-    "effective_date": {
+    "effectiveDate": {
       "type": "object",
       "description": "The date the permissions become (or became) active",
       "required": [
@@ -7514,7 +7514,7 @@
         "$ref": "#/x-mock_json/persons/values/0/group_membership_events/values/0/effective_date"
       }
     },
-    "email_address": {
+    "emailAddress": {
       "type": "object",
       "properties": {
         "links": {
@@ -7605,10 +7605,10 @@
           }
         },
         "metadata": {
-          "$ref": "#/definitions/simple_metadata"
+          "$ref": "#/definitions/simpleMetadata"
         },
         "byu_id": {
-          "$ref": "#/definitions/byu_id"
+          "$ref": "#/definitions/byuId"
         },
         "email_address_type": {
           "type": "object",
@@ -7643,16 +7643,16 @@
           }
         },
         "date_time_updated": {
-          "$ref": "#/definitions/date_time_updated"
+          "$ref": "#/definitions/dateTimeUpdated"
         },
         "updated_by_id": {
-          "$ref": "#/definitions/updated_by_id"
+          "$ref": "#/definitions/updatedById"
         },
         "date_time_created": {
-          "$ref": "#/definitions/date_time_created"
+          "$ref": "#/definitions/dateTimeCreated"
         },
         "created_by_id": {
-          "$ref": "#/definitions/created_by_id"
+          "$ref": "#/definitions/createdById"
         },
         "email_address": {
           "description": "The email address",
@@ -7684,11 +7684,11 @@
           "$ref": "#/definitions/unlisted"
         },
         "verified_flag": {
-          "$ref": "#/definitions/verified_flag"
+          "$ref": "#/definitions/verifiedFlag"
         }
       }
     },
-    "email_addresses": {
+    "emailAddresses": {
       "description": "A collection of email addresses",
       "type": "object",
       "required": [
@@ -7729,17 +7729,17 @@
           }
         },
         "metadata": {
-          "$ref": "#/definitions/sub_level_metadata"
+          "$ref": "#/definitions/subLevelMetadata"
         },
         "values": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/email_address"
+            "$ref": "#/definitions/emailAddress"
           }
         }
       }
     },
-    "email_alias": {
+    "emailAlias": {
       "type": "object",
       "properties": {
         "links": {
@@ -7830,10 +7830,10 @@
           }
         },
         "metadata": {
-          "$ref": "#/definitions/simple_metadata"
+          "$ref": "#/definitions/simpleMetadata"
         },
         "byu_id": {
-          "$ref": "#/definitions/byu_id"
+          "$ref": "#/definitions/byuId"
         },
         "email_alias": {
           "description": "The email address",
@@ -7896,16 +7896,16 @@
           }
         },
         "date_time_updated": {
-          "$ref": "#/definitions/date_time_updated"
+          "$ref": "#/definitions/dateTimeUpdated"
         },
         "updated_by_id": {
-          "$ref": "#/definitions/updated_by_id"
+          "$ref": "#/definitions/updatedById"
         },
         "date_time_created": {
-          "$ref": "#/definitions/date_time_created"
+          "$ref": "#/definitions/dateTimeCreated"
         },
         "created_by_id": {
-          "$ref": "#/definitions/created_by_id"
+          "$ref": "#/definitions/createdById"
         },
         "alias_domain": {
           "type": "object",
@@ -7944,7 +7944,7 @@
         }
       }
     },
-    "email_alias_put": {
+    "emailAliasPut": {
       "type": "object",
       "properties": {
         "date_time_updated": {
@@ -7981,7 +7981,7 @@
         "$ref": "#/x-mock_json/email_alias_put"
       }
     },
-    "email_aliases": {
+    "emailAliases": {
       "description": "A collection of email addresses",
       "type": "object",
       "required": [
@@ -8022,17 +8022,17 @@
           }
         },
         "metadata": {
-          "$ref": "#/definitions/sub_level_metadata"
+          "$ref": "#/definitions/subLevelMetadata"
         },
         "values": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/email_alias"
+            "$ref": "#/definitions/emailAlias"
           }
         }
       }
     },
-    "email_put": {
+    "emailPut": {
       "type": "object",
       "required": [
         "email_address"
@@ -8065,7 +8065,7 @@
         "$ref": "#/x-mock_json/email_put"
       }
     },
-    "employee_summaries": {
+    "employeeSummaries": {
       "type": "object",
       "description": "Employee summaries for a person",
       "properties": {
@@ -8103,19 +8103,19 @@
           }
         },
         "metadata": {
-          "$ref": "#/definitions/simple_metadata"
+          "$ref": "#/definitions/simpleMetadata"
         },
         "byu_id": {
-          "$ref": "#/definitions/byu_id"
+          "$ref": "#/definitions/byuId"
         },
         "employee_type": {
-          "$ref": "#/definitions/employee_type"
+          "$ref": "#/definitions/employeeType"
         },
         "department": {
           "$ref": "#/definitions/department"
         },
         "job_title": {
-          "$ref": "#/definitions/job_title"
+          "$ref": "#/definitions/jobTitle"
         },
         "hire_date": {
           "type": "object",
@@ -8169,7 +8169,7 @@
         }
       }
     },
-    "employee_type": {
+    "employeeType": {
       "type": "object",
       "description": "The employee type, validated through the meta/employee_type service",
       "properties": {
@@ -8200,14 +8200,14 @@
         "$ref": "#/x-mock_json/persons/values/0/employee_summaries/employee_type"
       }
     },
-    "error_response": {
+    "errorResponse": {
       "type": "object",
       "required": [
         "metadata"
       ],
       "properties": {
         "metadata": {
-          "$ref": "#/definitions/simple_metadata"
+          "$ref": "#/definitions/simpleMetadata"
         }
       }
     },
@@ -8252,7 +8252,7 @@
           }
         },
         "metadata": {
-          "$ref": "#/definitions/sub_level_metadata"
+          "$ref": "#/definitions/subLevelMetadata"
         },
         "values": {
           "type": "array",
@@ -8353,7 +8353,7 @@
           }
         },
         "metadata": {
-          "$ref": "#/definitions/simple_metadata"
+          "$ref": "#/definitions/simpleMetadata"
         },
         "ethnicity_code": {
           "type": "object",
@@ -8405,7 +8405,7 @@
           }
         },
         "primary_flag": {
-          "$ref": "#/definitions/primary_flag"
+          "$ref": "#/definitions/primaryFlag"
         },
         "active": {
           "type": "object",
@@ -8432,7 +8432,7 @@
         }
       }
     },
-    "ethnicity_put": {
+    "ethnicityPut": {
       "type": "object",
       "required": [
         "primary_flag"
@@ -8455,7 +8455,7 @@
         "$ref": "#/x-mock_json/ethnicity_put"
       }
     },
-    "expiration_date": {
+    "expirationDate": {
       "type": "object",
       "required": [
         "api_type"
@@ -8480,7 +8480,7 @@
         "$ref": "#/x-mock_json/persons/values/0/credentials/values/0/expiration_date"
       }
     },
-    "family_phone": {
+    "familyPhone": {
       "type": "object",
       "properties": {
         "links": {
@@ -8571,10 +8571,10 @@
           }
         },
         "metadata": {
-          "$ref": "#/definitions/sub_level_metadata"
+          "$ref": "#/definitions/subLevelMetadata"
         },
         "byu_id": {
-          "$ref": "#/definitions/byu_id"
+          "$ref": "#/definitions/byuId"
         },
         "phone_type": {
           "type": "object",
@@ -8608,31 +8608,31 @@
           }
         },
         "lookup_number": {
-          "$ref": "#/definitions/lookup_number"
+          "$ref": "#/definitions/lookupNumber"
         },
         "date_time_updated": {
-          "$ref": "#/definitions/date_time_updated"
+          "$ref": "#/definitions/dateTimeUpdated"
         },
         "updated_by_id": {
-          "$ref": "#/definitions/updated_by_id"
+          "$ref": "#/definitions/updatedById"
         },
         "date_time_created": {
-          "$ref": "#/definitions/date_time_created"
+          "$ref": "#/definitions/dateTimeCreated"
         },
         "created_by_id": {
-          "$ref": "#/definitions/created_by_id"
+          "$ref": "#/definitions/createdById"
         },
         "phone_number": {
-          "$ref": "#/definitions/phone_number"
+          "$ref": "#/definitions/phoneNumber"
         },
         "country_code": {
-          "$ref": "#/definitions/country_code"
+          "$ref": "#/definitions/countryCode"
         },
         "cell_flag": {
-          "$ref": "#/definitions/cell_flag"
+          "$ref": "#/definitions/cellFlag"
         },
         "texts_okay": {
-          "$ref": "#/definitions/texts_okay"
+          "$ref": "#/definitions/textsOkay"
         },
         "preferred_language_code": {
           "type": "object",
@@ -8695,7 +8695,7 @@
         }
       }
     },
-    "family_phone_put": {
+    "familyPhonePut": {
       "type": "object",
       "required": [
         "country_code",
@@ -8761,7 +8761,7 @@
         "$ref": "#/x-mock_json/family_phone_put"
       }
     },
-    "family_phones": {
+    "familyPhones": {
       "description": "A collection of family phones",
       "type": "object",
       "required": [
@@ -8802,17 +8802,17 @@
           }
         },
         "metadata": {
-          "$ref": "#/definitions/sub_level_metadata"
+          "$ref": "#/definitions/subLevelMetadata"
         },
         "values": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/family_phone"
+            "$ref": "#/definitions/familyPhone"
           }
         }
       }
     },
-    "government_record_put": {
+    "governmentRecordPut": {
       "description": "Basic person information to be updated",
       "type": "object",
       "properties": {
@@ -8871,7 +8871,7 @@
         "$ref": "#/x-mock_json/government_record_put"
       }
     },
-    "government_records": {
+    "governmentRecords": {
       "description": "Basic person information",
       "type": "object",
       "properties": {
@@ -8936,25 +8936,25 @@
           }
         },
         "metadata": {
-          "$ref": "#/definitions/simple_metadata"
+          "$ref": "#/definitions/simpleMetadata"
         },
         "byu_id": {
-          "$ref": "#/definitions/byu_id"
+          "$ref": "#/definitions/byuId"
         },
         "net_id": {
-          "$ref": "#/definitions/net_id"
+          "$ref": "#/definitions/netId"
         },
         "date_time_updated": {
-          "$ref": "#/definitions/date_time_updated"
+          "$ref": "#/definitions/dateTimeUpdated"
         },
         "updated_by_id": {
-          "$ref": "#/definitions/updated_by_id"
+          "$ref": "#/definitions/updatedById"
         },
         "date_time_created": {
-          "$ref": "#/definitions/date_time_created"
+          "$ref": "#/definitions/dateTimeCreated"
         },
         "created_by_id": {
-          "$ref": "#/definitions/created_by_id"
+          "$ref": "#/definitions/createdById"
         },
         "citizenship_country_code": {
           "type": "object",
@@ -9149,7 +9149,7 @@
         }
       }
     },
-    "group_administered": {
+    "groupAdministered": {
       "type": "object",
       "properties": {
         "links": {
@@ -9186,47 +9186,47 @@
           }
         },
         "metadata": {
-          "$ref": "#/definitions/simple_metadata"
+          "$ref": "#/definitions/simpleMetadata"
         },
         "group_id": {
-          "$ref": "#/definitions/group_id"
+          "$ref": "#/definitions/groupId"
         },
         "group_type": {
-          "$ref": "#/definitions/group_type"
+          "$ref": "#/definitions/groupType"
         },
         "created_by_id": {
-          "$ref": "#/definitions/created_by_id"
+          "$ref": "#/definitions/createdById"
         },
         "effective_date": {
-          "$ref": "#/definitions/effective_date"
+          "$ref": "#/definitions/effectiveDate"
         },
         "expiration_date": {
-          "$ref": "#/definitions/expiration_date"
+          "$ref": "#/definitions/expirationDate"
         },
         "group_description": {
-          "$ref": "#/definitions/group_description"
+          "$ref": "#/definitions/groupDescription"
         },
         "date_time_inactivated": {
-          "$ref": "#/definitions/date_time_inactivated"
+          "$ref": "#/definitions/dateTimeInactivated"
         },
         "inactivated_by_id": {
-          "$ref": "#/definitions/inactivated_by_id"
+          "$ref": "#/definitions/inactivatedById"
         },
         "byu_id": {
-          "$ref": "#/definitions/byu_id"
+          "$ref": "#/definitions/byuId"
         },
         "job_title": {
-          "$ref": "#/definitions/job_title"
+          "$ref": "#/definitions/jobTitle"
         },
         "department": {
           "$ref": "#/definitions/department"
         },
         "employee_type": {
-          "$ref": "#/definitions/employee_type"
+          "$ref": "#/definitions/employeeType"
         }
       }
     },
-    "group_administered_put": {
+    "groupAdministeredPut": {
       "type": "object",
       "required": [
         "owner_flag"
@@ -9241,7 +9241,7 @@
         "$ref": "#/x-mock_json/group_administered_put"
       }
     },
-    "group_description": {
+    "groupDescription": {
       "type": "object",
       "description": "Description of the group",
       "required": [
@@ -9266,7 +9266,7 @@
         "$ref": "#/x-mock_json/persons/values/0/group_membership_events/values/0/group_description"
       }
     },
-    "group_id": {
+    "groupId": {
       "type": "object",
       "description": "The ID created for the group",
       "required": [
@@ -9302,7 +9302,7 @@
         "$ref": "#/x-mock_json/persons/values/0/group_membership_events/values/0/group_id"
       }
     },
-    "group_membership": {
+    "groupMembership": {
       "type": "object",
       "properties": {
         "links": {
@@ -9339,29 +9339,29 @@
           }
         },
         "metadata": {
-          "$ref": "#/definitions/simple_metadata"
+          "$ref": "#/definitions/simpleMetadata"
         },
         "group_id": {
-          "$ref": "#/definitions/group_id"
+          "$ref": "#/definitions/groupId"
         },
         "group_type": {
-          "$ref": "#/definitions/group_type"
+          "$ref": "#/definitions/groupType"
         },
         "byu_id": {
-          "$ref": "#/definitions/byu_id"
+          "$ref": "#/definitions/byuId"
         },
         "job_title": {
-          "$ref": "#/definitions/job_title"
+          "$ref": "#/definitions/jobTitle"
         },
         "department": {
           "$ref": "#/definitions/department"
         },
         "employee_type": {
-          "$ref": "#/definitions/employee_type"
+          "$ref": "#/definitions/employeeType"
         }
       }
     },
-    "group_membership_event": {
+    "groupMembershipEvent": {
       "type": "object",
       "properties": {
         "links": {
@@ -9398,7 +9398,7 @@
           }
         },
         "metadata": {
-          "$ref": "#/definitions/simple_metadata"
+          "$ref": "#/definitions/simpleMetadata"
         },
         "event_id": {
           "type": "object",
@@ -9425,10 +9425,10 @@
           }
         },
         "group_id": {
-          "$ref": "#/definitions/group_id"
+          "$ref": "#/definitions/groupId"
         },
         "group_type": {
-          "$ref": "#/definitions/group_type"
+          "$ref": "#/definitions/groupType"
         },
         "granted_by_id": {
           "type": "object",
@@ -9468,35 +9468,35 @@
           }
         },
         "effective_date": {
-          "$ref": "#/definitions/effective_date"
+          "$ref": "#/definitions/effectiveDate"
         },
         "expiration_date": {
-          "$ref": "#/definitions/expiration_date"
+          "$ref": "#/definitions/expirationDate"
         },
         "group_description": {
-          "$ref": "#/definitions/group_description"
+          "$ref": "#/definitions/groupDescription"
         },
         "date_time_inactivated": {
-          "$ref": "#/definitions/date_time_inactivated"
+          "$ref": "#/definitions/dateTimeInactivated"
         },
         "inactivated_by_id": {
-          "$ref": "#/definitions/inactivated_by_id"
+          "$ref": "#/definitions/inactivatedById"
         },
         "byu_id": {
-          "$ref": "#/definitions/byu_id"
+          "$ref": "#/definitions/byuId"
         },
         "job_title": {
-          "$ref": "#/definitions/job_title"
+          "$ref": "#/definitions/jobTitle"
         },
         "department": {
           "$ref": "#/definitions/department"
         },
         "employee_type": {
-          "$ref": "#/definitions/employee_type"
+          "$ref": "#/definitions/employeeType"
         }
       }
     },
-    "group_membership_event_put": {
+    "groupMembershipEventPut": {
       "type": "object",
       "properties": {
         "group_type": {
@@ -9540,7 +9540,7 @@
         "$ref": "#/x-mock_json/group_membership_event_put"
       }
     },
-    "group_membership_events": {
+    "groupMembershipEvents": {
       "description": "The group event history for the specified person/group",
       "type": "object",
       "required": [
@@ -9581,17 +9581,17 @@
           }
         },
         "metadata": {
-          "$ref": "#/definitions/sub_level_metadata"
+          "$ref": "#/definitions/subLevelMetadata"
         },
         "values": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/group_membership_event"
+            "$ref": "#/definitions/groupMembershipEvent"
           }
         }
       }
     },
-    "group_memberships": {
+    "groupMemberships": {
       "description": "A person's group memberships",
       "type": "object",
       "required": [
@@ -9632,17 +9632,17 @@
           }
         },
         "metadata": {
-          "$ref": "#/definitions/sub_level_metadata"
+          "$ref": "#/definitions/subLevelMetadata"
         },
         "values": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/group_membership"
+            "$ref": "#/definitions/groupMembership"
           }
         }
       }
     },
-    "group_type": {
+    "groupType": {
       "type": "object",
       "description": "The type of group -- A(ctive), M(anual), or I(mplied)",
       "required": [
@@ -9671,7 +9671,7 @@
         "$ref": "#/x-mock_json/persons/values/0/group_membership_events/values/0/group_type"
       }
     },
-    "groups_administered": {
+    "groupsAdministered": {
       "description": "The groups a person administers from group_administrator table",
       "type": "object",
       "required": [
@@ -9712,17 +9712,17 @@
           }
         },
         "metadata": {
-          "$ref": "#/definitions/sub_level_metadata"
+          "$ref": "#/definitions/subLevelMetadata"
         },
         "values": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/group_administered"
+            "$ref": "#/definitions/groupAdministered"
           }
         }
       }
     },
-    "id_cards": {
+    "idCards": {
       "description": "ID Card information belonging to a person",
       "type": "object",
       "properties": {
@@ -9814,10 +9814,10 @@
           }
         },
         "byu_id": {
-          "$ref": "#/definitions/byu_id"
+          "$ref": "#/definitions/byuId"
         },
         "expiration_date": {
-          "$ref": "#/definitions/expiration_date"
+          "$ref": "#/definitions/expirationDate"
         },
         "site_id": {
           "type": "object",
@@ -9968,16 +9968,16 @@
           }
         },
         "date_time_updated": {
-          "$ref": "#/definitions/date_time_updated"
+          "$ref": "#/definitions/dateTimeUpdated"
         },
         "updated_by_id": {
-          "$ref": "#/definitions/updated_by_id"
+          "$ref": "#/definitions/updatedById"
         },
         "date_time_created": {
-          "$ref": "#/definitions/date_time_created"
+          "$ref": "#/definitions/dateTimeCreated"
         },
         "created_by_id": {
-          "$ref": "#/definitions/created_by_id"
+          "$ref": "#/definitions/createdById"
         },
         "use_preferred_name_on_id_card": {
           "type": "object",
@@ -10005,7 +10005,7 @@
         }
       }
     },
-    "id_cards_put": {
+    "idCardsPut": {
       "description": "ID Card information belonging to a person",
       "type": "object",
       "required": [
@@ -10110,7 +10110,7 @@
         "use_preferred_name_on_id_card": true
       }
     },
-    "inactivated_by_id": {
+    "inactivatedById": {
       "description": "The BYU ID of the person or process that deactivated the group or group membership",
       "type": "object",
       "required": [
@@ -10140,7 +10140,7 @@
         "$ref": "#/x-mock_json/persons/values/0/group_membership_events/values/0/inactivated_by_id"
       }
     },
-    "job_title": {
+    "jobTitle": {
       "description": "The person's job title",
       "type": "object",
       "required": [
@@ -10265,10 +10265,10 @@
           }
         },
         "metadata": {
-          "$ref": "#/definitions/simple_metadata"
+          "$ref": "#/definitions/simpleMetadata"
         },
         "byu_id": {
-          "$ref": "#/definitions/byu_id"
+          "$ref": "#/definitions/byuId"
         },
         "language_code": {
           "type": "object",
@@ -10310,16 +10310,16 @@
           }
         },
         "date_time_updated": {
-          "$ref": "#/definitions/date_time_updated"
+          "$ref": "#/definitions/dateTimeUpdated"
         },
         "updated_by_id": {
-          "$ref": "#/definitions/updated_by_id"
+          "$ref": "#/definitions/updatedById"
         },
         "date_time_created": {
-          "$ref": "#/definitions/date_time_created"
+          "$ref": "#/definitions/dateTimeCreated"
         },
         "created_by_id": {
-          "$ref": "#/definitions/created_by_id"
+          "$ref": "#/definitions/createdById"
         },
         "speak_proficiency": {
           "type": "object",
@@ -10454,7 +10454,7 @@
         }
       }
     },
-    "language_put": {
+    "languagePut": {
       "type": "object",
       "required": [
         "speak_proficiency",
@@ -10572,7 +10572,7 @@
           }
         },
         "metadata": {
-          "$ref": "#/definitions/sub_level_metadata"
+          "$ref": "#/definitions/subLevelMetadata"
         },
         "values": {
           "type": "array",
@@ -10582,7 +10582,7 @@
         }
       }
     },
-    "lookup_number": {
+    "lookupNumber": {
       "type": "object",
       "description": "The phone number, numbers only",
       "required": [
@@ -10616,7 +10616,7 @@
         "$ref": "#/x-mock_json/persons/values/0/phones/values/0/lookup_number"
       }
     },
-    "my_delegator": {
+    "myDelegator": {
       "type": "object",
       "properties": {
         "links": {
@@ -10680,13 +10680,13 @@
           }
         },
         "metadata": {
-          "$ref": "#/definitions/simple_metadata"
+          "$ref": "#/definitions/simpleMetadata"
         },
         "access_delegation_id": {
-          "$ref": "#/definitions/access_delegation_id"
+          "$ref": "#/definitions/accessDelegationId"
         },
         "byu_id": {
-          "$ref": "#/definitions/byu_id"
+          "$ref": "#/definitions/byuId"
         },
         "delegator_id": {
           "type": "object",
@@ -10915,44 +10915,44 @@
           }
         },
         "access_type": {
-          "$ref": "#/definitions/access_type"
+          "$ref": "#/definitions/accessType"
         },
         "categories": {
           "$ref": "#/definitions/categories"
         },
         "date_time_accepted": {
-          "$ref": "#/definitions/date_time_accepted"
+          "$ref": "#/definitions/dateTimeAccepted"
         },
         "date_time_revoked": {
-          "$ref": "#/definitions/date_time_revoked"
+          "$ref": "#/definitions/dateTimeRevoked"
         },
         "revoked_by_id": {
-          "$ref": "#/definitions/revoked_by_id"
+          "$ref": "#/definitions/revokedById"
         },
         "expiration_date": {
-          "$ref": "#/definitions/expiration_date"
+          "$ref": "#/definitions/expirationDate"
         },
         "date_time_updated": {
-          "$ref": "#/definitions/date_time_updated"
+          "$ref": "#/definitions/dateTimeUpdated"
         },
         "updated_by_id": {
-          "$ref": "#/definitions/updated_by_id"
+          "$ref": "#/definitions/updatedById"
         },
         "date_time_created": {
-          "$ref": "#/definitions/date_time_created"
+          "$ref": "#/definitions/dateTimeCreated"
         },
         "created_by_id": {
-          "$ref": "#/definitions/created_by_id"
+          "$ref": "#/definitions/createdById"
         },
         "operations_performed": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/operation_performed"
+            "$ref": "#/definitions/operationPerformed"
           }
         }
       }
     },
-    "my_delegator_put": {
+    "myDelegatorPut": {
       "type": "object",
       "required": [
         "access_type",
@@ -11014,7 +11014,7 @@
         "$ref": "#/x-mock_json/my_delegator_put"
       }
     },
-    "my_delegators": {
+    "myDelegators": {
       "description": "Collection of persons who have been delegator access to another person's records",
       "type": "object",
       "required": [
@@ -11055,17 +11055,17 @@
           }
         },
         "metadata": {
-          "$ref": "#/definitions/sub_level_metadata"
+          "$ref": "#/definitions/subLevelMetadata"
         },
         "values": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/my_delegator"
+            "$ref": "#/definitions/myDelegator"
           }
         }
       }
     },
-    "my_guest": {
+    "myGuest": {
       "type": "object",
       "properties": {
         "links": {
@@ -11129,13 +11129,13 @@
           }
         },
         "metadata": {
-          "$ref": "#/definitions/simple_metadata"
+          "$ref": "#/definitions/simpleMetadata"
         },
         "byu_id": {
-          "$ref": "#/definitions/byu_id"
+          "$ref": "#/definitions/byuId"
         },
         "access_delegation_id": {
-          "$ref": "#/definitions/access_delegation_id"
+          "$ref": "#/definitions/accessDelegationId"
         },
         "guest_id": {
           "type": "object",
@@ -11368,44 +11368,44 @@
           }
         },
         "access_type": {
-          "$ref": "#/definitions/access_type"
+          "$ref": "#/definitions/accessType"
         },
         "categories": {
           "$ref": "#/definitions/categories"
         },
         "date_time_created": {
-          "$ref": "#/definitions/date_time_created"
+          "$ref": "#/definitions/dateTimeCreated"
         },
         "created_by_id": {
-          "$ref": "#/definitions/created_by_id"
+          "$ref": "#/definitions/createdById"
         },
         "date_time_accepted": {
-          "$ref": "#/definitions/date_time_accepted"
+          "$ref": "#/definitions/dateTimeAccepted"
         },
         "date_time_updated": {
-          "$ref": "#/definitions/date_time_updated"
+          "$ref": "#/definitions/dateTimeUpdated"
         },
         "updated_by_id": {
-          "$ref": "#/definitions/updated_by_id"
+          "$ref": "#/definitions/updatedById"
         },
         "date_time_revoked": {
-          "$ref": "#/definitions/date_time_revoked"
+          "$ref": "#/definitions/dateTimeRevoked"
         },
         "revoked_by_id": {
-          "$ref": "#/definitions/revoked_by_id"
+          "$ref": "#/definitions/revokedById"
         },
         "expiration_date": {
-          "$ref": "#/definitions/expiration_date"
+          "$ref": "#/definitions/expirationDate"
         },
         "operations_performed": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/operation_performed"
+            "$ref": "#/definitions/operationPerformed"
           }
         }
       }
     },
-    "my_guest_put": {
+    "myGuestPut": {
       "type": "object",
       "required": [
         "guest_id",
@@ -11464,7 +11464,7 @@
         "$ref": "#/x-mock_json/my_guest_put"
       }
     },
-    "my_guests": {
+    "myGuests": {
       "description": "Collection of persons who have been delegator access to another person's records",
       "type": "object",
       "required": [
@@ -11532,17 +11532,17 @@
           }
         },
         "metadata": {
-          "$ref": "#/definitions/sub_level_metadata"
+          "$ref": "#/definitions/subLevelMetadata"
         },
         "values": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/my_guest"
+            "$ref": "#/definitions/myGuest"
           }
         }
       }
     },
-    "net_id": {
+    "netId": {
       "type": "object",
       "description": "The user name to used for authentication to BYU web applications",
       "required": [
@@ -11574,7 +11574,7 @@
         "$ref": "#/x-mock_json/persons/values/0/basic/net_id"
       }
     },
-    "operation_performed": {
+    "operationPerformed": {
       "type": "object",
       "properties": {
         "operation_performed_id": {
@@ -11716,52 +11716,52 @@
           "$ref": "#/definitions/addresses"
         },
         "alias_domains": {
-          "$ref": "#/definitions/alias_domains"
+          "$ref": "#/definitions/aliasDomains"
         },
         "credentials": {
           "$ref": "#/definitions/credentials"
         },
         "email_addresses": {
-          "$ref": "#/definitions/email_addresses"
+          "$ref": "#/definitions/emailAddresses"
         },
         "email_aliases": {
-          "$ref": "#/definitions/email_aliases"
+          "$ref": "#/definitions/emailAliases"
         },
         "employee_summaries": {
-          "$ref": "#/definitions/employee_summaries"
+          "$ref": "#/definitions/employeeSummaries"
         },
         "ethnicities": {
           "$ref": "#/definitions/ethnicities"
         },
         "family_phones": {
-          "$ref": "#/definitions/family_phones"
+          "$ref": "#/definitions/familyPhones"
         },
         "government_records": {
-          "$ref": "#/definitions/government_records"
+          "$ref": "#/definitions/governmentRecords"
         },
         "group_membership_events": {
-          "$ref": "#/definitions/group_membership_events"
+          "$ref": "#/definitions/groupMembershipEvents"
         },
         "group_memberships": {
-          "$ref": "#/definitions/group_memberships"
+          "$ref": "#/definitions/groupMemberships"
         },
         "groups_administered": {
-          "$ref": "#/definitions/groups_administered"
+          "$ref": "#/definitions/groupsAdministered"
         },
         "id_cards": {
-          "$ref": "#/definitions/id_cards"
+          "$ref": "#/definitions/idCards"
         },
         "languages": {
           "$ref": "#/definitions/languages"
         },
         "my_delegators": {
-          "$ref": "#/definitions/my_delegators"
+          "$ref": "#/definitions/myDelegators"
         },
         "my_guests": {
-          "$ref": "#/definitions/my_guests"
+          "$ref": "#/definitions/myGuests"
         },
         "personal_records": {
-          "$ref": "#/definitions/personal_records"
+          "$ref": "#/definitions/personalRecords"
         },
         "phones": {
           "$ref": "#/definitions/phones"
@@ -11770,11 +11770,11 @@
           "$ref": "#/definitions/relationships"
         },
         "student_summaries": {
-          "$ref": "#/definitions/student_summaries"
+          "$ref": "#/definitions/studentSummaries"
         }
       }
     },
-    "person_post": {
+    "personPost": {
       "description": "Person information to create",
       "type": "object",
       "required": [
@@ -11963,7 +11963,7 @@
         "$ref": "#/x-mock_json/person_post"
       }
     },
-    "personal_record_put": {
+    "personalRecordPut": {
       "description": "Basic person information to be updated",
       "type": "object",
       "required": [
@@ -12023,7 +12023,7 @@
         "$ref": "#/x-mock_json/personal_record_put"
       }
     },
-    "personal_records": {
+    "personalRecords": {
       "description": "Basic person information",
       "type": "object",
       "required": [
@@ -12091,25 +12091,25 @@
           }
         },
         "metadata": {
-          "$ref": "#/definitions/simple_metadata"
+          "$ref": "#/definitions/simpleMetadata"
         },
         "byu_id": {
-          "$ref": "#/definitions/byu_id"
+          "$ref": "#/definitions/byuId"
         },
         "net_id": {
-          "$ref": "#/definitions/net_id"
+          "$ref": "#/definitions/netId"
         },
         "date_time_updated": {
-          "$ref": "#/definitions/date_time_updated"
+          "$ref": "#/definitions/dateTimeUpdated"
         },
         "updated_by_id": {
-          "$ref": "#/definitions/updated_by_id"
+          "$ref": "#/definitions/updatedById"
         },
         "date_time_created": {
-          "$ref": "#/definitions/date_time_created"
+          "$ref": "#/definitions/dateTimeCreated"
         },
         "created_by_id": {
-          "$ref": "#/definitions/created_by_id"
+          "$ref": "#/definitions/createdById"
         },
         "date_of_birth": {
           "type": "object",
@@ -12580,1227 +12580,6 @@
           }
         },
         "metadata": {
-          "$ref": "#/definitions/top_level_metadata"
-        },
-        "values": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/person"
-          },
-          "x-variable": "persons_values"
-        }
-      }
-    },
-    "phone": {
-      "type": "object",
-      "properties": {
-        "links": {
-          "description": "Hypermedia links for a single family phone",
-          "type": "object",
-          "properties": {
-            "phones.info": {
-              "description": "Hypermedia links format",
-              "type": "object",
-              "required": [
-                "rel",
-                "href",
-                "method"
-              ],
-              "properties": {
-                "rel": {
-                  "type": "string",
-                  "default": "self"
-                },
-                "href": {
-                  "type": "string",
-                  "format": "uri",
-                  "default": "https://api.byu.edu/byuapi/persons/v1/:byu_id/phones/:lookup_number"
-                },
-                "method": {
-                  "type": "string",
-                  "default": "GET",
-                  "enum": [
-                    "GET"
-                  ]
-                }
-              }
-            },
-            "phones.modify": {
-              "description": "Hypermedia links format",
-              "type": "object",
-              "required": [
-                "rel",
-                "href",
-                "method"
-              ],
-              "properties": {
-                "rel": {
-                  "type": "string",
-                  "default": "self"
-                },
-                "href": {
-                  "type": "string",
-                  "format": "uri",
-                  "default": "https://api.byu.edu/byuapi/persons/v1/:byu_id/phones/:lookup_number"
-                },
-                "method": {
-                  "type": "string",
-                  "default": "PUT",
-                  "enum": [
-                    "PUT"
-                  ]
-                }
-              }
-            },
-            "phones.delete": {
-              "description": "Hypermedia links format",
-              "type": "object",
-              "required": [
-                "rel",
-                "href",
-                "method"
-              ],
-              "properties": {
-                "rel": {
-                  "type": "string",
-                  "default": "self"
-                },
-                "href": {
-                  "type": "string",
-                  "format": "uri",
-                  "default": "https://api.byu.edu/byuapi/persons/v1/:byu_id/phones/:lookup_number"
-                },
-                "method": {
-                  "type": "string",
-                  "default": "DELETE",
-                  "enum": [
-                    "DELETE"
-                  ]
-                }
-              }
-            }
-          }
-        },
-        "metadata": {
-          "$ref": "#/definitions/simple_metadata"
-        },
-        "byu_id": {
-          "$ref": "#/definitions/byu_id"
-        },
-        "lookup_number": {
-          "$ref": "#/definitions/lookup_number"
-        },
-        "date_time_updated": {
-          "$ref": "#/definitions/date_time_updated"
-        },
-        "updated_by_id": {
-          "$ref": "#/definitions/updated_by_id"
-        },
-        "date_time_created": {
-          "$ref": "#/definitions/date_time_created"
-        },
-        "created_by_id": {
-          "$ref": "#/definitions/created_by_id"
-        },
-        "country_number": {
-          "type": "object",
-          "description": "The country code number",
-          "required": [
-            "value",
-            "api_type"
-          ],
-          "properties": {
-            "values": {
-              "type": "string",
-              "pattern": "^(|[0-9]+)$",
-              "default": "",
-              "x-variable": "country_number"
-            },
-            "api_type": {
-              "type": "string",
-              "default": "related",
-              "enum": [
-                "related"
-              ]
-            },
-            "related_resource": {
-              "type": "string",
-              "default": "https://api.byu.edu/meta/country_codes/v1/"
-            }
-          }
-        },
-        "phone_number": {
-          "$ref": "#/definitions/phone_number"
-        },
-        "country_code": {
-          "$ref": "#/definitions/country_code"
-        },
-        "cell_flag": {
-          "$ref": "#/definitions/cell_flag"
-        },
-        "time_code": {
-          "type": "object",
-          "description": "The time zone a person lives in",
-          "required": [
-            "value",
-            "api_type"
-          ],
-          "properties": {
-            "value": {
-              "type": "string",
-              "maxLength": 10,
-              "default": "Mountain",
-              "x-variable": "time_code"
-            },
-            "api_type": {
-              "type": "string",
-              "default": "read-only",
-              "x-variable": "api_type",
-              "enum": [
-                "read-only",
-                "modifiable"
-              ]
-            },
-            "domain": {
-              "type": "string",
-              "default": "https://api.byu.edu/byuapi/meta/time_codes/v1"
-            }
-          }
-        },
-        "texts_okay": {
-          "$ref": "#/definitions/texts_okay"
-        },
-        "unlisted": {
-          "$ref": "#/definitions/unlisted"
-        },
-        "primary_flag": {
-          "$ref": "#/definitions/primary_flag"
-        },
-        "tty": {
-          "type": "object",
-          "required": [
-            "value",
-            "api_type"
-          ],
-          "properties": {
-            "value": {
-              "type": "boolean",
-              "default": false,
-              "x-variable": "tty"
-            },
-            "api_type": {
-              "type": "string",
-              "default": "read-only",
-              "x-variable": "api_type",
-              "enum": [
-                "read-only",
-                "modifiable"
-              ]
-            }
-          }
-        },
-        "verified_flag": {
-          "$ref": "#/definitions/verified_flag"
-        },
-        "work_flag": {
-          "type": "object",
-          "required": [
-            "value",
-            "api_type"
-          ],
-          "properties": {
-            "value": {
-              "type": "boolean",
-              "default": false,
-              "x-variable": "work_flag"
-            },
-            "api_type": {
-              "type": "string",
-              "default": "read-only",
-              "x-variable": "api_type",
-              "enum": [
-                "read-only",
-                "modifiable"
-              ]
-            }
-          }
-        }
-      }
-    },
-    "phone_number": {
-      "type": "object",
-      "required": [
-        "value",
-        "api_type"
-      ],
-      "properties": {
-        "value": {
-          "type": "string",
-          "x-variable": "phone_number",
-          "maxLength": 30
-        },
-        "api_type": {
-          "type": "string",
-          "default": "read-only",
-          "x-variable": "api_type",
-          "enum": [
-            "read-only",
-            "modifiable"
-          ]
-        }
-      },
-      "example": {
-        "$ref": "#/x-mock_json/persons/values/0/phones/values/0/phone_number"
-      }
-    },
-    "phone_put": {
-      "type": "object",
-      "required": [
-        "country_code"
-      ],
-      "properties": {
-        "date_time_created": {
-          "type": "string",
-          "format": "date-time"
-        },
-        "created_by_id": {
-          "type": "string",
-          "pattern": "^( |[0-9A-Z]{1,9})$"
-        },
-        "date_time_updated": {
-          "type": "string",
-          "format": "date-time"
-        },
-        "updated_by_id": {
-          "type": "string",
-          "pattern": "^( |[0-9A-Z]{1,9})$"
-        },
-        "country_code": {
-          "type": "string",
-          "pattern": "^([?]{3}|UK|HK|EL|CW|SX|[A-Z]{3})$"
-        },
-        "phone_number": {
-          "type": "string",
-          "maxLength": 30,
-          "pattern": "^(|[0-9(+])[0-9()-./ ]{0,28}[0-9]$"
-        },
-        "cell_flag": {
-          "type": "boolean",
-          "default": false
-        },
-        "time_code": {
-          "type": "string",
-          "maxLength": 10,
-          "default": "Mountain"
-        },
-        "texts_okay": {
-          "type": "boolean",
-          "default": false
-        },
-        "unlisted": {
-          "type": "boolean",
-          "default": false
-        },
-        "primary_flag": {
-          "type": "boolean",
-          "default": false
-        },
-        "tty": {
-          "type": "boolean",
-          "default": false
-        },
-        "work_flag": {
-          "type": "boolean",
-          "default": false
-        },
-        "verified_flag": {
-          "type": "boolean",
-          "default": false
-        }
-      },
-      "example": {
-        "$ref": "#/x-mock_json/phone_put"
-      }
-    },
-    "phones": {
-      "description": "A collection of phones",
-      "type": "object",
-      "required": [
-        "values"
-      ],
-      "properties": {
-        "links": {
-          "description": "Hypermedia links for a collection of family phones",
-          "type": "object",
-          "properties": {
-            "phones.info": {
-              "description": "Hypermedia links format",
-              "type": "object",
-              "required": [
-                "rel",
-                "href",
-                "method"
-              ],
-              "properties": {
-                "rel": {
-                  "type": "string",
-                  "default": "self"
-                },
-                "href": {
-                  "type": "string",
-                  "format": "uri",
-                  "default": "https://api.byu.edu/byuapi/persons/v1/:byu_id/phones"
-                },
-                "method": {
-                  "type": "string",
-                  "default": "GET",
-                  "enum": [
-                    "GET"
-                  ]
-                }
-              }
-            }
-          }
-        },
-        "metadata": {
-          "$ref": "#/definitions/sub_level_metadata"
-        },
-        "values": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/phone"
-          }
-        }
-      }
-    },
-    "primary_flag": {
-      "type": "object",
-      "required": [
-        "value",
-        "api_type"
-      ],
-      "properties": {
-        "value": {
-          "type": "boolean",
-          "default": false,
-          "x-variable": "primary_flag"
-        },
-        "api_type": {
-          "type": "string",
-          "default": "read-only",
-          "x-variable": "api_type",
-          "enum": [
-            "read-only",
-            "modifiable"
-          ]
-        }
-      },
-      "example": {
-        "$ref": "#/x-mock_json/persons/values/0/phones/values/0/primary_flag"
-      }
-    },
-    "relationship": {
-      "type": "object",
-      "properties": {
-        "links": {
-          "description": "Hypermedia links for a single relationship",
-          "type": "object",
-          "properties": {
-            "relationships.info": {
-              "description": "Hypermedia links format",
-              "type": "object",
-              "required": [
-                "rel",
-                "href",
-                "method"
-              ],
-              "properties": {
-                "rel": {
-                  "type": "string",
-                  "default": "self"
-                },
-                "href": {
-                  "type": "string",
-                  "format": "uri",
-                  "default": "https://api.byu.edu/byuapi/persons/v1/:byu_id/relationships/:related_id"
-                },
-                "method": {
-                  "type": "string",
-                  "default": "GET",
-                  "enum": [
-                    "GET"
-                  ]
-                }
-              }
-            },
-            "relationships.modify": {
-              "description": "Hypermedia links format",
-              "type": "object",
-              "required": [
-                "rel",
-                "href",
-                "method"
-              ],
-              "properties": {
-                "rel": {
-                  "type": "string",
-                  "default": "self"
-                },
-                "href": {
-                  "type": "string",
-                  "format": "uri",
-                  "default": "https://api.byu.edu/byuapi/persons/v1/:byu_id/relationships/:related_id"
-                },
-                "method": {
-                  "type": "string",
-                  "default": "PUT",
-                  "enum": [
-                    "PUT"
-                  ]
-                }
-              }
-            },
-            "relationships.delete": {
-              "description": "Hypermedia links format",
-              "type": "object",
-              "required": [
-                "rel",
-                "href",
-                "method"
-              ],
-              "properties": {
-                "rel": {
-                  "type": "string",
-                  "default": "self"
-                },
-                "href": {
-                  "type": "string",
-                  "format": "uri",
-                  "default": "https://api.byu.edu/byuapi/persons/v1/:byu_id/relationships/:related_id"
-                },
-                "method": {
-                  "type": "string",
-                  "default": "DELETE",
-                  "enum": [
-                    "DELETE"
-                  ]
-                }
-              }
-            }
-          }
-        },
-        "metadata": {
-          "$ref": "#/definitions/simple_metadata"
-        },
-        "byu_id": {
-          "$ref": "#/definitions/byu_id"
-        },
-        "related_id": {
-          "type": "object",
-          "required": [
-            "value",
-            "api_type"
-          ],
-          "properties": {
-            "value": {
-              "type": "string",
-              "pattern": "^[0-9]{9}$"
-            },
-            "api_type": {
-              "type": "string",
-              "default": "read-only",
-              "x-variable": "api_type",
-              "enum": [
-                "read-only",
-                "modifiable"
-              ]
-            },
-            "key": {
-              "type": "boolean",
-              "default": true
-            }
-          }
-        },
-        "related_net_id": {
-          "description": "The related person's Net ID",
-          "type": "object",
-          "required": [
-            "value",
-            "api_type"
-          ],
-          "properties": {
-            "value": {
-              "type": "string",
-              "maxLength": 9,
-              "pattern": "^(|[a-z][a-z0-9]{0,8})$",
-              "x-variable": "related_net_id"
-            },
-            "api_type": {
-              "type": "string",
-              "default": "related",
-              "enum": [
-                "related"
-              ]
-            },
-            "related_resource": {
-              "type": "string",
-              "default": "https://api.byu.edu/byuapi/persons/v1/:related_id/credentials/NET_ID,:related_net_id"
-            }
-          }
-        },
-        "relationship_type": {
-          "type": "object",
-          "required": [
-            "value",
-            "api_type"
-          ],
-          "properties": {
-            "value": {
-              "type": "string",
-              "x-variable": "relationship_type",
-              "enum": [
-                "CHILD",
-                "GRANDCHILD",
-                "RESPONSIBLE_IDENTITY",
-                "PARENT",
-                "SPOUSE",
-                "GRANDPARENT",
-                "CONTACT_IDENTITY",
-                "FORMER SPOUSE"
-              ]
-            },
-            "api_type": {
-              "type": "string",
-              "default": "read-only",
-              "x-variable": "api_type",
-              "enum": [
-                "read-only",
-                "modifiable"
-              ]
-            }
-          }
-        },
-        "related_name_lnf": {
-          "description": "The related person's full name, given last-name-first",
-          "type": "object",
-          "required": [
-            "value",
-            "api_type"
-          ],
-          "properties": {
-            "value": {
-              "type": "string",
-              "x-variable": "related_name_lnf"
-            },
-            "api_type": {
-              "type": "string",
-              "default": "related",
-              "enum": [
-                "related"
-              ]
-            },
-            "related_resource": {
-              "type": "string",
-              "default": "https://api.byu.edu/byuapi/persons/v1/:related_id"
-            }
-          }
-        },
-        "related_name_fnf": {
-          "description": "The related person's full name, given first-name-first",
-          "type": "object",
-          "required": [
-            "value",
-            "api_type"
-          ],
-          "properties": {
-            "value": {
-              "type": "string",
-              "x-variable": "related_name_fnf"
-            },
-            "api_type": {
-              "type": "string",
-              "default": "related",
-              "enum": [
-                "related"
-              ]
-            },
-            "related_resource": {
-              "type": "string",
-              "default": "https://api.byu.edu/byuapi/persons/v1/:related_id"
-            }
-          }
-        },
-        "related_preferred_name": {
-          "description": "The related person's preferred, derived from the preferred_first_name and preferred_surname",
-          "type": "object",
-          "required": [
-            "value",
-            "api_type"
-          ],
-          "properties": {
-            "value": {
-              "type": "string",
-              "x-variable": "related_preferred_name"
-            },
-            "api_type": {
-              "type": "string",
-              "default": "related",
-              "enum": [
-                "related"
-              ]
-            },
-            "related_resource": {
-              "type": "string",
-              "default": "https://api.byu.edu/byuapi/persons/v1/:related_id"
-            }
-          }
-        },
-        "related_surname": {
-          "description": "The related person's surname",
-          "type": "object",
-          "required": [
-            "value",
-            "api_type"
-          ],
-          "properties": {
-            "value": {
-              "type": "string",
-              "x-variable": "related_surname"
-            },
-            "api_type": {
-              "type": "string",
-              "default": "related",
-              "enum": [
-                "related"
-              ]
-            },
-            "related_resource": {
-              "type": "string",
-              "default": "https://api.byu.edu/byuapi/persons/v1/:related_id"
-            }
-          }
-        },
-        "related_rest_of_name": {
-          "description": "The related person's full name, excluding the surname",
-          "type": "object",
-          "required": [
-            "value",
-            "api_type"
-          ],
-          "properties": {
-            "value": {
-              "type": "string",
-              "x-variable": "related_rest_of_name"
-            },
-            "api_type": {
-              "type": "string",
-              "default": "related",
-              "enum": [
-                "related"
-              ]
-            },
-            "related_resource": {
-              "type": "string",
-              "default": "https://api.byu.edu/byuapi/persons/v1/:related_id"
-            }
-          }
-        },
-        "related_preferred_surname": {
-          "description": "The related person's preferred surname",
-          "type": "object",
-          "required": [
-            "value",
-            "api_type"
-          ],
-          "properties": {
-            "value": {
-              "type": "string",
-              "x-variable": "related_preferred_surname"
-            },
-            "api_type": {
-              "type": "string",
-              "default": "related",
-              "enum": [
-                "related"
-              ]
-            },
-            "related_resource": {
-              "type": "string",
-              "default": "https://api.byu.edu/byuapi/persons/v1/:related_id"
-            }
-          }
-        },
-        "related_preferred_first_name": {
-          "description": "The related person's preferred first name",
-          "type": "object",
-          "required": [
-            "value",
-            "api_type"
-          ],
-          "properties": {
-            "value": {
-              "type": "string",
-              "x-variable": "related_preferred_first_name"
-            },
-            "api_type": {
-              "type": "string",
-              "default": "related",
-              "enum": [
-                "related"
-              ]
-            },
-            "related_resource": {
-              "type": "string",
-              "default": "https://api.byu.edu/byuapi/persons/v1/:related_id"
-            }
-          }
-        },
-        "date_time_updated": {
-          "$ref": "#/definitions/date_time_updated"
-        },
-        "updated_by_id": {
-          "$ref": "#/definitions/updated_by_id"
-        },
-        "date_time_created": {
-          "$ref": "#/definitions/date_time_created"
-        },
-        "created_by_id": {
-          "$ref": "#/definitions/created_by_id"
-        },
-        "date_time_verified": {
-          "type": "object",
-          "required": [
-            "api_type"
-          ],
-          "properties": {
-            "value": {
-              "type": "string",
-              "format": "date-time",
-              "x-variable": "date_time_verified"
-            },
-            "api_type": {
-              "type": "string",
-              "default": "system",
-              "enum": [
-                "system"
-              ]
-            }
-          }
-        },
-        "verified_by_id": {
-          "type": "object",
-          "required": [
-            "value",
-            "api_type",
-            "description"
-          ],
-          "properties": {
-            "value": {
-              "type": "string",
-              "pattern": "^[0-9]{9}$"
-            },
-            "api_type": {
-              "type": "string",
-              "default": "system",
-              "enum": [
-                "system"
-              ]
-            },
-            "description": {
-              "type": "string",
-              "x-variable": "verified_by_name",
-              "maxLength": 50
-            }
-          }
-        }
-      }
-    },
-    "relationship_put": {
-      "type": "object",
-      "required": [
-        "relationship_type"
-      ],
-      "properties": {
-        "date_time_created": {
-          "type": "string",
-          "format": "date-time"
-        },
-        "created_by_id": {
-          "type": "string",
-          "pattern": "^( |[0-9A-Z]{1,9})$"
-        },
-        "date_time_updated": {
-          "type": "string",
-          "format": "date-time"
-        },
-        "updated_by_id": {
-          "type": "string",
-          "pattern": "^( |[0-9A-Z]{1,9})$"
-        },
-        "relationship_type": {
-          "type": "string",
-          "enum": [
-            "CHILD",
-            "GRANDCHILD",
-            "RESPONSIBLE_IDENTITY",
-            "PARENT",
-            "SPOUSE",
-            "GRANDPARENT",
-            "CONTACT_IDENTITY",
-            "FORMER SPOUSE"
-          ]
-        },
-        "date_time_verified": {
-          "type": "string",
-          "format": "date-time"
-        },
-        "verified_by_id": {
-          "type": "string",
-          "default": " ",
-          "pattern": "^( |[0-9A-Z]{1,9})$"
-        }
-      },
-      "example": {
-        "date_time_created": "YYYY-MM-DDTHH24:MI:SS.FFFZ",
-        "created_by_id": "123456789",
-        "date_time_updated": "YYYY-MM-DDTHH24:MI:SS.FFFZ",
-        "updated_by_id": "123456789",
-        "relationship_type": "PARENT",
-        "date_time_verified": "YYYY-MM-DDTHH24:MI:SS.FFFZ",
-        "verified_by_id": "123456789"
-      }
-    },
-    "relationships": {
-      "description": "Collection of relationships between persons",
-      "type": "object",
-      "required": [
-        "values"
-      ],
-      "properties": {
-        "links": {
-          "description": "Hypermedia links that impact the collection",
-          "type": "object",
-          "properties": {
-            "relationships.info": {
-              "description": "Hypermedia links format",
-              "type": "object",
-              "required": [
-                "rel",
-                "href",
-                "method"
-              ],
-              "properties": {
-                "rel": {
-                  "type": "string",
-                  "default": "self"
-                },
-                "href": {
-                  "type": "string",
-                  "format": "uri",
-                  "default": "https://api.byu.edu/byuapi/persons/v1/:byu_id/relationships/:related_id"
-                },
-                "method": {
-                  "type": "string",
-                  "default": "GET",
-                  "enum": [
-                    "GET"
-                  ]
-                }
-              }
-            }
-          }
-        },
-        "metadata": {
-          "$ref": "#/definitions/sub_level_metadata"
-        },
-        "values": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/relationship"
-          }
-        }
-      }
-    },
-    "revoked_by_id": {
-      "type": "object",
-      "required": [
-        "value",
-        "api_type"
-      ],
-      "properties": {
-        "value": {
-          "type": "string",
-          "default": "",
-          "x-variable": "revoked_by_id"
-        },
-        "description": {
-          "type": "string",
-          "x-variable": "revoked_by_name",
-          "maxLength": 50
-        },
-        "api_type": {
-          "type": "string",
-          "default": "system",
-          "enum": [
-            "system"
-          ]
-        }
-      },
-      "example": {
-        "$ref": "#/x-mock_json/persons/values/0/my_delegators/values/0/revoked_by_id"
-      }
-    },
-    "simple_metadata": {
-      "type": "object",
-      "required": [
-        "validation_response"
-      ],
-      "properties": {
-        "validation_response": {
-          "$ref": "#/definitions/validation_response"
-        },
-        "validation_information": {
-          "$ref": "#/definitions/validation_information"
-        },
-        "cache": {
-          "$ref": "#/definitions/cache"
-        }
-      }
-    },
-    "student_summaries": {
-      "description": "Basic (individual) academic information for a collection of students",
-      "type": "object",
-      "properties": {
-        "links": {
-          "description": "Hypermedia links for employee summaries",
-          "type": "object",
-          "properties": {
-            "student_summaries.info": {
-              "description": "Hypermedia links format",
-              "type": "object",
-              "required": [
-                "rel",
-                "href",
-                "method"
-              ],
-              "properties": {
-                "rel": {
-                  "type": "string",
-                  "default": "self"
-                },
-                "href": {
-                  "type": "string",
-                  "format": "uri",
-                  "default": "https://api.byu.edu/byuapi/persons/v1/:byu_id/student_summaries"
-                },
-                "method": {
-                  "type": "string",
-                  "default": "GET",
-                  "enum": [
-                    "GET"
-                  ]
-                }
-              }
-            }
-          }
-        },
-        "metadata": {
-          "$ref": "#/definitions/simple_metadata"
-        },
-        "byu_id": {
-          "$ref": "#/definitions/byu_id"
-        },
-        "student_status": {
-          "type": "object",
-          "description": "The status of the student, provided by the Student Status Web Service",
-          "required": [
-            "value",
-            "api_type"
-          ],
-          "properties": {
-            "value": {
-              "type": "string",
-              "default": "Non-student",
-              "x-variable": "student_status",
-              "enum": [
-                "Doctorate Program",
-                "Masters Program",
-                "Post Baccalaureate Non Degree",
-                "Senior",
-                "Junior",
-                "Sophomore",
-                "Freshman",
-                "BGS",
-                "Audit",
-                "Concurrent Enrollment",
-                "Visiting Student",
-                "ELC",
-                "Evening School",
-                "Salt Lake Center Student",
-                "Non-student"
-              ]
-            },
-            "api_type": {
-              "type": "string",
-              "default": "related",
-              "enum": [
-                "related"
-              ]
-            },
-            "related_resource": {
-              "type": "string",
-              "default": "https://api.byu.edu/byuapi/students/v1/:byu_id"
-            }
-          }
-        },
-        "current_student": {
-          "type": "object",
-          "description": "Indicates whether the person is currently a BYU student",
-          "required": [
-            "value",
-            "api_type"
-          ],
-          "properties": {
-            "value": {
-              "type": "boolean",
-              "default": false,
-              "x-variable": "current_student"
-            },
-            "api_type": {
-              "type": "string",
-              "default": "related",
-              "enum": [
-                "related"
-              ]
-            },
-            "related_resource": {
-              "type": "string",
-              "default": "https://api.byu.edu/byuapi/students/v1/:byu_id"
-            }
-          }
-        },
-        "eligible_to_register": {
-          "type": "object",
-          "description": "Indicates whether the person is currently eligible to register",
-          "required": [
-            "value",
-            "api_type"
-          ],
-          "properties": {
-            "value": {
-              "type": "boolean",
-              "default": false,
-              "x-variable": "eligible_to_register"
-            },
-            "api_type": {
-              "type": "string",
-              "default": "related",
-              "enum": [
-                "related"
-              ]
-            },
-            "related_resource": {
-              "type": "string",
-              "default": "https://api.byu.edu/byuapi/students/v1/:byu_id"
-            }
-          }
-        }
-      }
-    },
-    "sub_level_metadata": {
-      "type": "object",
-      "required": [
-        "collection_size",
-        "page_start",
-        "page_end",
-        "page_size",
-        "default_page_size",
-        "max_page_size",
-        "validation_response"
-      ],
-      "properties": {
-        "collection_size": {
-          "type": "integer",
-          "format": "int32",
-          "minimum": 0,
-          "default": 0,
-          "x-variable": "collection_size"
-        },
-        "page_start": {
-          "type": "integer",
-          "format": "int32",
-          "minimum": 0,
-          "default": 0,
-          "x-variable": "page_start"
-        },
-        "page_end": {
-          "type": "integer",
-          "format": "int32",
-          "minimum": 0,
-          "default": 0,
-          "x-variable": "page_end"
-        },
-        "page_size": {
-          "type": "integer",
-          "format": "int32",
-          "minimum": 0,
-          "default": 0,
-          "x-variable": "page_size"
-        },
-        "default_page_size": {
-          "type": "integer",
-          "format": "int32",
-          "minimum": 1,
-          "default": 50,
-          "x-variable": "default_page_size"
-        },
-        "maximum_page_size": {
-          "type": "integer",
-          "format": "int32",
-          "minimum": 0,
-          "default": 100,
-          "x-variable": "maximum_page_size"
-        },
-        "validation_response": {
-          "$ref": "#/definitions/validation_response"
-        },
-        "validation_information": {
-          "$ref": "#/definitions/validation_information"
-        },
-        "cache": {
-          "$ref": "#/definitions/cache"
-        }
-      }
-    },
-    "texts_okay": {
-      "type": "object",
-      "required": [
-        "value",
-        "api_type"
-      ],
-      "properties": {
-        "value": {
-          "type": "boolean",
-          "x-variable": "texts_okay",
-          "default": false
-        },
-        "api_type": {
-          "type": "string",
-          "default": "read-only",
-          "x-variable": "api_type",
-          "enum": [
-            "read-only",
-            "modifiable"
-          ]
-        }
-      },
-      "example": {
-        "$ref": "#/x-mock_json/persons/values/0/phones/values/0/texts_okay"
-      }
-    },
-    "top_level_metadata": {
-      "allOf": [
-        {
           "type": "object",
           "required": [
             "field_sets_returned",
@@ -14072,13 +12851,1275 @@
                   }
                 }
               }
+            },
+            "collection_size": {
+              "type": "integer",
+              "format": "int32",
+              "minimum": 0,
+              "default": 0,
+              "x-variable": "collection_size"
+            },
+            "page_start": {
+              "type": "integer",
+              "format": "int32",
+              "minimum": 0,
+              "default": 0,
+              "x-variable": "page_start"
+            },
+            "page_end": {
+              "type": "integer",
+              "format": "int32",
+              "minimum": 0,
+              "default": 0,
+              "x-variable": "page_end"
+            },
+            "page_size": {
+              "type": "integer",
+              "format": "int32",
+              "minimum": 0,
+              "default": 0,
+              "x-variable": "page_size"
+            },
+            "default_page_size": {
+              "type": "integer",
+              "format": "int32",
+              "minimum": 1,
+              "default": 50,
+              "x-variable": "default_page_size"
+            },
+            "maximum_page_size": {
+              "type": "integer",
+              "format": "int32",
+              "minimum": 0,
+              "default": 100,
+              "x-variable": "maximum_page_size"
+            },
+            "validation_response": {
+              "$ref": "#/definitions/validationResponse"
+            },
+            "validation_information": {
+              "$ref": "#/definitions/validationInformation"
+            },
+            "cache": {
+              "$ref": "#/definitions/cache"
             }
           }
         },
-        {
-          "$ref": "#/definitions/sub_level_metadata"
+        "values": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/person"
+          },
+          "x-variable": "persons_values"
         }
-      ]
+      }
+    },
+    "phone": {
+      "type": "object",
+      "properties": {
+        "links": {
+          "description": "Hypermedia links for a single family phone",
+          "type": "object",
+          "properties": {
+            "phones.info": {
+              "description": "Hypermedia links format",
+              "type": "object",
+              "required": [
+                "rel",
+                "href",
+                "method"
+              ],
+              "properties": {
+                "rel": {
+                  "type": "string",
+                  "default": "self"
+                },
+                "href": {
+                  "type": "string",
+                  "format": "uri",
+                  "default": "https://api.byu.edu/byuapi/persons/v1/:byu_id/phones/:lookup_number"
+                },
+                "method": {
+                  "type": "string",
+                  "default": "GET",
+                  "enum": [
+                    "GET"
+                  ]
+                }
+              }
+            },
+            "phones.modify": {
+              "description": "Hypermedia links format",
+              "type": "object",
+              "required": [
+                "rel",
+                "href",
+                "method"
+              ],
+              "properties": {
+                "rel": {
+                  "type": "string",
+                  "default": "self"
+                },
+                "href": {
+                  "type": "string",
+                  "format": "uri",
+                  "default": "https://api.byu.edu/byuapi/persons/v1/:byu_id/phones/:lookup_number"
+                },
+                "method": {
+                  "type": "string",
+                  "default": "PUT",
+                  "enum": [
+                    "PUT"
+                  ]
+                }
+              }
+            },
+            "phones.delete": {
+              "description": "Hypermedia links format",
+              "type": "object",
+              "required": [
+                "rel",
+                "href",
+                "method"
+              ],
+              "properties": {
+                "rel": {
+                  "type": "string",
+                  "default": "self"
+                },
+                "href": {
+                  "type": "string",
+                  "format": "uri",
+                  "default": "https://api.byu.edu/byuapi/persons/v1/:byu_id/phones/:lookup_number"
+                },
+                "method": {
+                  "type": "string",
+                  "default": "DELETE",
+                  "enum": [
+                    "DELETE"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "metadata": {
+          "$ref": "#/definitions/simpleMetadata"
+        },
+        "byu_id": {
+          "$ref": "#/definitions/byuId"
+        },
+        "lookup_number": {
+          "$ref": "#/definitions/lookupNumber"
+        },
+        "date_time_updated": {
+          "$ref": "#/definitions/dateTimeUpdated"
+        },
+        "updated_by_id": {
+          "$ref": "#/definitions/updatedById"
+        },
+        "date_time_created": {
+          "$ref": "#/definitions/dateTimeCreated"
+        },
+        "created_by_id": {
+          "$ref": "#/definitions/createdById"
+        },
+        "country_number": {
+          "type": "object",
+          "description": "The country code number",
+          "required": [
+            "value",
+            "api_type"
+          ],
+          "properties": {
+            "values": {
+              "type": "string",
+              "pattern": "^(|[0-9]+)$",
+              "default": "",
+              "x-variable": "country_number"
+            },
+            "api_type": {
+              "type": "string",
+              "default": "related",
+              "enum": [
+                "related"
+              ]
+            },
+            "related_resource": {
+              "type": "string",
+              "default": "https://api.byu.edu/meta/country_codes/v1/"
+            }
+          }
+        },
+        "phone_number": {
+          "$ref": "#/definitions/phoneNumber"
+        },
+        "country_code": {
+          "$ref": "#/definitions/countryCode"
+        },
+        "cell_flag": {
+          "$ref": "#/definitions/cellFlag"
+        },
+        "time_code": {
+          "type": "object",
+          "description": "The time zone a person lives in",
+          "required": [
+            "value",
+            "api_type"
+          ],
+          "properties": {
+            "value": {
+              "type": "string",
+              "maxLength": 10,
+              "default": "Mountain",
+              "x-variable": "time_code"
+            },
+            "api_type": {
+              "type": "string",
+              "default": "read-only",
+              "x-variable": "api_type",
+              "enum": [
+                "read-only",
+                "modifiable"
+              ]
+            },
+            "domain": {
+              "type": "string",
+              "default": "https://api.byu.edu/byuapi/meta/time_codes/v1"
+            }
+          }
+        },
+        "texts_okay": {
+          "$ref": "#/definitions/textsOkay"
+        },
+        "unlisted": {
+          "$ref": "#/definitions/unlisted"
+        },
+        "primary_flag": {
+          "$ref": "#/definitions/primaryFlag"
+        },
+        "tty": {
+          "type": "object",
+          "required": [
+            "value",
+            "api_type"
+          ],
+          "properties": {
+            "value": {
+              "type": "boolean",
+              "default": false,
+              "x-variable": "tty"
+            },
+            "api_type": {
+              "type": "string",
+              "default": "read-only",
+              "x-variable": "api_type",
+              "enum": [
+                "read-only",
+                "modifiable"
+              ]
+            }
+          }
+        },
+        "verified_flag": {
+          "$ref": "#/definitions/verifiedFlag"
+        },
+        "work_flag": {
+          "type": "object",
+          "required": [
+            "value",
+            "api_type"
+          ],
+          "properties": {
+            "value": {
+              "type": "boolean",
+              "default": false,
+              "x-variable": "work_flag"
+            },
+            "api_type": {
+              "type": "string",
+              "default": "read-only",
+              "x-variable": "api_type",
+              "enum": [
+                "read-only",
+                "modifiable"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "phoneNumber": {
+      "type": "object",
+      "required": [
+        "value",
+        "api_type"
+      ],
+      "properties": {
+        "value": {
+          "type": "string",
+          "x-variable": "phone_number",
+          "maxLength": 30
+        },
+        "api_type": {
+          "type": "string",
+          "default": "read-only",
+          "x-variable": "api_type",
+          "enum": [
+            "read-only",
+            "modifiable"
+          ]
+        }
+      },
+      "example": {
+        "$ref": "#/x-mock_json/persons/values/0/phones/values/0/phone_number"
+      }
+    },
+    "phonePut": {
+      "type": "object",
+      "required": [
+        "country_code"
+      ],
+      "properties": {
+        "date_time_created": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "created_by_id": {
+          "type": "string",
+          "pattern": "^( |[0-9A-Z]{1,9})$"
+        },
+        "date_time_updated": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updated_by_id": {
+          "type": "string",
+          "pattern": "^( |[0-9A-Z]{1,9})$"
+        },
+        "country_code": {
+          "type": "string",
+          "pattern": "^([?]{3}|UK|HK|EL|CW|SX|[A-Z]{3})$"
+        },
+        "phone_number": {
+          "type": "string",
+          "maxLength": 30,
+          "pattern": "^(|[0-9(+])[0-9()-./ ]{0,28}[0-9]$"
+        },
+        "cell_flag": {
+          "type": "boolean",
+          "default": false
+        },
+        "time_code": {
+          "type": "string",
+          "maxLength": 10,
+          "default": "Mountain"
+        },
+        "texts_okay": {
+          "type": "boolean",
+          "default": false
+        },
+        "unlisted": {
+          "type": "boolean",
+          "default": false
+        },
+        "primary_flag": {
+          "type": "boolean",
+          "default": false
+        },
+        "tty": {
+          "type": "boolean",
+          "default": false
+        },
+        "work_flag": {
+          "type": "boolean",
+          "default": false
+        },
+        "verified_flag": {
+          "type": "boolean",
+          "default": false
+        }
+      },
+      "example": {
+        "$ref": "#/x-mock_json/phone_put"
+      }
+    },
+    "phones": {
+      "description": "A collection of phones",
+      "type": "object",
+      "required": [
+        "values"
+      ],
+      "properties": {
+        "links": {
+          "description": "Hypermedia links for a collection of family phones",
+          "type": "object",
+          "properties": {
+            "phones.info": {
+              "description": "Hypermedia links format",
+              "type": "object",
+              "required": [
+                "rel",
+                "href",
+                "method"
+              ],
+              "properties": {
+                "rel": {
+                  "type": "string",
+                  "default": "self"
+                },
+                "href": {
+                  "type": "string",
+                  "format": "uri",
+                  "default": "https://api.byu.edu/byuapi/persons/v1/:byu_id/phones"
+                },
+                "method": {
+                  "type": "string",
+                  "default": "GET",
+                  "enum": [
+                    "GET"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "metadata": {
+          "$ref": "#/definitions/subLevelMetadata"
+        },
+        "values": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/phone"
+          }
+        }
+      }
+    },
+    "primaryFlag": {
+      "type": "object",
+      "required": [
+        "value",
+        "api_type"
+      ],
+      "properties": {
+        "value": {
+          "type": "boolean",
+          "default": false,
+          "x-variable": "primary_flag"
+        },
+        "api_type": {
+          "type": "string",
+          "default": "read-only",
+          "x-variable": "api_type",
+          "enum": [
+            "read-only",
+            "modifiable"
+          ]
+        }
+      },
+      "example": {
+        "$ref": "#/x-mock_json/persons/values/0/phones/values/0/primary_flag"
+      }
+    },
+    "relationship": {
+      "type": "object",
+      "properties": {
+        "links": {
+          "description": "Hypermedia links for a single relationship",
+          "type": "object",
+          "properties": {
+            "relationships.info": {
+              "description": "Hypermedia links format",
+              "type": "object",
+              "required": [
+                "rel",
+                "href",
+                "method"
+              ],
+              "properties": {
+                "rel": {
+                  "type": "string",
+                  "default": "self"
+                },
+                "href": {
+                  "type": "string",
+                  "format": "uri",
+                  "default": "https://api.byu.edu/byuapi/persons/v1/:byu_id/relationships/:related_id"
+                },
+                "method": {
+                  "type": "string",
+                  "default": "GET",
+                  "enum": [
+                    "GET"
+                  ]
+                }
+              }
+            },
+            "relationships.modify": {
+              "description": "Hypermedia links format",
+              "type": "object",
+              "required": [
+                "rel",
+                "href",
+                "method"
+              ],
+              "properties": {
+                "rel": {
+                  "type": "string",
+                  "default": "self"
+                },
+                "href": {
+                  "type": "string",
+                  "format": "uri",
+                  "default": "https://api.byu.edu/byuapi/persons/v1/:byu_id/relationships/:related_id"
+                },
+                "method": {
+                  "type": "string",
+                  "default": "PUT",
+                  "enum": [
+                    "PUT"
+                  ]
+                }
+              }
+            },
+            "relationships.delete": {
+              "description": "Hypermedia links format",
+              "type": "object",
+              "required": [
+                "rel",
+                "href",
+                "method"
+              ],
+              "properties": {
+                "rel": {
+                  "type": "string",
+                  "default": "self"
+                },
+                "href": {
+                  "type": "string",
+                  "format": "uri",
+                  "default": "https://api.byu.edu/byuapi/persons/v1/:byu_id/relationships/:related_id"
+                },
+                "method": {
+                  "type": "string",
+                  "default": "DELETE",
+                  "enum": [
+                    "DELETE"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "metadata": {
+          "$ref": "#/definitions/simpleMetadata"
+        },
+        "byu_id": {
+          "$ref": "#/definitions/byuId"
+        },
+        "related_id": {
+          "type": "object",
+          "required": [
+            "value",
+            "api_type"
+          ],
+          "properties": {
+            "value": {
+              "type": "string",
+              "pattern": "^[0-9]{9}$"
+            },
+            "api_type": {
+              "type": "string",
+              "default": "read-only",
+              "x-variable": "api_type",
+              "enum": [
+                "read-only",
+                "modifiable"
+              ]
+            },
+            "key": {
+              "type": "boolean",
+              "default": true
+            }
+          }
+        },
+        "related_net_id": {
+          "description": "The related person's Net ID",
+          "type": "object",
+          "required": [
+            "value",
+            "api_type"
+          ],
+          "properties": {
+            "value": {
+              "type": "string",
+              "maxLength": 9,
+              "pattern": "^(|[a-z][a-z0-9]{0,8})$",
+              "x-variable": "related_net_id"
+            },
+            "api_type": {
+              "type": "string",
+              "default": "related",
+              "enum": [
+                "related"
+              ]
+            },
+            "related_resource": {
+              "type": "string",
+              "default": "https://api.byu.edu/byuapi/persons/v1/:related_id/credentials/NET_ID,:related_net_id"
+            }
+          }
+        },
+        "relationship_type": {
+          "type": "object",
+          "required": [
+            "value",
+            "api_type"
+          ],
+          "properties": {
+            "value": {
+              "type": "string",
+              "x-variable": "relationship_type",
+              "enum": [
+                "CHILD",
+                "GRANDCHILD",
+                "RESPONSIBLE_IDENTITY",
+                "PARENT",
+                "SPOUSE",
+                "GRANDPARENT",
+                "CONTACT_IDENTITY",
+                "FORMER SPOUSE"
+              ]
+            },
+            "api_type": {
+              "type": "string",
+              "default": "read-only",
+              "x-variable": "api_type",
+              "enum": [
+                "read-only",
+                "modifiable"
+              ]
+            }
+          }
+        },
+        "related_name_lnf": {
+          "description": "The related person's full name, given last-name-first",
+          "type": "object",
+          "required": [
+            "value",
+            "api_type"
+          ],
+          "properties": {
+            "value": {
+              "type": "string",
+              "x-variable": "related_name_lnf"
+            },
+            "api_type": {
+              "type": "string",
+              "default": "related",
+              "enum": [
+                "related"
+              ]
+            },
+            "related_resource": {
+              "type": "string",
+              "default": "https://api.byu.edu/byuapi/persons/v1/:related_id"
+            }
+          }
+        },
+        "related_name_fnf": {
+          "description": "The related person's full name, given first-name-first",
+          "type": "object",
+          "required": [
+            "value",
+            "api_type"
+          ],
+          "properties": {
+            "value": {
+              "type": "string",
+              "x-variable": "related_name_fnf"
+            },
+            "api_type": {
+              "type": "string",
+              "default": "related",
+              "enum": [
+                "related"
+              ]
+            },
+            "related_resource": {
+              "type": "string",
+              "default": "https://api.byu.edu/byuapi/persons/v1/:related_id"
+            }
+          }
+        },
+        "related_preferred_name": {
+          "description": "The related person's preferred, derived from the preferred_first_name and preferred_surname",
+          "type": "object",
+          "required": [
+            "value",
+            "api_type"
+          ],
+          "properties": {
+            "value": {
+              "type": "string",
+              "x-variable": "related_preferred_name"
+            },
+            "api_type": {
+              "type": "string",
+              "default": "related",
+              "enum": [
+                "related"
+              ]
+            },
+            "related_resource": {
+              "type": "string",
+              "default": "https://api.byu.edu/byuapi/persons/v1/:related_id"
+            }
+          }
+        },
+        "related_surname": {
+          "description": "The related person's surname",
+          "type": "object",
+          "required": [
+            "value",
+            "api_type"
+          ],
+          "properties": {
+            "value": {
+              "type": "string",
+              "x-variable": "related_surname"
+            },
+            "api_type": {
+              "type": "string",
+              "default": "related",
+              "enum": [
+                "related"
+              ]
+            },
+            "related_resource": {
+              "type": "string",
+              "default": "https://api.byu.edu/byuapi/persons/v1/:related_id"
+            }
+          }
+        },
+        "related_rest_of_name": {
+          "description": "The related person's full name, excluding the surname",
+          "type": "object",
+          "required": [
+            "value",
+            "api_type"
+          ],
+          "properties": {
+            "value": {
+              "type": "string",
+              "x-variable": "related_rest_of_name"
+            },
+            "api_type": {
+              "type": "string",
+              "default": "related",
+              "enum": [
+                "related"
+              ]
+            },
+            "related_resource": {
+              "type": "string",
+              "default": "https://api.byu.edu/byuapi/persons/v1/:related_id"
+            }
+          }
+        },
+        "related_preferred_surname": {
+          "description": "The related person's preferred surname",
+          "type": "object",
+          "required": [
+            "value",
+            "api_type"
+          ],
+          "properties": {
+            "value": {
+              "type": "string",
+              "x-variable": "related_preferred_surname"
+            },
+            "api_type": {
+              "type": "string",
+              "default": "related",
+              "enum": [
+                "related"
+              ]
+            },
+            "related_resource": {
+              "type": "string",
+              "default": "https://api.byu.edu/byuapi/persons/v1/:related_id"
+            }
+          }
+        },
+        "related_preferred_first_name": {
+          "description": "The related person's preferred first name",
+          "type": "object",
+          "required": [
+            "value",
+            "api_type"
+          ],
+          "properties": {
+            "value": {
+              "type": "string",
+              "x-variable": "related_preferred_first_name"
+            },
+            "api_type": {
+              "type": "string",
+              "default": "related",
+              "enum": [
+                "related"
+              ]
+            },
+            "related_resource": {
+              "type": "string",
+              "default": "https://api.byu.edu/byuapi/persons/v1/:related_id"
+            }
+          }
+        },
+        "date_time_updated": {
+          "$ref": "#/definitions/dateTimeUpdated"
+        },
+        "updated_by_id": {
+          "$ref": "#/definitions/updatedById"
+        },
+        "date_time_created": {
+          "$ref": "#/definitions/dateTimeCreated"
+        },
+        "created_by_id": {
+          "$ref": "#/definitions/createdById"
+        },
+        "date_time_verified": {
+          "type": "object",
+          "required": [
+            "api_type"
+          ],
+          "properties": {
+            "value": {
+              "type": "string",
+              "format": "date-time",
+              "x-variable": "date_time_verified"
+            },
+            "api_type": {
+              "type": "string",
+              "default": "system",
+              "enum": [
+                "system"
+              ]
+            }
+          }
+        },
+        "verified_by_id": {
+          "type": "object",
+          "required": [
+            "value",
+            "api_type",
+            "description"
+          ],
+          "properties": {
+            "value": {
+              "type": "string",
+              "pattern": "^[0-9]{9}$"
+            },
+            "api_type": {
+              "type": "string",
+              "default": "system",
+              "enum": [
+                "system"
+              ]
+            },
+            "description": {
+              "type": "string",
+              "x-variable": "verified_by_name",
+              "maxLength": 50
+            }
+          }
+        }
+      }
+    },
+    "relationshipPut": {
+      "type": "object",
+      "required": [
+        "relationship_type"
+      ],
+      "properties": {
+        "date_time_created": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "created_by_id": {
+          "type": "string",
+          "pattern": "^( |[0-9A-Z]{1,9})$"
+        },
+        "date_time_updated": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updated_by_id": {
+          "type": "string",
+          "pattern": "^( |[0-9A-Z]{1,9})$"
+        },
+        "relationship_type": {
+          "type": "string",
+          "enum": [
+            "CHILD",
+            "GRANDCHILD",
+            "RESPONSIBLE_IDENTITY",
+            "PARENT",
+            "SPOUSE",
+            "GRANDPARENT",
+            "CONTACT_IDENTITY",
+            "FORMER SPOUSE"
+          ]
+        },
+        "date_time_verified": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "verified_by_id": {
+          "type": "string",
+          "default": " ",
+          "pattern": "^( |[0-9A-Z]{1,9})$"
+        }
+      },
+      "example": {
+        "date_time_created": "YYYY-MM-DDTHH24:MI:SS.FFFZ",
+        "created_by_id": "123456789",
+        "date_time_updated": "YYYY-MM-DDTHH24:MI:SS.FFFZ",
+        "updated_by_id": "123456789",
+        "relationship_type": "PARENT",
+        "date_time_verified": "YYYY-MM-DDTHH24:MI:SS.FFFZ",
+        "verified_by_id": "123456789"
+      }
+    },
+    "relationships": {
+      "description": "Collection of relationships between persons",
+      "type": "object",
+      "required": [
+        "values"
+      ],
+      "properties": {
+        "links": {
+          "description": "Hypermedia links that impact the collection",
+          "type": "object",
+          "properties": {
+            "relationships.info": {
+              "description": "Hypermedia links format",
+              "type": "object",
+              "required": [
+                "rel",
+                "href",
+                "method"
+              ],
+              "properties": {
+                "rel": {
+                  "type": "string",
+                  "default": "self"
+                },
+                "href": {
+                  "type": "string",
+                  "format": "uri",
+                  "default": "https://api.byu.edu/byuapi/persons/v1/:byu_id/relationships/:related_id"
+                },
+                "method": {
+                  "type": "string",
+                  "default": "GET",
+                  "enum": [
+                    "GET"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "metadata": {
+          "$ref": "#/definitions/subLevelMetadata"
+        },
+        "values": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/relationship"
+          }
+        }
+      }
+    },
+    "revokedById": {
+      "type": "object",
+      "required": [
+        "value",
+        "api_type"
+      ],
+      "properties": {
+        "value": {
+          "type": "string",
+          "default": "",
+          "x-variable": "revoked_by_id"
+        },
+        "description": {
+          "type": "string",
+          "x-variable": "revoked_by_name",
+          "maxLength": 50
+        },
+        "api_type": {
+          "type": "string",
+          "default": "system",
+          "enum": [
+            "system"
+          ]
+        }
+      },
+      "example": {
+        "$ref": "#/x-mock_json/persons/values/0/my_delegators/values/0/revoked_by_id"
+      }
+    },
+    "simpleMetadata": {
+      "type": "object",
+      "required": [
+        "validation_response"
+      ],
+      "properties": {
+        "validation_response": {
+          "$ref": "#/definitions/validationResponse"
+        },
+        "validation_information": {
+          "$ref": "#/definitions/validationInformation"
+        },
+        "cache": {
+          "$ref": "#/definitions/cache"
+        }
+      }
+    },
+    "studentSummaries": {
+      "description": "Basic (individual) academic information for a collection of students",
+      "type": "object",
+      "properties": {
+        "links": {
+          "description": "Hypermedia links for employee summaries",
+          "type": "object",
+          "properties": {
+            "student_summaries.info": {
+              "description": "Hypermedia links format",
+              "type": "object",
+              "required": [
+                "rel",
+                "href",
+                "method"
+              ],
+              "properties": {
+                "rel": {
+                  "type": "string",
+                  "default": "self"
+                },
+                "href": {
+                  "type": "string",
+                  "format": "uri",
+                  "default": "https://api.byu.edu/byuapi/persons/v1/:byu_id/student_summaries"
+                },
+                "method": {
+                  "type": "string",
+                  "default": "GET",
+                  "enum": [
+                    "GET"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "metadata": {
+          "$ref": "#/definitions/simpleMetadata"
+        },
+        "byu_id": {
+          "$ref": "#/definitions/byuId"
+        },
+        "student_status": {
+          "type": "object",
+          "description": "The status of the student, provided by the Student Status Web Service",
+          "required": [
+            "value",
+            "api_type"
+          ],
+          "properties": {
+            "value": {
+              "type": "string",
+              "default": "Non-student",
+              "x-variable": "student_status",
+              "enum": [
+                "Doctorate Program",
+                "Masters Program",
+                "Post Baccalaureate Non Degree",
+                "Senior",
+                "Junior",
+                "Sophomore",
+                "Freshman",
+                "BGS",
+                "Audit",
+                "Concurrent Enrollment",
+                "Visiting Student",
+                "ELC",
+                "Evening School",
+                "Salt Lake Center Student",
+                "Non-student"
+              ]
+            },
+            "api_type": {
+              "type": "string",
+              "default": "related",
+              "enum": [
+                "related"
+              ]
+            },
+            "related_resource": {
+              "type": "string",
+              "default": "https://api.byu.edu/byuapi/students/v1/:byu_id"
+            }
+          }
+        },
+        "current_student": {
+          "type": "object",
+          "description": "Indicates whether the person is currently a BYU student",
+          "required": [
+            "value",
+            "api_type"
+          ],
+          "properties": {
+            "value": {
+              "type": "boolean",
+              "default": false,
+              "x-variable": "current_student"
+            },
+            "api_type": {
+              "type": "string",
+              "default": "related",
+              "enum": [
+                "related"
+              ]
+            },
+            "related_resource": {
+              "type": "string",
+              "default": "https://api.byu.edu/byuapi/students/v1/:byu_id"
+            }
+          }
+        },
+        "eligible_to_register": {
+          "type": "object",
+          "description": "Indicates whether the person is currently eligible to register",
+          "required": [
+            "value",
+            "api_type"
+          ],
+          "properties": {
+            "value": {
+              "type": "boolean",
+              "default": false,
+              "x-variable": "eligible_to_register"
+            },
+            "api_type": {
+              "type": "string",
+              "default": "related",
+              "enum": [
+                "related"
+              ]
+            },
+            "related_resource": {
+              "type": "string",
+              "default": "https://api.byu.edu/byuapi/students/v1/:byu_id"
+            }
+          }
+        }
+      }
+    },
+    "subLevelMetadata": {
+      "type": "object",
+      "required": [
+        "collection_size",
+        "page_start",
+        "page_end",
+        "page_size",
+        "default_page_size",
+        "max_page_size",
+        "validation_response"
+      ],
+      "properties": {
+        "collection_size": {
+          "type": "integer",
+          "format": "int32",
+          "minimum": 0,
+          "default": 0,
+          "x-variable": "collection_size"
+        },
+        "page_start": {
+          "type": "integer",
+          "format": "int32",
+          "minimum": 0,
+          "default": 0,
+          "x-variable": "page_start"
+        },
+        "page_end": {
+          "type": "integer",
+          "format": "int32",
+          "minimum": 0,
+          "default": 0,
+          "x-variable": "page_end"
+        },
+        "page_size": {
+          "type": "integer",
+          "format": "int32",
+          "minimum": 0,
+          "default": 0,
+          "x-variable": "page_size"
+        },
+        "default_page_size": {
+          "type": "integer",
+          "format": "int32",
+          "minimum": 1,
+          "default": 50,
+          "x-variable": "default_page_size"
+        },
+        "maximum_page_size": {
+          "type": "integer",
+          "format": "int32",
+          "minimum": 0,
+          "default": 100,
+          "x-variable": "maximum_page_size"
+        },
+        "validation_response": {
+          "$ref": "#/definitions/validationResponse"
+        },
+        "validation_information": {
+          "$ref": "#/definitions/validationInformation"
+        },
+        "cache": {
+          "$ref": "#/definitions/cache"
+        }
+      }
+    },
+    "textsOkay": {
+      "type": "object",
+      "required": [
+        "value",
+        "api_type"
+      ],
+      "properties": {
+        "value": {
+          "type": "boolean",
+          "x-variable": "texts_okay",
+          "default": false
+        },
+        "api_type": {
+          "type": "string",
+          "default": "read-only",
+          "x-variable": "api_type",
+          "enum": [
+            "read-only",
+            "modifiable"
+          ]
+        }
+      },
+      "example": {
+        "$ref": "#/x-mock_json/persons/values/0/phones/values/0/texts_okay"
+      }
     },
     "unlisted": {
       "type": "object",
@@ -14106,7 +14147,7 @@
         "$ref": "#/x-mock_json/persons/values/0/addresses/values/0/unlisted"
       }
     },
-    "updated_by_id": {
+    "updatedById": {
       "type": "object",
       "description": "The BYU ID of the last person who performed the last update",
       "required": [
@@ -14138,7 +14179,7 @@
         "$ref": "#/x-mock_json/persons/values/0/addresses/values/0/updated_by_id"
       }
     },
-    "validation_information": {
+    "validationInformation": {
       "type": "array",
       "default": [
         "Success"
@@ -14150,7 +14191,7 @@
         "$ref": "#/x-mock_json/persons/values/0/basic/metadata/validation_information"
       }
     },
-    "validation_response": {
+    "validationResponse": {
       "type": "object",
       "required": [
         "code",
@@ -14175,7 +14216,7 @@
         "$ref": "#/x-mock_json/persons/values/0/basic/metadata/validation_response"
       }
     },
-    "verified_flag": {
+    "verifiedFlag": {
       "type": "object",
       "required": [
         "value",
@@ -14206,43 +14247,43 @@
     "207": {
       "description": "Partial Success - unable to raise event",
       "schema": {
-        "$ref": "#/definitions/error_response"
+        "$ref": "#/definitions/errorResponse"
       }
     },
     "400": {
       "description": "Invalid Request - unable to interpret request",
       "schema": {
-        "$ref": "#/definitions/error_response"
+        "$ref": "#/definitions/errorResponse"
       }
     },
     "401": {
       "description": "Authentication required to access data",
       "schema": {
-        "$ref": "#/definitions/error_response"
+        "$ref": "#/definitions/errorResponse"
       }
     },
     "403": {
       "description": "Access denied to protected data",
       "schema": {
-        "$ref": "#/definitions/error_response"
+        "$ref": "#/definitions/errorResponse"
       }
     },
     "404": {
       "description": "The resource does not exist",
       "schema": {
-        "$ref": "#/definitions/error_response"
+        "$ref": "#/definitions/errorResponse"
       }
     },
     "409": {
       "description": "Query parameters conflict or are malformed",
       "schema": {
-        "$ref": "#/definitions/error_response"
+        "$ref": "#/definitions/errorResponse"
       }
     },
     "default": {
       "description": "Unexpected error",
       "schema": {
-        "$ref": "#/definitions/error_response"
+        "$ref": "#/definitions/errorResponse"
       },
       "x-handler": "defaultHandler"
     }
