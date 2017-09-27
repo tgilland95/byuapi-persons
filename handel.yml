@@ -6,7 +6,7 @@ environments:
   dev:
     app:
       type: apigateway
-      swagger: ./swagger-dev.json
+      swagger: ./swagger-api-gateway-dev.json
     webapp:
       type: ecs
       cluster:
@@ -59,7 +59,7 @@ environments:
   prd:
     app:
       type: apigateway
-      swagger: ./swagger.json
+      swagger: ./swagger-api-gateway-prd.json
     webapp:
       type: ecs
       cluster:
