@@ -969,7 +969,9 @@
             "in": "body",
             "description": "The operation values to be set",
             "required": true,
-            "type": "string"
+            "schema": {
+              "$ref": "#/definitions/inputBody"
+            }
           }
         ],
         "responses": {
@@ -1724,7 +1726,9 @@
             "in": "body",
             "description": "The group event values to be set",
             "required": true,
-            "type": "string"
+            "schema": {
+              "$ref": "#/definitions/inputBody"
+            }
           }
         ],
         "responses": {
