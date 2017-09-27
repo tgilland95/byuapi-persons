@@ -306,39 +306,12 @@
             ]
           }
         ],
-        "tags": [
-          "persons"
-        ],
         "responses": {
           "200": {
             "description": "A collection of Persons successfully returned",
             "type": "string"
-          },
-          "400": {
-            "description": "Invalid Request - unable to interpret request",
-            "type": "string"
-          },
-          "401": {
-            "description": "Authentication required to access data",
-            "type": "string"
-          },
-          "403": {
-            "description": "Access denied to protected data",
-            "type": "string"
-          },
-          "404": {
-            "description": "The resource does not exist",
-            "type": "string"
-          },
-          "409": {
-            "description": "Query parameters conflict or are malformed",
-            "type": "string"
-          },
-          "default": {
-            "description": "Unknown error",
-            "type": "string"
           }
-        }
+\        }
       },
       "post": {
         "x-http-passthrough-url": "https://byuapi-persons-dev.arch.byu.edu/byuapi/persons/",
@@ -351,43 +324,14 @@
             "in": "body",
             "description": "The address values to be set",
             "required": true,
-            "type": "string"
+            "schema": {
+              "$ref": "#/definitions/inputBody"
+            }
           }
-        ],
-        "tags": [
-          "persons"
         ],
         "responses": {
           "201": {
             "description": "A collection of Persons successfully created",
-            "type": "string"
-          },
-          "207": {
-            "description": "Partial Success - unable to raise event",
-            "type": "string"
-          },
-          "400": {
-            "description": "Invalid Request - unable to interpret request",
-            "type": "string"
-          },
-          "401": {
-            "description": "Authentication required to access data",
-            "type": "string"
-          },
-          "403": {
-            "description": "Access denied to protected data",
-            "type": "string"
-          },
-          "404": {
-            "description": "The resource does not exist",
-            "type": "string"
-          },
-          "409": {
-            "description": "Query parameters conflict or are malformed",
-            "type": "string"
-          },
-          "default": {
-            "description": "Unknown error",
             "type": "string"
           }
         }
@@ -464,36 +408,9 @@
             ]
           }
         ],
-        "tags": [
-          "persons"
-        ],
         "responses": {
           "200": {
             "description": "Person successfully returned",
-            "type": "string"
-          },
-          "400": {
-            "description": "Invalid Request - unable to interpret request",
-            "type": "string"
-          },
-          "401": {
-            "description": "Authentication required to access data",
-            "type": "string"
-          },
-          "403": {
-            "description": "Access denied to protected data",
-            "type": "string"
-          },
-          "404": {
-            "description": "The resource does not exist",
-            "type": "string"
-          },
-          "409": {
-            "description": "Query parameters conflict or are malformed",
-            "type": "string"
-          },
-          "default": {
-            "description": "Unknown error",
             "type": "string"
           }
         }
@@ -516,43 +433,14 @@
             "in": "body",
             "description": "The person data to be updated",
             "required": true,
-            "type": "string"
+            "schema": {
+              "$ref": "#/definitions/inputBody"
+            }
           }
-        ],
-        "tags": [
-          "persons"
         ],
         "responses": {
           "200": {
             "description": "Person successfully updated",
-            "type": "string"
-          },
-          "207": {
-            "description": "Partial Success - unable to raise event",
-            "type": "string"
-          },
-          "400": {
-            "description": "Invalid Request - unable to interpret request",
-            "type": "string"
-          },
-          "401": {
-            "description": "Authentication required to access data",
-            "type": "string"
-          },
-          "403": {
-            "description": "Access denied to protected data",
-            "type": "string"
-          },
-          "404": {
-            "description": "The resource does not exist",
-            "type": "string"
-          },
-          "409": {
-            "description": "Query parameters conflict or are malformed",
-            "type": "string"
-          },
-          "default": {
-            "description": "Unknown error",
             "type": "string"
           }
         }
@@ -571,40 +459,9 @@
             "pattern": "^[0-9]{9}$"
           }
         ],
-        "tags": [
-          "persons"
-        ],
         "responses": {
           "204": {
             "description": "Person successfully deleted",
-            "type": "string"
-          },
-          "207": {
-            "description": "Partial Success - unable to raise event",
-            "type": "string"
-          },
-          "400": {
-            "description": "Invalid Request - unable to interpret request",
-            "type": "string"
-          },
-          "401": {
-            "description": "Authentication required to access data",
-            "type": "string"
-          },
-          "403": {
-            "description": "Access denied to protected data",
-            "type": "string"
-          },
-          "404": {
-            "description": "The resource does not exist",
-            "type": "string"
-          },
-          "409": {
-            "description": "Query parameters conflict or are malformed",
-            "type": "string"
-          },
-          "default": {
-            "description": "Unknown error",
             "type": "string"
           }
         }
@@ -629,36 +486,9 @@
             "pattern": "^[0-9]{9}$"
           }
         ],
-        "tags": [
-          "addresses"
-        ],
         "responses": {
           "200": {
             "description": "Addresses successfully returned",
-            "type": "string"
-          },
-          "400": {
-            "description": "Invalid Request - unable to interpret request",
-            "type": "string"
-          },
-          "401": {
-            "description": "Authentication required to access data",
-            "type": "string"
-          },
-          "403": {
-            "description": "Access denied to protected data",
-            "type": "string"
-          },
-          "404": {
-            "description": "The resource does not exist",
-            "type": "string"
-          },
-          "409": {
-            "description": "Query parameters conflict or are malformed",
-            "type": "string"
-          },
-          "default": {
-            "description": "Unknown error",
             "type": "string"
           }
         }
@@ -697,36 +527,9 @@
             ]
           }
         ],
-        "tags": [
-          "addresses"
-        ],
         "responses": {
           "200": {
             "description": "Address successfully returned",
-            "type": "string"
-          },
-          "400": {
-            "description": "Invalid Request - unable to interpret request",
-            "type": "string"
-          },
-          "401": {
-            "description": "Authentication required to access data",
-            "type": "string"
-          },
-          "403": {
-            "description": "Access denied to protected data",
-            "type": "string"
-          },
-          "404": {
-            "description": "The resource does not exist",
-            "type": "string"
-          },
-          "409": {
-            "description": "Query parameters conflict or are malformed",
-            "type": "string"
-          },
-          "default": {
-            "description": "Unknown error",
             "type": "string"
           }
         }
@@ -762,43 +565,14 @@
             "in": "body",
             "description": "The address values to be set",
             "required": true,
-            "type": "string"
+            "schema": {
+              "$ref": "#/definitions/inputBody"
+            }
           }
-        ],
-        "tags": [
-          "addresses"
         ],
         "responses": {
           "200": {
             "description": "Addresses successfully updated",
-            "type": "string"
-          },
-          "207": {
-            "description": "Partial Success - unable to raise event",
-            "type": "string"
-          },
-          "400": {
-            "description": "Invalid Request - unable to interpret request",
-            "type": "string"
-          },
-          "401": {
-            "description": "Authentication required to access data",
-            "type": "string"
-          },
-          "403": {
-            "description": "Access denied to protected data",
-            "type": "string"
-          },
-          "404": {
-            "description": "The resource does not exist",
-            "type": "string"
-          },
-          "409": {
-            "description": "Query parameters conflict or are malformed",
-            "type": "string"
-          },
-          "default": {
-            "description": "Unknown error",
             "type": "string"
           }
         }
@@ -830,40 +604,9 @@
             ]
           }
         ],
-        "tags": [
-          "addresses"
-        ],
         "responses": {
           "204": {
             "description": "Address successfully deleted",
-            "type": "string"
-          },
-          "207": {
-            "description": "Partial Success - unable to raise event",
-            "type": "string"
-          },
-          "400": {
-            "description": "Invalid Request - unable to interpret request",
-            "type": "string"
-          },
-          "401": {
-            "description": "Authentication required to access data",
-            "type": "string"
-          },
-          "403": {
-            "description": "Access denied to protected data",
-            "type": "string"
-          },
-          "404": {
-            "description": "The resource does not exist",
-            "type": "string"
-          },
-          "409": {
-            "description": "Query parameters conflict or are malformed",
-            "type": "string"
-          },
-          "default": {
-            "description": "Unknown error",
             "type": "string"
           }
         }
@@ -888,36 +631,9 @@
             "pattern": "^[0-9]{9}$"
           }
         ],
-        "tags": [
-          "alias_domains"
-        ],
         "responses": {
           "200": {
             "description": "Alias Domains successfully returned",
-            "type": "string"
-          },
-          "400": {
-            "description": "Invalid Request - unable to interpret request",
-            "type": "string"
-          },
-          "401": {
-            "description": "Authentication required to access data",
-            "type": "string"
-          },
-          "403": {
-            "description": "Access denied to protected data",
-            "type": "string"
-          },
-          "404": {
-            "description": "The resource does not exist",
-            "type": "string"
-          },
-          "409": {
-            "description": "Query parameters conflict or are malformed",
-            "type": "string"
-          },
-          "default": {
-            "description": "Unknown error",
             "type": "string"
           }
         }
@@ -950,36 +666,9 @@
             "type": "string"
           }
         ],
-        "tags": [
-          "alias_domains"
-        ],
         "responses": {
           "200": {
             "description": "Alias Domain successfully returned",
-            "type": "string"
-          },
-          "400": {
-            "description": "Invalid Request - unable to interpret request",
-            "type": "string"
-          },
-          "401": {
-            "description": "Authentication required to access data",
-            "type": "string"
-          },
-          "403": {
-            "description": "Access denied to protected data",
-            "type": "string"
-          },
-          "404": {
-            "description": "The resource does not exist",
-            "type": "string"
-          },
-          "409": {
-            "description": "Query parameters conflict or are malformed",
-            "type": "string"
-          },
-          "default": {
-            "description": "Unknown error",
             "type": "string"
           }
         }
@@ -1009,43 +698,13 @@
             "in": "body",
             "description": "The email address values to be set",
             "required": true,
-            "type": "string"
-          }
-        ],
-        "tags": [
-          "alias_domains"
+            "schema": {
+              "$ref": "#/definitions/inputBody"
+            }          }
         ],
         "responses": {
           "200": {
             "description": "Alias Domain successfully updated",
-            "type": "string"
-          },
-          "207": {
-            "description": "Partial Success - unable to raise event",
-            "type": "string"
-          },
-          "400": {
-            "description": "Invalid Request - unable to interpret request",
-            "type": "string"
-          },
-          "401": {
-            "description": "Authentication required to access data",
-            "type": "string"
-          },
-          "403": {
-            "description": "Access denied to protected data",
-            "type": "string"
-          },
-          "404": {
-            "description": "The resource does not exist",
-            "type": "string"
-          },
-          "409": {
-            "description": "Query parameters conflict or are malformed",
-            "type": "string"
-          },
-          "default": {
-            "description": "Unknown error",
             "type": "string"
           }
         }
@@ -1071,40 +730,9 @@
             "type": "string"
           }
         ],
-        "tags": [
-          "alias_domains"
-        ],
         "responses": {
           "204": {
             "description": "Alias Domain successfully deleted",
-            "type": "string"
-          },
-          "207": {
-            "description": "Partial Success - unable to raise event",
-            "type": "string"
-          },
-          "400": {
-            "description": "Invalid Request - unable to interpret request",
-            "type": "string"
-          },
-          "401": {
-            "description": "Authentication required to access data",
-            "type": "string"
-          },
-          "403": {
-            "description": "Access denied to protected data",
-            "type": "string"
-          },
-          "404": {
-            "description": "The resource does not exist",
-            "type": "string"
-          },
-          "409": {
-            "description": "Query parameters conflict or are malformed",
-            "type": "string"
-          },
-          "default": {
-            "description": "Unknown error",
             "type": "string"
           }
         }
@@ -1150,47 +778,19 @@
             ]
           }
         ],
-        "tags": [
-          "credentials"
-        ],
         "responses": {
           "200": {
             "description": "Credentials successfully returned",
-            "type": "string"
-          },
-          "400": {
-            "description": "Invalid Request - unable to interpret request",
-            "type": "string"
-          },
-          "401": {
-            "description": "Authentication required to access data",
-            "type": "string"
-          },
-          "403": {
-            "description": "Access denied to protected data",
-            "type": "string"
-          },
-          "404": {
-            "description": "The resource does not exist",
-            "type": "string"
-          },
-          "409": {
-            "description": "Query parameters conflict or are malformed",
-            "type": "string"
-          },
-          "default": {
-            "description": "Unknown error",
             "type": "string"
           }
         }
       }
     },
-    "/{byu_id}/credentials/{credential_type},{credential_id}": {
+    "/{byu_id}/credentials/{credential_vars}": {
       "x-http-passthrough-url": "https://persons.arch.byu.edu/services/persons/{byu_id}/credentials/{credential_type},{credential_id}",
       "x-http-passthrough-path-params": {
         "byu_id": "byu_id",
-        "credential_type": "credential_type",
-        "credential_id": "credential_id"
+        "credential_vars": "credential_vars"
       },
       "get": {
         "summary": "Credentials",
@@ -1234,36 +834,9 @@
             "type": "string"
           }
         ],
-        "tags": [
-          "credentials"
-        ],
         "responses": {
           "200": {
             "description": "Credential successfully returned",
-            "type": "string"
-          },
-          "400": {
-            "description": "Invalid Request - unable to interpret request",
-            "type": "string"
-          },
-          "401": {
-            "description": "Authentication required to access data",
-            "type": "string"
-          },
-          "403": {
-            "description": "Access denied to protected data",
-            "type": "string"
-          },
-          "404": {
-            "description": "The resource does not exist",
-            "type": "string"
-          },
-          "409": {
-            "description": "Query parameters conflict or are malformed",
-            "type": "string"
-          },
-          "default": {
-            "description": "Unknown error",
             "type": "string"
           }
         }
@@ -1314,43 +887,13 @@
             "in": "body",
             "description": "The attributes of the credential to be created or updated",
             "required": true,
-            "type": "string"
-          }
-        ],
-        "tags": [
-          "credentials"
+            "schema": {
+              "$ref": "#/definitions/inputBody"
+            }          }
         ],
         "responses": {
           "200": {
             "description": "Credential successfully updated",
-            "type": "string"
-          },
-          "207": {
-            "description": "Partial Success - unable to raise event",
-            "type": "string"
-          },
-          "400": {
-            "description": "Invalid Request - unable to interpret request",
-            "type": "string"
-          },
-          "401": {
-            "description": "Authentication required to access data",
-            "type": "string"
-          },
-          "403": {
-            "description": "Access denied to protected data",
-            "type": "string"
-          },
-          "404": {
-            "description": "The resource does not exist",
-            "type": "string"
-          },
-          "409": {
-            "description": "Query parameters conflict or are malformed",
-            "type": "string"
-          },
-          "default": {
-            "description": "Unknown error",
             "type": "string"
           }
         }
@@ -1395,40 +938,9 @@
             "type": "string"
           }
         ],
-        "tags": [
-          "credentials"
-        ],
         "responses": {
           "204": {
             "description": "Credential successfully deleted",
-            "type": "string"
-          },
-          "207": {
-            "description": "Partial Success - unable to raise event",
-            "type": "string"
-          },
-          "400": {
-            "description": "Invalid Request - unable to interpret request",
-            "type": "string"
-          },
-          "401": {
-            "description": "Authentication required to access data",
-            "type": "string"
-          },
-          "403": {
-            "description": "Access denied to protected data",
-            "type": "string"
-          },
-          "404": {
-            "description": "The resource does not exist",
-            "type": "string"
-          },
-          "409": {
-            "description": "Query parameters conflict or are malformed",
-            "type": "string"
-          },
-          "default": {
-            "description": "Unknown error",
             "type": "string"
           }
         }
@@ -1460,40 +972,9 @@
             "type": "string"
           }
         ],
-        "tags": [
-          "delegated_operations_performed"
-        ],
         "responses": {
           "201": {
             "description": "Operation successfully added",
-            "type": "string"
-          },
-          "207": {
-            "description": "Partial Success - unable to raise event",
-            "type": "string"
-          },
-          "400": {
-            "description": "Invalid Request - unable to interpret request",
-            "type": "string"
-          },
-          "401": {
-            "description": "Authentication required to access data",
-            "type": "string"
-          },
-          "403": {
-            "description": "Access denied to protected data",
-            "type": "string"
-          },
-          "404": {
-            "description": "The resource does not exist",
-            "type": "string"
-          },
-          "409": {
-            "description": "Query parameters conflict or are malformed",
-            "type": "string"
-          },
-          "default": {
-            "description": "Unknown error",
             "type": "string"
           }
         }
@@ -1518,36 +999,9 @@
             "pattern": "^[0-9]{9}$"
           }
         ],
-        "tags": [
-          "email_addresses"
-        ],
         "responses": {
           "200": {
             "description": "Email Addresses successfully returned",
-            "type": "string"
-          },
-          "400": {
-            "description": "Invalid Request - unable to interpret request",
-            "type": "string"
-          },
-          "401": {
-            "description": "Authentication required to access data",
-            "type": "string"
-          },
-          "403": {
-            "description": "Access denied to protected data",
-            "type": "string"
-          },
-          "404": {
-            "description": "The resource does not exist",
-            "type": "string"
-          },
-          "409": {
-            "description": "Query parameters conflict or are malformed",
-            "type": "string"
-          },
-          "default": {
-            "description": "Unknown error",
             "type": "string"
           }
         }
@@ -1585,36 +1039,9 @@
             ]
           }
         ],
-        "tags": [
-          "email_addresses"
-        ],
         "responses": {
           "200": {
             "description": "Email Address successfully returned",
-            "type": "string"
-          },
-          "400": {
-            "description": "Invalid Request - unable to interpret request",
-            "type": "string"
-          },
-          "401": {
-            "description": "Authentication required to access data",
-            "type": "string"
-          },
-          "403": {
-            "description": "Access denied to protected data",
-            "type": "string"
-          },
-          "404": {
-            "description": "The resource does not exist",
-            "type": "string"
-          },
-          "409": {
-            "description": "Query parameters conflict or are malformed",
-            "type": "string"
-          },
-          "default": {
-            "description": "Unknown error",
             "type": "string"
           }
         }
@@ -1649,43 +1076,13 @@
             "in": "body",
             "description": "The email address values to be set",
             "required": true,
-            "type": "string"
-          }
-        ],
-        "tags": [
-          "email_addresses"
+            "schema": {
+              "$ref": "#/definitions/inputBody"
+            }          }
         ],
         "responses": {
           "200": {
             "description": "Email Address successfully updated",
-            "type": "string"
-          },
-          "207": {
-            "description": "Partial Success - unable to raise event",
-            "type": "string"
-          },
-          "400": {
-            "description": "Invalid Request - unable to interpret request",
-            "type": "string"
-          },
-          "401": {
-            "description": "Authentication required to access data",
-            "type": "string"
-          },
-          "403": {
-            "description": "Access denied to protected data",
-            "type": "string"
-          },
-          "404": {
-            "description": "The resource does not exist",
-            "type": "string"
-          },
-          "409": {
-            "description": "Query parameters conflict or are malformed",
-            "type": "string"
-          },
-          "default": {
-            "description": "Unknown error",
             "type": "string"
           }
         }
@@ -1716,40 +1113,9 @@
             ]
           }
         ],
-        "tags": [
-          "email_addresses"
-        ],
         "responses": {
           "204": {
             "description": "Email Address successfully deleted",
-            "type": "string"
-          },
-          "207": {
-            "description": "Partial Success - unable to raise event",
-            "type": "string"
-          },
-          "400": {
-            "description": "Invalid Request - unable to interpret request",
-            "type": "string"
-          },
-          "401": {
-            "description": "Authentication required to access data",
-            "type": "string"
-          },
-          "403": {
-            "description": "Access denied to protected data",
-            "type": "string"
-          },
-          "404": {
-            "description": "The resource does not exist",
-            "type": "string"
-          },
-          "409": {
-            "description": "Query parameters conflict or are malformed",
-            "type": "string"
-          },
-          "default": {
-            "description": "Unknown error",
             "type": "string"
           }
         }
@@ -1774,47 +1140,19 @@
             "pattern": "^[0-9]{9}$"
           }
         ],
-        "tags": [
-          "email_aliases"
-        ],
         "responses": {
           "200": {
             "description": "Email Aliases successfully returned",
-            "type": "string"
-          },
-          "400": {
-            "description": "Invalid Request - unable to interpret request",
-            "type": "string"
-          },
-          "401": {
-            "description": "Authentication required to access data",
-            "type": "string"
-          },
-          "403": {
-            "description": "Access denied to protected data",
-            "type": "string"
-          },
-          "404": {
-            "description": "The resource does not exist",
-            "type": "string"
-          },
-          "409": {
-            "description": "Query parameters conflict or are malformed",
-            "type": "string"
-          },
-          "default": {
-            "description": "Unknown error",
             "type": "string"
           }
         }
       }
     },
-    "/{byu_id}/email_aliases/{email_alias},{forwarding_address}": {
+    "/{byu_id}/email_aliases/{email_alias_vars}": {
       "x-http-passthrough-url": "https://persons.arch.byu.edu/services/persons/{byu_id}/email_aliases/{email_alias},{forwarding_address}",
       "x-http-passthrough-path-params": {
         "byu_id": "byu_id",
-        "email_alias": "email_alias",
-        "forwarding_address": "forwarding_address"
+        "email_alias_vars": "email_alias_vars"
       },
       "get": {
         "summary": "Email aliases",
@@ -1846,36 +1184,9 @@
             "format": "email"
           }
         ],
-        "tags": [
-          "email_aliases"
-        ],
         "responses": {
           "200": {
             "description": "Email Alias successfully returned",
-            "type": "string"
-          },
-          "400": {
-            "description": "Invalid Request - unable to interpret request",
-            "type": "string"
-          },
-          "401": {
-            "description": "Authentication required to access data",
-            "type": "string"
-          },
-          "403": {
-            "description": "Access denied to protected data",
-            "type": "string"
-          },
-          "404": {
-            "description": "The resource does not exist",
-            "type": "string"
-          },
-          "409": {
-            "description": "Query parameters conflict or are malformed",
-            "type": "string"
-          },
-          "default": {
-            "description": "Unknown error",
             "type": "string"
           }
         }
@@ -1914,43 +1225,13 @@
             "in": "body",
             "description": "The email address values to be set",
             "required": true,
-            "type": "string"
-          }
-        ],
-        "tags": [
-          "email_aliases"
+            "schema": {
+              "$ref": "#/definitions/inputBody"
+            }          }
         ],
         "responses": {
           "200": {
             "description": "Email Alias successfully updated",
-            "type": "string"
-          },
-          "207": {
-            "description": "Partial Success - unable to raise event",
-            "type": "string"
-          },
-          "400": {
-            "description": "Invalid Request - unable to interpret request",
-            "type": "string"
-          },
-          "401": {
-            "description": "Authentication required to access data",
-            "type": "string"
-          },
-          "403": {
-            "description": "Access denied to protected data",
-            "type": "string"
-          },
-          "404": {
-            "description": "The resource does not exist",
-            "type": "string"
-          },
-          "409": {
-            "description": "Query parameters conflict or are malformed",
-            "type": "string"
-          },
-          "default": {
-            "description": "Unknown error",
             "type": "string"
           }
         }
@@ -1985,40 +1266,9 @@
             "format": "email"
           }
         ],
-        "tags": [
-          "email_aliases"
-        ],
         "responses": {
           "204": {
             "description": "Email Alias successfully deleted",
-            "type": "string"
-          },
-          "207": {
-            "description": "Partial Success - unable to raise event",
-            "type": "string"
-          },
-          "400": {
-            "description": "Invalid Request - unable to interpret request",
-            "type": "string"
-          },
-          "401": {
-            "description": "Authentication required to access data",
-            "type": "string"
-          },
-          "403": {
-            "description": "Access denied to protected data",
-            "type": "string"
-          },
-          "404": {
-            "description": "The resource does not exist",
-            "type": "string"
-          },
-          "409": {
-            "description": "Query parameters conflict or are malformed",
-            "type": "string"
-          },
-          "default": {
-            "description": "Unknown error",
             "type": "string"
           }
         }
@@ -2043,40 +1293,9 @@
             "pattern": "^[0-9]{9}$"
           }
         ],
-        "tags": [
-          "employee_summaries"
-        ],
         "responses": {
           "200": {
             "description": "Employee information for the person successfully returned",
-            "type": "string"
-          },
-          "203": {
-            "description": "Employee information for the person successfully returned public info only",
-            "type": "string"
-          },
-          "400": {
-            "description": "Invalid Request - unable to interpret request",
-            "type": "string"
-          },
-          "401": {
-            "description": "Authentication required to access data",
-            "type": "string"
-          },
-          "403": {
-            "description": "Access denied to protected data",
-            "type": "string"
-          },
-          "404": {
-            "description": "The resource does not exist",
-            "type": "string"
-          },
-          "409": {
-            "description": "Query parameters conflict or are malformed",
-            "type": "string"
-          },
-          "default": {
-            "description": "Unknown error",
             "type": "string"
           }
         }
@@ -2101,36 +1320,9 @@
             "pattern": "^[0-9]{9}$"
           }
         ],
-        "tags": [
-          "ethnicities"
-        ],
         "responses": {
           "200": {
             "description": "Ethnicities successfully returned",
-            "type": "string"
-          },
-          "400": {
-            "description": "Invalid Request - unable to interpret request",
-            "type": "string"
-          },
-          "401": {
-            "description": "Authentication required to access data",
-            "type": "string"
-          },
-          "403": {
-            "description": "Access denied to protected data",
-            "type": "string"
-          },
-          "404": {
-            "description": "The resource does not exist",
-            "type": "string"
-          },
-          "409": {
-            "description": "Query parameters conflict or are malformed",
-            "type": "string"
-          },
-          "default": {
-            "description": "Unknown error",
             "type": "string"
           }
         }
@@ -2175,36 +1367,9 @@
             ]
           }
         ],
-        "tags": [
-          "ethnicities"
-        ],
         "responses": {
           "200": {
             "description": "Ethnicity successfully returned",
-            "type": "string"
-          },
-          "400": {
-            "description": "Invalid Request - unable to interpret request",
-            "type": "string"
-          },
-          "401": {
-            "description": "Authentication required to access data",
-            "type": "string"
-          },
-          "403": {
-            "description": "Access denied to protected data",
-            "type": "string"
-          },
-          "404": {
-            "description": "The resource does not exist",
-            "type": "string"
-          },
-          "409": {
-            "description": "Query parameters conflict or are malformed",
-            "type": "string"
-          },
-          "default": {
-            "description": "Unknown error",
             "type": "string"
           }
         }
@@ -2246,43 +1411,13 @@
             "in": "body",
             "description": "The address values to be set",
             "required": true,
-            "type": "string"
-          }
-        ],
-        "tags": [
-          "ethnicities"
+            "schema": {
+              "$ref": "#/definitions/inputBody"
+            }          }
         ],
         "responses": {
           "200": {
             "description": "Ethnicity successfully updated",
-            "type": "string"
-          },
-          "207": {
-            "description": "Partial Success - unable to raise event",
-            "type": "string"
-          },
-          "400": {
-            "description": "Invalid Request - unable to interpret request",
-            "type": "string"
-          },
-          "401": {
-            "description": "Authentication required to access data",
-            "type": "string"
-          },
-          "403": {
-            "description": "Access denied to protected data",
-            "type": "string"
-          },
-          "404": {
-            "description": "The resource does not exist",
-            "type": "string"
-          },
-          "409": {
-            "description": "Query parameters conflict or are malformed",
-            "type": "string"
-          },
-          "default": {
-            "description": "Unknown error",
             "type": "string"
           }
         }
@@ -2320,40 +1455,9 @@
             ]
           }
         ],
-        "tags": [
-          "ethnicities"
-        ],
         "responses": {
           "204": {
             "description": "Ethnicity successfully deleted",
-            "type": "string"
-          },
-          "207": {
-            "description": "Partial Success - unable to raise event",
-            "type": "string"
-          },
-          "400": {
-            "description": "Invalid Request - unable to interpret request",
-            "type": "string"
-          },
-          "401": {
-            "description": "Authentication required to access data",
-            "type": "string"
-          },
-          "403": {
-            "description": "Access denied to protected data",
-            "type": "string"
-          },
-          "404": {
-            "description": "The resource does not exist",
-            "type": "string"
-          },
-          "409": {
-            "description": "Query parameters conflict or are malformed",
-            "type": "string"
-          },
-          "default": {
-            "description": "Unknown error",
             "type": "string"
           }
         }
@@ -2378,47 +1482,19 @@
             "pattern": "^[0-9]{9}$"
           }
         ],
-        "tags": [
-          "family_phones"
-        ],
         "responses": {
           "200": {
             "description": "Family Phones successfully returned",
-            "type": "string"
-          },
-          "400": {
-            "description": "Invalid Request - unable to interpret request",
-            "type": "string"
-          },
-          "401": {
-            "description": "Authentication required to access data",
-            "type": "string"
-          },
-          "403": {
-            "description": "Access denied to protected data",
-            "type": "string"
-          },
-          "404": {
-            "description": "The resource does not exist",
-            "type": "string"
-          },
-          "409": {
-            "description": "Query parameters conflict or are malformed",
-            "type": "string"
-          },
-          "default": {
-            "description": "Unknown error",
             "type": "string"
           }
         }
       }
     },
-    "/{byu_id}/family_phones/{phone_type},{lookup_number}": {
+    "/{byu_id}/family_phones/{phone_vars}": {
       "x-http-passthrough-url": "https://persons.arch.byu.edu/services/persons/{byu_id}/email_aliases/{phone_type},{lookup_number}",
       "x-http-passthrough-path-params": {
         "byu_id": "byu_id",
-        "phone_type": "phone_type",
-        "lookup_number": "lookup_number"
+        "phone_vars": "phone_vars"
       },
       "get": {
         "summary": "Family phones",
@@ -2452,36 +1528,9 @@
             "type": "string"
           }
         ],
-        "tags": [
-          "family_phones"
-        ],
         "responses": {
           "200": {
             "description": "Family Phone successfully returned",
-            "type": "string"
-          },
-          "400": {
-            "description": "Invalid Request - unable to interpret request",
-            "type": "string"
-          },
-          "401": {
-            "description": "Authentication required to access data",
-            "type": "string"
-          },
-          "403": {
-            "description": "Access denied to protected data",
-            "type": "string"
-          },
-          "404": {
-            "description": "The resource does not exist",
-            "type": "string"
-          },
-          "409": {
-            "description": "Query parameters conflict or are malformed",
-            "type": "string"
-          },
-          "default": {
-            "description": "Unknown error",
             "type": "string"
           }
         }
@@ -2523,43 +1572,13 @@
             "in": "body",
             "description": "The attributes associated with the family phone",
             "required": true,
-            "type": "string"
-          }
-        ],
-        "tags": [
-          "family_phones"
+            "schema": {
+              "$ref": "#/definitions/inputBody"
+            }          }
         ],
         "responses": {
           "200": {
             "description": "Family Phone successfully updated",
-            "type": "string"
-          },
-          "207": {
-            "description": "Partial Success - unable to raise event",
-            "type": "string"
-          },
-          "400": {
-            "description": "Invalid Request - unable to interpret request",
-            "type": "string"
-          },
-          "401": {
-            "description": "Authentication required to access data",
-            "type": "string"
-          },
-          "403": {
-            "description": "Access denied to protected data",
-            "type": "string"
-          },
-          "404": {
-            "description": "The resource does not exist",
-            "type": "string"
-          },
-          "409": {
-            "description": "Query parameters conflict or are malformed",
-            "type": "string"
-          },
-          "default": {
-            "description": "Unknown error",
             "type": "string"
           }
         }
@@ -2597,40 +1616,9 @@
             "pattern": "^[0-9]{1,30}$"
           }
         ],
-        "tags": [
-          "family_phones"
-        ],
         "responses": {
           "204": {
             "description": "Family Phone successfully deleted",
-            "type": "string"
-          },
-          "207": {
-            "description": "Partial Success - unable to raise event",
-            "type": "string"
-          },
-          "400": {
-            "description": "Invalid Request - unable to interpret request",
-            "type": "string"
-          },
-          "401": {
-            "description": "Authentication required to access data",
-            "type": "string"
-          },
-          "403": {
-            "description": "Access denied to protected data",
-            "type": "string"
-          },
-          "404": {
-            "description": "The resource does not exist",
-            "type": "string"
-          },
-          "409": {
-            "description": "Query parameters conflict or are malformed",
-            "type": "string"
-          },
-          "default": {
-            "description": "Unknown error",
             "type": "string"
           }
         }
@@ -2655,36 +1643,9 @@
             "pattern": "^[0-9]{9}$"
           }
         ],
-        "tags": [
-          "government_records"
-        ],
         "responses": {
           "200": {
             "description": "Government Records successfully returned",
-            "type": "string"
-          },
-          "400": {
-            "description": "Invalid Request - unable to interpret request",
-            "type": "string"
-          },
-          "401": {
-            "description": "Authentication required to access data",
-            "type": "string"
-          },
-          "403": {
-            "description": "Access denied to protected data",
-            "type": "string"
-          },
-          "404": {
-            "description": "The resource does not exist",
-            "type": "string"
-          },
-          "409": {
-            "description": "Query parameters conflict or are malformed",
-            "type": "string"
-          },
-          "default": {
-            "description": "Unknown error",
             "type": "string"
           }
         }
@@ -2707,43 +1668,13 @@
             "in": "body",
             "description": "The person data to be updated",
             "required": true,
-            "type": "string"
-          }
-        ],
-        "tags": [
-          "government_records"
+            "schema": {
+              "$ref": "#/definitions/inputBody"
+            }          }
         ],
         "responses": {
           "200": {
             "description": "Government Records successfully updated",
-            "type": "string"
-          },
-          "207": {
-            "description": "Partial Success - unable to raise event",
-            "type": "string"
-          },
-          "400": {
-            "description": "Invalid Request - unable to interpret request",
-            "type": "string"
-          },
-          "401": {
-            "description": "Authentication required to access data",
-            "type": "string"
-          },
-          "403": {
-            "description": "Access denied to protected data",
-            "type": "string"
-          },
-          "404": {
-            "description": "The resource does not exist",
-            "type": "string"
-          },
-          "409": {
-            "description": "Query parameters conflict or are malformed",
-            "type": "string"
-          },
-          "default": {
-            "description": "Unknown error",
             "type": "string"
           }
         }
@@ -2768,36 +1699,9 @@
             "pattern": "^[0-9]{9}$"
           }
         ],
-        "tags": [
-          "group_membership_events"
-        ],
         "responses": {
           "200": {
             "description": "Group Membership Events successfully returned",
-            "type": "string"
-          },
-          "400": {
-            "description": "Invalid Request - unable to interpret request",
-            "type": "string"
-          },
-          "401": {
-            "description": "Authentication required to access data",
-            "type": "string"
-          },
-          "403": {
-            "description": "Access denied to protected data",
-            "type": "string"
-          },
-          "404": {
-            "description": "The resource does not exist",
-            "type": "string"
-          },
-          "409": {
-            "description": "Query parameters conflict or are malformed",
-            "type": "string"
-          },
-          "default": {
-            "description": "Unknown error",
             "type": "string"
           }
         }
@@ -2823,40 +1727,9 @@
             "type": "string"
           }
         ],
-        "tags": [
-          "group_membership_events"
-        ],
         "responses": {
           "201": {
             "description": "Group Membership Events successfully updated",
-            "type": "string"
-          },
-          "207": {
-            "description": "Partial Success - unable to raise event",
-            "type": "string"
-          },
-          "400": {
-            "description": "Invalid Request - unable to interpret request",
-            "type": "string"
-          },
-          "401": {
-            "description": "Authentication required to access data",
-            "type": "string"
-          },
-          "403": {
-            "description": "Access denied to protected data",
-            "type": "string"
-          },
-          "404": {
-            "description": "The resource does not exist",
-            "type": "string"
-          },
-          "409": {
-            "description": "Query parameters conflict or are malformed",
-            "type": "string"
-          },
-          "default": {
-            "description": "Unknown error",
             "type": "string"
           }
         }
@@ -2890,36 +1763,9 @@
             "pattern": "^[0-9]+$"
           }
         ],
-        "tags": [
-          "group_membership_events"
-        ],
         "responses": {
           "200": {
             "description": "Group Membership Event successfully returned",
-            "type": "string"
-          },
-          "400": {
-            "description": "Invalid Request - unable to interpret request",
-            "type": "string"
-          },
-          "401": {
-            "description": "Authentication required to access data",
-            "type": "string"
-          },
-          "403": {
-            "description": "Access denied to protected data",
-            "type": "string"
-          },
-          "404": {
-            "description": "The resource does not exist",
-            "type": "string"
-          },
-          "409": {
-            "description": "Query parameters conflict or are malformed",
-            "type": "string"
-          },
-          "default": {
-            "description": "Unknown error",
             "type": "string"
           }
         }
@@ -2950,43 +1796,13 @@
             "in": "body",
             "description": "The group event values to be set",
             "required": true,
-            "type": "string"
-          }
-        ],
-        "tags": [
-          "group_membership_events"
+            "schema": {
+              "$ref": "#/definitions/inputBody"
+            }          }
         ],
         "responses": {
           "200": {
             "description": "Group Membership Event successfully updated",
-            "type": "string"
-          },
-          "207": {
-            "description": "Partial Success - unable to raise event",
-            "type": "string"
-          },
-          "400": {
-            "description": "Invalid Request - unable to interpret request",
-            "type": "string"
-          },
-          "401": {
-            "description": "Authentication required to access data",
-            "type": "string"
-          },
-          "403": {
-            "description": "Access denied to protected data",
-            "type": "string"
-          },
-          "404": {
-            "description": "The resource does not exist",
-            "type": "string"
-          },
-          "409": {
-            "description": "Query parameters conflict or are malformed",
-            "type": "string"
-          },
-          "default": {
-            "description": "Unknown error",
             "type": "string"
           }
         }
@@ -3013,40 +1829,9 @@
             "pattern": "^[0-9]+$"
           }
         ],
-        "tags": [
-          "group_membership_events"
-        ],
         "responses": {
           "204": {
             "description": "Group Membership Event successfully deleted",
-            "type": "string"
-          },
-          "207": {
-            "description": "Partial Success - unable to raise event",
-            "type": "string"
-          },
-          "400": {
-            "description": "Invalid Request - unable to interpret request",
-            "type": "string"
-          },
-          "401": {
-            "description": "Authentication required to access data",
-            "type": "string"
-          },
-          "403": {
-            "description": "Access denied to protected data",
-            "type": "string"
-          },
-          "404": {
-            "description": "The resource does not exist",
-            "type": "string"
-          },
-          "409": {
-            "description": "Query parameters conflict or are malformed",
-            "type": "string"
-          },
-          "default": {
-            "description": "Unknown error",
             "type": "string"
           }
         }
@@ -3071,36 +1856,9 @@
             "pattern": "^[0-9]{9}$"
           }
         ],
-        "tags": [
-          "group_memberships"
-        ],
         "responses": {
           "200": {
             "description": "Group Memberships successfully returned",
-            "type": "string"
-          },
-          "400": {
-            "description": "Invalid Request - unable to interpret request",
-            "type": "string"
-          },
-          "401": {
-            "description": "Authentication required to access data",
-            "type": "string"
-          },
-          "403": {
-            "description": "Access denied to protected data",
-            "type": "string"
-          },
-          "404": {
-            "description": "The resource does not exist",
-            "type": "string"
-          },
-          "409": {
-            "description": "Query parameters conflict or are malformed",
-            "type": "string"
-          },
-          "default": {
-            "description": "Unknown error",
             "type": "string"
           }
         }
@@ -3133,36 +1891,9 @@
             "type": "string"
           }
         ],
-        "tags": [
-          "group_memberships"
-        ],
         "responses": {
           "200": {
             "description": "Group Membership successfully returned",
-            "type": "string"
-          },
-          "400": {
-            "description": "Invalid Request - unable to interpret request",
-            "type": "string"
-          },
-          "401": {
-            "description": "Authentication required to access data",
-            "type": "string"
-          },
-          "403": {
-            "description": "Access denied to protected data",
-            "type": "string"
-          },
-          "404": {
-            "description": "The resource does not exist",
-            "type": "string"
-          },
-          "409": {
-            "description": "Query parameters conflict or are malformed",
-            "type": "string"
-          },
-          "default": {
-            "description": "Unknown error",
             "type": "string"
           }
         }
@@ -3188,40 +1919,9 @@
             "type": "string"
           }
         ],
-        "tags": [
-          "group_memberships"
-        ],
         "responses": {
           "200": {
             "description": "Group Membership successfully updated",
-            "type": "string"
-          },
-          "207": {
-            "description": "Partial Success - unable to raise event",
-            "type": "string"
-          },
-          "400": {
-            "description": "Invalid Request - unable to interpret request",
-            "type": "string"
-          },
-          "401": {
-            "description": "Authentication required to access data",
-            "type": "string"
-          },
-          "403": {
-            "description": "Access denied to protected data",
-            "type": "string"
-          },
-          "404": {
-            "description": "The resource does not exist",
-            "type": "string"
-          },
-          "409": {
-            "description": "Query parameters conflict or are malformed",
-            "type": "string"
-          },
-          "default": {
-            "description": "Unknown error",
             "type": "string"
           }
         }
@@ -3247,40 +1947,9 @@
             "type": "string"
           }
         ],
-        "tags": [
-          "group_memberships"
-        ],
         "responses": {
           "204": {
             "description": "Group Membership successfully deleted",
-            "type": "string"
-          },
-          "207": {
-            "description": "Partial Success - unable to raise event",
-            "type": "string"
-          },
-          "400": {
-            "description": "Invalid Request - unable to interpret request",
-            "type": "string"
-          },
-          "401": {
-            "description": "Authentication required to access data",
-            "type": "string"
-          },
-          "403": {
-            "description": "Access denied to protected data",
-            "type": "string"
-          },
-          "404": {
-            "description": "The resource does not exist",
-            "type": "string"
-          },
-          "409": {
-            "description": "Query parameters conflict or are malformed",
-            "type": "string"
-          },
-          "default": {
-            "description": "Unknown error",
             "type": "string"
           }
         }
@@ -3305,36 +1974,9 @@
             "pattern": "^[0-9]{9}$"
           }
         ],
-        "tags": [
-          "groups_administered"
-        ],
         "responses": {
           "200": {
             "description": "Groups Administered successfully returned",
-            "type": "string"
-          },
-          "400": {
-            "description": "Invalid Request - unable to interpret request",
-            "type": "string"
-          },
-          "401": {
-            "description": "Authentication required to access data",
-            "type": "string"
-          },
-          "403": {
-            "description": "Access denied to protected data",
-            "type": "string"
-          },
-          "404": {
-            "description": "The resource does not exist",
-            "type": "string"
-          },
-          "409": {
-            "description": "Query parameters conflict or are malformed",
-            "type": "string"
-          },
-          "default": {
-            "description": "Unknown error",
             "type": "string"
           }
         }
@@ -3367,36 +2009,9 @@
             "type": "string"
           }
         ],
-        "tags": [
-          "groups_administered"
-        ],
         "responses": {
           "200": {
             "description": "Group Administered successfully returned",
-            "type": "string"
-          },
-          "400": {
-            "description": "Invalid Request - unable to interpret request",
-            "type": "string"
-          },
-          "401": {
-            "description": "Authentication required to access data",
-            "type": "string"
-          },
-          "403": {
-            "description": "Access denied to protected data",
-            "type": "string"
-          },
-          "404": {
-            "description": "The resource does not exist",
-            "type": "string"
-          },
-          "409": {
-            "description": "Query parameters conflict or are malformed",
-            "type": "string"
-          },
-          "default": {
-            "description": "Unknown error",
             "type": "string"
           }
         }
@@ -3426,43 +2041,13 @@
             "in": "body",
             "description": "The group_administered values to be set",
             "required": true,
-            "type": "string"
-          }
-        ],
-        "tags": [
-          "groups_administered"
+            "schema": {
+              "$ref": "#/definitions/inputBody"
+            }          }
         ],
         "responses": {
           "200": {
             "description": "Group Administered successfully updated",
-            "type": "string"
-          },
-          "207": {
-            "description": "Partial Success - unable to raise event",
-            "type": "string"
-          },
-          "400": {
-            "description": "Invalid Request - unable to interpret request",
-            "type": "string"
-          },
-          "401": {
-            "description": "Authentication required to access data",
-            "type": "string"
-          },
-          "403": {
-            "description": "Access denied to protected data",
-            "type": "string"
-          },
-          "404": {
-            "description": "The resource does not exist",
-            "type": "string"
-          },
-          "409": {
-            "description": "Query parameters conflict or are malformed",
-            "type": "string"
-          },
-          "default": {
-            "description": "Unknown error",
             "type": "string"
           }
         }
@@ -3488,40 +2073,9 @@
             "type": "string"
           }
         ],
-        "tags": [
-          "groups_administered"
-        ],
         "responses": {
           "204": {
             "description": "Group Administered successfully deleted",
-            "type": "string"
-          },
-          "207": {
-            "description": "Partial Success - unable to raise event",
-            "type": "string"
-          },
-          "400": {
-            "description": "Invalid Request - unable to interpret request",
-            "type": "string"
-          },
-          "401": {
-            "description": "Authentication required to access data",
-            "type": "string"
-          },
-          "403": {
-            "description": "Access denied to protected data",
-            "type": "string"
-          },
-          "404": {
-            "description": "The resource does not exist",
-            "type": "string"
-          },
-          "409": {
-            "description": "Query parameters conflict or are malformed",
-            "type": "string"
-          },
-          "default": {
-            "description": "Unknown error",
             "type": "string"
           }
         }
@@ -3546,36 +2100,9 @@
             "pattern": "^[0-9]{9}$"
           }
         ],
-        "tags": [
-          "id_cards"
-        ],
         "responses": {
           "200": {
             "description": "ID Cards successfully returned",
-            "type": "string"
-          },
-          "400": {
-            "description": "Invalid Request - unable to interpret request",
-            "type": "string"
-          },
-          "401": {
-            "description": "Authentication required to access data",
-            "type": "string"
-          },
-          "403": {
-            "description": "Access denied to protected data",
-            "type": "string"
-          },
-          "404": {
-            "description": "The resource does not exist",
-            "type": "string"
-          },
-          "409": {
-            "description": "Query parameters conflict or are malformed",
-            "type": "string"
-          },
-          "default": {
-            "description": "Unknown error",
             "type": "string"
           }
         }
@@ -3598,43 +2125,14 @@
             "in": "body",
             "description": "The ID card info being changed",
             "required": true,
-            "type": "string"
+            "schema": {
+              "$ref": "#/definitions/inputBody"
+            }
           }
-        ],
-        "tags": [
-          "id_cards"
         ],
         "responses": {
           "200": {
             "description": "ID Card successfully updated",
-            "type": "string"
-          },
-          "207": {
-            "description": "Partial Success - unable to raise event",
-            "type": "string"
-          },
-          "400": {
-            "description": "Invalid Request - unable to interpret request",
-            "type": "string"
-          },
-          "401": {
-            "description": "Authentication required to access data",
-            "type": "string"
-          },
-          "403": {
-            "description": "Access denied to protected data",
-            "type": "string"
-          },
-          "404": {
-            "description": "The resource does not exist",
-            "type": "string"
-          },
-          "409": {
-            "description": "Query parameters conflict or are malformed",
-            "type": "string"
-          },
-          "default": {
-            "description": "Unknown error",
             "type": "string"
           }
         }
@@ -3653,40 +2151,9 @@
             "pattern": "^[0-9]{9}$"
           }
         ],
-        "tags": [
-          "id_cards"
-        ],
         "responses": {
           "204": {
             "description": "ID Card successfully deleted",
-            "type": "string"
-          },
-          "207": {
-            "description": "Partial Success - unable to raise event",
-            "type": "string"
-          },
-          "400": {
-            "description": "Invalid Request - unable to interpret request",
-            "type": "string"
-          },
-          "401": {
-            "description": "Authentication required to access data",
-            "type": "string"
-          },
-          "403": {
-            "description": "Access denied to protected data",
-            "type": "string"
-          },
-          "404": {
-            "description": "The resource does not exist",
-            "type": "string"
-          },
-          "409": {
-            "description": "Query parameters conflict or are malformed",
-            "type": "string"
-          },
-          "default": {
-            "description": "Unknown error",
             "type": "string"
           }
         }
@@ -3711,36 +2178,9 @@
             "pattern": "^[0-9]{9}$"
           }
         ],
-        "tags": [
-          "languages"
-        ],
         "responses": {
           "200": {
             "description": "Languages successfully returned",
-            "type": "string"
-          },
-          "400": {
-            "description": "Invalid Request - unable to interpret request",
-            "type": "string"
-          },
-          "401": {
-            "description": "Authentication required to access data",
-            "type": "string"
-          },
-          "403": {
-            "description": "Access denied to protected data",
-            "type": "string"
-          },
-          "404": {
-            "description": "The resource does not exist",
-            "type": "string"
-          },
-          "409": {
-            "description": "Query parameters conflict or are malformed",
-            "type": "string"
-          },
-          "default": {
-            "description": "Unknown error",
             "type": "string"
           }
         }
@@ -3773,36 +2213,9 @@
             "type": "string"
           }
         ],
-        "tags": [
-          "languages"
-        ],
         "responses": {
           "200": {
             "description": "Language successfully returned",
-            "type": "string"
-          },
-          "400": {
-            "description": "Invalid Request - unable to interpret request",
-            "type": "string"
-          },
-          "401": {
-            "description": "Authentication required to access data",
-            "type": "string"
-          },
-          "403": {
-            "description": "Access denied to protected data",
-            "type": "string"
-          },
-          "404": {
-            "description": "The resource does not exist",
-            "type": "string"
-          },
-          "409": {
-            "description": "Query parameters conflict or are malformed",
-            "type": "string"
-          },
-          "default": {
-            "description": "Unknown error",
             "type": "string"
           }
         }
@@ -3832,43 +2245,14 @@
             "in": "body",
             "description": "The language parameters to be created",
             "required": true,
-            "type": "string"
+            "schema": {
+              "$ref": "#/definitions/inputBody"
+            }
           }
-        ],
-        "tags": [
-          "languages"
         ],
         "responses": {
           "200": {
             "description": "Language information successfully updated",
-            "type": "string"
-          },
-          "207": {
-            "description": "Partial Success - unable to raise event",
-            "type": "string"
-          },
-          "400": {
-            "description": "Invalid Request - unable to interpret request",
-            "type": "string"
-          },
-          "401": {
-            "description": "Authentication required to access data",
-            "type": "string"
-          },
-          "403": {
-            "description": "Access denied to protected data",
-            "type": "string"
-          },
-          "404": {
-            "description": "The resource does not exist",
-            "type": "string"
-          },
-          "409": {
-            "description": "Query parameters conflict or are malformed",
-            "type": "string"
-          },
-          "default": {
-            "description": "Unknown error",
             "type": "string"
           }
         }
@@ -3894,40 +2278,9 @@
             "type": "string"
           }
         ],
-        "tags": [
-          "languages"
-        ],
         "responses": {
           "204": {
             "description": "Language successfully deleted",
-            "type": "string"
-          },
-          "207": {
-            "description": "Partial Success - unable to raise event",
-            "type": "string"
-          },
-          "400": {
-            "description": "Invalid Request - unable to interpret request",
-            "type": "string"
-          },
-          "401": {
-            "description": "Authentication required to access data",
-            "type": "string"
-          },
-          "403": {
-            "description": "Access denied to protected data",
-            "type": "string"
-          },
-          "404": {
-            "description": "The resource does not exist",
-            "type": "string"
-          },
-          "409": {
-            "description": "Query parameters conflict or are malformed",
-            "type": "string"
-          },
-          "default": {
-            "description": "Unknown error",
             "type": "string"
           }
         }
@@ -3967,36 +2320,9 @@
             "type": "string"
           }
         ],
-        "tags": [
-          "my_delegators"
-        ],
         "responses": {
           "200": {
             "description": "Guest Rights successfully returned",
-            "type": "string"
-          },
-          "400": {
-            "description": "Invalid Request - unable to interpret request",
-            "type": "string"
-          },
-          "401": {
-            "description": "Authentication required to access data",
-            "type": "string"
-          },
-          "403": {
-            "description": "Access denied to protected data",
-            "type": "string"
-          },
-          "404": {
-            "description": "The resource does not exist",
-            "type": "string"
-          },
-          "409": {
-            "description": "Query parameters conflict or are malformed",
-            "type": "string"
-          },
-          "default": {
-            "description": "Unknown error",
             "type": "string"
           }
         }
@@ -4028,36 +2354,9 @@
             "type": "string"
           }
         ],
-        "tags": [
-          "my_delegators"
-        ],
         "responses": {
           "200": {
             "description": "Guest Rights successfully returned",
-            "type": "string"
-          },
-          "400": {
-            "description": "Invalid Request - unable to interpret request",
-            "type": "string"
-          },
-          "401": {
-            "description": "Authentication required to access data",
-            "type": "string"
-          },
-          "403": {
-            "description": "Access denied to protected data",
-            "type": "string"
-          },
-          "404": {
-            "description": "The resource does not exist",
-            "type": "string"
-          },
-          "409": {
-            "description": "Query parameters conflict or are malformed",
-            "type": "string"
-          },
-          "default": {
-            "description": "Unknown error",
             "type": "string"
           }
         }
@@ -4086,43 +2385,14 @@
             "in": "body",
             "description": "The details of the rights being granted.",
             "required": true,
-            "type": "string"
+            "schema": {
+              "$ref": "#/definitions/inputBody"
+            }
           }
-        ],
-        "tags": [
-          "my_delegators"
         ],
         "responses": {
           "200": {
             "description": "Guest Rights successfully updated",
-            "type": "string"
-          },
-          "207": {
-            "description": "Partial Success - unable to raise event",
-            "type": "string"
-          },
-          "400": {
-            "description": "Invalid Request - unable to interpret request",
-            "type": "string"
-          },
-          "401": {
-            "description": "Authentication required to access data",
-            "type": "string"
-          },
-          "403": {
-            "description": "Access denied to protected data",
-            "type": "string"
-          },
-          "404": {
-            "description": "The resource does not exist",
-            "type": "string"
-          },
-          "409": {
-            "description": "Query parameters conflict or are malformed",
-            "type": "string"
-          },
-          "default": {
-            "description": "Unknown error",
             "type": "string"
           }
         }
@@ -4162,36 +2432,9 @@
             "type": "string"
           }
         ],
-        "tags": [
-          "guests"
-        ],
         "responses": {
           "200": {
             "description": "Guest Access rights granted by a BYU ID successfully returned",
-            "type": "string"
-          },
-          "400": {
-            "description": "Invalid Request - unable to interpret request",
-            "type": "string"
-          },
-          "401": {
-            "description": "Authentication required to access data",
-            "type": "string"
-          },
-          "403": {
-            "description": "Access denied to protected data",
-            "type": "string"
-          },
-          "404": {
-            "description": "The resource does not exist",
-            "type": "string"
-          },
-          "409": {
-            "description": "Query parameters conflict or are malformed",
-            "type": "string"
-          },
-          "default": {
-            "description": "Unknown error",
             "type": "string"
           }
         }
@@ -4214,43 +2457,13 @@
             "in": "body",
             "description": "The guest access information to be set",
             "required": true,
-            "type": "string"
-          }
-        ],
-        "tags": [
-          "guests"
+            "schema": {
+              "$ref": "#/definitions/inputBody"
+            }          }
         ],
         "responses": {
           "201": {
             "description": "Guest access rights successfully created",
-            "type": "string"
-          },
-          "207": {
-            "description": "Partial Success - unable to raise event",
-            "type": "string"
-          },
-          "400": {
-            "description": "Invalid Request - unable to interpret request",
-            "type": "string"
-          },
-          "401": {
-            "description": "Authentication required to access data",
-            "type": "string"
-          },
-          "403": {
-            "description": "Access denied to protected data",
-            "type": "string"
-          },
-          "404": {
-            "description": "The resource does not exist",
-            "type": "string"
-          },
-          "409": {
-            "description": "Query parameters conflict or are malformed",
-            "type": "string"
-          },
-          "default": {
-            "description": "Unknown error",
             "type": "string"
           }
         }
@@ -4283,36 +2496,9 @@
             "type": "string"
           }
         ],
-        "tags": [
-          "guests"
-        ],
         "responses": {
           "200": {
             "description": "Guest Access information for the person/guest successfully returned",
-            "type": "string"
-          },
-          "400": {
-            "description": "Invalid Request - unable to interpret request",
-            "type": "string"
-          },
-          "401": {
-            "description": "Authentication required to access data",
-            "type": "string"
-          },
-          "403": {
-            "description": "Access denied to protected data",
-            "type": "string"
-          },
-          "404": {
-            "description": "The resource does not exist",
-            "type": "string"
-          },
-          "409": {
-            "description": "Query parameters conflict or are malformed",
-            "type": "string"
-          },
-          "default": {
-            "description": "Unknown error",
             "type": "string"
           }
         }
@@ -4342,43 +2528,13 @@
             "in": "body",
             "description": "The guest access information to be set",
             "required": true,
-            "type": "string"
-          }
-        ],
-        "tags": [
-          "guests"
+            "schema": {
+              "$ref": "#/definitions/inputBody"
+            }          }
         ],
         "responses": {
           "200": {
             "description": "Guest Access information for the person/guest successfully updated",
-            "type": "string"
-          },
-          "207": {
-            "description": "Partial Success - unable to raise event",
-            "type": "string"
-          },
-          "400": {
-            "description": "Invalid Request - unable to interpret request",
-            "type": "string"
-          },
-          "401": {
-            "description": "Authentication required to access data",
-            "type": "string"
-          },
-          "403": {
-            "description": "Access denied to protected data",
-            "type": "string"
-          },
-          "404": {
-            "description": "The resource does not exist",
-            "type": "string"
-          },
-          "409": {
-            "description": "Query parameters conflict or are malformed",
-            "type": "string"
-          },
-          "default": {
-            "description": "Unknown error",
             "type": "string"
           }
         }
@@ -4410,39 +2566,11 @@
             "type": "boolean"
           }
         ],
-        "tags": [
-          "personal_records"
-        ],
         "responses": {
           "200": {
             "description": "Personal Records successfully returned",
             "type": "string"
-          },
-          "400": {
-            "description": "Invalid Request - unable to interpret request",
-            "type": "string"
-          },
-          "401": {
-            "description": "Authentication required to access data",
-            "type": "string"
-          },
-          "403": {
-            "description": "Access denied to protected data",
-            "type": "string"
-          },
-          "404": {
-            "description": "The resource does not exist",
-            "type": "string"
-          },
-          "409": {
-            "description": "Query parameters conflict or are malformed",
-            "type": "string"
-          },
-          "default": {
-            "description": "Unknown error",
-            "type": "string"
           }
-        }
       },
       "put": {
         "summary": "Persons",
@@ -4462,43 +2590,13 @@
             "in": "body",
             "description": "The person data to be updated",
             "required": true,
-            "type": "string"
-          }
-        ],
-        "tags": [
-          "personal_records"
+            "schema": {
+              "$ref": "#/definitions/inputBody"
+            }          }
         ],
         "responses": {
           "200": {
             "description": "Personal Records successfully updated",
-            "type": "string"
-          },
-          "207": {
-            "description": "Partial Success - unable to raise event",
-            "type": "string"
-          },
-          "400": {
-            "description": "Invalid Request - unable to interpret request",
-            "type": "string"
-          },
-          "401": {
-            "description": "Authentication required to access data",
-            "type": "string"
-          },
-          "403": {
-            "description": "Access denied to protected data",
-            "type": "string"
-          },
-          "404": {
-            "description": "The resource does not exist",
-            "type": "string"
-          },
-          "409": {
-            "description": "Query parameters conflict or are malformed",
-            "type": "string"
-          },
-          "default": {
-            "description": "Unknown error",
             "type": "string"
           }
         }
@@ -4530,36 +2628,9 @@
             "type": "string"
           }
         ],
-        "tags": [
-          "phones"
-        ],
         "responses": {
           "200": {
             "description": "Phones successfully returned",
-            "type": "string"
-          },
-          "400": {
-            "description": "Invalid Request - unable to interpret request",
-            "type": "string"
-          },
-          "401": {
-            "description": "Authentication required to access data",
-            "type": "string"
-          },
-          "403": {
-            "description": "Access denied to protected data",
-            "type": "string"
-          },
-          "404": {
-            "description": "The resource does not exist",
-            "type": "string"
-          },
-          "409": {
-            "description": "Query parameters conflict or are malformed",
-            "type": "string"
-          },
-          "default": {
-            "description": "Unknown error",
             "type": "string"
           }
         }
@@ -4593,36 +2664,9 @@
             "pattern": "^[0-9]{1,30}$"
           }
         ],
-        "tags": [
-          "phones"
-        ],
         "responses": {
           "200": {
             "description": "Phone successfully returned",
-            "type": "string"
-          },
-          "400": {
-            "description": "Invalid Request - unable to interpret request",
-            "type": "string"
-          },
-          "401": {
-            "description": "Authentication required to access data",
-            "type": "string"
-          },
-          "403": {
-            "description": "Access denied to protected data",
-            "type": "string"
-          },
-          "404": {
-            "description": "The resource does not exist",
-            "type": "string"
-          },
-          "409": {
-            "description": "Query parameters conflict or are malformed",
-            "type": "string"
-          },
-          "default": {
-            "description": "Unknown error",
             "type": "string"
           }
         }
@@ -4653,43 +2697,14 @@
             "in": "body",
             "description": "The phone information to be updated or created",
             "required": true,
-            "type": "string"
+            "schema": {
+              "$ref": "#/definitions/inputBody"
+            }
           }
-        ],
-        "tags": [
-          "phones"
         ],
         "responses": {
           "200": {
             "description": "Phone successfully updated",
-            "type": "string"
-          },
-          "207": {
-            "description": "Partial Success - unable to raise event",
-            "type": "string"
-          },
-          "400": {
-            "description": "Invalid Request - unable to interpret request",
-            "type": "string"
-          },
-          "401": {
-            "description": "Authentication required to access data",
-            "type": "string"
-          },
-          "403": {
-            "description": "Access denied to protected data",
-            "type": "string"
-          },
-          "404": {
-            "description": "The resource does not exist",
-            "type": "string"
-          },
-          "409": {
-            "description": "Query parameters conflict or are malformed",
-            "type": "string"
-          },
-          "default": {
-            "description": "Unknown error",
             "type": "string"
           }
         }
@@ -4716,40 +2731,9 @@
             "pattern": "^[0-9]{1,30}$"
           }
         ],
-        "tags": [
-          "phones"
-        ],
         "responses": {
           "204": {
             "description": "Phone successfully deleted",
-            "type": "string"
-          },
-          "207": {
-            "description": "Partial Success - unable to raise event",
-            "type": "string"
-          },
-          "400": {
-            "description": "Invalid Request - unable to interpret request",
-            "type": "string"
-          },
-          "401": {
-            "description": "Authentication required to access data",
-            "type": "string"
-          },
-          "403": {
-            "description": "Access denied to protected data",
-            "type": "string"
-          },
-          "404": {
-            "description": "The resource does not exist",
-            "type": "string"
-          },
-          "409": {
-            "description": "Query parameters conflict or are malformed",
-            "type": "string"
-          },
-          "default": {
-            "description": "Unknown error",
             "type": "string"
           }
         }
@@ -4774,36 +2758,9 @@
             "pattern": "^[0-9]{9}$"
           }
         ],
-        "tags": [
-          "relationships"
-        ],
         "responses": {
           "200": {
             "description": "Relationships successfully returned",
-            "type": "string"
-          },
-          "400": {
-            "description": "Invalid Request - unable to interpret request",
-            "type": "string"
-          },
-          "401": {
-            "description": "Authentication required to access data",
-            "type": "string"
-          },
-          "403": {
-            "description": "Access denied to protected data",
-            "type": "string"
-          },
-          "404": {
-            "description": "The resource does not exist",
-            "type": "string"
-          },
-          "409": {
-            "description": "Query parameters conflict or are malformed",
-            "type": "string"
-          },
-          "default": {
-            "description": "Unknown error",
             "type": "string"
           }
         }
@@ -4836,36 +2793,9 @@
             "type": "string"
           }
         ],
-        "tags": [
-          "relationships"
-        ],
         "responses": {
           "200": {
             "description": "Relationship successfully returned",
-            "type": "string"
-          },
-          "400": {
-            "description": "Invalid Request - unable to interpret request",
-            "type": "string"
-          },
-          "401": {
-            "description": "Authentication required to access data",
-            "type": "string"
-          },
-          "403": {
-            "description": "Access denied to protected data",
-            "type": "string"
-          },
-          "404": {
-            "description": "The resource does not exist",
-            "type": "string"
-          },
-          "409": {
-            "description": "Query parameters conflict or are malformed",
-            "type": "string"
-          },
-          "default": {
-            "description": "Unknown error",
             "type": "string"
           }
         }
@@ -4895,43 +2825,13 @@
             "in": "body",
             "description": "The relationship information to be set",
             "required": true,
-            "type": "string"
-          }
-        ],
-        "tags": [
-          "relationships"
+            "schema": {
+              "$ref": "#/definitions/inputBody"
+            }          }
         ],
         "responses": {
           "200": {
             "description": "Relationship successfully updated",
-            "type": "string"
-          },
-          "207": {
-            "description": "Partial Success - unable to raise event",
-            "type": "string"
-          },
-          "400": {
-            "description": "Invalid Request - unable to interpret request",
-            "type": "string"
-          },
-          "401": {
-            "description": "Authentication required to access data",
-            "type": "string"
-          },
-          "403": {
-            "description": "Access denied to protected data",
-            "type": "string"
-          },
-          "404": {
-            "description": "The resource does not exist",
-            "type": "string"
-          },
-          "409": {
-            "description": "Query parameters conflict or are malformed",
-            "type": "string"
-          },
-          "default": {
-            "description": "Unknown error",
             "type": "string"
           }
         }
@@ -4957,40 +2857,9 @@
             "type": "string"
           }
         ],
-        "tags": [
-          "relationships"
-        ],
         "responses": {
           "204": {
             "description": "Relationship successfully deleted",
-            "type": "string"
-          },
-          "207": {
-            "description": "Partial Success - unable to raise event",
-            "type": "string"
-          },
-          "400": {
-            "description": "Invalid Request - unable to interpret request",
-            "type": "string"
-          },
-          "401": {
-            "description": "Authentication required to access data",
-            "type": "string"
-          },
-          "403": {
-            "description": "Access denied to protected data",
-            "type": "string"
-          },
-          "404": {
-            "description": "The resource does not exist",
-            "type": "string"
-          },
-          "409": {
-            "description": "Query parameters conflict or are malformed",
-            "type": "string"
-          },
-          "default": {
-            "description": "Unknown error",
             "type": "string"
           }
         }
@@ -5015,40 +2884,18 @@
             "pattern": "^[0-9]{9}$"
           }
         ],
-        "tags": [
-          "student_summaries"
-        ],
         "responses": {
           "200": {
             "description": "Student Summaries successfully returned",
             "type": "string"
-          },
-          "400": {
-            "description": "Invalid Request - unable to interpret request",
-            "type": "string"
-          },
-          "401": {
-            "description": "Authentication required to access data",
-            "type": "string"
-          },
-          "403": {
-            "description": "Access denied to protected data",
-            "type": "string"
-          },
-          "404": {
-            "description": "The resource does not exist",
-            "type": "string"
-          },
-          "409": {
-            "description": "Query parameters conflict or are malformed",
-            "type": "string"
-          },
-          "default": {
-            "description": "Unknown error",
-            "type": "string"
           }
         }
       }
+    }
+  },
+  "definitions": {
+    "inputBody": {
+      "type": "string"
     }
   }
 }
