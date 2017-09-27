@@ -22,6 +22,69 @@ const db = require('../db');
 const sql = require('./sql');
 const utils = require('../utils');
 const eventy = require('../event');
+const handel_utils = require('handel-utils');
+const AWS = require('aws-sdk');
+const https = require('https');
+AWS.config.update({ region: 'us-west-2' });
+
+function IsJsonString(str) {
+  try {
+    JSON.parse(str);
+  } catch (e) {
+    return false;
+  }
+  return true;
+}
+
+async function request(config, body) {
+  return new Promise((resolve, reject) => {
+    const req = https.request(config, (res) => {
+      console.log('statusCode:', res.statusCode);
+      console.log('headers:', res.headers);
+
+      let result = '';
+      res.on('data', (data) => {
+        result += data.toString();
+      });
+      res.on('end', () => {
+        console.log('RESULT:', result);
+        if (IsJsonString(result)) {
+          resolve(JSON.parse(result))
+        }
+        else {
+          resolve(result);
+        }
+      });
+    });
+    req.on('error', (e) => {
+      console.log('Reject');
+      console.error(e.stack);
+      reject(e);
+    });
+    if (arguments.length > 1 && body) {
+      console.log('BODY XXXXX:', body);
+      req.write(body);
+    }
+    req.end();
+  });
+}
+
+async function getChurchInfo(cmis_id, client_id, client_secret, hostname) {
+  const lds_api = {
+    hostname: hostname,
+    port: 443,
+    path: '/byu/adm/mlu/v1/reporting/membershipRecord?individualId=' + cmis_id,
+    method: 'GET',
+    headers: {
+      'client_id': client_id,
+      'client_secret': client_secret,
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    }
+  };
+
+  return await request(lds_api);
+}
 
 function mapDBResultsToDefinition(definitions, row, birth_api_type, death_api_type, lds_api_type, rel_api_type) {
   return Enforcer.applyTemplate(definitions.personal_records, definitions,
@@ -58,17 +121,177 @@ function mapDBResultsToDefinition(definitions, row, birth_api_type, death_api_ty
   );
 }
 
-exports.getPersonalRecords = async function getBasic(definitions, byu_id, permissions) {
-  const params = [byu_id];
-  const sql_query = sql.sql.getPersonalRecords;
-  const results = await db.execute(sql_query, params);
+exports.getPersonalRecords = async function getBasic(definitions, byu_id, permissions, query) {
+  let results = {};
+  console.log("QUERY",query);
+  if ('refresh_from_church' in query && query.refresh_from_church) {
+    const connection = await db.getConnection();
+    let date_time_updated = moment();
+    date_time_updated = date_time_updated.clone().tz('America/Denver').format('YYYY-MM-DD HH:mm:ss.SSS');
+    let lds_cmis_ids = [];
+    let lds_account_ids = [];
+    let lds_confirmation_dates = [];
+    let lds_confirmation_date = '';
+    const cmis_check_sql = `
+      select p.byu_id          as "byu_id", 
+             k.credential_id   as "credential_id", 
+             k.credential_type as "credential_type", 
+             p.date_of_birth   as "date_of_birth" 
+      from   iam.person p 
+             left join iam.credential k 
+                    on p.byu_id = k.byu_id 
+      where  p.byu_id = :BYU_ID`;
+    const update_iam = `
+      update iam.person 
+      set    lds_confirmation_date = to_date(:LDS_CONFIRMATION_DATE, 'YYYY-MM-DD'),
+             religion_code = 'LDS',
+             updated_by_id = '266389392',
+             date_time_updated = systimestamp
+      where  byu_id = :BYU_ID`;
+    const update_pro = `
+      update pro.person 
+      set    religion_code = 'LDS',
+             updated_by_id = '280262482'
+             date_time_updated = sysdate
+      where  byu_id = :BYU_ID`;
+
+    const cmis_check_results = await connection.execute(cmis_check_sql, [byu_id]);
+    const params = await handel_utils.fetchParameters(AWS, ['lds_client_id', 'lds_client_secret']);
+    const from_results = await connection.execute(sql.sql.getGovernmentRecords, [byu_id]);
+    const processed_body = processFromResults('266389392', from_results.rows[0]);
+
+    if (!cmis_check_results.rows.length) {
+      throw utils.Error(404, 'BYU_ID Not Found In Person Table');
+    }
+    for (let i = cmis_check_results.rows.length; i--;) {
+      if (cmis_check_results.rows[i].credential_type === 'LDS_CMIS_ID') {
+        lds_cmis_ids.push(cmis_check_results.rows[i].credential_id);
+      }
+      if (cmis_check_results.rows[i].credential_type === 'LDS_ACCOUNT_ID') {
+        lds_account_ids.push(cmis_check_results.rows[i].credential_id);
+      }
+    }
+
+    if (!lds_cmis_ids.length && !lds_account_ids.length) {
+      throw utils.Error(400, 'Bad Request', [
+        'Account Not Federated with LDS Church'
+      ])
+    }
+
+    if (!lds_cmis_ids.length && lds_account_ids.length) {
+      throw utils.Error(400, 'Bad Request', [
+        'Federated with Church but no LDS_CMIS_ID',
+        `Add '?samlFederation=LDS_ACCOUNT_ID' to user's CAS login to force LDS Account Update to add CMIS ID`
+      ])
+    }
+
+
+    for (let i = lds_cmis_ids.length; i--;) {
+      const church_info = await getChurchInfo(lds_cmis_ids[i], params.client_id, params.client_secret, params.hostname);
+      if (church_info.iosRecordData.confirmationDate) lds_confirmation_dates.push(church_info.iosRecordData.confirmationDate)
+    }
+
+    if (!lds_confirmation_dates.length) {
+      throw utils.Error(404, 'Not Found', [
+        'No Confirmation Date Found for the federated LDS ACCOUNT',
+        'Or not able to connect to Church API'
+      ])
+    }
+
+    for (let i = lds_confirmation_dates.length; i--;) {
+      if (!(moment.tz(lds_confirmation_dates[i], 'YYYY-MM-DD', 'America/Denver') > date_time_updated ||
+          (cmis_check_results.rows[0].date_of_birth && moment(lds_confirmation_dates[i], 'YYYY-MM-DD') < moment(cmis_check_results.rows[0].date_of_birth, 'YYYY-MM-DD').add(8, 'years')))) {
+        lds_confirmation_date = lds_confirmation_dates[i];
+      }
+    }
+
+    if (!lds_confirmation_date) {
+      throw utils.Error(400, 'Bad Request', [
+        'LDS Confirmation Date is in the future or is before the 8th birthday',
+        'Possibly federated with the wrong account (e.g. Parent or Sibling)'
+      ])
+    }
+
+    await connection.execute(update_iam, [lds_confirmation_date, byu_id]);
+    await connection.execute(update_pro, [byu_id]);
+
+    let log_params = [
+      processed_body.change_type,
+      byu_id,
+      date_time_updated,
+      '266389392',
+      processed_body.date_time_created,
+      processed_body.created_by_id,
+      processed_body.from_date_of_birth,
+      processed_body.from_deceased,
+      processed_body.from_date_of_death,
+      processed_body.sex,
+      processed_body.from_marital_status,
+      processed_body.from_religion_code,
+      processed_body.from_lds_unit_number,
+      processed_body.citizenship_country_code,
+      processed_body.birth_country_code,
+      processed_body.home_town,
+      processed_body.home_state_code,
+      processed_body.home_country_code,
+      processed_body.high_school_code,
+      processed_body.restricted,
+      processed_body.ssn,
+      processed_body.ssn_verification_date,
+      processed_body.visa_type,
+      processed_body.i20_expiration_date,
+      processed_body.visa_type_source,
+      processed_body.from_lds_confirmation_date,
+      processed_body.from_date_of_birth,
+      processed_body.from_deceased,
+      processed_body.from_date_of_death,
+      processed_body.sex,
+      processed_body.from_marital_status,
+      processed_body.from_religion_code,
+      processed_body.from_lds_unit_number,
+      processed_body.citizenship_country_code,
+      processed_body.birth_country_code,
+      processed_body.home_town,
+      processed_body.home_state_code,
+      processed_body.home_country_code,
+      processed_body.high_school_code,
+      processed_body.restricted,
+      processed_body.ssn,
+      processed_body.ssn_verification_date,
+      processed_body.visa_type,
+      processed_body.i20_expiration_date,
+      processed_body.visa_type_source,
+      lds_confirmation_date
+    ];
+    console.log(log_params);
+    await connection.execute(sql.modifyPersonalRecord.logChange, log_params, { autoCommit: true });
+    let new_body = {
+      religion_code: 'LDS',
+      lds_unit_number: processed_body.from_lds_unit_number,
+      lds_confirmation_date: lds_confirmation_date,
+      date_of_birth: processed_body.from_date_of_birth,
+      date_of_death: processed_body.from_date_of_death,
+      deceased: processed_body.from_deceased,
+      marital_status: processed_body.from_marital_status,
+      updated_by_id: '266389392',
+      date_time_updated: date_time_updated
+
+    };
+    await personalRecordChangedEvents(connection, byu_id, new_body, processed_body);
+
+    results = await connection.execute(sql.sql.getPersonalRecords, [byu_id]);
+    connection.close();
+  } else {
+    results = await db.execute(sql.sql.getPersonalRecords, [byu_id]);
+  }
+
   const vital_api_type = auth.canUpdateDoB(permissions) ? 'modifiable' : 'read-only';
   const lds_api_type = auth.canIsLdsSync(permissions) ? 'modifiable' : 'read-only';
   const rel_api_type = auth.canUpdateReligion(permissions) ? 'modifiable' : 'read-only';
 
   console.log("Results", results);
   if (!results.rows.length ||
-    (results.rows[0].restricted === 'Y' &&
+    (/^Y$/.test(results.rows[0].restricted) &&
       !auth.hasRestrictedRights(permissions))) {
     throw utils.Error(404, 'BYU_ID Not Found In Person Table')
   }
@@ -949,7 +1172,7 @@ exports.modifyPersonalRecords = async (definitions, byu_id, body, authorized_byu
       processed_body.visa_type,
       processed_body.i20_expiration_date,
       processed_body.visa_type_source,
-      new_body.lds_confirmation_date,
+      new_body.lds_confirmation_date
     ];
     console.log(sql_query);
     console.log(log_params);
@@ -961,9 +1184,9 @@ exports.modifyPersonalRecords = async (definitions, byu_id, body, authorized_byu
   sql_query = sql.sql.getPersonalRecords;
   const results = await connection.execute(sql_query, params);
   connection.close();
-  const vital_api_type = can_update_dob ? 'modifiable': 'read-only';
-  const lds_api_type = is_lds_sync ? 'modifiable': 'read-only';
-  const rel_api_type = can_update_rel ? 'modifiable': 'read-only';
+  const vital_api_type = can_update_dob ? 'modifiable' : 'read-only';
+  const lds_api_type = is_lds_sync ? 'modifiable' : 'read-only';
+  const rel_api_type = can_update_rel ? 'modifiable' : 'read-only';
 
   return mapDBResultsToDefinition(definitions, results.rows[0], vital_api_type, vital_api_type, lds_api_type, rel_api_type);
 };

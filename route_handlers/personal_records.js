@@ -24,7 +24,7 @@ exports.getPersonalRecords = async (req, res) => {
   try {
     const permissions = await auth.getPermissions(req, ['personal_records']);
     const personal_records = await personalRecordsController.getPersonalRecords(req.swagger.root.definitions,
-      req.params.byu_id, permissions);
+      req.params.byu_id, permissions, req.query);
 
     res.send(personal_records);
   } catch (error) {
