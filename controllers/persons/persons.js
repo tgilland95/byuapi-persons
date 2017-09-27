@@ -322,7 +322,7 @@ exports.getPersons = async (definitions, query, permissions) => {
   }
   const results = await db.execute(`${sql_query_select}${sql_query_from}${sql_query_where}`, params);
   console.log("HERE273");
-  const values = await Promise.all(results.rows.map(row => exports.getPerson(definitions, new_body.byu_id, query, permissions)));
+  const values = await Promise.all(results.rows.map(row => exports.getPerson(definitions, row.byu_id, query, permissions)));
   // console.log("I am not filtering"),
 
   // ): (
@@ -337,7 +337,7 @@ exports.getPersons = async (definitions, query, permissions) => {
       page_size: results.rows.length,
       default_page_size: 1,
       maximum_page_size: 100,
-      field_sets_returned: query,
+      field_sets_returned: query.field_sets,
       persons_values: values
     });
 // TODO: Should we embellish the HATEOAS 'self' links with the query parameters specified on this specific request?
