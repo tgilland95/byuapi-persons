@@ -25,9 +25,7 @@
     "/": {
       "get": {
         "x-http-passthrough-url": "https://persons.arch.byu.edu/services/persons/",
-        "summary": "Persons",
         "description": "Returns a collection of Persons",
-        "operationId": "getPersons",
         "parameters": [
           {
             "name": "byu_id",
@@ -305,19 +303,11 @@
               "marriott_school"
             ]
           }
-        ],
-        "responses": {
-          "200": {
-            "description": "A collection of Persons successfully returned",
-            "type": "string"
-          }
-        }
+        ]
       },
       "post": {
         "x-http-passthrough-url": "https://byuapi-persons-dev.arch.byu.edu/byuapi/persons/",
-        "summary": "Persons",
         "description": "Creates a Person",
-        "operationId": "createPerson",
         "parameters": [
           {
             "name": "person_post",
@@ -328,13 +318,7 @@
               "$ref": "#/definitions/inputBody"
             }
           }
-        ],
-        "responses": {
-          "201": {
-            "description": "A collection of Persons successfully created",
-            "type": "string"
-          }
-        }
+        ]
       }
     },
     "/{byu_id}": {
@@ -347,9 +331,7 @@
         "x-http-passthrough-path-params": {
           "byu_id": "byu_id"
         },
-        "summary": "Persons",
         "description": "Returns the person with the specified BYU ID",
-        "operationId": "getPerson",
         "parameters": [
           {
             "name": "byu_id",
@@ -407,18 +389,10 @@
               "marriott_school"
             ]
           }
-        ],
-        "responses": {
-          "200": {
-            "description": "Person successfully returned",
-            "type": "string"
-          }
-        }
+        ]
       },
       "put": {
-        "summary": "Persons",
         "description": "Modifies the Person with specified BYU ID",
-        "operationId": "modifyPerson",
         "parameters": [
           {
             "name": "byu_id",
@@ -437,18 +411,10 @@
               "$ref": "#/definitions/inputBody"
             }
           }
-        ],
-        "responses": {
-          "200": {
-            "description": "Person successfully updated",
-            "type": "string"
-          }
-        }
+        ]
       },
       "delete": {
-        "summary": "Persons",
         "description": "Deletes the person with the specified BYU ID",
-        "operationId": "deletePerson",
         "parameters": [
           {
             "name": "byu_id",
@@ -458,13 +424,7 @@
             "type": "string",
             "pattern": "^[0-9]{9}$"
           }
-        ],
-        "responses": {
-          "204": {
-            "description": "Person successfully deleted",
-            "type": "string"
-          }
-        }
+        ]
       }
     },
     "/{byu_id}/addresses": {
@@ -473,9 +433,7 @@
         "byu_id": "byu_id"
       },
       "get": {
-        "summary": "Addresses",
         "description": "Returns all addresses for the BYU ID",
-        "operationId": "getAddresses",
         "parameters": [
           {
             "name": "byu_id",
@@ -485,13 +443,7 @@
             "type": "string",
             "pattern": "^[0-9]{9}$"
           }
-        ],
-        "responses": {
-          "200": {
-            "description": "Addresses successfully returned",
-            "type": "string"
-          }
-        }
+        ]
       }
     },
     "/{byu_id}/addresses/{address_type}": {
@@ -501,9 +453,7 @@
         "address_type": "address_type"
       },
       "get": {
-        "summary": "Addresses",
         "description": "Returns the address for the specified BYU ID and address type",
-        "operationId": "getAddress",
         "parameters": [
           {
             "name": "byu_id",
@@ -526,18 +476,10 @@
               "WRK"
             ]
           }
-        ],
-        "responses": {
-          "200": {
-            "description": "Address successfully returned",
-            "type": "string"
-          }
-        }
+        ]
       },
       "put": {
-        "summary": "Addresses",
         "description": "Modifies or creates an address for the specified BYU ID and address_type",
-        "operationId": "modifyAddress",
         "parameters": [
           {
             "name": "byu_id",
@@ -569,18 +511,10 @@
               "$ref": "#/definitions/inputBody"
             }
           }
-        ],
-        "responses": {
-          "200": {
-            "description": "Addresses successfully updated",
-            "type": "string"
-          }
-        }
+        ]
       },
       "delete": {
-        "summary": "Addresses",
         "description": "Deletes the address for the BYU ID/address_type",
-        "operationId": "deleteAddress",
         "parameters": [
           {
             "name": "byu_id",
@@ -603,13 +537,7 @@
               "WRK"
             ]
           }
-        ],
-        "responses": {
-          "204": {
-            "description": "Address successfully deleted",
-            "type": "string"
-          }
-        }
+        ]
       }
     },
     "/{byu_id}/alias_domains": {
@@ -618,9 +546,7 @@
         "byu_id": "byu_id"
       },
       "get": {
-        "summary": "Alias domains",
         "description": "Returns all alias domains for the BYU ID",
-        "operationId": "getAliasDomains",
         "parameters": [
           {
             "name": "byu_id",
@@ -630,13 +556,7 @@
             "type": "string",
             "pattern": "^[0-9]{9}$"
           }
-        ],
-        "responses": {
-          "200": {
-            "description": "Alias Domains successfully returned",
-            "type": "string"
-          }
-        }
+        ]
       }
     },
     "/{byu_id}/alias_domains/{alias_domain}": {
@@ -646,9 +566,7 @@
         "alias_domain": "alias_domain"
       },
       "get": {
-        "summary": "Alias domains",
         "description": "Returns the attributes for an individual email alias domain",
-        "operationId": "getAliasDomain",
         "parameters": [
           {
             "name": "byu_id",
@@ -665,18 +583,10 @@
             "required": true,
             "type": "string"
           }
-        ],
-        "responses": {
-          "200": {
-            "description": "Alias Domain successfully returned",
-            "type": "string"
-          }
-        }
+        ]
       },
       "put": {
-        "summary": "Alias domain",
         "description": "Modifies or creates an alias domain for the BYU ID",
-        "operationId": "modifyAliasDomain",
         "parameters": [
           {
             "name": "byu_id",
@@ -701,18 +611,10 @@
             "schema": {
               "$ref": "#/definitions/inputBody"
             }          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Alias Domain successfully updated",
-            "type": "string"
-          }
-        }
+        ]
       },
       "delete": {
-        "summary": "Alias domain",
         "description": "Deletes the alias domain for the BYU ID",
-        "operationId": "deleteAliasDomain",
         "parameters": [
           {
             "name": "byu_id",
@@ -729,13 +631,7 @@
             "required": true,
             "type": "string"
           }
-        ],
-        "responses": {
-          "204": {
-            "description": "Alias Domain successfully deleted",
-            "type": "string"
-          }
-        }
+        ]
       }
     },
     "/{byu_id}/credentials": {
@@ -744,9 +640,7 @@
         "byu_id": "byu_id"
       },
       "get": {
-        "summary": "Credentials",
         "description": "Returns all credentials for the BYU ID",
-        "operationId": "getCredentials",
         "parameters": [
           {
             "name": "byu_id",
@@ -777,17 +671,11 @@
               "WSO2_CLIENT_ID"
             ]
           }
-        ],
-        "responses": {
-          "200": {
-            "description": "Credentials successfully returned",
-            "type": "string"
-          }
-        }
+        ]
       }
     },
     "/{byu_id}/credentials/{credential_vars}": {
-      "x-http-passthrough-url": "https://persons.arch.byu.edu/services/persons/{byu_id}/credentials/{credential_type},{credential_id}",
+      "x-http-passthrough-url": "https://persons.arch.byu.edu/services/persons/{byu_id}/credentials/{credential_vars}",
       "x-http-passthrough-path-params": {
         "byu_id": "byu_id",
         "credential_vars": "credential_vars"
@@ -1151,7 +1039,7 @@
       }
     },
     "/{byu_id}/email_aliases/{email_alias_vars}": {
-      "x-http-passthrough-url": "https://persons.arch.byu.edu/services/persons/{byu_id}/email_aliases/{email_alias},{forwarding_address}",
+      "x-http-passthrough-url": "https://persons.arch.byu.edu/services/persons/{byu_id}/email_aliases/{email_alias_vars}",
       "x-http-passthrough-path-params": {
         "byu_id": "byu_id",
         "email_alias_vars": "email_alias_vars"
@@ -1493,7 +1381,7 @@
       }
     },
     "/{byu_id}/family_phones/{phone_vars}": {
-      "x-http-passthrough-url": "https://persons.arch.byu.edu/services/persons/{byu_id}/email_aliases/{phone_type},{lookup_number}",
+      "x-http-passthrough-url": "https://persons.arch.byu.edu/services/persons/{byu_id}/email_aliases/{phone_vars}",
       "x-http-passthrough-path-params": {
         "byu_id": "byu_id",
         "phone_vars": "phone_vars"
