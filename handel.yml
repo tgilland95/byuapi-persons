@@ -38,8 +38,6 @@ environments:
       load_balancer:
         type: https
         https_certificate: b996d9d5-09fc-4b45-8bed-214dabde2ca0
-        dns_names:
-        - byuapi-persons-dev.arch.byu.edu
       containers:
       - name: app
         max_mb: 350 # change to support two docker containers per box
