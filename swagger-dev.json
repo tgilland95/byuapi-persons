@@ -4319,12 +4319,11 @@
             "pattern": "^[0-9]{9}$"
           },
           {
-            "name": "lds_cmis_id",
+            "name": "refresh_from_church",
             "in": "query",
             "description": "The person's BYU ID",
             "required": false,
-            "type": "string",
-            "pattern": "^[0-9]+$"
+            "type": "boolean"
           }
         ],
         "tags": [

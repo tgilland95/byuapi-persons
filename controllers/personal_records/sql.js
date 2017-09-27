@@ -132,7 +132,7 @@ exports.sql = {
                                               where  a.person_id = e2.person_id) ) 
            left join hr.per_warehouse 
                   on a.byu_id = hr.per_warehouse.byu_id 
-    where  a.byu_id = :BYU_ID`
+    where  a.byu_id = :BYU_ID`,
 };
 
 exports.modifyPersonalRecord = {
