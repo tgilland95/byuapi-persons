@@ -87,7 +87,7 @@ async function getChurchInfo(cmis_id, client_id, client_secret, hostname) {
 }
 
 function mapDBResultsToDefinition(definitions, row, birth_api_type, death_api_type, lds_api_type, rel_api_type) {
-  return Enforcer.applyTemplate(definitions.personal_records, definitions,
+  return Enforcer.applyTemplate(definitions.personalRecords, definitions,
     {
       cache_date_time: new Date().toISOString(),
       byu_id: row.byu_id,
