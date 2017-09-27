@@ -2523,9 +2523,7 @@
             "in": "body",
             "description": "The attributes associated with the family phone",
             "required": true,
-            "schema": {
-              "$ref": "#/definitions/familyPhonePut"
-            }
+            "type": "string"
           }
         ],
         "tags": [
