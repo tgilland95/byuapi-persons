@@ -70,15 +70,15 @@ async function request(config, body) {
   });
 }
 
-async function getChurchInfo(cmis_id, client_id, client_secret, hostname) {
+async function getChurchInfo(cmis_id, lds_client_id, lds_client_secret, hostname) {
   const lds_api = {
     hostname: hostname,
     port: 443,
     path: `/byu/adm/mlu/v1/reporting/membershipRecord?individualId=${cmis_id}`,
     method: 'GET',
     headers: {
-      'client_id': client_id,
-      'client_secret': client_secret,
+      'client_id': lds_client_id,
+      'client_secret': lds_client_secret,
       'Accept': 'application/json',
       'Content-Type': 'application/json'
     }
@@ -157,7 +157,8 @@ exports.getPersonalRecords = async function getBasic(definitions, byu_id, permis
       where  byu_id = :BYU_ID`;
 
     const cmis_check_results = await connection.execute(cmis_check_sql, [byu_id]);
-    const params = await handel_utils.fetchParameters(AWS, ['lds_client_id', 'lds_client_secret']);
+    const params = await handel_utils.fetchParameters(AWS, ['lds_client_id', 'lds_client_secret', 'hostname']);
+    console.log("PARAMS", params);
     const from_results = await connection.execute(sql.sql.getPersonalRecords, [byu_id]);
     const processed_body = processFromResults('266389392', from_results.rows[0]);
 
@@ -186,12 +187,19 @@ exports.getPersonalRecords = async function getBasic(definitions, byu_id, permis
       ])
     }
 
-
-    for (let i = lds_cmis_ids.length; i--;) {
-      const church_info = await getChurchInfo(lds_cmis_ids[i], params.client_id, params.client_secret, params.hostname);
-      console.log("CMIS_ID", lds_cmis_ids[i]);
-      console.log("CHURCH_INFO", church_info);
-      if (IsJsonString(church_info.iosRecordData.confirmationDate) && church_info.iosRecordData.confirmationDate) lds_confirmation_dates.push(church_info.iosRecordData.confirmationDate)
+    try {
+      for (let i = lds_cmis_ids.length; i--;) {
+        const church_info = await getChurchInfo(lds_cmis_ids[i], params.lds_client_id, params.lds_client_secret, params.hostname);
+        console.log("CMIS_ID", lds_cmis_ids[i]);
+        console.log("CHURCH_INFO", church_info);
+        if (IsJsonString(church_info.iosRecordData.confirmationDate) && church_info.iosRecordData.confirmationDate) lds_confirmation_dates.push(church_info.iosRecordData.confirmationDate)
+      }
+    } catch (error) {
+      console.error(error.stack);
+      throw utils.Error(500, 'Internal Server Error', [
+        'Call to Church API failed',
+        'Possibly due to a test/invalid CMIS ID being used'
+      ])
     }
 
     if (!lds_confirmation_dates.length) {
