@@ -311,7 +311,7 @@
             "description": "A collection of Persons successfully returned",
             "type": "string"
           }
-\        }
+        }
       },
       "post": {
         "x-http-passthrough-url": "https://byuapi-persons-dev.arch.byu.edu/byuapi/persons/",
@@ -2571,6 +2571,7 @@
             "description": "Personal Records successfully returned",
             "type": "string"
           }
+        }
       },
       "put": {
         "summary": "Persons",
@@ -2592,7 +2593,8 @@
             "required": true,
             "schema": {
               "$ref": "#/definitions/inputBody"
-            }          }
+            }
+          }
         ],
         "responses": {
           "200": {
