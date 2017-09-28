@@ -321,14 +321,13 @@ exports.getPersons = async (definitions, query, permissions) => {
     }
   }
   const results = await db.execute(`${sql_query_select}${sql_query_from}${sql_query_where}`, params);
-  console.log("HERE273");
-  const values = await Promise.all(results.rows.map(row => exports.getPerson(definitions, row.byu_id, query, permissions)));
-  // console.log("I am not filtering"),
+  const values = (auth.hasRestrictedRights(permissions))? (
+    await Promise.all(results.rows.map((row) => exports.getPerson(definitions, row.byu_id, query, permissions)))
+  ) : (
+    await Promise.all(results.rows.filter(row => /^N$/.test(row.restricted)).map(row => exports.getPerson(definitions, row.byu_id, query, permissions)))
+  );
 
-  // ): (
-  //   console.log("I am filtering"),
-  //   await Promise.all(results.rows.filter(row=> /^N$/g.test(new_body.restricted)).map(row => exports.getPerson(definitions, new_body.byu_id, query, permissions)))
-  // );
+
   const persons = Enforcer.applyTemplate(definitions.persons, definitions,
     {
       collection_size: results.rows.length, // TODO: Can we use the length of the results.rows? We may get results back with no addresses but have results.
