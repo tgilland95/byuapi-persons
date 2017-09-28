@@ -25,7 +25,6 @@
     "/": {
       "get": {
         "x-http-passthrough-url": "https://persons.arch.byu.edu/services/persons/",
-        "description": "Returns a collection of Persons",
         "parameters": [
           {
             "name": "byu_id",
@@ -307,7 +306,6 @@
       },
       "post": {
         "x-http-passthrough-url": "https://byuapi-persons-dev.arch.byu.edu/byuapi/persons/",
-        "description": "Creates a Person",
         "parameters": [
           {
             "name": "person_post",
@@ -331,7 +329,6 @@
         "x-http-passthrough-path-params": {
           "byu_id": "byu_id"
         },
-        "description": "Returns the person with the specified BYU ID",
         "parameters": [
           {
             "name": "byu_id",
@@ -392,7 +389,6 @@
         ]
       },
       "put": {
-        "description": "Modifies the Person with specified BYU ID",
         "parameters": [
           {
             "name": "byu_id",
@@ -414,7 +410,6 @@
         ]
       },
       "delete": {
-        "description": "Deletes the person with the specified BYU ID",
         "parameters": [
           {
             "name": "byu_id",
@@ -433,7 +428,6 @@
         "byu_id": "byu_id"
       },
       "get": {
-        "description": "Returns all addresses for the BYU ID",
         "parameters": [
           {
             "name": "byu_id",
@@ -453,7 +447,6 @@
         "address_type": "address_type"
       },
       "get": {
-        "description": "Returns the address for the specified BYU ID and address type",
         "parameters": [
           {
             "name": "byu_id",
@@ -479,7 +472,6 @@
         ]
       },
       "put": {
-        "description": "Modifies or creates an address for the specified BYU ID and address_type",
         "parameters": [
           {
             "name": "byu_id",
@@ -514,7 +506,6 @@
         ]
       },
       "delete": {
-        "description": "Deletes the address for the BYU ID/address_type",
         "parameters": [
           {
             "name": "byu_id",
@@ -546,7 +537,6 @@
         "byu_id": "byu_id"
       },
       "get": {
-        "description": "Returns all alias domains for the BYU ID",
         "parameters": [
           {
             "name": "byu_id",
@@ -566,7 +556,6 @@
         "alias_domain": "alias_domain"
       },
       "get": {
-        "description": "Returns the attributes for an individual email alias domain",
         "parameters": [
           {
             "name": "byu_id",
@@ -586,7 +575,6 @@
         ]
       },
       "put": {
-        "description": "Modifies or creates an alias domain for the BYU ID",
         "parameters": [
           {
             "name": "byu_id",
@@ -614,7 +602,6 @@
         ]
       },
       "delete": {
-        "description": "Deletes the alias domain for the BYU ID",
         "parameters": [
           {
             "name": "byu_id",
@@ -640,7 +627,6 @@
         "byu_id": "byu_id"
       },
       "get": {
-        "description": "Returns all credentials for the BYU ID",
         "parameters": [
           {
             "name": "byu_id",
@@ -681,9 +667,6 @@
         "credential_vars": "credential_vars"
       },
       "get": {
-        "summary": "Credentials",
-        "description": "Returns the credential for the BYU ID/credential_type",
-        "operationId": "getCredential",
         "parameters": [
           {
             "name": "byu_id",
@@ -694,45 +677,15 @@
             "pattern": "^[0-9]{9}$"
           },
           {
-            "name": "credential_type",
+            "name": "credential_vars",
             "in": "path",
-            "description": "One of the credential types available through the meta/credential_type service.",
-            "required": true,
-            "type": "string",
-            "enum": [
-              "BYU_HAWAII_ID",
-              "BYU_IDAHO_ID",
-              "FACEBOOK_ID",
-              "GOOGLE_ID",
-              "ID_CARD",
-              "LDS_ACCOUNT_ID",
-              "LDS_CMIS_ID",
-              "NET_ID",
-              "PROX_CARD",
-              "SEMINARY_STUDENT_ID",
-              "SEOS_CARD",
-              "WSO2_CLIENT_ID"
-            ]
-          },
-          {
-            "name": "credential_id",
-            "in": "path",
-            "description": "One of the credential types available through the meta/credential_type service.",
+            "description": "The combination of the credential_type and credential_id to make API Gateway happy",
             "required": true,
             "type": "string"
           }
-        ],
-        "responses": {
-          "200": {
-            "description": "Credential successfully returned",
-            "type": "string"
-          }
-        }
+        ]
       },
       "put": {
-        "summary": "Credentials",
-        "description": "Modifies or creates a credential",
-        "operationId": "modifyCredential",
         "parameters": [
           {
             "name": "byu_id",
@@ -778,18 +731,9 @@
             "schema": {
               "$ref": "#/definitions/inputBody"
             }          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Credential successfully updated",
-            "type": "string"
-          }
-        }
+        ]
       },
       "delete": {
-        "summary": "Credentials",
-        "description": "Deletes a credential",
-        "operationId": "deleteCredential",
         "parameters": [
           {
             "name": "byu_id",
@@ -825,13 +769,7 @@
             "required": true,
             "type": "string"
           }
-        ],
-        "responses": {
-          "204": {
-            "description": "Credential successfully deleted",
-            "type": "string"
-          }
-        }
+        ]
       }
     },
     "/{byu_id}/delegated_operations_performed": {
@@ -840,9 +778,6 @@
         "byu_id": "byu_id"
       },
       "post": {
-        "summary": "Delegated operations performed",
-        "description": "Modifies or creates an address for the specified BYU ID and address_type",
-        "operationId": "modifyDelegatedOperationPerformed",
         "parameters": [
           {
             "name": "byu_id",
@@ -861,13 +796,7 @@
               "$ref": "#/definitions/inputBody"
             }
           }
-        ],
-        "responses": {
-          "201": {
-            "description": "Operation successfully added",
-            "type": "string"
-          }
-        }
+        ]
       }
     },
     "/{byu_id}/email_addresses": {
@@ -876,9 +805,6 @@
         "byu_id": "byu_id"
       },
       "get": {
-        "summary": "Email addresses",
-        "description": "Returns all email addresses for the BYU ID",
-        "operationId": "getEmailAddresses",
         "parameters": [
           {
             "name": "byu_id",
@@ -888,13 +814,7 @@
             "type": "string",
             "pattern": "^[0-9]{9}$"
           }
-        ],
-        "responses": {
-          "200": {
-            "description": "Email Addresses successfully returned",
-            "type": "string"
-          }
-        }
+        ]
       }
     },
     "/{byu_id}/email_addresses/{email_address_type}": {
@@ -904,9 +824,6 @@
         "email_address_type": "email_address_type"
       },
       "get": {
-        "summary": "Email addresses",
-        "description": "Returns the email address for the BYU ID/email_address_type",
-        "operationId": "getEmailAddress",
         "parameters": [
           {
             "name": "byu_id",
@@ -928,18 +845,9 @@
               "SECURITY"
             ]
           }
-        ],
-        "responses": {
-          "200": {
-            "description": "Email Address successfully returned",
-            "type": "string"
-          }
-        }
+        ]
       },
       "put": {
-        "summary": "Email addresses",
-        "description": "Modifies or creates an email address for the BYU ID/email_address_type",
-        "operationId": "modifyEmailAddress",
         "parameters": [
           {
             "name": "byu_id",
@@ -969,18 +877,9 @@
             "schema": {
               "$ref": "#/definitions/inputBody"
             }          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Email Address successfully updated",
-            "type": "string"
-          }
-        }
+        ]
       },
       "delete": {
-        "summary": "Email addresses",
-        "description": "Deletes the email address for the BYU ID/email_address_type",
-        "operationId": "deleteEmailAddress",
         "parameters": [
           {
             "name": "byu_id",
@@ -1002,13 +901,7 @@
               "SECURITY"
             ]
           }
-        ],
-        "responses": {
-          "204": {
-            "description": "Email Address successfully deleted",
-            "type": "string"
-          }
-        }
+        ]
       }
     },
     "/{byu_id}/email_aliases": {
@@ -1017,9 +910,6 @@
         "byu_id": "byu_id"
       },
       "get": {
-        "summary": "Email aliases",
-        "description": "Returns all email addresses for the BYU ID",
-        "operationId": "getEmailAliases",
         "parameters": [
           {
             "name": "byu_id",
@@ -1029,13 +919,7 @@
             "type": "string",
             "pattern": "^[0-9]{9}$"
           }
-        ],
-        "responses": {
-          "200": {
-            "description": "Email Aliases successfully returned",
-            "type": "string"
-          }
-        }
+        ]
       }
     },
     "/{byu_id}/email_aliases/{email_alias_vars}": {
@@ -1045,9 +929,6 @@
         "email_alias_vars": "email_alias_vars"
       },
       "get": {
-        "summary": "Email aliases",
-        "description": "Returns the email address for the BYU ID/email_address_type",
-        "operationId": "getEmailAlias",
         "parameters": [
           {
             "name": "byu_id",
@@ -1058,33 +939,15 @@
             "pattern": "^[0-9]{9}$"
           },
           {
-            "name": "email_alias",
+            "name": "email_alias_vars",
             "in": "path",
-            "description": "The email alias",
+            "description": "The email alias & forwarding address to make API Gateway happy",
             "required": true,
-            "type": "string",
-            "format": "email"
-          },
-          {
-            "name": "forwarding_address",
-            "in": "path",
-            "description": "The forwarding email address for the given alias",
-            "required": true,
-            "type": "string",
-            "format": "email"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Email Alias successfully returned",
             "type": "string"
           }
-        }
+        ]
       },
       "put": {
-        "summary": "Email aliases",
-        "description": "Modifies or creates an email alias for the BYU ID",
-        "operationId": "modifyEmailAlias",
         "parameters": [
           {
             "name": "byu_id",
@@ -1095,20 +958,11 @@
             "pattern": "^[0-9]{9}$"
           },
           {
-            "name": "email_alias",
+            "name": "email_alias_vars",
             "in": "path",
-            "description": "The email alias",
+            "description": "The email alias & forwarding address to make API Gateway happy",
             "required": true,
-            "type": "string",
-            "format": "email"
-          },
-          {
-            "name": "forwarding_address",
-            "in": "path",
-            "description": "The forwarding email address for the given alias",
-            "required": true,
-            "type": "string",
-            "format": "email"
+            "type": "string"
           },
           {
             "name": "email_alias_put",
@@ -1118,18 +972,9 @@
             "schema": {
               "$ref": "#/definitions/inputBody"
             }          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Email Alias successfully updated",
-            "type": "string"
-          }
-        }
+        ]
       },
       "delete": {
-        "summary": "Email aliases",
-        "description": "Deletes the email address for the BYU ID/email_address_type",
-        "operationId": "deleteEmailAlias",
         "parameters": [
           {
             "name": "byu_id",
@@ -1140,28 +985,13 @@
             "pattern": "^[0-9]{9}$"
           },
           {
-            "name": "email_alias",
+            "name": "email_alias_vars",
             "in": "path",
-            "description": "The email alias",
+            "description": "The email alias & forwarding address to make API Gateway happy",
             "required": true,
-            "type": "string",
-            "format": "email"
-          },
-          {
-            "name": "forwarding_address",
-            "in": "path",
-            "description": "The forwarding email address for the given alias",
-            "required": true,
-            "type": "string",
-            "format": "email"
-          }
-        ],
-        "responses": {
-          "204": {
-            "description": "Email Alias successfully deleted",
             "type": "string"
           }
-        }
+        ]
       }
     },
     "/{byu_id}/employee_summaries": {
@@ -1170,9 +1000,6 @@
         "byu_id": "byu_id"
       },
       "get": {
-        "summary": "Employee summaries",
-        "description": "Returns employee summary data for a person",
-        "operationId": "getEmployeeSummaries",
         "parameters": [
           {
             "name": "byu_id",
@@ -1182,13 +1009,7 @@
             "type": "string",
             "pattern": "^[0-9]{9}$"
           }
-        ],
-        "responses": {
-          "200": {
-            "description": "Employee information for the person successfully returned",
-            "type": "string"
-          }
-        }
+        ]
       }
     },
     "/{byu_id}/ethnicities": {
@@ -1197,9 +1018,6 @@
         "byu_id": "byu_id"
       },
       "get": {
-        "summary": "Ethnicities",
-        "description": "Returns all addresses for the BYU ID",
-        "operationId": "getEthnicities",
         "parameters": [
           {
             "name": "byu_id",
@@ -1209,13 +1027,7 @@
             "type": "string",
             "pattern": "^[0-9]{9}$"
           }
-        ],
-        "responses": {
-          "200": {
-            "description": "Ethnicities successfully returned",
-            "type": "string"
-          }
-        }
+        ]
       }
     },
     "/{byu_id}/ethnicities/{ethnicity_code}": {
@@ -1225,9 +1037,6 @@
         "ethnicity_code": "ethnicity_code"
       },
       "get": {
-        "summary": "Ethnicities",
-        "description": "Returns the address for the specified BYU ID and address type",
-        "operationId": "getEthnicity",
         "parameters": [
           {
             "name": "byu_id",
@@ -1256,18 +1065,9 @@
               "HAW"
             ]
           }
-        ],
-        "responses": {
-          "200": {
-            "description": "Ethnicity successfully returned",
-            "type": "string"
-          }
-        }
+        ]
       },
       "put": {
-        "summary": "Ethnicities",
-        "description": "Modifies or creates an address for the specified BYU ID and address_type",
-        "operationId": "modifyEthnicity",
         "parameters": [
           {
             "name": "byu_id",
@@ -1304,18 +1104,9 @@
             "schema": {
               "$ref": "#/definitions/inputBody"
             }          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Ethnicity successfully updated",
-            "type": "string"
-          }
-        }
+        ]
       },
       "delete": {
-        "summary": "Ethnicities",
-        "description": "Deletes the address for the BYU ID/address_type",
-        "operationId": "deleteEthnicity",
         "parameters": [
           {
             "name": "byu_id",
@@ -1344,13 +1135,7 @@
               "HAW"
             ]
           }
-        ],
-        "responses": {
-          "204": {
-            "description": "Ethnicity successfully deleted",
-            "type": "string"
-          }
-        }
+        ]
       }
     },
     "/{byu_id}/family_phones": {
@@ -1359,9 +1144,6 @@
         "byu_id": "byu_id"
       },
       "get": {
-        "summary": "Family phones",
-        "description": "Returns the person's family phones",
-        "operationId": "getFamilyPhones",
         "parameters": [
           {
             "name": "byu_id",
@@ -1371,13 +1153,7 @@
             "type": "string",
             "pattern": "^[0-9]{9}$"
           }
-        ],
-        "responses": {
-          "200": {
-            "description": "Family Phones successfully returned",
-            "type": "string"
-          }
-        }
+        ]
       }
     },
     "/{byu_id}/family_phones/{phone_vars}": {
@@ -1387,9 +1163,6 @@
         "phone_vars": "phone_vars"
       },
       "get": {
-        "summary": "Family phones",
-        "description": "Returns information on a specified family phone",
-        "operationId": "getFamilyPhone",
         "parameters": [
           {
             "name": "byu_id",
@@ -1400,35 +1173,15 @@
             "pattern": "^[0-9]{9}$"
           },
           {
-            "name": "phone_type",
+            "name": "phone_vars",
             "in": "path",
-            "description": "The phone type",
-            "required": true,
-            "type": "string",
-            "enum": [
-              "EMR",
-              "PRM"
-            ]
-          },
-          {
-            "name": "lookup_number",
-            "in": "path",
-            "description": "The family member's phone number",
+            "description": "The combination of phone type & lookup_number to make API Gateway happy",
             "required": true,
             "type": "string"
           }
-        ],
-        "responses": {
-          "200": {
-            "description": "Family Phone successfully returned",
-            "type": "string"
-          }
-        }
+        ]
       },
       "put": {
-        "summary": "Family phones",
-        "description": "Modifies or creates a family phone",
-        "operationId": "modifyFamilyPhone",
         "parameters": [
           {
             "name": "byu_id",
@@ -1439,23 +1192,11 @@
             "pattern": "^[0-9]{9}$"
           },
           {
-            "name": "phone_type",
+            "name": "phone_vars",
             "in": "path",
-            "description": "The phone type",
+            "description": "The combination of phone type & lookup_number to make API Gateway happy",
             "required": true,
-            "type": "string",
-            "enum": [
-              "EMR",
-              "PRM"
-            ]
-          },
-          {
-            "name": "lookup_number",
-            "in": "path",
-            "description": "The person's phone number, numbers only",
-            "required": true,
-            "type": "string",
-            "pattern": "^[0-9]{1,30}$"
+            "type": "string"
           },
           {
             "name": "family_phone_put",
@@ -1465,18 +1206,9 @@
             "schema": {
               "$ref": "#/definitions/inputBody"
             }          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Family Phone successfully updated",
-            "type": "string"
-          }
-        }
+        ]
       },
       "delete": {
-        "summary": "Family phones",
-        "description": "Deletes a specified family phone",
-        "operationId": "deleteFamilyPhone",
         "parameters": [
           {
             "name": "byu_id",
@@ -1487,31 +1219,13 @@
             "pattern": "^[0-9]{9}$"
           },
           {
-            "name": "phone_type",
+            "name": "phone_vars",
             "in": "path",
-            "description": "The phone type",
+            "description": "The combination of phone type & lookup_number to make API Gateway happy",
             "required": true,
-            "type": "string",
-            "enum": [
-              "EMR",
-              "PRM"
-            ]
-          },
-          {
-            "name": "lookup_number",
-            "in": "path",
-            "description": "The person's phone number, numbers only",
-            "required": true,
-            "type": "string",
-            "pattern": "^[0-9]{1,30}$"
-          }
-        ],
-        "responses": {
-          "204": {
-            "description": "Family Phone successfully deleted",
             "type": "string"
           }
-        }
+        ]
       }
     },
     "/{byu_id}/government_records": {
@@ -1520,9 +1234,6 @@
         "byu_id": "byu_id"
       },
       "get": {
-        "summary": "Persons",
-        "description": "Returns the person with the specified BYU ID",
-        "operationId": "getGovernmentRecords",
         "parameters": [
           {
             "name": "byu_id",
@@ -1532,18 +1243,9 @@
             "type": "string",
             "pattern": "^[0-9]{9}$"
           }
-        ],
-        "responses": {
-          "200": {
-            "description": "Government Records successfully returned",
-            "type": "string"
-          }
-        }
+        ]
       },
       "put": {
-        "summary": "Persons",
-        "description": "Modifies the Person with specified BYU ID",
-        "operationId": "modifyGovernmentRecords",
         "parameters": [
           {
             "name": "byu_id",
@@ -1561,13 +1263,7 @@
             "schema": {
               "$ref": "#/definitions/inputBody"
             }          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Government Records successfully updated",
-            "type": "string"
-          }
-        }
+        ]
       }
     },
     "/{byu_id}/group_membership_events": {
@@ -1576,9 +1272,6 @@
         "byu_id": "byu_id"
       },
       "get": {
-        "summary": "Group membership events",
-        "description": "Returns the group membership events for the BYU ID",
-        "operationId": "getGroupMembershipEvents",
         "parameters": [
           {
             "name": "byu_id",
@@ -1588,18 +1281,9 @@
             "type": "string",
             "pattern": "^[0-9]{9}$"
           }
-        ],
-        "responses": {
-          "200": {
-            "description": "Group Membership Events successfully returned",
-            "type": "string"
-          }
-        }
+        ]
       },
       "post": {
-        "summary": "Group membership events",
-        "description": "Creates an address for the specified BYU ID",
-        "operationId": "createGroupMembershipEvent",
         "parameters": [
           {
             "name": "byu_id",
@@ -1618,13 +1302,7 @@
               "$ref": "#/definitions/inputBody"
             }
           }
-        ],
-        "responses": {
-          "201": {
-            "description": "Group Membership Events successfully updated",
-            "type": "string"
-          }
-        }
+        ]
       }
     },
     "/{byu_id}/group_membership_events/{event_id}": {
@@ -1634,9 +1312,6 @@
         "event_id": "event_id"
       },
       "get": {
-        "summary": "Group membership events",
-        "description": "Returns the group event history for the specified BYU ID/group",
-        "operationId": "getGroupMembershipEvent",
         "parameters": [
           {
             "name": "byu_id",
@@ -1654,18 +1329,9 @@
             "type": "string",
             "pattern": "^[0-9]+$"
           }
-        ],
-        "responses": {
-          "200": {
-            "description": "Group Membership Event successfully returned",
-            "type": "string"
-          }
-        }
+        ]
       },
       "put": {
-        "summary": "Group membership events",
-        "description": "Modifies an group event for the specified BYU ID and event_id",
-        "operationId": "modifyGroupMembershipEvent",
         "parameters": [
           {
             "name": "byu_id",
@@ -1691,18 +1357,9 @@
             "schema": {
               "$ref": "#/definitions/inputBody"
             }          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Group Membership Event successfully updated",
-            "type": "string"
-          }
-        }
+        ]
       },
       "delete": {
-        "summary": "Group membership events",
-        "description": "Deletes the group event for the BYU ID/event_id",
-        "operationId": "deleteGroupMembershipEvent",
         "parameters": [
           {
             "name": "byu_id",
@@ -1720,13 +1377,7 @@
             "type": "string",
             "pattern": "^[0-9]+$"
           }
-        ],
-        "responses": {
-          "204": {
-            "description": "Group Membership Event successfully deleted",
-            "type": "string"
-          }
-        }
+        ]
       }
     },
     "/{byu_id}/group_memberships": {
@@ -1735,9 +1386,6 @@
         "byu_id": "byu_id"
       },
       "get": {
-        "summary": "Group memberships",
-        "description": "Returns the group memberships for the BYU ID",
-        "operationId": "getGroupMemberships",
         "parameters": [
           {
             "name": "byu_id",
@@ -1747,13 +1395,7 @@
             "type": "string",
             "pattern": "^[0-9]{9}$"
           }
-        ],
-        "responses": {
-          "200": {
-            "description": "Group Memberships successfully returned",
-            "type": "string"
-          }
-        }
+        ]
       }
     },
     "/{byu_id}/group_memberships/{group_id}": {
@@ -1763,9 +1405,6 @@
         "group_id": "group_id"
       },
       "get": {
-        "summary": "Group memberships",
-        "description": "Returns group membership information for the BYU ID/group",
-        "operationId": "getGroupMembership",
         "parameters": [
           {
             "name": "byu_id",
@@ -1782,18 +1421,9 @@
             "required": true,
             "type": "string"
           }
-        ],
-        "responses": {
-          "200": {
-            "description": "Group Membership successfully returned",
-            "type": "string"
-          }
-        }
-      },
+        ]
+       },
       "put": {
-        "summary": "Group memberships",
-        "description": "Modifies or creates an group_membership for the specified BYU ID and group_id",
-        "operationId": "modifyGroupMembership",
         "parameters": [
           {
             "name": "byu_id",
@@ -1810,18 +1440,9 @@
             "required": true,
             "type": "string"
           }
-        ],
-        "responses": {
-          "200": {
-            "description": "Group Membership successfully updated",
-            "type": "string"
-          }
-        }
+        ]
       },
       "delete": {
-        "summary": "Group memberships",
-        "description": "Deletes the group_membership for the BYU ID/group_id",
-        "operationId": "deleteGroupMembership",
         "parameters": [
           {
             "name": "byu_id",
@@ -1838,13 +1459,7 @@
             "required": true,
             "type": "string"
           }
-        ],
-        "responses": {
-          "204": {
-            "description": "Group Membership successfully deleted",
-            "type": "string"
-          }
-        }
+        ]
       }
     },
     "/{byu_id}/groups_administered": {
@@ -1853,9 +1468,6 @@
         "byu_id": "byu_id"
       },
       "get": {
-        "summary": "Groups administered",
-        "description": "Returns groups administered by a person",
-        "operationId": "getGroupsAdministered",
         "parameters": [
           {
             "name": "byu_id",
@@ -1865,13 +1477,7 @@
             "type": "string",
             "pattern": "^[0-9]{9}$"
           }
-        ],
-        "responses": {
-          "200": {
-            "description": "Groups Administered successfully returned",
-            "type": "string"
-          }
-        }
+        ]
       }
     },
     "/{byu_id}/groups_administered/{group_id}": {
@@ -1881,9 +1487,6 @@
         "group_id": "group_id"
       },
       "get": {
-        "summary": "Groups administered",
-        "description": "Returns group administration information for the BYU ID/group",
-        "operationId": "getGroupAdministered",
         "parameters": [
           {
             "name": "byu_id",
@@ -1900,18 +1503,9 @@
             "required": true,
             "type": "string"
           }
-        ],
-        "responses": {
-          "200": {
-            "description": "Group Administered successfully returned",
-            "type": "string"
-          }
-        }
+        ]
       },
       "put": {
-        "summary": "Groups administered",
-        "description": "Modifies or creates an group_administered for the specified BYU ID and group_id",
-        "operationId": "modifyGroupAdministered",
         "parameters": [
           {
             "name": "byu_id",
@@ -1936,18 +1530,9 @@
             "schema": {
               "$ref": "#/definitions/inputBody"
             }          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Group Administered successfully updated",
-            "type": "string"
-          }
-        }
-      },
+        ]
+       },
       "delete": {
-        "summary": "Groups administered",
-        "description": "Deletes the group_administration for the BYU ID/group_id",
-        "operationId": "deleteGroupAdministered",
         "parameters": [
           {
             "name": "byu_id",
@@ -1964,13 +1549,7 @@
             "required": true,
             "type": "string"
           }
-        ],
-        "responses": {
-          "204": {
-            "description": "Group Administered successfully deleted",
-            "type": "string"
-          }
-        }
+        ]
       }
     },
     "/{byu_id}/id_cards": {
@@ -1979,9 +1558,6 @@
         "byu_id": "byu_id"
       },
       "get": {
-        "summary": "ID cards",
-        "description": "Returns a person's ID card information",
-        "operationId": "getIdCards",
         "parameters": [
           {
             "name": "byu_id",
@@ -1991,18 +1567,9 @@
             "type": "string",
             "pattern": "^[0-9]{9}$"
           }
-        ],
-        "responses": {
-          "200": {
-            "description": "ID Cards successfully returned",
-            "type": "string"
-          }
-        }
+        ]
       },
       "put": {
-        "summary": "ID cards",
-        "description": "Modifies a person's ID card information",
-        "operationId": "modifyIdCards",
         "parameters": [
           {
             "name": "byu_id",
@@ -2021,18 +1588,9 @@
               "$ref": "#/definitions/inputBody"
             }
           }
-        ],
-        "responses": {
-          "200": {
-            "description": "ID Card successfully updated",
-            "type": "string"
-          }
-        }
+        ]
       },
       "delete": {
-        "summary": "ID cards",
-        "description": "Deletes a person's ID card",
-        "operationId": "deleteIdCards",
         "parameters": [
           {
             "name": "byu_id",
@@ -2042,13 +1600,7 @@
             "type": "string",
             "pattern": "^[0-9]{9}$"
           }
-        ],
-        "responses": {
-          "204": {
-            "description": "ID Card successfully deleted",
-            "type": "string"
-          }
-        }
+        ]
       }
     },
     "/{byu_id}/languages": {
@@ -2057,9 +1609,6 @@
         "byu_id": "byu_id"
       },
       "get": {
-        "summary": "Languages",
-        "description": "Returns the languages for a person",
-        "operationId": "getLanguages",
         "parameters": [
           {
             "name": "byu_id",
@@ -2069,14 +1618,8 @@
             "type": "string",
             "pattern": "^[0-9]{9}$"
           }
-        ],
-        "responses": {
-          "200": {
-            "description": "Languages successfully returned",
-            "type": "string"
-          }
-        }
-      }
+        ]
+     }
     },
     "/{byu_id}/languages/{language_code}": {
       "x-http-passthrough-url": "https://persons.arch.byu.edu/services/persons/{byu_id}/languages/{language_code}",
@@ -2085,9 +1628,6 @@
         "language_code": "language_code"
       },
       "get": {
-        "summary": "Languages",
-        "description": "Returns a person's abilities for a specific language",
-        "operationId": "getLanguage",
         "parameters": [
           {
             "name": "byu_id",
@@ -2104,18 +1644,9 @@
             "required": true,
             "type": "string"
           }
-        ],
-        "responses": {
-          "200": {
-            "description": "Language successfully returned",
-            "type": "string"
-          }
-        }
+        ]
       },
       "put": {
-        "summary": "Languages",
-        "description": "Modifies a person's abilities for a specific language",
-        "operationId": "modifyLanguage",
         "parameters": [
           {
             "name": "byu_id",
@@ -2141,18 +1672,9 @@
               "$ref": "#/definitions/inputBody"
             }
           }
-        ],
-        "responses": {
-          "200": {
-            "description": "Language information successfully updated",
-            "type": "string"
-          }
-        }
+        ]
       },
       "delete": {
-        "summary": "Languages",
-        "description": "Deletes a person's language abilities for a specific language",
-        "operationId": "deleteLanguage",
         "parameters": [
           {
             "name": "byu_id",
@@ -2169,13 +1691,7 @@
             "required": true,
             "type": "string"
           }
-        ],
-        "responses": {
-          "204": {
-            "description": "Language successfully deleted",
-            "type": "string"
-          }
-        }
+        ]
       }
     },
     "/{byu_id}/my_delegators": {
@@ -2184,9 +1700,6 @@
         "byu_id": "byu_id"
       },
       "get": {
-        "summary": "Delegations",
-        "description": "Returns a collection of guest rights delegator to the BYU ID",
-        "operationId": "getMyDelegators",
         "parameters": [
           {
             "name": "byu_id",
@@ -2211,13 +1724,7 @@
             "required": false,
             "type": "string"
           }
-        ],
-        "responses": {
-          "200": {
-            "description": "Guest Rights successfully returned",
-            "type": "string"
-          }
-        }
+        ]
       }
     },
     "/{byu_id}/my_delegators/{access_delegation_id}": {
@@ -2227,9 +1734,6 @@
         "access_delegation_id": "access_delegation_id"
       },
       "get": {
-        "summary": "Delegations",
-        "description": "Returns the guest rights delegator to the BYU ID by the delegator BYU ID",
-        "operationId": "getMyDelegator",
         "parameters": [
           {
             "name": "byu_id",
@@ -2245,18 +1749,9 @@
             "required": true,
             "type": "string"
           }
-        ],
-        "responses": {
-          "200": {
-            "description": "Guest Rights successfully returned",
-            "type": "string"
-          }
-        }
+        ]
       },
       "put": {
-        "summary": "Delegations",
-        "description": "Accepts or rejects the access delegation invitation",
-        "operationId": "acceptDelegation",
         "parameters": [
           {
             "name": "byu_id",
@@ -2281,13 +1776,7 @@
               "$ref": "#/definitions/inputBody"
             }
           }
-        ],
-        "responses": {
-          "200": {
-            "description": "Guest Rights successfully updated",
-            "type": "string"
-          }
-        }
+        ]
       }
     },
     "/{byu_id}/my_guests": {
@@ -2296,9 +1785,6 @@
         "byu_id": "byu_id"
       },
       "get": {
-        "summary": "Guests",
-        "description": "Returns a collection of guests who have or had access rights to this BYU_ID",
-        "operationId": "getMyGuests",
         "parameters": [
           {
             "name": "byu_id",
@@ -2323,18 +1809,9 @@
             "required": false,
             "type": "string"
           }
-        ],
-        "responses": {
-          "200": {
-            "description": "Guest Access rights granted by a BYU ID successfully returned",
-            "type": "string"
-          }
-        }
+        ]
       },
       "post": {
-        "summary": "Guests",
-        "description": "Creates guest access information for the person/guest",
-        "operationId": "createMyGuest",
         "parameters": [
           {
             "name": "byu_id",
@@ -2352,13 +1829,7 @@
             "schema": {
               "$ref": "#/definitions/inputBody"
             }          }
-        ],
-        "responses": {
-          "201": {
-            "description": "Guest access rights successfully created",
-            "type": "string"
-          }
-        }
+        ]
       }
     },
     "/{byu_id}/my_guests/{access_delegation_id}": {
@@ -2368,9 +1839,6 @@
         "access_delegation_id": "access_delegation_id"
       },
       "get": {
-        "summary": "Guests",
-        "description": "Returns a specific access delegation and information about to whom it was granted. NOTE: Guest ID is not used because the same person could have been granted access then had access revoked and then granted access again",
-        "operationId": "getMyGuest",
         "parameters": [
           {
             "name": "byu_id",
@@ -2387,18 +1855,9 @@
             "required": true,
             "type": "string"
           }
-        ],
-        "responses": {
-          "200": {
-            "description": "Guest Access information for the person/guest successfully returned",
-            "type": "string"
-          }
-        }
+        ]
       },
       "put": {
-        "summary": "Guests",
-        "description": "Modifies guest access information for the person/guest",
-        "operationId": "modifyMyGuest",
         "parameters": [
           {
             "name": "byu_id",
@@ -2423,13 +1882,7 @@
             "schema": {
               "$ref": "#/definitions/inputBody"
             }          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Guest Access information for the person/guest successfully updated",
-            "type": "string"
-          }
-        }
+        ]
       }
     },
     "/{byu_id}/personal_records": {
@@ -2438,9 +1891,6 @@
         "byu_id": "byu_id"
       },
       "get": {
-        "summary": "Persons",
-        "description": "Returns the person with the specified BYU ID",
-        "operationId": "getPersonalRecords",
         "parameters": [
           {
             "name": "byu_id",
@@ -2457,18 +1907,9 @@
             "required": false,
             "type": "boolean"
           }
-        ],
-        "responses": {
-          "200": {
-            "description": "Personal Records successfully returned",
-            "type": "string"
-          }
-        }
+        ]
       },
       "put": {
-        "summary": "Persons",
-        "description": "Modifies the Person with specified BYU ID",
-        "operationId": "modifyPersonalRecords",
         "parameters": [
           {
             "name": "byu_id",
@@ -2487,13 +1928,7 @@
               "$ref": "#/definitions/inputBody"
             }
           }
-        ],
-        "responses": {
-          "200": {
-            "description": "Personal Records successfully updated",
-            "type": "string"
-          }
-        }
+        ]
       }
     },
     "/{byu_id}/phones": {
@@ -2502,9 +1937,6 @@
         "byu_id": "byu_id"
       },
       "get": {
-        "summary": "Phones",
-        "description": "Returns a person's phones",
-        "operationId": "getPhones",
         "parameters": [
           {
             "name": "byu_id",
@@ -2521,13 +1953,7 @@
             "required": false,
             "type": "string"
           }
-        ],
-        "responses": {
-          "200": {
-            "description": "Phones successfully returned",
-            "type": "string"
-          }
-        }
+        ]
       }
     },
     "/{byu_id}/phones/{lookup_number}": {
@@ -2537,9 +1963,6 @@
         "lookup_number": "lookup_number"
       },
       "get": {
-        "summary": "Phones",
-        "description": "Returns phone information for a specific person/phone number",
-        "operationId": "getPhone",
         "parameters": [
           {
             "name": "byu_id",
@@ -2557,18 +1980,9 @@
             "type": "string",
             "pattern": "^[0-9]{1,30}$"
           }
-        ],
-        "responses": {
-          "200": {
-            "description": "Phone successfully returned",
-            "type": "string"
-          }
-        }
+        ]
       },
       "put": {
-        "summary": "Phones",
-        "description": "Sets phone information for a specific person/phone number",
-        "operationId": "modifyPhone",
         "parameters": [
           {
             "name": "byu_id",
@@ -2595,18 +2009,9 @@
               "$ref": "#/definitions/inputBody"
             }
           }
-        ],
-        "responses": {
-          "200": {
-            "description": "Phone successfully updated",
-            "type": "string"
-          }
-        }
+        ]
       },
       "delete": {
-        "summary": "Phones",
-        "description": "Deletes one of a person's phones",
-        "operationId": "deletePhone",
         "parameters": [
           {
             "name": "byu_id",
@@ -2624,13 +2029,7 @@
             "type": "string",
             "pattern": "^[0-9]{1,30}$"
           }
-        ],
-        "responses": {
-          "204": {
-            "description": "Phone successfully deleted",
-            "type": "string"
-          }
-        }
+        ]
       }
     },
     "/{byu_id}/relationships": {
@@ -2639,9 +2038,6 @@
         "byu_id": "byu_id"
       },
       "get": {
-        "summary": "Relationships",
-        "description": "Returns a person's relationships",
-        "operationId": "getRelationships",
         "parameters": [
           {
             "name": "byu_id",
@@ -2651,13 +2047,7 @@
             "type": "string",
             "pattern": "^[0-9]{9}$"
           }
-        ],
-        "responses": {
-          "200": {
-            "description": "Relationships successfully returned",
-            "type": "string"
-          }
-        }
+        ]
       }
     },
     "/{byu_id}/relationships/{related_id}": {
@@ -2667,9 +2057,6 @@
         "related_id": "related_id"
       },
       "get": {
-        "summary": "Relationships",
-        "description": "Returns information on a specific relationship between two identities",
-        "operationId": "getRelationship",
         "parameters": [
           {
             "name": "byu_id",
@@ -2686,18 +2073,9 @@
             "required": true,
             "type": "string"
           }
-        ],
-        "responses": {
-          "200": {
-            "description": "Relationship successfully returned",
-            "type": "string"
-          }
-        }
+        ]
       },
       "put": {
-        "summary": "Relationships",
-        "description": "Modifies or creates a relationship between two persons",
-        "operationId": "modifyRelationship",
         "parameters": [
           {
             "name": "byu_id",
@@ -2722,18 +2100,9 @@
             "schema": {
               "$ref": "#/definitions/inputBody"
             }          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Relationship successfully updated",
-            "type": "string"
-          }
-        }
+        ]
       },
       "delete": {
-        "summary": "Relationships",
-        "description": "Deletes a relationship",
-        "operationId": "deleteRelationship",
         "parameters": [
           {
             "name": "byu_id",
@@ -2750,13 +2119,7 @@
             "required": true,
             "type": "string"
           }
-        ],
-        "responses": {
-          "204": {
-            "description": "Relationship successfully deleted",
-            "type": "string"
-          }
-        }
+        ]
       }
     },
     "/{byu_id}/student_summaries": {
@@ -2765,9 +2128,6 @@
         "byu_id": "byu_id"
       },
       "get": {
-        "summary": "Student summaries",
-        "description": "Returns a summary of a person's academic information",
-        "operationId": "getStudentSummaries",
         "parameters": [
           {
             "name": "byu_id",
@@ -2777,13 +2137,7 @@
             "type": "string",
             "pattern": "^[0-9]{9}$"
           }
-        ],
-        "responses": {
-          "200": {
-            "description": "Student Summaries successfully returned",
-            "type": "string"
-          }
-        }
+        ]
       }
     }
   },
