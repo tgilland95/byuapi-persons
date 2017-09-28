@@ -696,30 +696,9 @@
             "pattern": "^[0-9]{9}$"
           },
           {
-            "name": "credential_type",
+            "name": "credential_vars",
             "in": "path",
-            "description": "One of the credential types available through the meta/credential_type service.",
-            "required": true,
-            "type": "string",
-            "enum": [
-              "BYU_HAWAII_ID",
-              "BYU_IDAHO_ID",
-              "FACEBOOK_ID",
-              "GOOGLE_ID",
-              "ID_CARD",
-              "LDS_ACCOUNT_ID",
-              "LDS_CMIS_ID",
-              "NET_ID",
-              "PROX_CARD",
-              "SEMINARY_STUDENT_ID",
-              "SEOS_CARD",
-              "WSO2_CLIENT_ID"
-            ]
-          },
-          {
-            "name": "credential_id",
-            "in": "path",
-            "description": "One of the credential types available through the meta/credential_type service.",
+            "description": "The combination of the credential_type and credential_id to make API Gateway happy",
             "required": true,
             "type": "string"
           },
@@ -744,28 +723,9 @@
             "pattern": "^[0-9]{9}$"
           },
           {
-            "name": "credential_type",
+            "name": "credential_vars",
             "in": "path",
-            "description": "One of the credential types available through the meta/credential_type service.",
-            "required": true,
-            "type": "string",
-            "enum": [
-              "FACEBOOK_ID",
-              "GOOGLE_ID",
-              "ID_CARD",
-              "NET_ID",
-              "PROX_CARD",
-              "WSO2_CLIENT_ID",
-              "LDS_ACCOUNT_ID",
-              "LDS_CMIS_ID",
-              "BYU_IDAHO_ID",
-              "BYU_HAWAII_ID"
-            ]
-          },
-          {
-            "name": "credential_id",
-            "in": "path",
-            "description": "One of the credential types available through the meta/credential_type service.",
+            "description": "The combination of the credential_type and credential_id to make API Gateway happy",
             "required": true,
             "type": "string"
           }
